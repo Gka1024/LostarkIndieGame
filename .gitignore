@@ -14,6 +14,17 @@
 # =========================
 UserSettings/
 
+# Assets 전체 무시
+Assets/*
+
+# Prefab 폴더만 추적 허용
+!Assets/**/Prefab/
+!Assets/**/Prefab/**
+
+# Prefab 메타파일도 포함
+!Assets/**/Prefab.meta
+!Assets/**/Prefab/**/*.meta
+
 # =========================
 # OS / Editor Files
 # =========================
