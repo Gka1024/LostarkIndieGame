@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f413d872016784da9ee60e0724d071, type: 3}
+  m_Name: Hammer_PerfectSwing
+  m_EditorClassIdentifier: 
+  CardID: 131
+  cardName: 
+  isCardSkill: 1
+  HasChainSkill: 0
+  ChainSkill: {fileID: 0}
+  playerWeapon: 4
+  beforeActTurn: 3
+  afterActTurn: 1
+  needToSelectTile: 1
+  isAngleSkill: 1
+  skillAngle: 3
+  skillAngleRange: 1
+  isDistanceSkill: 0
+  skillDistance: 0
+  skillDistanceRange: 0
+  isAroundSkill: 0
+  aroundRange: 0
+  isRaySkill: 0
+  isHexRaySkill: 0
+  rayDistance: 0
+  rayWidth: 0
+  skill_damage: 10
+  manaUse: 10
+  identityGain: 0
+  stagger: 0
+  coolDownTurn: 0
+  isCounterAble: 0
+  isHeadAttack: 0
+  isBackAttack: 0
+  isSuperArmor: 0
+  opt1_turns: 0
+  opt1_damage_coef: 0
+  opt2_isTaunt: 0
+  opt2_taunt_turns: 0
+  opt3_skill_damage_1: 0
+  opt3_skill_damage_2: 0

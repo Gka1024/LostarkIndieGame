@@ -1,0 +1,378 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "name": "기본 카드",
+      "description": "기본 카드입니다. 턴 종료, 긴급 이동, 기본 공격이 있습니다.",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "턴 종료",
+          "option_description": "무언가 더 할 건 없는지 더블 체크!"
+        },
+        {
+          "option_id": 2,
+          "option_name": "긴급 이동",
+          "option_description": "2칸 내 원하는 위치로 이동할 수 있다. 남발하지 않도록 하자."
+        },
+        {
+          "option_id": 3,
+          "option_name": "기본 공격",
+          "option_description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "esther": "실리안",
+      "name": "완성된 패자의 검",
+      "description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
+    },
+    {
+      "id": 72,
+      "esther": "웨이",
+      "name": "각성 도철",
+      "description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
+    },
+    {
+      "id": 73,
+      "esther": "바훈투르",
+      "name": "아크투르스의 숨결",
+      "description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
+    },
+    {
+      "id": 75,
+      "esther": "니나브",
+      "name": "천벌 파르쿠나스",
+      "description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
+    },
+    {
+      "id": 76,
+      "esther": "이난나",
+      "name": "엘조윈의 가호",
+      "description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
+    },
+    {
+      "id": 77,
+      "esther": "아제나",
+      "name": "태초의 창",
+      "description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
+    },
+    {
+      "id": 78,
+      "esther": "카단",
+      "name": "단죄",
+      "description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
+    },
+    {
+      "id": 79,
+      "esther": "카단",
+      "name": "아르스의 방패",
+      "description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
+    },
+    {
+      "id": 111,
+      "name": "배쉬",
+      "description": "적을 방패로 타격하여 {base_skill_damage}의 피해를 준다.",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "갑옷 파괴",
+          "option_description": "공격에 적중된 적들의 방어력을 {opt1_turns}턴 간 {opt1_defence_debuff} % 감소시킨다."
+        },
+        {
+          "option_id": 2,
+          "option_name": "뇌진탕",
+          "option_description": "스킬의 무력화 단계가 [상]으로 증가하고, 부위파괴 레벨이 1 증가한다."
+        },
+        {
+          "option_id": 3,
+          "option_name": "전장의 방패",
+          "option_description": "공격 적중 시 아이덴티티 게이지 획득량이 {opt3_identity_bonus}% 증가한다. "
+        }
+      ]
+    },
+    {
+      "id": 112,
+      "name": "버스트 캐넌",
+      "description": "무기에 장착된 기폭장치를 이용하여 화력을 응축시켜 전방을 항해 쏟아내어 {base_skill_damage} 피해를 준다. 이때 뒤로 한 칸 밀려난다.",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "차지 스팅거",
+          "option_description": "기운을 모아 순식간에 전방으로 미끄러져 창을 내질러 추가로 {opt1_skill_damage} 피해를 준다. "
+        },
+        {
+          "option_id": 2,
+          "option_name": "확산탄",
+          "option_description": "스킬의 무력화 단계가 [상] 으로 증가하고, 범위가 증가한다."
+        },
+        {
+          "option_id": 3,
+          "option_name": "카운터 스피어",
+          "option_description": "공격 대기 시간이 1턴 늘어나지만, 적의 공격을 방어하면 강력하게 반격하여 추가로 {opt3_skill_damage} 피해를 준다. "
+        }
+      ]
+    },
+    {
+      "id": 1121,
+      "name": "차지 스팅어",
+      "description": "기운을 모아 순식간에 전방으로 미끄러져 창을 내질러 추가로 {opt1_skill_damage} 피해를 준다."
+    },
+    {
+      "id": 113,
+      "name": "증오의 함성",
+      "description": "강하게 포효하여 자신을 중심으로 1칸 내 적에게 {base_skill_damage} 피해를 주고, 적들을 {taunt_turns} 턴간 도발한다.",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "넓은 타격",
+          "option_description": "피해를 주는 범위가 1칸 증가하고, 2턴간 추가로 도발한다. "
+        },
+        {
+          "option_id": 2,
+          "option_name": "보호막",
+          "option_description": "{opt2_shield_turns}턴간 자신 최대 생명력의 {opt2_shields}%의 보호막을 생성한다."
+        },
+        {
+          "option_id": 3,
+          "option_name": "전장의 방패",
+          "option_description": "공격 적중 시 아이덴티티 게이지 획득량이 {opt3_identity_bonus}% 증가한다. "
+        }
+      ]
+    },
+    {
+      "id": 121,
+      "name": "신성한 보호",
+      "description": "성스러운 빛으로  {base_shield_turns} 간 자신 최대 생명력의 {base_shields} 에 해당하는 보호막을 부여한다.",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "보호막 증가",
+          "option_description": "보호막 수치가 {opt1_shield_bonus} % 증가되고, 보호막이 {opt1_shield_duration} 턴 더 유지된다. "
+        },
+        {
+          "option_id": 2,
+          "option_name": "빛의 서약",
+          "option_description": "보호막이 해제될 때 최대 생명력의 {opt2_heal}에 해당하는 생명력을 회복한다."
+        },
+        {
+          "option_id": 3,
+          "option_name": "호흡 조절",
+          "option_description": "스킬 사용 후 다음 스킬을 사용할 수 있다."
+        }
+      ]
+    },
+    {
+      "id": 122,
+      "name": "천상의 축복",
+      "description": "빛의 수호자를 소환하여 주변에 {base_skill_damage}의 피해를 주고 자신에게 축복을 내려 {base_buff_turns} 동안 공격력을 {base_attack_increase} 증가시킨다.",
+      "options" : [
+        {
+          "option_id": 1,
+          "option_name": "완전한 축복",
+          "option_description": "{opt1_turns}턴 동안 자신의 마나회복 속도가 {opt1_mana_regen}% 증가한다. "
+        },
+        {
+          "option_id": 2,
+          "option_name": "용맹",
+          "option_description": "공격력 증가 효과가 {opt2_attack_increase} % 증가되고, 공격력 증가 효과가 {opt2_increase_turns} 턴 더 유지된다."
+        },
+        {
+          "option_id": 3,
+          "option_name": "신앙심",
+          "option_description": "공격 적중 시 신앙 게이지를 {opt3_identity_bonus} % 추가 획득한다."
+        }
+      ]
+    },
+    {
+      "id": 123,
+      "name": "신성검",
+      "description": "빛의 기운을 검에 담아 찔러 {base_skill_damage} 피해를 주고 이후 검에서 빛이 쏟아져 나오며 {base_skill_range}칸 범위 내에 {base_skill_damage_2} 피해를 준다.",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "빛의 해방",
+          "option_description": "찌르기 공격에도 빛을 해방하여 찌르기 공격의 범위가 증가한다."
+        },
+        {
+          "option_id": 2,
+          "option_name": "성흔",
+          "option_description": "빛의 잔해가 남아 {opt2_turns} 동안 매 턴 {opt2_damage} 피해를 입힌다."
+        },
+        {
+          "option_id": 3,
+          "option_name": "응축된 기운",
+          "option_description": "빛의 공격이 1칸 짧아지지만, 적에게 주는 피해가 {opt3_damage_coef}% 증가한다."
+        }
+      ]
+    },
+    {
+      "id": 1234,
+      "name": "신성검 - 분출",
+      "description": "해머를 즉시 휘둘러 {opt3_skill_damage_1} 의 피해를 주며, 이후 한 번 더 휘둘러 {opt3_skill_damage_2}의 피해를 준다."
+    },
+    {
+      "id": 131,
+      "name": "퍼펙트 스윙",
+      "description": "{before_turn} 동안 차지하며, 차지가 완료되면 두 손으로 해머를 크게 휘둘러 {base_skill_damage}의 피해를 준다. ",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "슈퍼노바",
+          "option_description": "{opt1_turns} 턴 추가로 차지하지만, 스킬의 데미지가 {opt1_damage_coef}% 증가한다."
+        },
+        {
+          "option_id": 2,
+          "option_name": "도발",
+          "option_description": "차지를 시작할 때 보스에게 3턴간 도발 상태이상을 부여한다."
+        },
+        {
+          "option_id": 3,
+          "option_name": "기괴한 해머",
+          "option_description": "해머를 즉시 휘둘러 {opt3_skill_damage_1} 의 피해를 주며, 이후 한 번 더 휘둘러 {opt3_skill_damage_2}의 피해를 준다. "
+        }
+      ]
+    },
+    {
+      "id": 1313,
+      "name": "기괴한 해머",
+      "description": "해머를 즉시 휘둘러 {opt3_skill_damage_1} 의 피해를 주며, 이후 한 번 더 휘둘러 {opt3_skill_damage_2}의 피해를 준다."
+    },
+    {
+      "id": 132,
+      "name": "사이즈믹 해머",
+      "description": "망치를 뒤로 빼고, {before_turn} 턴 동안 대기한다. 이후 해머를 전방으로 강하게 내리쳐 {base_skill_damage}의 피해를 준다.",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "대지의 분노",
+          "option_description": "해머를 내리치는 공격의 데미지가 {opt1_damage_coef}% 증가한다."
+        },
+        {
+          "option_id": 2,
+          "option_name": "슈퍼 차지",
+          "option_description": "망치를 뒤로 뺀 이후 바로 공격한다."
+        },
+        {
+          "option_id": 3,
+          "option_name": "어스이터",
+          "option_description": "데미지가 낮아지지만, 해머를 내리치지 않고 주변으로 2회 돌리며 데미지를 준다. 두번째 회전은 한 칸 이동하여 공격할 수 있다."
+        }
+      ]
+    },
+    {
+      "id": 1323,
+      "name": "어스이터",
+      "description": "데미지가 낮아지지만, 해머를 내리치지 않고 주변으로 2회 돌리며 데미지를 준다. 두번째 회전은 한 칸 이동하여 공격할 수 있다."
+    },
+    {
+      "id": 133,
+      "name": "점핑 스매쉬",
+      "description": "{before_turn}턴 후, {base_tile}칸 내 지정한 위치로 점프하여 해머를 바닥에 내려치면서 {base_skill_damage}의 피해를 준다.",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "드레드노트",
+          "option_description": "점프하며 바로 카운터 공격을 한다."
+        },
+        {
+          "option_id": 2,
+          "option_name": "탁월한 변화",
+          "option_description": "이동 가능 거리가 1칸 늘어난다."
+        },
+        {
+          "option_id": 3,
+          "option_name": "분쇄",
+          "option_description": "이동할 수 없으나, 더 넓은 범위에 {opt3_skill_damage} 피해를 주는 두번째 폭발이 발생한다. "
+        }
+      ]
+    },
+    {
+      "id": 1333,
+      "name": "분쇄",
+      "description": "이동할 수 없으나, 더 넓은 범위에 {opt3_skill_damage} 피해를 주는 두번째 폭발이 발생한다. ."
+    },
+    {
+      "id": 141,
+      "name": "피니쉬 스트라이크",
+      "description": "대검을 강하게 내리찍어 {base_skill_damage}의 피해를 준다.",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "질풍",
+          "option_description": "준비 동작을 생략한다."
+        },
+        {
+          "option_id": 2,
+          "option_name": "충격파",
+          "option_description": "공격 후 충격파가 솟아올라 {opt2_skill_damage}에 해당하는 피해를 준다."
+        },
+        {
+          "option_id": 3,
+          "option_name": "확인사살",
+          "option_description": "내리찍은 후 한번 더 내리찍을 수 있다. 두번째의 공격은 {opt3_skill_damage}에 해당하는 피해를 준다."
+        }
+      ]
+    },
+    {
+      "id": 1413,
+      "name": "확인사살",
+      "description": "점프하며 바로 카운터 공격을 한다."
+    },
+    {
+      "id": 142,
+      "name": "레드 더스트",
+      "description": "대검을 땅에 꽂은 후, 크게 올려치며 붉은 기운을 일으킨다. 자신의 공격력이 {base_buff_turns}턴 동안 {base_attack_increase} 증가하며, {base_skill_damage}의 데미지를 준다. ",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "폭주 준비",
+          "option_description": "공격 적중 시 아이덴티티 게이지 획득량이 {opt1_identity_bonus}% 증가한다. "
+        },
+        {
+          "option_id": 2,
+          "option_name": "블러디 더스트",
+          "option_description": "공격력 증가 효과가 {opt2_attack_increase} % 증가되고, 공격력 증가 효과가 {opt2_increase_turns} 턴 더 유지된다."
+        },
+        {
+          "option_id": 3,
+          "option_name": "상쇄",
+          "option_description": "와일즈 아님. 아무튼 아님. 올려치기 공격에 카운터가 가능합니다. 아무튼 상쇄 올려베기 아니라고"
+        }
+      ]
+    },
+    {
+      "id": 1423,
+      "name": "상쇄",
+      "description": "점프하며 바로 카운터 공격을 한다."
+    },
+    {
+      "id": 143,
+      "name": "볼케이노 이럽션",
+      "description": "1칸 내의 범위로 도약한 뒤 공격하여 대검을 찍어 주변에 {base_skill_damage}의 데미지를 주고, 후폭풍을 일으켜 {base_skill_damage_2}의 데미지를 준다.",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "탁월한 변화",
+          "option_description": "도약의 범위가 1칸 늘어난다."
+        },
+        {
+          "option_id": 2,
+          "option_name": "방출된 분노",
+          "option_description": "후폭풍의 피해가 {opt2_damage_coef}% 증가하고 범위가 1칸 늘어나지만, 아이덴티티를 회복할 수 없다."
+        },
+        {
+          "option_id": 3,
+          "option_name": "슈퍼아머",
+          "option_description": "적에게 공격받아도 스킬이 끊기지 않는다."
+        }
+      ]
+    },
+    {
+      "id": 1434,
+      "name": "볼케이노 이럽션 - 분출",
+      "description": "점프하며 바로 카운터 공격을 한다."
+    }
+  ]
+}

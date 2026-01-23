@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ad3c5a527f5cb41909a95df264df33, type: 3}
+  m_Name: GunLance_Bash
+  m_EditorClassIdentifier: 
+  CardID: 111
+  cardName: bash
+  isCardSkill: 1
+  HasChainSkill: 0
+  playerWeapon: 3
+  beforeActTurn: 1
+  afterActTurn: 1
+  needToSelectTile: 1
+  isAngleSkill: 1
+  skillAngle: 3
+  skillAngleRange: 1
+  isDistanceSkill: 0
+  skillDistance: 0
+  skillDistanceRange: 0
+  isAroundSkill: 0
+  aroundRange: 0
+  isRaySkill: 0
+  isHexRaySkill: 0
+  rayDistance: 0
+  rayWidth: 0
+  skill_damage: 1
+  mana: 1
+  identity: 1
+  stagger: 1
+  coolDownTurn: 2
+  isChainSkill: 0
+  isSideSkill: 1
+  isCounterAble: 0
+  isHeadAttack: 0
+  isBackAttack: 0
+  opt1_defenceDebuff: 10
+  opt1_turns: 5
+  opt2_staggerBonus: 10
+  opt3_identityBonus: 10

@@ -14,12 +14,13 @@
 # =========================
 UserSettings/
 
-# Assets 전체 무시
-Assets/*
+# 임포트한 에셋 전부 무시
+Assets/Imports/
+Assets/Imports/**
 
-# Prefab 폴더만 추적 허용
-!Assets/**/Prefab/
-!Assets/**/Prefab/**
+Assets/Animation/
+Assets/Animation/**
+
 
 # Prefab 메타파일도 포함
 !Assets/**/Prefab.meta
