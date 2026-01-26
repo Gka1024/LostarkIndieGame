@@ -1,46 +1,39 @@
 # 🎮 Turn-Based Card Boss Battle (Unity)
 
 Unity로 개발 중인 **턴제 카드 기반 보스전 게임 프로젝트**입니다.  
-카드(스킬) 선택 → 트라이포드 분기 → 보스 패턴 AI → 버프/디버프 → UI 연출까지  
-전투 시스템 구조 설계와 **확장성**에 초점을 맞춰 제작하고 있습니다.
+전투 흐름, 스킬 처리 구조, 보스 AI, Buff/Debuff 파이프라인 등  
+**게임 전투 시스템 아키텍처 설계**에 초점을 맞춰 제작하고 있습니다.
 
 ---
 
-## 🧭 Overview
+## 🧭 Project Overview
 
 | 항목 | 내용 |
 |------|------|
 | 장르 | Turn-Based / Card / Boss Battle |
 | 엔진 | Unity |
 | 언어 | C# |
-| 핵심 | 패턴형 보스 AI / Buff & Debuff / Damage Popup / UI Tooltip |
+| 핵심 | 전투 흐름 설계 / 패턴형 보스 AI / Buff & Debuff 시스템 |
 
 ---
 
-## ✨ Key Features
+## 🔄 1. Turn Flow Architecture
 
-- ✔ 턴제 전투 + 카드 선택  
-- ✔ 트라이포드 기반 스킬 분기 시스템  
-- ✔ Skill Queue 기반 스킬 처리 구조  
-- ✔ 패턴 기반 보스 AI  
-- ✔ Buff / Debuff 시스템 (ScriptableObject + Factory)  
-- ✔ 데미지 / 무력화 / 파괴 수치 처리  
-- ✔ 데미지 팝업 & 버프 아이콘 UI  
-
----
-
-## 🔄 Turn Flow
+전투는 `TurnStateMachine`이 전체 흐름을 관리합니다.
 
 ```text
-BossStart → PlayerTurn → BossAttack → TurnEnd → Loop
+BossStart → PlayerTurn → SkillQueue → BossAction → TurnEnd → Loop
 ```
 
-TurnStateMachine이 전체 전투 흐름을 비동기로 제어합니다.
-플레이어 입력과 보스 행동을 명확히 분리한 구조입니다.
+플레이어 입력과 보스 행동을 명확히 분리
 
-🃏 Card & Skill Queue System
-플레이어가 사용한 카드는 SkillQueueData로 큐에 저장되고,
-턴 종료 시 큐에 들어간 스킬을 순차 실행합니다.
+스킬은 즉시 실행되지 않고 큐에 저장 → 턴 종료 시 처리
+
+상태 전환은 비동기 코루틴 기반으로 안전하게 제어
+
+🃏 2. Card & Skill Queue System
+플레이어가 사용한 카드는 SkillQueueData로 변환되어 큐에 저장됩니다.
+턴 종료 시 큐에 쌓인 스킬을 순차 실행하는 구조입니다.
 
 public class SkillQueueData
 {
@@ -48,95 +41,36 @@ public class SkillQueueData
     public int tripodIndex;
     public float damage;
     public float stagger;
-    public float manaCost;
     public bool isChainSkill;
 }
-🤖 Boss AI & Pattern System
-보스는 단순 공격이 아니라
-패턴 선택 → 예고 → 실행 구조로 행동합니다.
+설계 포인트
+카드 → 데이터 → 큐 → 실행 흐름 분리
 
-다음 패턴 자동 선택
+체인 스킬 / 분기 스킬도 동일한 파이프라인에서 처리
+
+UI / 연출 / 계산 로직이 서로 직접 의존하지 않도록 분리
+
+🤖 3. Boss AI & Pattern System
+보스는 단순 공격이 아니라 패턴 기반 AI 구조로 동작합니다.
+
+패턴 선택 → 예고 → 실행 → 종료 → 다음 패턴 선택
+설계 포인트
+AI는 패턴을 선택만 하고, 실행은 BossPattern이 담당
 
 상태(그로기, 도발 등)에 따라 행동 제한
 
-AI와 패턴 로직 분리 설계
+AI / 패턴 / 애니메이션 로직 분리
 
-🧪 Buff & Debuff System
-ScriptableObject 기반 BuffData / DebuffData
-
-Factory 패턴으로 런타임 객체 생성
-
-ID 기반 Dictionary 관리
-
-데미지 계산 파이프라인에 개입
+🧪 4. Buff & Debuff Damage Pipeline
+Buff / Debuff는 ScriptableObject 기반 데이터 + 런타임 객체 구조입니다.
 
 Base Damage
  → Buff.ModifyIncomeDamage()
  → Debuff.ModifyIncomeDamage()
  → Final Damage
-🧾 UI System
-🟦 Buff / Debuff Icon UI
-보스가 가진 상태를 아이콘으로 표시
+설계 포인트
+Buff는 Factory 패턴으로 런타임 객체 생성
 
-마우스 오버 시 툴팁으로 설명 출력
+ID 기반 Dictionary로 중복/중첩 관리
 
-🔢 Damage Popup
-보스 머리 위에서 데미지 숫자 출력
-
-월드 좌표 → Screen 좌표 변환 → Canvas 표시
-
-🎥 FX & Visual
-그로기 상태: 머리 위 Loop 이펙트
-
-피격 시: Body Anchor 기반 단발성 Hit Effect
-
-아이콘 영역: RectMask2D로 마스킹 처리
-
-🗂 Project Structure
-Assets/
-├── Scripts/
-│   ├── Turn/
-│   ├── Boss/
-│   ├── BuffSystem/
-│   ├── Cards/
-│   └── UI/
-├── ScriptableObjects/
-│   ├── BuffData/
-│   └── SkillData/
-├── Prefabs/
-│   ├── UI/
-│   └── Effects/
-🛠 Tech Stack
-Unity (2022+ LTS)
-
-C#
-
-ScriptableObject
-
-TextMeshPro
-
-State Machine
-
-Factory Pattern
-
-🚧 In Progress / Roadmap
-상태	내용
-🚧 진행중	추가 보스 패턴
-🛠 작업중	크리티컬 연출
-⏳ 예정	카드 시너지 시스템
-📈 장기	전투 밸런싱 & 확장
-🎯 Goal
-이 프로젝트는
-✔ 구조적으로 확장 가능한 전투 시스템
-✔ 유지보수하기 쉬운 AI / Buff 설계
-✔ 실전 게임 아키텍처 연습
-을 목표로 제작 중입니다.
-
-📸 Screenshots / Demo
-(추후 플레이 영상 / GIF / 스크린샷 추가 예정)
-
-📜 License
-MIT License
-
-
----
+데미지 계산 흐름에 직접 개입하는 파이프라인 구조
