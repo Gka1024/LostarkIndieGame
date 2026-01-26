@@ -46,13 +46,11 @@ public class AssignedPatternNo1 : BossPattern
         return new BossPatternTurnInfo(new List<HexTile>(), 0);
     }
 
-    private BossPatternTurnInfo MakePattern1(BossAI ai) => CreatePattern(ai, new[]
+    private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
-        (2, 12, true),
-        (3, 18, true),
-        (4, 24, true)
-    },
-    damage: 30, isKnockback: true, knockbackDistance: 1, breakWalls: true);
+        List<HexTile> damageRange = HexTileManager.Instance.GetTilesWithinRange(ai.GetBoss().interaction.currentTile, 3);
+        return new BossPatternTurnInfo(damageRange, 60, isKnockback: true, breakWalls: true);
+    }
 
 
     public override void OnPatternEnd(BossAI ai)

@@ -323,10 +323,16 @@ public class SkillManager : MonoBehaviour
         Destroy(chainGO);
     }
 
+    public void CallGiveBossDamage(float damage)
+    {
+        GiveBossDamage(damage);
+    }
+
     public void GiveBossDamage(float damage)
     {
         Boss.GetComponent<BossStats>().ReceiveDamage(new BossDamageData(damage, false, false));
         Boss.GetComponent<BossEffectController>().SpawnHitEffect();
+        Boss.GetComponent<BossDamagePopup>().ShowDamage(damage);
     }
 
     public void GiveBossStagger(float stagger)

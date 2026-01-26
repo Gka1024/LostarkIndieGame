@@ -41,7 +41,7 @@ public class PatternNo12 : BossPattern
         return new BossPatternTurnInfo(attackRange, 0);
     }
 
-    private BossPatternTurnInfo MakePattern2(BossAI ai) => CreatePattern(ai, new[]
+    private BossPatternTurnInfo MakePattern2(BossAI ai) => CreatePatternByDistance(ai, new[]
     {
         (4, 24, true),
         (5, 30, true),

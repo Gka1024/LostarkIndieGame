@@ -32,7 +32,7 @@ public class PatternNo3 : BossPattern
     private BossPatternTurnInfo MakePattern4(BossAI ai)
     {
         // 기본 공격 범위 생성
-        var pattern = CreatePattern(ai, new[]
+        var pattern = CreatePatternByDistance(ai, new[]
         {
         (2, 2, false), (2, 2, true),
         (3, 3, false), (3, 3, true),

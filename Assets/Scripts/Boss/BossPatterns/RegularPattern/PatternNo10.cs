@@ -35,7 +35,7 @@ public class PatternNo10 : BossPattern
         return new BossPatternTurnInfo(new List<HexTile>(), 0);
     }
 
-    private BossPatternTurnInfo MakePattern1(BossAI ai) => CreatePattern(ai, new[]
+    private BossPatternTurnInfo MakePattern1(BossAI ai) => CreatePatternByDistance(ai, new[]
     {
         (2, 12, true),
         (3, 18, true),

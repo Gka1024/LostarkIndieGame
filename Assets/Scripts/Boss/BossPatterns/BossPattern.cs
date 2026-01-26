@@ -114,7 +114,7 @@ public abstract class BossPattern
         isFinished = false;
     }
 
-    protected BossPatternTurnInfo CreatePattern(
+    protected BossPatternTurnInfo CreatePatternByDistance(
       BossAI ai,
       (int direction, int count, bool clockwise)[] patterns,
       int damage,

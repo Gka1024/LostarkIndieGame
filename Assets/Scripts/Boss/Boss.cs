@@ -13,6 +13,7 @@ public class Boss : MonoBehaviour
     public BossStatus status;
     public BossInteraction interaction;
     public BossEffectController bossEffectController;
+    public BossDamagePopup bossDamagePopup;
 
     public GameObject patterns;
 

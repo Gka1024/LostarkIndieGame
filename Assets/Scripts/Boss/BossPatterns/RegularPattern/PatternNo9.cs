@@ -18,7 +18,7 @@ public class PatternNo9 : BossPattern
         base.OnStartPattern(ai);
     }
 
-    private BossPatternTurnInfo MakePattern1(BossAI ai) => CreatePattern(ai, new[]
+    private BossPatternTurnInfo MakePattern1(BossAI ai) => CreatePatternByDistance(ai, new[]
     {
         (2, 3, true), (3, 5, true),
         (4, 2, false), (4, 6, true),
@@ -26,7 +26,7 @@ public class PatternNo9 : BossPattern
     },
     damage: 40);
 
-    private BossPatternTurnInfo MakePattern2(BossAI ai) => CreatePattern(ai, new[]
+    private BossPatternTurnInfo MakePattern2(BossAI ai) => CreatePatternByDistance(ai, new[]
     {
         (2, 3, false), (3, 5, false),
         (4, 2, true), (4, 6, false),
@@ -34,7 +34,7 @@ public class PatternNo9 : BossPattern
     },
     damage: 40);
 
-    private BossPatternTurnInfo MakePattern3(BossAI ai) => CreatePattern(ai, new[]
+    private BossPatternTurnInfo MakePattern3(BossAI ai) => CreatePatternByDistance(ai, new[]
     {
         (2, 2, false), (2, 2, true),
         (3, 3, true), (3, 3, false),
@@ -49,7 +49,7 @@ public class PatternNo9 : BossPattern
         return new BossPatternTurnInfo(new List<HexTile>(), 0);
     }
 
-    private BossPatternTurnInfo MakePattern5(BossAI ai) => CreatePattern(ai, new[]
+    private BossPatternTurnInfo MakePattern5(BossAI ai) => CreatePatternByDistance(ai, new[]
     {
         (4, 24, true),
         (5, 30, true),

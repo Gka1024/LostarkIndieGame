@@ -25,13 +25,13 @@ public class PatternNo1 : BossPattern
         startStagger = ai.GetBoss().stats.staggerAmount;
 
         // 성공/실패 패턴을 사전에 생성
-        counterSuccess = CreatePattern(ai, new[]
+        counterSuccess = CreatePatternByDistance(ai, new[]
         {
             (2, 6, true),  // radius 2, 360도
             (3, 18, true)  // radius 3, 3*6 = 18 방향으로 회전
         }, damage: 40, isKnockback: true, knockbackDistance: 2);
 
-        counterFail = CreatePattern(ai, new[]
+        counterFail = CreatePatternByDistance(ai, new[]
         {
             (2, 6, true),
             (2, 3, false),

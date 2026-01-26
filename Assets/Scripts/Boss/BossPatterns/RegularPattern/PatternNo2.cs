@@ -37,7 +37,7 @@ public class PatternNo2 : BossPattern
     }
 
 
-    private BossPatternTurnInfo MakePattern1(BossAI ai) => CreatePattern(ai, new[]
+    private BossPatternTurnInfo MakePattern1(BossAI ai) => CreatePatternByDistance(ai, new[]
     {
         (2, 2, true), (2, 2, false),
         (3, 3, true), (3, 3, false),
@@ -46,7 +46,7 @@ public class PatternNo2 : BossPattern
     },
     damage: 50);
 
-    private BossPatternTurnInfo MakePattern2(BossAI ai) => CreatePattern(ai, new[]
+    private BossPatternTurnInfo MakePattern2(BossAI ai) => CreatePatternByDistance(ai, new[]
     {
         (2, 2, true), (2, 2, false),
         (3, 3, true), (3, 3, false),
@@ -55,7 +55,7 @@ public class PatternNo2 : BossPattern
     },
     damage: 50);
 
-    private BossPatternTurnInfo MakePattern3(BossAI ai) => CreatePattern(ai, new[]
+    private BossPatternTurnInfo MakePattern3(BossAI ai) => CreatePatternByDistance(ai, new[]
     {
         (2, 2, true), (2, 2, false),
         (3, 3, true), (3, 3, false),

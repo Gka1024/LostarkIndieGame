@@ -27,7 +27,7 @@ public class PatternNo8 : BossPattern
         base.OnPatternTurn(ai);
     }
 
-    private BossPatternTurnInfo MakePattern1(BossAI ai) => CreatePattern(ai, new[]
+    private BossPatternTurnInfo MakePattern1(BossAI ai) => CreatePatternByDistance(ai, new[]
     {
         (2, 2, false), (2, 2, true),
         (3, 3, false), (3, 3, true),

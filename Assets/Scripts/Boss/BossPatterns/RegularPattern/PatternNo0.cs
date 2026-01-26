@@ -10,7 +10,6 @@ public class PatternNo0 : BossPattern
 
         turnGenerators.Add(MakePattern0);
         turnGenerators.Add(MakePattern1);
-        turnGenerators.Add(MakePattern2);
     }
 
     public override void OnStartPattern(BossAI ai)
@@ -40,15 +39,6 @@ public class PatternNo0 : BossPattern
 
         return new BossPatternTurnInfo(attackRange, 0);
     }
-
-    private BossPatternTurnInfo MakePattern2(BossAI ai) => CreatePattern(ai, new[]
-    {
-        (4, 24, true),
-        (5, 30, true),
-        (6, 36, true)
-    },
-    damage: 60, isKnockback: true, knockbackDistance: 2);
-
 
     public override void OnPatternEnd(BossAI ai)
     {
