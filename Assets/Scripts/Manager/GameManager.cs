@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public SkillManager skillManager;
     public CardManager cardManager;
     public EstherManager estherManager;
+    public ObjectManager objectManager;
+
     public PlayerAnimation playerAnimation;
 
     public CardList cardList;

@@ -11,12 +11,12 @@ public class HexTile : MonoBehaviour
     public GameObject player;
     public HexTile[] neighbors;
     public MeshRenderer meshRenderer;
-
-    public GameObject OnTileObject;
+    public ObjectManager objectManager;
 
     public Vector3Int CubeCoord;
 
     public TileState currentTileState;
+    public TileSpecific currentTileSpecific;
 
     public bool isMoveable = true;
     public bool isBossAttackRange = false;
@@ -28,13 +28,27 @@ public class HexTile : MonoBehaviour
     private void Awake()
     {
         manager = FindFirstObjectByType<GameManager>();
-        tileManager = FindFirstObjectByType<HexTileManager>();
+        tileManager = manager.hexTileManager;
+        objectManager = manager.objectManager;
         player = manager.GetPlayer();
+        RegisterObject();
+
+        Init();
+        
+    }
+
+    private void Init()
+    {
         meshRenderer = GetComponent<MeshRenderer>();
         originalColor = meshRenderer.material.color;
         playerMoveRangeColor = new Color(0.564f, 0.933f, 0.565f);
         bossAttackRangeColor = new Color(0.8f, 0.2f, 0.2f);
         CubeCoord = WorldToCube(transform.position);
+    }
+
+    private void RegisterObject()
+    {
+        objectManager.Register(this);
     }
 
     public static Vector3Int WorldToCube(Vector3 worldPos)
@@ -209,18 +223,12 @@ public class HexTile : MonoBehaviour
         return tileManager.IsTileMoveable(player.GetComponent<PlayerMove>().GetCurrentTile(), this, player.GetComponent<PlayerMove>().moveAbleDistance);
     }
 
-    public void BreakWalls(bool breakObject = false)
+    public void ChangeTileState(TileState state)
     {
         if (currentTileState == TileState.IsWall)
         {
             currentTileState = TileState.Default;
         }
-
-        if(breakObject)
-        {
-            Destroy(OnTileObject);
-        }
-
     }
 
 }
@@ -231,5 +239,27 @@ public enum TileState
     IsBossTile,
     ItemPlaced,
     Destroyed,
-    IsWall
+    IsWall,
+    IsPillar,
+    IsObstacle
+}
+
+public enum TileSpecific
+{
+    Default,
+    PillarLeftUp,
+    PillarLeftMiddle,
+    PillarLeftDown,
+    PillarRightUp,
+    PillarRightMiddle,
+    PillarRightDown,
+    WallFront,
+    WallLeftUp,
+    WallLeftDown,
+    WallRightUp,
+    WallRightDown,
+    ObstacleLeftUp,
+    ObstacleLeftDown,
+    ObstacleRightUp,
+    ObstacleRightDown,
 }

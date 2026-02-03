@@ -31,7 +31,7 @@ public class AssignedPatternNo2 : BossPattern
     {
         if (currentTurn == 2)
         {
-            isHitWall = targetTile.currentTileState == TileState.IsWall;
+            isHitWall = targetTile.currentTileState == TileState.IsWall || targetTile.currentTileState == TileState.IsPillar;
 
             HexTile moveTile = TileDirectionHelper.Instance.GetFrontTile(targetTile, ai.bossController.GetCurrentTile());
             ai.GetBoss().GetComponent<BossInteraction>().Moveto(isHitWall ? moveTile : targetTile);
@@ -42,7 +42,7 @@ public class AssignedPatternNo2 : BossPattern
                 ai.bossController.MakeBossDestroyable(3, 5);
                 ai.bossStatus.AddBossBuff(BossBuffFactory.CreateBuff(102, 1, 5));
                 // ai.bossStatus.AddBossDebuff();
-
+                GameManager.Instance.objectManager.DestroyObjectByTile(targetTile);
             }
         }
 
@@ -52,7 +52,7 @@ public class AssignedPatternNo2 : BossPattern
     private BossPatternTurnInfo MakePattern0(BossAI ai)
     {
         return new BossPatternTurnInfo(new List<HexTile>(), 0);
-    }
+    }       
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {

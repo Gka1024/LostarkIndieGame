@@ -50,6 +50,8 @@ public class BossPatternList : MonoBehaviour
         queuedPatterns.Enqueue(new AssignedPatternNo2());
         queuedPatterns.Enqueue(new AssignedPatternNo3());
         queuedPatterns.Enqueue(new AssignedPatternNo4());
+        queuedPatterns.Enqueue(new AssignedPatternNo5());
+        queuedPatterns.Enqueue(new AssignedPatternNo6());
     }
 
     private void RegisterBossPattern1()

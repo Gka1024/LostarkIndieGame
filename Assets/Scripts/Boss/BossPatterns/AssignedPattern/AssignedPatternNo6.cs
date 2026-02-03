@@ -81,7 +81,7 @@ public class AssignedPatternNo6 : BossPattern
         {
             tile.isBossAttackRange = false;
             tile.ResetColor();
-            tile.BreakWalls();
+            tile.ChangeTileState(TileState.Default);
         }
 
         if (turnInfo.IsSpecial)

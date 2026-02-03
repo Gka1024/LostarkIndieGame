@@ -73,7 +73,7 @@ public abstract class BossPattern
         {
             foreach (HexTile tile in turnInfo.TargetTiles)
             {
-                tile.BreakWalls(true);
+                tile.ChangeTileState(TileState.Default);
             }
         }
 
