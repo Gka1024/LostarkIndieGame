@@ -41,8 +41,14 @@ public class AssignedPatternNo2 : BossPattern
                 ai.bossController.MakeBossGroggy(3);
                 ai.bossController.MakeBossDestroyable(3, 5);
                 ai.bossStatus.AddBossBuff(BossBuffFactory.CreateBuff(102, 1, 5));
-                // ai.bossStatus.AddBossDebuff();
-                GameManager.Instance.objectManager.DestroyObjectByTile(targetTile);
+            }
+
+            HexTile objectTile = GameManager.Instance.objectManager.IsObjectExist(turnInfo.TargetTiles, TileState.IsPillar);
+
+            if (objectTile != null)
+            {
+                Debug.Log(objectTile.currentTileSpecific);
+                GameManager.Instance.objectManager.DestroyObjectByTile(objectTile);
             }
         }
 
@@ -52,7 +58,7 @@ public class AssignedPatternNo2 : BossPattern
     private BossPatternTurnInfo MakePattern0(BossAI ai)
     {
         return new BossPatternTurnInfo(new List<HexTile>(), 0);
-    }       
+    }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {

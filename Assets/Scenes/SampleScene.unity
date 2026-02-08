@@ -194,7 +194,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -930,7 +929,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -1143,7 +1141,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -1425,7 +1422,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -1621,7 +1617,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -1708,11 +1703,6 @@ MeshFilter:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 49dc877413941154f950bbf3b86de636, type: 3}
   m_PrefabInstance: {fileID: 1583314216}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &105326503 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-  m_PrefabInstance: {fileID: 643446777}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &114025517
 GameObject:
@@ -1896,7 +1886,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -2304,7 +2293,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 11
@@ -2667,11 +2655,15 @@ MonoBehaviour:
   pillarRightUp: {fileID: 783900920}
   pillarRightMiddle: {fileID: 651896218}
   pillarRightDown: {fileID: 1543095442}
-  WallLeftUp: {fileID: 1315797424}
-  WallLeftDown: {fileID: 1671297365}
-  WallRightUp: {fileID: 1189723227}
-  WallRightDown: {fileID: 611000426}
-  WallFront: {fileID: 809598669}
+  wallLeftUp: {fileID: 1315797424}
+  wallLeftDown: {fileID: 1671297365}
+  wallRightUp: {fileID: 1189723227}
+  wallRightDown: {fileID: 611000426}
+  wallFront: {fileID: 809598669}
+  obstacleLeftUp: {fileID: 0}
+  obstacleLeftDown: {fileID: 1895779169}
+  obstacleRightUp: {fileID: 1271174345}
+  obstacleRightDown: {fileID: 0}
 --- !u!1 &162158560
 GameObject:
   m_ObjectHideFlags: 0
@@ -2725,7 +2717,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 1
@@ -2861,7 +2852,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -2944,6 +2934,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 166386607}
   m_Mesh: {fileID: 703726867841230225, guid: 48b66ab356aa75f49b078160a608456e, type: 3}
+--- !u!1 &169810454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 169810455}
+  - component: {fileID: 169810456}
+  m_Layer: 0
+  m_Name: Obstacles Right Down
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &169810455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169810454}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 442600513}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &169810456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169810454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6951b70c4fb9a0545b505b90e0581a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tiles: []
 --- !u!1001 &172189140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3078,7 +3113,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -3214,7 +3248,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 10
@@ -3556,7 +3589,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -4495,7 +4527,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -4961,7 +4992,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -5296,7 +5326,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -5763,7 +5792,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 9
@@ -6335,7 +6363,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -6552,7 +6579,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 1
@@ -6723,13 +6749,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5395058, y: 0, z: 0, w: 0.84198195}
-  m_LocalPosition: {x: 0, y: 26.88, z: -18.8}
+  m_LocalRotation: {x: 0.4814477, y: 0, z: 0, w: 0.87647486}
+  m_LocalPosition: {x: 0, y: 24.9, z: -21.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 65.3, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 57.56, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6991,11 +7017,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!4 &338423072 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-  m_PrefabInstance: {fileID: 1778894594}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &340677693
 GameObject:
   m_ObjectHideFlags: 0
@@ -7049,7 +7070,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -7266,7 +7286,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -7812,7 +7831,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -8643,7 +8661,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -8726,6 +8743,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 418986746}
   m_Mesh: {fileID: 703726867841230225, guid: 48b66ab356aa75f49b078160a608456e, type: 3}
+--- !u!1 &419763035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 419763036}
+  - component: {fileID: 419763037}
+  m_Layer: 0
+  m_Name: Obstacles Left Down
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &419763036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419763035}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 442600513}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &419763037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419763035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6951b70c4fb9a0545b505b90e0581a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tiles:
+  - {fileID: 218883055}
+  - {fileID: 2103610245}
+  - {fileID: 3469287836689291694}
+  - {fileID: 3469287837761265921}
 --- !u!1 &420466859
 GameObject:
   m_ObjectHideFlags: 0
@@ -8887,7 +8953,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -9111,7 +9176,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -9223,10 +9287,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 338423072}
-  - {fileID: 121012640}
-  - {fileID: 105326503}
-  - {fileID: 1134415548}
+  - {fileID: 1628606326}
+  - {fileID: 169810455}
+  - {fileID: 1654264259}
+  - {fileID: 419763036}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &443668088
@@ -9454,7 +9518,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -9724,7 +9787,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -9918,7 +9980,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -10054,7 +10115,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 651896218}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 5
@@ -10604,7 +10664,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 442600513}
+    m_TransformParent: {fileID: 1654264259}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
       propertyPath: m_LocalScale.x
@@ -10620,7 +10680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.21
+      value: -6.16
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10628,7 +10688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.3400006
+      value: 6.99
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11804,7 +11864,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -11940,7 +11999,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -12470,7 +12528,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -13531,79 +13588,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 639687738}
   m_CullTransparentMesh: 1
---- !u!1001 &643446777
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 442600513}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3.17
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3.17
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3.17
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.9099998
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.56
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3.49
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.8660254
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_Name
-      value: fence_stone_straight (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d726688f73802a2489b12fab05981ebd, type: 3}
 --- !u!1 &648000545
 GameObject:
   m_ObjectHideFlags: 0
@@ -15138,7 +15122,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 8
@@ -15416,7 +15399,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -15552,7 +15534,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -15688,7 +15669,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 5
@@ -16248,7 +16228,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -16517,7 +16496,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -17519,7 +17497,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -18391,7 +18368,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -19075,7 +19051,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 8
@@ -19289,7 +19264,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 5
@@ -19425,7 +19399,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 10
@@ -19893,7 +19866,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -20090,7 +20062,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 9
@@ -20226,7 +20197,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -20493,7 +20463,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -21360,7 +21329,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -21632,7 +21600,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -22054,7 +22021,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -22665,7 +22631,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -23016,7 +22981,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -23358,7 +23322,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -23494,7 +23457,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -23652,7 +23614,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -23924,7 +23885,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -24694,7 +24654,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -25007,7 +24966,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -25143,7 +25101,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -25752,7 +25709,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 10
@@ -25888,7 +25844,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -26029,7 +25984,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 8
@@ -26165,7 +26119,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -26712,7 +26665,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -27246,6 +27198,11 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 703726867841230225, guid: 48b66ab356aa75f49b078160a608456e, type: 3}
+--- !u!1 &1271174345 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d726688f73802a2489b12fab05981ebd, type: 3}
+  m_PrefabInstance: {fileID: 1832891590}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1278972441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27385,7 +27342,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -27676,7 +27632,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 806130351}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 2
@@ -27812,7 +27767,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 0
@@ -28051,7 +28005,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -28262,7 +28215,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -28609,7 +28561,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -28781,7 +28732,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 9
@@ -29340,7 +29290,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -29739,7 +29688,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -30377,7 +30325,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 11
@@ -30637,7 +30584,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -30773,7 +30719,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 9
@@ -30909,7 +30854,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -31156,7 +31100,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -31433,7 +31376,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 9
@@ -31591,7 +31533,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -32250,7 +32191,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -32932,7 +32872,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -33422,7 +33361,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -33505,6 +33443,56 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1628179837}
   m_Mesh: {fileID: 703726867841230225, guid: 48b66ab356aa75f49b078160a608456e, type: 3}
+--- !u!1 &1628606325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1628606326}
+  - component: {fileID: 1628606327}
+  m_Layer: 0
+  m_Name: Obstacles Right Up
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1628606326
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628606325}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 121012640}
+  m_Father: {fileID: 442600513}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1628606327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628606325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6951b70c4fb9a0545b505b90e0581a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tiles:
+  - {fileID: 1586245640}
+  - {fileID: 1989045076}
+  - {fileID: 1147281345}
+  - {fileID: 453675220}
 --- !u!1001 &1629348554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33667,7 +33655,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -33878,6 +33865,56 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 703726867841230225, guid: 48b66ab356aa75f49b078160a608456e, type: 3}
+--- !u!1 &1654264258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1654264259}
+  - component: {fileID: 1654264260}
+  m_Layer: 0
+  m_Name: Obstacles Left Up
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1654264259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654264258}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1134415548}
+  m_Father: {fileID: 442600513}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1654264260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654264258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6951b70c4fb9a0545b505b90e0581a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tiles:
+  - {fileID: 50155356}
+  - {fileID: 1028539639}
+  - {fileID: 1095971719}
+  - {fileID: 427208213}
 --- !u!1 &1655563914
 GameObject:
   m_ObjectHideFlags: 0
@@ -34238,7 +34275,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -34374,7 +34410,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 0
@@ -34897,7 +34932,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -35264,7 +35298,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -35678,7 +35711,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 9
@@ -36347,7 +36379,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -36430,79 +36461,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1770226732}
   m_Mesh: {fileID: 703726867841230225, guid: 48b66ab356aa75f49b078160a608456e, type: 3}
---- !u!1001 &1778894594
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 442600513}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3.17
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3.17
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3.17
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.9300001
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.56
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3.18
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.49999994
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.86602545
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-      propertyPath: m_Name
-      value: fence_stone_straight
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d726688f73802a2489b12fab05981ebd, type: 3}
 --- !u!1 &1782306603
 GameObject:
   m_ObjectHideFlags: 0
@@ -36595,7 +36553,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -36851,7 +36808,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -37062,7 +37018,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 10
@@ -37198,7 +37153,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -37573,7 +37527,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 442600513}
+    m_TransformParent: {fileID: 1628606326}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
       propertyPath: m_LocalScale.x
@@ -37589,7 +37543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.21
+      value: 6.28
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -37597,7 +37551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.15
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d726688f73802a2489b12fab05981ebd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38306,7 +38260,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 8
@@ -38714,7 +38667,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 8
@@ -38797,6 +38749,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888989969}
   m_Mesh: {fileID: 703726867841230225, guid: 48b66ab356aa75f49b078160a608456e, type: 3}
+--- !u!1 &1895779169 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d726688f73802a2489b12fab05981ebd, type: 3}
+  m_PrefabInstance: {fileID: 481626921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1895856119
 GameObject:
   m_ObjectHideFlags: 0
@@ -38995,7 +38952,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 8
@@ -39575,7 +39531,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -39711,7 +39666,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -39847,7 +39801,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -40096,7 +40049,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -40237,7 +40189,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -40373,7 +40324,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -40509,7 +40459,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 10
@@ -40645,7 +40594,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -41663,7 +41611,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -41799,7 +41746,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -41935,7 +41881,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -42717,7 +42662,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -43167,7 +43111,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 9
@@ -43604,7 +43547,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -48698,7 +48640,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -48732,7 +48673,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -48766,7 +48706,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -48800,7 +48739,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -48834,7 +48772,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -48868,7 +48805,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -48902,7 +48838,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -48936,7 +48871,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -48970,7 +48904,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49004,7 +48937,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49038,7 +48970,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49072,7 +49003,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49106,7 +49036,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49140,7 +49069,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49174,7 +49102,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 11
@@ -49208,7 +49135,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49242,7 +49168,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49276,7 +49201,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49310,7 +49234,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 7
@@ -49344,7 +49267,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 783900920}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 0
@@ -49378,7 +49300,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49412,7 +49333,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 10
@@ -49446,7 +49366,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49480,7 +49399,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49514,7 +49432,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 11
@@ -49548,7 +49465,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 7
@@ -49582,7 +49498,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 8
@@ -49616,7 +49531,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 7
@@ -49650,7 +49564,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49684,7 +49597,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 4
@@ -49718,7 +49630,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49752,7 +49663,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49786,7 +49696,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49820,7 +49729,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49854,7 +49762,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49888,7 +49795,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49922,7 +49828,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -49956,7 +49861,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 11
@@ -49990,7 +49894,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -50024,7 +49927,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 4
@@ -50058,7 +49960,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 10
@@ -50092,7 +49993,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -50126,7 +50026,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 0
@@ -50160,7 +50059,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 11
@@ -50194,7 +50092,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 1118315889}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 0
@@ -50228,7 +50125,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -50262,7 +50158,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -50296,7 +50191,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -50330,7 +50224,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -50364,7 +50257,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -50398,7 +50290,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -50432,7 +50323,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -50466,7 +50356,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 4
   currentTileSpecific: 11
@@ -50500,7 +50389,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 1
@@ -50534,7 +50422,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 0
@@ -50568,7 +50455,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 5
   currentTileSpecific: 4
@@ -50602,7 +50488,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -50636,7 +50521,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -50670,7 +50554,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0
@@ -50704,7 +50587,6 @@ MonoBehaviour:
   neighbors: []
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
-  OnTileObject: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
   currentTileState: 0
   currentTileSpecific: 0

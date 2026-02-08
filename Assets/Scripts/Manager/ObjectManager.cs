@@ -23,9 +23,7 @@ public class ObjectManager : MonoBehaviour
 
     [Header("Obstacles")]
     public GameObject obstacleLeftUp;
-    public GameObject obstacleLeftDown;
     public GameObject obstacleRightUp;
-    public GameObject obstacleRightDown;
 
     private void Awake()
     {
@@ -46,9 +44,7 @@ public class ObjectManager : MonoBehaviour
         tileObjects[TileSpecific.WallFront] = wallFront;
 
         tileObjects[TileSpecific.ObstacleLeftUp] = obstacleLeftUp;
-        tileObjects[TileSpecific.ObstacleLeftDown] = obstacleLeftDown;
         tileObjects[TileSpecific.ObstacleRightUp] = obstacleRightUp;
-        tileObjects[TileSpecific.ObstacleRightDown] = obstacleRightDown;
     }
 
     public void Register(HexTile tile)
@@ -63,6 +59,18 @@ public class ObjectManager : MonoBehaviour
         }
 
         tileGroups[type].Add(tile);
+    }
+
+    public HexTile IsObjectExist(List<HexTile> tiles, TileState state)
+    {
+        foreach(HexTile tile in tiles)
+        {
+            if(tile.currentTileState == state)
+            {
+                return tile;
+            }
+        }
+        return null;
     }
 
     public void DestroyObjectByTile(HexTile tile)
@@ -82,3 +90,4 @@ public class ObjectManager : MonoBehaviour
         return null;
     }
 }
+ 
