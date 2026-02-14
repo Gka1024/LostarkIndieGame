@@ -16,32 +16,28 @@ MonoBehaviour:
   cardName: 
   isCardSkill: 1
   HasChainSkill: 0
+  ChainSkill: {fileID: 0}
   playerWeapon: 3
   beforeActTurn: 1
   afterActTurn: 0
   needToSelectTile: 1
-  isAngleSkill: 0
+  tileSelectType: 3
   skillAngle: 0
   skillAngleRange: 0
-  isDistanceSkill: 0
   skillDistance: 0
   skillDistanceRange: 0
-  isAroundSkill: 1
   aroundRange: 2
-  isRaySkill: 0
-  isHexRaySkill: 0
   rayDistance: 0
   rayWidth: 0
   skill_damage: 0
-  mana: 0
-  identity: 0
+  manaUse: 0
+  identityGain: 0
   stagger: 0
   coolDownTurn: 0
-  isChainSkill: 0
-  isSideSkill: 1
   isCounterAble: 0
   isHeadAttack: 0
   isBackAttack: 0
+  isSuperArmor: 0
   taunt_turns: 0
   opt1_taunt_turns: 0
   opt2_shield_turns: 0

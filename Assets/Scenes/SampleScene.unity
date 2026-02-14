@@ -2661,9 +2661,7 @@ MonoBehaviour:
   wallRightDown: {fileID: 611000426}
   wallFront: {fileID: 809598669}
   obstacleLeftUp: {fileID: 0}
-  obstacleLeftDown: {fileID: 1895779169}
   obstacleRightUp: {fileID: 1271174345}
-  obstacleRightDown: {fileID: 0}
 --- !u!1 &162158560
 GameObject:
   m_ObjectHideFlags: 0
@@ -11423,6 +11421,7 @@ GameObject:
   - component: {fileID: 514132749}
   - component: {fileID: 514132754}
   - component: {fileID: 514132753}
+  - component: {fileID: 514132761}
   - component: {fileID: 514132750}
   - component: {fileID: 514132757}
   - component: {fileID: 514132758}
@@ -11543,6 +11542,7 @@ MonoBehaviour:
   bossStatus: {fileID: 514132757}
   bossInteraction: {fileID: 514132751}
   bossAnimation: {fileID: 514132752}
+  bossPhaseController: {fileID: 514132761}
   bossPatternList: {fileID: 1868109048}
   bossPatternHelper: {fileID: 1868109047}
   isPatternNull: 0
@@ -11646,6 +11646,20 @@ MonoBehaviour:
   damageTextPrefab: {fileID: 5244142319047981103, guid: 4200219bad798454a8850c6bd0db341b, type: 3}
   worldAnchor: {fileID: 1266420968}
   damageOffset: {x: 75, y: 0}
+--- !u!114 &514132761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514132748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00fed668fcb3839458baa3ee9360290a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossStats: {fileID: 514132750}
+  bossAI: {fileID: 514132753}
 --- !u!1 &518076097
 GameObject:
   m_ObjectHideFlags: 0
@@ -38749,11 +38763,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888989969}
   m_Mesh: {fileID: 703726867841230225, guid: 48b66ab356aa75f49b078160a608456e, type: 3}
---- !u!1 &1895779169 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d726688f73802a2489b12fab05981ebd, type: 3}
-  m_PrefabInstance: {fileID: 481626921}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1895856119
 GameObject:
   m_ObjectHideFlags: 0

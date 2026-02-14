@@ -25,7 +25,6 @@ public class AssignedPatternNo5 : BossPattern
 
     public override void OnPatternTurn(BossAI ai)
     {
-
         base.OnPatternTurn(ai);
     }
 

@@ -21,16 +21,12 @@ MonoBehaviour:
   beforeActTurn: 1
   afterActTurn: 0
   needToSelectTile: 1
-  isAngleSkill: 0
+  tileSelectType: 2
   skillAngle: 0
   skillAngleRange: 0
-  isDistanceSkill: 1
   skillDistance: 2
   skillDistanceRange: 2
-  isAroundSkill: 0
   aroundRange: 0
-  isRaySkill: 0
-  isHexRaySkill: 0
   rayDistance: 0
   rayWidth: 0
   skill_damage: 10
@@ -38,8 +34,8 @@ MonoBehaviour:
   identityGain: 0
   stagger: 0
   coolDownTurn: 0
-  superArmor: 0
   isCounterAble: 0
   isHeadAttack: 0
   isBackAttack: 0
+  isSuperArmor: 0
   opt3_skill_damage: 0

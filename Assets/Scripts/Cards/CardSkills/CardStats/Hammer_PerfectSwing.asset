@@ -16,21 +16,17 @@ MonoBehaviour:
   cardName: 
   isCardSkill: 1
   HasChainSkill: 0
-  ChainSkill: {fileID: 0}
+  ChainSkill: {fileID: 3221078657083030816, guid: acb75729dee1a974d96ef6381a77001a, type: 3}
   playerWeapon: 4
   beforeActTurn: 3
   afterActTurn: 1
   needToSelectTile: 1
-  isAngleSkill: 1
+  tileSelectType: 1
   skillAngle: 3
   skillAngleRange: 1
-  isDistanceSkill: 0
   skillDistance: 0
   skillDistanceRange: 0
-  isAroundSkill: 0
   aroundRange: 0
-  isRaySkill: 0
-  isHexRaySkill: 0
   rayDistance: 0
   rayWidth: 0
   skill_damage: 10

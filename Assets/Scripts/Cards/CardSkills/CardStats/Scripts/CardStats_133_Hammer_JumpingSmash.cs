@@ -20,9 +20,8 @@ public class CardStats_Hammer_JumpingSmash : CardStats
 
             case 3:
                 this.skill_damage += opt3_skill_damage;
-                this.isDistanceSkill = false;
 
-                this.isAroundSkill = true;
+                this.tileSelectType = TileSelectType.Around;
                 this.aroundRange = 2;
                 break;
 

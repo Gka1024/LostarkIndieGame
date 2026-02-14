@@ -20,17 +20,13 @@ MonoBehaviour:
   playerWeapon: 2
   beforeActTurn: 0
   afterActTurn: 0
-  needToSelectTile: 1
-  isAngleSkill: 0
+  needToSelectTile: 0
+  tileSelectType: 0
   skillAngle: 0
   skillAngleRange: 0
-  isDistanceSkill: 0
   skillDistance: 0
   skillDistanceRange: 0
-  isAroundSkill: 0
   aroundRange: 0
-  isRaySkill: 0
-  isHexRaySkill: 0
   rayDistance: 0
   rayWidth: 0
   skill_damage: 0

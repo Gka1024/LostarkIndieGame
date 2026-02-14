@@ -32,41 +32,48 @@ public class CardStatsEditor : Editor
         card.needToSelectTile = EditorGUILayout.Toggle("Need To Select Tile", card.needToSelectTile);
         if (card.needToSelectTile)
         {
-            card.isAngleSkill = EditorGUILayout.Toggle("Is Angle Skill", card.isAngleSkill);
-            if (card.isAngleSkill)
+            EditorGUI.indentLevel++;
+            card.tileSelectType = (TileSelectType)EditorGUILayout.EnumPopup("Tile Select Type", card.tileSelectType);
+
+            switch (card.tileSelectType)
             {
-                EditorGUI.indentLevel++;
-                card.skillAngle = EditorGUILayout.IntField("Skill Angle", card.skillAngle);
-                card.skillAngleRange = EditorGUILayout.IntField("Skill Angle Range", card.skillAngleRange);
-                EditorGUI.indentLevel--;
+                case TileSelectType.Angle:
+                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField("▶ Angle Settings", EditorStyles.miniBoldLabel);
+                    card.skillAngle = EditorGUILayout.IntField("Skill Angle", card.skillAngle);
+                    card.skillAngleRange = EditorGUILayout.IntField("Skill Angle Range", card.skillAngleRange);
+                    break;
+
+                case TileSelectType.Distance:
+                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField("▶ Distance Settings", EditorStyles.miniBoldLabel);
+                    card.skillDistance = EditorGUILayout.IntField("Skill Distance", card.skillDistance);
+                    card.skillDistanceRange = EditorGUILayout.IntField("Skill Distance Range", card.skillDistanceRange);
+                    break;
+
+                case TileSelectType.Around:
+                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField("▶ Around Settings", EditorStyles.miniBoldLabel);
+                    card.aroundRange = EditorGUILayout.IntField("Around Range", card.aroundRange);
+                    break;
+
+                case TileSelectType.Ray:
+                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField("▶ Ray Settings", EditorStyles.miniBoldLabel);
+                    card.rayDistance = EditorGUILayout.IntField("Ray Distance", card.rayDistance);
+                    card.rayWidth = EditorGUILayout.IntField("Ray Width", card.rayWidth);
+                    break;
+
+                case TileSelectType.HexRay:
+                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField("▶Hex - Ray Settings", EditorStyles.miniBoldLabel);
+                    card.rayDistance = EditorGUILayout.IntField("Ray Distance", card.rayDistance);
+                    card.rayWidth = EditorGUILayout.IntField("Ray Width", card.rayWidth);
+                    break;
+
             }
 
-            card.isDistanceSkill = EditorGUILayout.Toggle("Is Distance Skill", card.isDistanceSkill);
-            if (card.isDistanceSkill)
-            {
-                EditorGUI.indentLevel++;
-                card.skillDistance = EditorGUILayout.IntField("Skill Distance", card.skillDistance);
-                card.skillDistanceRange = EditorGUILayout.IntField("Skill Distance Range", card.skillDistanceRange);
-                EditorGUI.indentLevel--;
-            }
-
-            card.isAroundSkill = EditorGUILayout.Toggle("Is Around Skill", card.isAroundSkill);
-            if (card.isAroundSkill)
-            {
-                EditorGUI.indentLevel++;
-                card.aroundRange = EditorGUILayout.IntField("Around Range", card.aroundRange);
-                EditorGUI.indentLevel--;
-            }
-
-            card.isRaySkill = EditorGUILayout.Toggle("Is Ray Skill", card.isRaySkill);
-            if (card.isRaySkill)
-            {
-                EditorGUI.indentLevel++;
-                card.isHexRaySkill = EditorGUILayout.Toggle("Is Hex Ray Skill", card.isHexRaySkill);
-                card.rayDistance = EditorGUILayout.IntField("Ray Distance", card.rayDistance);
-                card.rayWidth = EditorGUILayout.IntField("Ray Width", card.rayWidth);
-                EditorGUI.indentLevel--;
-            }
+            EditorGUI.indentLevel--;
         }
 
         EditorGUILayout.Space();
@@ -121,16 +128,12 @@ public class CardStatsEditor : Editor
             case nameof(CardStats.beforeActTurn):
             case nameof(CardStats.afterActTurn):
             case nameof(CardStats.needToSelectTile):
-            case nameof(CardStats.isAngleSkill):
+            case nameof(CardStats.tileSelectType):
             case nameof(CardStats.skillAngle):
             case nameof(CardStats.skillAngleRange):
-            case nameof(CardStats.isDistanceSkill):
             case nameof(CardStats.skillDistance):
             case nameof(CardStats.skillDistanceRange):
-            case nameof(CardStats.isAroundSkill):
             case nameof(CardStats.aroundRange):
-            case nameof(CardStats.isRaySkill):
-            case nameof(CardStats.isHexRaySkill):
             case nameof(CardStats.rayDistance):
             case nameof(CardStats.rayWidth):
             case nameof(CardStats.skill_damage):

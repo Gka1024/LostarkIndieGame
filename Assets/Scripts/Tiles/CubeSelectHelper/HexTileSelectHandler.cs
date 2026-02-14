@@ -211,21 +211,54 @@ public class HexTileSelectHandler : MonoBehaviour
     {
         ResetVariables();
 
-        if (stats.isAngleSkill) SelectTileByAngle(stats.skillAngle, stats.skillAngleRange);
-        if (stats.isDistanceSkill) SelectTileByDistance(stats.skillDistance, stats.skillDistanceRange);
-        if (stats.isAroundSkill) SelectTileByAround(stats.aroundRange);
-        if (stats.isRaySkill) SelectTileByRay(stats.rayDistance, stats.rayWidth);
-        if (stats.isHexRaySkill) isHexRayNeeded = true;
+        switch (stats.tileSelectType)
+        {
+            case TileSelectType.Angle:
+                SelectTileByAngle(stats.skillAngle, stats.skillAngleRange);
+                break;
+
+            case TileSelectType.Distance:
+                SelectTileByDistance(stats.skillDistance, stats.skillDistanceRange);
+                break;
+
+            case TileSelectType.Ray:
+                SelectTileByAround(stats.aroundRange);
+                break;
+
+            case TileSelectType.HexRay:
+                isHexRayNeeded = true;
+                SelectTileByRay(stats.rayDistance, stats.rayWidth);
+                break;
+
+            default: break;
+        }
     }
 
     public void StartSelection(ChainStats stat)
     {
         ResetVariables();
-        if (stat.isAngleSkill) SelectTileByAngle(stat.skillAngle, stat.skillAngleRange);
-        if (stat.isDistanceSkill) SelectTileByDistance(stat.skillDistance, stat.skillDistanceRange);
-        if (stat.isAroundSkill) SelectTileByAround(stat.aroundRange);
-        if (stat.isRaySkill) SelectTileByRay(stat.rayDistance, stat.rayWidth);
-        if (stat.isHexRaySkill) isHexRayNeeded = true;
+
+        switch (stat.tileSelectType)
+        {
+            case TileSelectType.Angle:
+                SelectTileByAngle(stat.skillAngle, stat.skillAngleRange);
+                break;
+
+            case TileSelectType.Distance:
+                SelectTileByDistance(stat.skillDistance, stat.skillDistanceRange);
+                break;
+
+            case TileSelectType.Ray:
+                SelectTileByAround(stat.aroundRange);
+                break;
+
+            case TileSelectType.HexRay:
+                isHexRayNeeded = true;
+                SelectTileByRay(stat.rayDistance, stat.rayWidth);
+                break;
+
+            default: break;
+        }
     }
 
     public void StartSelection(EstherSkill skill)
@@ -268,4 +301,14 @@ public class HexTileSelectHandler : MonoBehaviour
     }
     public void ResetAllTileColor() { tileManager.ResetTileColor(); needTileColorReset = false; }
     public void CancelSelection() { isSelecting = false; isSelectStopped = false; ResetTileColorPrevious(); ResetVariables(); }
+}
+
+public enum TileSelectType
+{
+    None,
+    Angle,
+    Distance,
+    Around,
+    Ray,
+    HexRay,
 }

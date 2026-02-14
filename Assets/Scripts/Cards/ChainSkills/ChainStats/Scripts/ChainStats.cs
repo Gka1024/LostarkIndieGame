@@ -16,20 +16,16 @@ public class ChainStats : ScriptableObject
     public HexTile targetTile;
 
     public bool needToSelectTile;
+    public TileSelectType tileSelectType;
 
-    public bool isAngleSkill;
     public int skillAngle;
     public int skillAngleRange;
 
-    public bool isDistanceSkill;
     public int skillDistance;
     public int skillDistanceRange;
 
-    public bool isAroundSkill;
     public int aroundRange;
 
-    public bool isRaySkill;
-    public bool isHexRaySkill;
     public int rayDistance;
     public int rayWidth;
 

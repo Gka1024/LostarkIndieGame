@@ -19,19 +19,16 @@ public class CardStats : ScriptableObject
     // ==== 타일 선택 관련 변수
     public bool needToSelectTile;
 
-    public bool isAngleSkill;
+    public TileSelectType tileSelectType;
+
     public int skillAngle;
     public int skillAngleRange;
 
-    public bool isDistanceSkill;
     public int skillDistance;
     public int skillDistanceRange;
 
-    public bool isAroundSkill;
     public int aroundRange;
 
-    public bool isRaySkill;
-    public bool isHexRaySkill;
     public int rayDistance;
     public int rayWidth;
 

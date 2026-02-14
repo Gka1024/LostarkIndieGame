@@ -14,7 +14,7 @@ public class BossAI : MonoBehaviour
     public BossAnimation bossAnimation;
 
     public BossPhaseController bossPhaseController;
-    
+
     public BossPatternList bossPatternList;
     public BossPatternHelper bossPatternHelper;
 
@@ -27,7 +27,7 @@ public class BossAI : MonoBehaviour
 
     private void Start()
     {
-
+        bossPhaseController.Initialize();
     }
 
     public void OnTurnStart()
@@ -101,11 +101,7 @@ public class BossAI : MonoBehaviour
 
     private BossPattern GetNextPattern()
     {
-        if (bossPatternList == null) Debug.LogError("BossPatternList가 연결되지 않았습니다.");
-
-        
-
-        if (nextPattern == null) Debug.LogError("BossPatternList에서 패턴을 가져오지 못했습니다. ");
+        nextPattern = bossPhaseController.GetNextPattern();
 
         return nextPattern;
     }

@@ -15,7 +15,8 @@ public class Chain_Hammer_Sizemic : ChainSkill
             {
                 chainStats.skill_damage = stat.opt3_damage_coef;
                 chainStats.needToSelectTile = true;
-                chainStats.isDistanceSkill = true;
+                
+                chainStats.tileSelectType = TileSelectType.Distance;
                 chainStats.skillDistance = 1;
                 chainStats.skillDistanceRange = 1;
             }
