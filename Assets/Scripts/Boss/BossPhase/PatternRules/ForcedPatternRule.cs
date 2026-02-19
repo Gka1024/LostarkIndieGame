@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GlobalPatternRule
+public class ForcedPatternRule
 {
     public System.Func<bool> Condition;
     public BossPattern Pattern { get; private set; }
@@ -9,7 +9,7 @@ public class GlobalPatternRule
     private bool hasTriggered = false;
     private bool isReserved = false;
 
-    public GlobalPatternRule(System.Func<bool> condition, BossPattern pattern, bool triggerOnce = true)
+    public ForcedPatternRule(System.Func<bool> condition, BossPattern pattern, bool triggerOnce = true)
     {
         this.Condition = condition;
         this.Pattern = pattern;

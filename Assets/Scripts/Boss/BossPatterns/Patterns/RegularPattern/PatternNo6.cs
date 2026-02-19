@@ -6,11 +6,9 @@ public class PatternNo6 : BossPattern
 { // 돌진 패턴입니다.
     public PatternNo6()
     {
-        totalTurns = 4;
-
-        turnGenerators.Add(MakePattern0);
-        turnGenerators.Add(MakePattern0);
-        turnGenerators.Add(MakePattern0);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern1);
     }
 
@@ -22,27 +20,6 @@ public class PatternNo6 : BossPattern
         isTileFixed = false;
     }
 
-    public override void OnPatternTurn(BossAI ai)
-    {
-        fixedPlayerTile = ai.bossController.GetPlayerTile();
-        base.OnPatternTurn(ai);
-    }
-
-    public override void ExecutePattern(BossAI ai)
-    {
-        base.ExecutePattern(ai);
-
-        if (currentTurn == 2)
-        {
-            GameManager.Instance.GetBoss().GetComponent<BossInteraction>().Moveto(targetTile);
-        }
-    }
-
-    private BossPatternTurnInfo MakePattern0(BossAI ai)
-    {
-        return new BossPatternTurnInfo(new List<HexTile>(), 0);
-    }
-
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
         var current = ai.bossController.GetCurrentTile();
@@ -52,7 +29,7 @@ public class PatternNo6 : BossPattern
 
         targetTile = tile;
 
-        return new BossPatternTurnInfo(result, 10);
+        return BossPatternTurnBuilder.Create(result).SetDamage(10).Build();
     }
 
 

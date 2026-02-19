@@ -15,7 +15,7 @@ public abstract class BossPatternPhase
 
     protected List<BossPattern> patterns = new();
     protected Queue<BossPattern> openingPatternsQueue = new();
-    protected List<ForcedPatternRule> forcedPatterns = new();
+    protected List<AssignedPatternRule> forcedPatterns = new();
 
     protected abstract void RegisterPatterns();
     protected abstract void RegisterOpeningPatterns();

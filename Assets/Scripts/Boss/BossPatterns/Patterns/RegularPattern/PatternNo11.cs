@@ -6,8 +6,6 @@ public class PatternNo11 : BossPattern
 { // 4번찍기 패턴입니다. 
     public PatternNo11()
     {
-        totalTurns = 3;
-
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern2);
@@ -20,36 +18,22 @@ public class PatternNo11 : BossPattern
         isTileFixed = false;
     }
 
-    public override void OnPatternTurn(BossAI ai)
-    {
-        if (currentTurn == 3) // 3번째 턴(인덱스 기준)
-        {
-            fixedPlayerTile = ai.bossController.GetPlayerTile(); // 3턴 끝날 때 위치 저장
-        }
-        base.OnPatternTurn(ai);
-    }
-
-    private BossPatternTurnInfo MakePattern0(BossAI ai)
-    {
-        return new BossPatternTurnInfo(new List<HexTile>(), 0);
-    }
-
-    private BossPatternTurnInfo MakePattern1(BossAI ai) => CreatePatternByDistance(ai, new[]
+    private BossPatternTurnInfo MakePattern1(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
     {
         (2, 2, false), (2, 2, true),
         (3, 3, false), (3, 3, true),
     },
-     damage: 50, isDown: false);
+     damage: 50);
 
-    private BossPatternTurnInfo MakePattern2(BossAI ai) => CreatePatternByDistance(ai, new[]
+    private BossPatternTurnInfo MakePattern2(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
     {
         (2, 2, false), (2, 2, true),
         (3, 3, false), (3, 3, true),
         (4, 3, false), (4, 3, true),
     },
-    damage: 60, isDown: true);
+    damage: 60, downDuration: 3);
 
-    private BossPatternTurnInfo MakePattern3(BossAI ai) => CreatePatternByDistance(ai, new[]
+    private BossPatternTurnInfo MakePattern3(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
     {
         (2, 2, false), (2, 2, true),
         (3, 3, false), (3, 3, true),

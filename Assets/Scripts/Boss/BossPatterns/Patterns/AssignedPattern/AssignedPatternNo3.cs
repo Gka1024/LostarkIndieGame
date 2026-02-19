@@ -6,8 +6,6 @@ public class AssignedPatternNo3 : BossPattern
 { // 점프찍기
     public AssignedPatternNo3()
     {
-        totalTurns = 2;
-
         turnGenerators.Add(MakePattern0);
         turnGenerators.Add(MakePattern1);
     }
@@ -20,18 +18,17 @@ public class AssignedPatternNo3 : BossPattern
         isTileFixed = false;
     }
 
-    public override void OnPatternTurn(BossAI ai)
+    public override void OnAfterTurnExecuted(BossAI ai)
     {
         if (currentTurn == 2)
         {
-            GameManager.Instance.GetBoss().GetComponent<BossInteraction>().Moveto(targetTile);
+            ai.bossInteraction.Moveto(targetTile);
         }
-        base.OnPatternTurn(ai);
     }
 
     private BossPatternTurnInfo MakePattern0(BossAI ai)
     {
-        return new BossPatternTurnInfo(new List<HexTile>(), 0);
+        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
@@ -45,16 +42,11 @@ public class AssignedPatternNo3 : BossPattern
         };
         result.AddRange(playerTile.neighbors);
 
-        return new BossPatternTurnInfo(result, 10, isKnockback: true, knockbackDistance: 2, breakWalls: true);
+        return BossPatternTurnBuilder.Create(result).SetDamage(10).SetKnockback(2).SetBreakWalls().Build();
     }
 
-
-    public override void OnPatternEnd(BossAI ai)
-    {
-
-    }
     public override void PerformActionAnimation(BossAnimation animation)
     {
-          Debug.Log("점프찍기 애니메이션 타이밍");
+        Debug.Log("점프찍기 애니메이션 타이밍");
     }
 }

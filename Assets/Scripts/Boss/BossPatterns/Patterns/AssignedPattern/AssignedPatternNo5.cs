@@ -6,8 +6,6 @@ public class AssignedPatternNo5 : BossPattern
 { // 공중에서 창 내려찍기
     public AssignedPatternNo5()
     {
-        totalTurns = 5;
-
         turnGenerators.Add(MakePattern0);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);
@@ -23,14 +21,9 @@ public class AssignedPatternNo5 : BossPattern
         base.OnStartPattern(ai);
     }
 
-    public override void OnPatternTurn(BossAI ai)
-    {
-        base.OnPatternTurn(ai);
-    }
-
     private BossPatternTurnInfo MakePattern0(BossAI ai)
     {
-        return new BossPatternTurnInfo(new List<HexTile>(), 0);
+        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
@@ -46,7 +39,7 @@ public class AssignedPatternNo5 : BossPattern
         attackRange.Add(playerTile);
         attackRange.AddRange(playerTile.neighbors);
 
-        return new BossPatternTurnInfo(attackRange, 30);
+        return BossPatternTurnBuilder.Create(attackRange).SetDamage(30).Build();
 
     }
 
@@ -56,10 +49,6 @@ public class AssignedPatternNo5 : BossPattern
         return HexTileManager.Instance.tileRayHelper.GetRayNextTile(curTile, centerTile, 2);
     }
 
-    public override void OnPatternEnd(BossAI ai)
-    {
-
-    }
     public override void PerformActionAnimation(BossAnimation animation)
     {
 

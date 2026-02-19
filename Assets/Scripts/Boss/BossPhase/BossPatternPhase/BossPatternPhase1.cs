@@ -15,7 +15,6 @@ public class BossPatternPhase1 : BossPatternPhase
         RegisterOpeningPattern(new AssignedPatternNo3());
         RegisterOpeningPattern(new AssignedPatternNo4());
         RegisterOpeningPattern(new AssignedPatternNo5());
-        RegisterOpeningPattern(new AssignedPatternNo6());
     }
 
     public override void OnEnter()
@@ -26,9 +25,9 @@ public class BossPatternPhase1 : BossPatternPhase
     protected override void RegisterForcedPattern()
     {
         forcedPatterns.Add(
-            new ForcedPatternRule(
+            new AssignedPatternRule(
                 () => ai.bossStats.GetBossHPByLine() <= 120,
-                new AssignedPatternNo6(),
+                new ForcedPatternNo1(),
                 true
             )
         );

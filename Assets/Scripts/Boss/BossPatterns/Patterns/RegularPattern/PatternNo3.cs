@@ -10,11 +10,9 @@ public class PatternNo3 : BossPattern
 
     public PatternNo3()
     {
-        totalTurns = 4;
-
-        turnGenerators.Add(MakePattern0);
-        turnGenerators.Add(MakePattern0);
-        turnGenerators.Add(MakePattern0);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern4);
     }
 
@@ -24,15 +22,10 @@ public class PatternNo3 : BossPattern
         isPatternInverted = UnityEngine.Random.value < 0.5f;
     }
 
-    private BossPatternTurnInfo MakePattern0(BossAI ai)
-    {
-        return new BossPatternTurnInfo(new List<HexTile>(), 0);
-    }
-
     private BossPatternTurnInfo MakePattern4(BossAI ai)
     {
         // 기본 공격 범위 생성
-        var pattern = CreatePatternByDistance(ai, new[]
+        var pattern = PatternUtility.CreatePatternByDistance(ai, new[]
         {
         (2, 2, false), (2, 2, true),
         (3, 3, false), (3, 3, true),
@@ -40,23 +33,14 @@ public class PatternNo3 : BossPattern
         (5, 3, false), (5, 3, true),
         (6, 2, false), (6, 2, true),
     },
-        damage: 50, isDown: true);
+        damage: 50, downDuration:3);
 
         // isPatternInverted가 true면 타일 범위 반전
         if (isPatternInverted)
         {
             var invertedTiles = HexTileManager.Instance.GetInvertedTiles(pattern.TargetTiles);
             // 새로운 BossPatternTurnInfo로 반환
-            return new BossPatternTurnInfo(
-                invertedTiles,
-                pattern.Damage,
-                pattern.IsDown,
-                pattern.IsGrab,
-                pattern.IsKnockback,
-                pattern.BreakWalls,
-                pattern.IsSpecial,
-                pattern.KnockbackDistance
-            );
+            return BossPatternTurnBuilder.Create(invertedTiles).SetDamage(50).SetDown(3).Build();
         }
 
         // 반전이 필요 없으면 원본 반환

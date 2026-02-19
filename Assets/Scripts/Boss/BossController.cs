@@ -128,7 +128,17 @@ public class BossController : MonoBehaviour
         bossStatus.AddBossDebuff(debuff);
     }
 
+    // 
 
+    public void ShowAttackPreview(BossPatternTurnInfo info)
+    {
+        
+    }
+
+    public void ClearAttackPreview(BossPatternTurnInfo info)
+    {
+        
+    }
 
 
 }

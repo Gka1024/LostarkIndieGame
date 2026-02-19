@@ -6,7 +6,7 @@ public class PatternNo7 : BossPattern
 { // 3카운터 패턴입니다. 
     public PatternNo7()
     {
-        totalTurns = 0;
+
     }
 
     public override void OnStartPattern(BossAI ai)

@@ -15,154 +15,124 @@ public class BossAI : MonoBehaviour
 
     public BossPhaseController bossPhaseController;
 
-    public BossPatternList bossPatternList;
-    public BossPatternHelper bossPatternHelper;
-
     public BossPattern currentPattern;
-    public BossPattern nextPattern;
-    public bool isPatternNull;
-
-    public GameObject GhostSpherePrefab;
-    GameObject sphereCurrent;
+    public BossPatternTurnInfo currentTurnInfo;
+    public BossPatternHelper bossPatternHelper;
 
     private void Start()
     {
         bossPhaseController.Initialize();
     }
 
+    // ===============================
+    // 턴 시작 (예고 단계)
+    // ===============================
+
     public void OnTurnStart()
     {
-        PerformAction();
+        if (IsBossCrowdControlled())
+            return;
+
+        if (currentPattern == null)
+            SetPattern(bossPhaseController.GetNextPattern());
+
+        if (currentPattern == null)
+            return;
+
+        currentTurnInfo = currentPattern.GenerateTurn(this);
+
+        bossController.ShowAttackPreview(currentTurnInfo);
     }
+
+    // ===============================
+    // 턴 종료 (실행 단계)
+    // ===============================
 
     public void OnTurnEnd()
     {
-        ExecuteAction();
+        if (IsBossCrowdControlled())
+            return;
+
+        if (currentTurnInfo == null || currentPattern == null)
+            return;
+
+        ApplyTurn(currentTurnInfo);
+
+        currentPattern.PerformActionAnimation(bossAnimation);
+
+        currentPattern.OnAfterTurnExecuted(this);   // 🔥 이동형 패턴 대응
+
+        currentPattern.CompleteTurn();
+
+        if (currentPattern.IsFinished)
+        {
+            currentPattern.OnPatternEnd(this);
+            currentPattern = null;
+        }
+
+        currentTurnInfo = null; // 🔥 중요
     }
+    // ===============================
+    // 실제 데미지 처리
+    // ===============================
 
-    // ==== 보스 패턴 관련 로직
-
-    public void FindNextAction()
+    private void ApplyTurn(BossPatternTurnInfo info)
     {
-        if (GetBossTaunted() || GetBossGroggied())
-        {
-            return;
-        }
+        Player player = GameManager.Instance.GetPlayer().GetComponent<Player>();
+        HexTile playerTile = player.move.GetCurrentTile();
 
-        if (nextPattern != null)
-        {
-            currentPattern = nextPattern;
-            nextPattern = null;
-            return;
-        }
+        bossController.ClearAttackPreview(info);
 
-        if (currentPattern == null)
+        if (info.IsSpecial)
         {
-            SetPattern(GetNextPattern()); // 보스의 패턴 찾기
-        }
-    }
-
-    public void PerformAction()
-    { // 턴이 시작할 때 실행되는 함수. 보스의 피격 범위를 알려주고, 패턴이 끝나면 새로운 패턴을 호출하는 책임을 지님
-        if (GetBossTaunted() || GetBossGroggied())
-        {
-            return;
-        }
-
-        if (currentPattern != null)
-        {
-            if (currentPattern.isFinished)
+            if (!player.stats.playerBuffState.HasPlayerSpecialBuffs("아크투르스의 가호"))
             {
-                currentPattern.OnPatternEnd(this);
-                ResetCurrentPattern();
+                player.stats.KillPlayerInstantly();
+                return;
             }
         }
 
-        if (currentPattern == null) FindNextAction();
+        if (!info.TargetTiles.Contains(playerTile))
+            return;
 
-        currentPattern.OnPatternTurn(this);
-    }
+        ApplyPlayerDamage(player, info);
 
-    public void ExecuteAction()
-    { // 턴이 끝날 때 실행되는 함수. 실제 플레이어에게 데미지를 주거나, 보스가 행동하는 애니메이션을 재생함. 
-        if (!IsBossCanAction())
+        if (info.IsKnockback)
         {
-            currentPattern?.ExecutePattern(this);
-            currentPattern?.PerformActionAnimation(bossAnimation);
+            // 넉백 처리
+        }
+
+        if (info.IsDownAttack)
+        {
+            // 다운 처리
         }
     }
 
-    public void SetPattern(BossPattern pattern)
+    private void ApplyPlayerDamage(Player player, BossPatternTurnInfo info)
+    {
+        player.stats.GetPlayerDamage(info.ToPlayerDamageInfo());
+    }
+
+    // ===============================
+
+    private void SetPattern(BossPattern pattern)
     {
         currentPattern = pattern;
-        currentPattern.Reset();
-        currentPattern.OnStartPattern(this);
+        currentPattern?.Reset();
+        currentPattern?.OnStartPattern(this);
     }
 
-    private BossPattern GetNextPattern()
+    private bool IsBossCrowdControlled()
     {
-        nextPattern = bossPhaseController.GetNextPattern();
-
-        return nextPattern;
+        return bossStatus.IsBossTaunted() || bossStatus.IsBossGroggied();
     }
-
-    public void GetCurrentPatternDebug()
-    {
-        Debug.Log(currentPattern);
-    }
-
-    public void ResetCurrentPattern()
-    {
-        currentPattern = null;
-    }
-
-    private bool IsBossCanAction()
-    {
-        return GetBossTaunted() || GetBossGroggied();
-    }
-
-    // 보스 디버프
-
-    private bool GetBossTaunted()
-    {
-        return bossStatus.IsBossTaunted();
-    }
-
-    private bool GetBossGroggied()
-    {
-        return bossStatus.IsBossGroggied();
-    }
-
-    public void SetBossTaunted()
-    {
-        ResetCurrentPattern();
-    }
-
-    public void RecoverFromTaunted()
-    {
-
-    }
-
-    public void RecoverFromGroggy()
-    {
-        Debug.Log("Recover From Groggy");
-    }
-
-    // ==== 특수 패턴 관련 로직
-
-    public void EnterPhase2()
-    {
-        bossStats.EnterPhase2();
-    }
-
-    // ==== 공통 로직
 
     public Boss GetBoss()
     {
         return boss;
     }
-
 }
+
 
 public class BossDamageInfo
 {

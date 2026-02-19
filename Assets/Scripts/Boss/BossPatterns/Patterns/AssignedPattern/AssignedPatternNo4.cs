@@ -6,8 +6,6 @@ public class AssignedPatternNo4 : BossPattern
 { // 휠윈드 하며 돌아가기
     public AssignedPatternNo4()
     {
-        totalTurns = 5;
-
         turnGenerators.Add(MakePattern0);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);
@@ -23,15 +21,8 @@ public class AssignedPatternNo4 : BossPattern
         base.OnStartPattern(ai);
     }
 
-    public override void OnPatternTurn(BossAI ai)
+    public override void OnAfterTurnExecuted(BossAI ai)
     {
-
-        base.OnPatternTurn(ai);
-    }
-
-    public override void ExecutePattern(BossAI ai)
-    {
-        base.ExecutePattern(ai);
         if (currentTurn != 1 && currentTurn != 5)
         {
             HexTile targetTile = GetNextTile(ai.bossController.GetCurrentTile());
@@ -45,7 +36,7 @@ public class AssignedPatternNo4 : BossPattern
 
     private BossPatternTurnInfo MakePattern0(BossAI ai)
     {
-        return new BossPatternTurnInfo(new List<HexTile>(), 0);
+        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
@@ -55,18 +46,13 @@ public class AssignedPatternNo4 : BossPattern
         centerTile = HexTileManager.Instance.IsThereHexTileByCube(new Vector3Int(0, 0, 0));
         List<HexTile> AttackRange = HexTileManager.Instance.GetTilesWithinRange(curTile, 3);
 
-        return new BossPatternTurnInfo(AttackRange, 30, isKnockback: true, knockbackDistance: 1);
+        return BossPatternTurnBuilder.Create(AttackRange).SetDamage(30).SetKnockback(1).Build();
     }
 
     private HexTile GetNextTile(HexTile curTile)
     {
         centerTile = HexTileManager.Instance.IsThereHexTileByCube(new Vector3Int(0, 0, 0));
         return HexTileManager.Instance.tileRayHelper.GetRayNextTile(curTile, centerTile, 2);
-    }
-
-       public override void OnPatternEnd(BossAI ai)
-    {
-
     }
 
     public override void PerformActionAnimation(BossAnimation animation)

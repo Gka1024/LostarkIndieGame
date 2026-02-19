@@ -4,12 +4,10 @@ public class PatternNo9 : BossPattern
 { // 휘적휘적 찍고 돌리기 패턴입니다. 
     public PatternNo9()
     {
-        totalTurns = 5;
-
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern2);
         turnGenerators.Add(MakePattern3);
-        turnGenerators.Add(MakePattern4);
+        turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern5);
     }
 
@@ -18,7 +16,7 @@ public class PatternNo9 : BossPattern
         base.OnStartPattern(ai);
     }
 
-    private BossPatternTurnInfo MakePattern1(BossAI ai) => CreatePatternByDistance(ai, new[]
+    private BossPatternTurnInfo MakePattern1(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
     {
         (2, 3, true), (3, 5, true),
         (4, 2, false), (4, 6, true),
@@ -26,7 +24,7 @@ public class PatternNo9 : BossPattern
     },
     damage: 40);
 
-    private BossPatternTurnInfo MakePattern2(BossAI ai) => CreatePatternByDistance(ai, new[]
+    private BossPatternTurnInfo MakePattern2(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
     {
         (2, 3, false), (3, 5, false),
         (4, 2, true), (4, 6, false),
@@ -34,7 +32,7 @@ public class PatternNo9 : BossPattern
     },
     damage: 40);
 
-    private BossPatternTurnInfo MakePattern3(BossAI ai) => CreatePatternByDistance(ai, new[]
+    private BossPatternTurnInfo MakePattern3(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
     {
         (2, 2, false), (2, 2, true),
         (3, 3, true), (3, 3, false),
@@ -42,20 +40,17 @@ public class PatternNo9 : BossPattern
         (5, 3, true), (5, 3, false),
         (6, 2, true), (6, 2, false)
     },
-    damage: 50, isDown: true);  // 예시: 다운 효과 추가
+    damage: 50, downDuration: 3);  // 예시: 다운 효과 추가
 
-    private BossPatternTurnInfo MakePattern4(BossAI ai)
-    {
-        return new BossPatternTurnInfo(new List<HexTile>(), 0);
-    }
 
-    private BossPatternTurnInfo MakePattern5(BossAI ai) => CreatePatternByDistance(ai, new[]
+
+    private BossPatternTurnInfo MakePattern5(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
     {
         (4, 24, true),
         (5, 30, true),
         (6, 36, true)
     },
-    damage: 60, isKnockback: true, knockbackDistance: 2);
+    damage: 60, knockbackDistance: 2);
 
     public override void OnPatternEnd(BossAI ai)
     {

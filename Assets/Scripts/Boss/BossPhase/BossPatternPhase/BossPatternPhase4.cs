@@ -15,7 +15,7 @@ public class BossPatternPhase4 : BossPatternPhase
         RegisterRegularPattern(new AssignedPatternNo3());
         RegisterRegularPattern(new AssignedPatternNo4());
         RegisterRegularPattern(new AssignedPatternNo5());
-        RegisterRegularPattern(new AssignedPatternNo6());
+        RegisterRegularPattern(new ForcedPatternNo1());
     }
 
     protected override void RegisterForcedPattern()

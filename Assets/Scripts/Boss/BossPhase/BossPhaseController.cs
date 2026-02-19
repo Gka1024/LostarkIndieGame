@@ -14,8 +14,8 @@ public class BossPhaseController : MonoBehaviour
 
     private BossPatternPhase currentPhase;
 
-    private List<GlobalPatternRule> globalRules = new();
-    private Queue<BossPattern> globalPattern = new();
+    private List<ForcedPatternRule> forcedRules = new();
+    private Queue<BossPattern> forcedPatterns = new();
 
     public void Initialize()
     {
@@ -33,9 +33,9 @@ public class BossPhaseController : MonoBehaviour
             Debug.Log("페이즈가 설정되지 않았습니다.");
         }
 
-        if (globalPattern.Count > 0)
+        if (forcedPatterns.Count > 0)
         {
-            return globalPattern.Dequeue();
+            return forcedPatterns.Dequeue();
         }
 
         return currentPhase.GetNextPattern();
@@ -74,26 +74,26 @@ public class BossPhaseController : MonoBehaviour
 
     public void RegisterAllGlobalPattern()
     {
-        RegisterGlobalPattern(() => bossStats.GetBossHPByLine() <= 130, new AssignedPatternNo6(), true);
+        RegisterGlobalPattern(() => bossStats.GetBossHPByLine() <= 130, new ForcedPatternNo1(), true);
     }
 
     private void EvaluateGlobalPatterns()
     {
-        foreach (var rule in globalRules)
+        foreach (var rule in forcedRules)
         {
             rule.Evaluate();
 
             var pattern = rule.TryDequeue();
             if (pattern != null)
             {
-                globalPattern.Enqueue(pattern);
+                forcedPatterns.Enqueue(pattern);
             }
         }
     }
 
     private void RegisterGlobalPattern(System.Func<bool> condition, BossPattern pattern, bool triggerOnce = true)
     {
-        globalRules.Add(new GlobalPatternRule(condition, pattern, triggerOnce));
+        forcedRules.Add(new ForcedPatternRule(condition, pattern, triggerOnce));
     }
 
 }
