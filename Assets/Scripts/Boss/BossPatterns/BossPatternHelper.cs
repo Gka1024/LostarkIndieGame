@@ -2,22 +2,29 @@ using UnityEngine;
 
 public class BossPatternHelper : MonoBehaviour
 {
-    public Boss boss;
-    public BossAI bossAI;
-    public BossStats bossStats;
-    public BossAnimation bossAnimation;
+    private Boss boss;
+    private BossAI bossAI;
+    private BossStats bossStats;
+    private BossStatus bossStatus;
+    private BossAnimation bossAnimation;
 
-    public GameObject GhostSpherePrefab;
+    [Header("Prefabs")]
+    [SerializeField] private GameObject ghostSpherePrefab;
 
-    public GameObject sphereCurrent;
+    private GameObject currentSphere;
 
-    void Start()
+    private void Awake()
     {
         boss = GetComponent<Boss>();
         bossAI = GetComponent<BossAI>();
         bossStats = GetComponent<BossStats>();
+        bossStatus = GetComponent<BossStatus>();
         bossAnimation = GetComponent<BossAnimation>();
     }
+
+    // =========================================================
+    // ================== 카운터 관련 ==========================
+    // =========================================================
 
     public void MakeBossCounter(int duration = 3)
     {
@@ -25,33 +32,14 @@ public class BossPatternHelper : MonoBehaviour
         bossStats.CounterReady(duration);
     }
 
-    public void SuccessCounter(bool isSuccess)
+    public void NotifyCounterResult(bool isSuccess)
     {
-        bossAI.currentPattern.ProcessCounter(isSuccess);
+        bossAI.NotifyCounterResult(isSuccess);
     }
 
-    public void OnSummonedObjectDestroyed(GameObject obj)
-    {
-        if (bossAI.currentPattern is PatternNo4 curPattern)
-        {
-            curPattern.BrokenSphere(this);
-        }
-    }
-
-    public bool CheckBossShield()
-    {
-        return bossStats.CheckBossShield();
-    }
-
-    public void BossShieldBroke()
-    {
-        if (bossAI.currentPattern is PatternNo4 curPattern)
-        {
-            curPattern.ShieldBroke();
-        }
-    }
-
-    // ==== 보스 속성 변환 코드
+    // =========================================================
+    // ================== 방어 / 보호막 =========================
+    // =========================================================
 
     public void SetBossDefence(float ratio)
     {
@@ -60,10 +48,10 @@ public class BossPatternHelper : MonoBehaviour
 
     public void ResetBossDefence()
     {
-        bossStats.SetDefenceRatio(1.0f);
+        bossStats.SetDefenceRatio(1f);
     }
 
-    public void MakeBossShield(float shield)
+    public void CreateBossShield(float shield)
     {
         bossStats.CreateShield(shield);
     }
@@ -73,29 +61,54 @@ public class BossPatternHelper : MonoBehaviour
         bossStats.RemoveShield();
     }
 
-    // ==== 패턴 4번용 코드
+    public bool HasBossShield()
+    {
+        return bossStats.HasShield();
+    }
+
+    public void NotifyShieldBroken()
+    {
+        bossAI.NotifyShieldBroken();
+    }
+
+    // =========================================================
+    // ================== Ghost Sphere (패턴4용 실행) ===========
+    // =========================================================
 
     public void SpawnGhostSphere(HexTile tile = null)
     {
-        sphereCurrent = Instantiate(GhostSpherePrefab, tile.transform.position, Quaternion.identity);
-        sphereCurrent.GetComponent<GhostSphereScript>().SetPosition(tile);
-    }
-
-    public HexTile GetSphereHexTile()
-    {
-        if (sphereCurrent != null)
+        if(tile == null)
         {
-            return sphereCurrent.GetComponent<GhostSphereScript>().GetHexTile();
+            tile = HexTileManager.Instance.GetRandomTile(HexTileManager.Instance.GetAllTiles());
         }
-        return null;
+
+        var obj = Instantiate(ghostSpherePrefab);
+
+        var sphere = obj.GetComponent<GhostSphereScript>();
+        sphere.Initialize(tile, bossAI);
+
+        sphere.OnSphereBroken += bossAI.NotifySummonedObjectDestroyed;
     }
 
-    public void GhostSphereBroke()
+    public HexTile GetCurrentSphereTile()
     {
-        if (bossAI.currentPattern is PatternNo4 curPattern)
-        {
-            curPattern.BrokenSphere(this);
-        }
+        if (currentSphere == null) return null;
+
+        return currentSphere
+            .GetComponent<GhostSphereScript>()
+            .GetHexTile();
     }
 
+    public void ClearCurrentSphere()
+    {
+        currentSphere = null;
+    }
+
+    // =========================================================
+    // ================== 접근자 (필요 최소한만) =================
+    // =========================================================
+
+    public BossAI GetBossAI() => bossAI;
+    public BossStatus GetStatus() => bossStatus;
+    public BossStats GetStats() => bossStats;
 }

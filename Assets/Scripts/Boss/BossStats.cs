@@ -1,86 +1,94 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossStats : MonoBehaviour
 {
-    public GameManager manager;
-
-    public Boss boss;
-
     public BossAI bossAI;
     public BossController bossController;
-    public BossPatternHelper bossPatternHelper;
     public BossStatus bossStatus;
 
-    public BossHPBar bossHPBar; // 보스 체력바
-    public BossStaggerBar staggerBar; // 보스 무력화 바
+    public BossHPBar bossHPBar;
+    public BossStaggerBar staggerBar;
 
-    // ==== 보스 체력
+    // =========================
+    // HP
+    // =========================
 
     public const float MAX_HEALTH = 24000;
     public const float MAX_HEALTH_PHASE_2 = 6000;
-    public float health = 24000; // 보스 체력
 
-    // ==== 보스 쉴드
+    private float health = MAX_HEALTH;
 
-    public float bossShield = 0;
+    // =========================
+    // Shield
+    // =========================
 
-    // ==== 보스 카운터
+    private float bossShield = 0;
+
+    // =========================
+    // Counter
+    // =========================
 
     private bool isCounterReady;
     private int counterDuration;
 
-    // ==== 보스 무력화
+    // =========================
+    // Stagger
+    // =========================
 
-    public bool isStaggerAble = true;
     public const float MAX_STAGGER = 1600;
-    public float staggerAmount = 1600; // 보스 무력화 수치
+    private float staggerAmount = MAX_STAGGER;
+    public bool isStaggerAble = true;
 
-    public bool specialStaggerAble = false;
-    public float specialStaggerAmount;
+    // =========================
+    //  Destroy
+    // =========================
 
-    // ==== 보스 파괴
+    private bool isDestroyable = false;
+    private int destroyAmount;
+    private int destroyDuration;
 
-    public bool isDestroyAble = false;
-    public int destroyDuration;
-    public int destroyAmount;
-
-    // ==== 보스 방어
-
-    public float attackBase = 20; // 보스 공격력
-    public float attackCur;
+    // =========================
+    // Defence
+    // =========================
 
     private const float k = 100f;
 
-    public float bossGetDamageRatio = 1.0f;
-    public float defenceBase = 80; // 보스 방어력
-    public float defenceCur;
+    public float bossGetDamageRatio = 1f;
+    public float defenceBase = 80f;
+    private float defenceCur;
 
-    // ==== 디버프
+    // =========================================================
+    // ================== 초기화 ================================
+    // =========================================================
 
-
-    void Start()
+    private void Awake()
     {
-        attackCur = attackBase;
+        bossAI = GetComponent<BossAI>();
         defenceCur = defenceBase;
         staggerAmount = MAX_STAGGER;
-        bossAI = GetComponent<BossAI>();
-        bossPatternHelper = bossAI.bossPatternHelper;
     }
 
-    void Update()
+    public void OnTurnEnd()
     {
-
+        ReduceDestroyDuration();
     }
 
-    // 데미지 관련 로직
+    // =========================================================
+    // ================== 데미지 처리 ===========================
+    // =========================================================
+
+    public void ApplyDamage(BossDamageData data)
+    {
+        ReceiveDamage(data);
+    }
 
     public float CalculateDamage(float incomeDamage)
     {
-        float defenceDamage = incomeDamage * (1 - (defenceCur / (defenceCur + k)));
+        float defenceDamage =
+            incomeDamage * (1 - (defenceCur / (defenceCur + k)));
 
-        float finalDamage = bossStatus.CalculateDamageOnBuffs(defenceDamage);
+        float finalDamage =
+            bossStatus.CalculateDamageOnBuffsAndDebuffs(defenceDamage);
 
         return finalDamage;
     }
@@ -88,68 +96,69 @@ public class BossStats : MonoBehaviour
     public void ReceiveDamage(BossDamageData data)
     {
         float damage = data.damage;
-        bool isTrueDamage = data.isTrueDamage;
-        bool isCounter = data.isCounter;
 
-        float leftOverDamage = isTrueDamage ? damage : CalculateDamage(damage);
-        leftOverDamage *= bossGetDamageRatio;
+        float finalDamage = data.isTrueDamage
+            ? damage
+            : CalculateDamage(damage);
 
-        if (isCounter || isCounterReady)
+        finalDamage *= bossGetDamageRatio;
+
+        // =========================
+        // Counter 처리
+        // =========================
+
+        if (data.isCounter || isCounterReady)
         {
-            SuccessCounter();
+            isCounterReady = false;
+            bossAI.NotifyCounterResult(true);
         }
+
+        // =========================
+        // Shield 처리
+        // =========================
 
         if (bossShield > 0)
         {
-            if (bossShield >= damage)
+            if (bossShield >= finalDamage)
             {
-                bossShield -= damage;
-                leftOverDamage = 0;
+                bossShield -= finalDamage;
+                finalDamage = 0;
             }
             else
             {
-                bossPatternHelper.BossShieldBroke();
-                leftOverDamage -= damage;
+                finalDamage -= bossShield;
                 bossShield = 0;
+
+                bossAI.NotifyShieldBroken();
             }
 
             bossHPBar.UpdateShieldBar(bossShield);
         }
 
-        if (leftOverDamage > 0)
+        // =========================
+        // HP 감소
+        // =========================
+
+        if (finalDamage > 0)
         {
-            health -= leftOverDamage;
-            bossHPBar.TakeDamage(leftOverDamage);
+            health -= finalDamage;
+            bossHPBar.TakeDamage(finalDamage);
+
+            if (health <= 0)
+            {
+                bossAI.NotifyBossDead();
+            }
         }
-
-        //Debug.Log("Boss HP: " + health);
-        if (health <= 0)
-        {
-            //Destroy(gameObject);
-        }
     }
 
-    public void SetDefenceRatio(float ratio)
-    {
-        bossGetDamageRatio = ratio;
-    }
-
-    public void ResetDefenceRatio()
-    {
-        bossGetDamageRatio = 0;
-    }
-
-    // 쉴드 관련 로직
+    // =========================================================
+    // ================== Shield ================================
+    // =========================================================
 
     public void CreateShield(float shield)
     {
         bossShield += shield;
         bossHPBar.UpdateShieldBar(bossShield);
-    }
-
-    public bool CheckBossShield()
-    {
-        return bossShield > 0;
     }
 
     public void RemoveShield()
@@ -158,7 +167,11 @@ public class BossStats : MonoBehaviour
         bossHPBar.UpdateShieldBar(bossShield);
     }
 
-    // 카운터 관련 로직
+    public bool HasShield() => bossShield > 0;
+
+    // =========================================================
+    // ================== Counter ===============================
+    // =========================================================
 
     public void CounterReady(int duration)
     {
@@ -166,130 +179,114 @@ public class BossStats : MonoBehaviour
         counterDuration = duration;
     }
 
-    public void SuccessCounter()
-    {
-        bossPatternHelper.SuccessCounter(true);
-    }
-
     private void ReduceCounterDuration()
     {
-        if (counterDuration > 0)
-        {
-            counterDuration--;
+        if (!isCounterReady) return;
 
-            if (counterDuration == 0)
-            {
-                bossPatternHelper.SuccessCounter(false);
-            }
+        counterDuration--;
+
+        if (counterDuration <= 0)
+        {
+            isCounterReady = false;
+            bossAI.NotifyCounterResult(false);
         }
     }
 
-    // 무력화 관련 로직
+    // =========================================================
+    // ================== Stagger ===============================
+    // =========================================================
 
-    public void GetBossStagger(float stagger)
+    public void ApplyStagger(BossDamageData data)
     {
-        if (isStaggerAble)
-        {
-            this.staggerAmount -= stagger;
-            staggerBar.UpdateBossStagger();
-            Debug.Log("Boss Stagger : " + this.staggerAmount);
-
-            if (staggerAmount <= 0)
-            {
-                bossController.MakeBossGroggy(5);
-            }
-        }
-
-        if (specialStaggerAble)
-        {
-            specialStaggerAmount -= stagger;
-            if (specialStaggerAmount <= 0)
-            {
-                bossController.StaggerSuccess();
-            }
-        }
-
+        GetBossStagger(data.stagger);
     }
 
+    public void GetBossStagger(float amount)
+    {
+        if (!isStaggerAble) return;
 
-    // 파괴 관련 로직 
+        staggerAmount -= amount;
+        staggerBar.UpdateBossStagger();
+
+        if (staggerAmount <= 0)
+        {
+            bossStatus.MakeBossGroggy(5);
+        }
+    }
+
+    // =========================================================
+    // ================== Destroy ===============================
+    // =========================================================
+
+    public void ApplyDestroy(BossDamageData data)
+    {
+        GetBossDestroy(data.destroy);
+    }
 
     public void GetBossDestroy(int amount)
     {
-        if (!isDestroyAble) return;
+        if (!isDestroyable)
+        {
+            return;
+        }
 
         destroyAmount -= amount;
 
         if (destroyAmount <= 0)
         {
-            DestroySuccess();
+            bossAI.NotifyDestroyResult(true);
         }
     }
 
-    public void SetBossDestroyAvailable(int amount, int duration)
+    public void EnableDestroy(int amount, int duration)
     {
-        isDestroyAble = true;
+        isDestroyable = true;
         destroyAmount = amount;
         destroyDuration = duration;
     }
 
-    public void SetBossDestroyUnAvailable()
+    public void DisableDestroy()
     {
-        isDestroyAble = false;
+        isDestroyable = false;
         destroyAmount = 0;
     }
 
     private void ReduceDestroyDuration()
     {
-        if (destroyAmount == 0) return;
+        if (!isDestroyable) return;
 
-        if (destroyDuration-- == 0)
+        destroyDuration--;
+
+        if (destroyDuration <= 0)
         {
-            SetBossDestroyUnAvailable();
+            bossAI.NotifyDestroyResult(false);
+            DisableDestroy();
         }
-
     }
 
-    private void DestroySuccess()
-    {
-        bossController.MakeBossGroggy(3);
+    public float GetCurrentStagger() => staggerAmount;
 
-        bossStatus.ReduceArmorBuff();
-    }
-
-    // 디버프 관련 로직
-
-    public void GetDefenceDown()
-    {
-
-    }
-
-
-    // 일반 로직
+    // =========================================================
+    // ================== 턴 진행 ===============================
+    // =========================================================
 
     public void ProceedTurn()
     {
         ReduceCounterDuration();
-        ReduceDestroyDuration();
     }
 
-    // 보스 요소 리턴 로직
+    // =========================================================
+    // ================== 외부 접근 =============================
+    // =========================================================
 
-    public float GetBossDefence()
+    public void SetDefenceRatio(float ratio)
     {
-        return defenceCur;
+        bossGetDamageRatio = ratio;
     }
 
-    public float GetBossHPByLine()
+    public void ResetDefenceRatio()
     {
-        return health / 150;
-    }
-
-    // 2페이즈 (유령) 용 로직
-
-    public void EnterPhase2()
-    {
-        SetBossHP(MAX_HEALTH_PHASE_2);
+        bossGetDamageRatio = 1f; // 🔥 버그 수정
     }
 
     public void SetBossHP(float value)
@@ -298,31 +295,32 @@ public class BossStats : MonoBehaviour
         bossHPBar.SetCurrentHealth(value);
     }
 
-
+    public int GetBossHPByLine()
+    {
+        return (int)health / 150;
+    }
 }
 
 public class BossDamageData
 {
     public float damage;
-    public bool isTrueDamage = false;
-    public bool isCounter = false;
+    public float stagger;
+    public int destroy;
 
-    public BossDamageData(float damage, bool isTrueDamage = false, bool isCounter = false)
+    public bool isTrueDamage;
+    public bool isCounter;
+
+    public BossDamageData(
+        float damage,
+        float stagger = 0,
+        int destroy = 0,
+        bool isTrueDamage = false,
+        bool isCounter = false)
     {
         this.damage = damage;
+        this.stagger = stagger;
+        this.destroy = destroy;
         this.isTrueDamage = isTrueDamage;
         this.isCounter = isCounter;
     }
 }
-
-
-
-/*
-todo : 
-디버프 핸들러 만들기
-파괴 수치 및 파괴 만들기
-무력화 로직 구체화하기
-보스 상태머신 만들기
-
-
-*/

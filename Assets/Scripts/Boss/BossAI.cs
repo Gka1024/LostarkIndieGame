@@ -19,9 +19,19 @@ public class BossAI : MonoBehaviour
     public BossPatternTurnInfo currentTurnInfo;
     public BossPatternHelper bossPatternHelper;
 
+    private bool isTaunted;
+    private bool isGroggied;
+
     private void Start()
     {
         bossPhaseController.Initialize();
+
+        // 🔥 이벤트 기반 연결 (추천 구조)
+        bossStatus.OnTauntApplied += SetBossTaunted;
+        bossStatus.OnTauntRecovered += RecoverFromTaunt;
+
+        bossStatus.OnGroggyApplied += SetBossGroggy;
+        bossStatus.OnGroggyRecovered += RecoverFromGroggy;
     }
 
     // ===============================
@@ -60,18 +70,20 @@ public class BossAI : MonoBehaviour
 
         currentPattern.PerformActionAnimation(bossAnimation);
 
-        currentPattern.OnAfterTurnExecuted(this);   // 🔥 이동형 패턴 대응
+        currentPattern.OnAfterTurnExecuted(this);
 
         currentPattern.CompleteTurn();
 
         if (currentPattern.IsFinished)
         {
+            Debug.Log("패턴이 끝났습니다.");
             currentPattern.OnPatternEnd(this);
             currentPattern = null;
         }
 
-        currentTurnInfo = null; // 🔥 중요
+        currentTurnInfo = null;
     }
+
     // ===============================
     // 실제 데미지 처리
     // ===============================
@@ -114,6 +126,77 @@ public class BossAI : MonoBehaviour
     }
 
     // ===============================
+    // CC 처리
+    // ===============================
+
+    private bool IsBossCrowdControlled()
+    {
+        return isTaunted || isGroggied;
+    }
+
+    public void SetBossTaunted(GameObject target)
+    {
+        isTaunted = true;
+
+        // 현재 패턴 예고 제거 (꼬임 방지)
+        if (currentTurnInfo != null)
+            bossController.ClearAttackPreview(currentTurnInfo);
+
+        currentTurnInfo = null;
+
+        // 필요하다면 타겟 강제 지정 로직 추가
+        // 예: bossInteraction.SetForcedTarget(bossStatus.TauntedTarget);
+    }
+
+    public void RecoverFromTaunt()
+    {
+        isTaunted = false;
+
+        // 타겟 정상화
+        // bossInteraction.ResetTarget();
+
+        // 다음 턴부터 정상 패턴 진행
+    }
+
+    public void SetBossGroggy()
+    {
+        isGroggied = true;
+
+        // 그로기 들어가면 패턴 중단
+        if (currentTurnInfo != null)
+            bossController.ClearAttackPreview(currentTurnInfo);
+
+        currentPattern = null;
+        currentTurnInfo = null;
+
+        //bossAnimation.PlayGroggyAnimation();
+    }
+
+    public void RecoverFromGroggy()
+    {
+        isGroggied = false;
+
+        // bossAnimation.PlayRecoverAnimation();
+
+        // 그로기 끝난 뒤 새 패턴 시작
+        currentPattern = null;
+        currentTurnInfo = null;
+    }
+
+    public void InterruptCurrentPattern()
+    {
+        if (currentPattern == null)
+            return;
+
+        Debug.Log($"Pattern Interrupted: {currentPattern.GetType().Name}");
+
+        currentPattern.OnInterrupted(this);
+
+        currentPattern = null;
+
+    }
+
+    // ===============================
 
     private void SetPattern(BossPattern pattern)
     {
@@ -122,28 +205,38 @@ public class BossAI : MonoBehaviour
         currentPattern?.OnStartPattern(this);
     }
 
-    private bool IsBossCrowdControlled()
+    public void NotifySummonedObjectDestroyed(GhostSphereScript sphere)
     {
-        return bossStatus.IsBossTaunted() || bossStatus.IsBossGroggied();
+        currentPattern?.OnSummonedObjectDestroyed(sphere.gameObject);
+    }
+
+    public void NotifyCounterResult(bool isSuccess)
+    {
+
+    }
+
+    public void NotifyShieldBroken()
+    {
+
+    }
+
+    public void NotifyBossDead()
+    {
+
+    }
+
+    public void NotifyDestroyResult(bool isSuccess)
+    {
+        if (isSuccess)
+        {
+            InterruptCurrentPattern();
+
+            bossStatus.MakeBossGroggy(5);
+        }
     }
 
     public Boss GetBoss()
     {
         return boss;
-    }
-}
-
-
-public class BossDamageInfo
-{
-    public float damage;
-    public float stagger;
-    public int destroy;
-
-    public BossDamageInfo(float damage, float stagger, int destroy)
-    {
-        this.damage = damage;
-        this.stagger = stagger;
-        this.destroy = destroy;
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public abstract class BossPattern
 {
@@ -30,6 +31,7 @@ public abstract class BossPattern
     }
 
     protected virtual void OnBeforeGenerateTurn(BossAI ai) { }
+    public virtual void OnInterrupted(BossAI ai) { }
 
     // 이번 턴 데이터 생성 (예고 단계)
     public virtual BossPatternTurnInfo GenerateTurn(BossAI ai)
@@ -69,6 +71,9 @@ public abstract class BossPattern
     public abstract void PerformActionAnimation(BossAnimation animation);
     public virtual void OnPatternEnd(BossAI ai) { }
     public virtual void OnAfterTurnExecuted(BossAI ai) { }
+
+    public virtual void OnSummonedObjectDestroyed(GameObject obj) { }
+    public virtual void OnBossShieldBroke(BossPatternHelper helper) { }
 
     public virtual void Reset()
     {

@@ -13,13 +13,14 @@ public class BossPhaseController : MonoBehaviour
     private const int Phase4HP = 30; // 유령
 
     private BossPatternPhase currentPhase;
+    private BossPhase bossPhase;
 
     private List<ForcedPatternRule> forcedRules = new();
     private Queue<BossPattern> forcedPatterns = new();
 
     public void Initialize()
     {
-        PhaseCheck();
+        Debug.Log("BossPhaseController Initialize");
         RegisterAllGlobalPattern();
     }
 
@@ -33,12 +34,16 @@ public class BossPhaseController : MonoBehaviour
             Debug.Log("페이즈가 설정되지 않았습니다.");
         }
 
+        Debug.Log($"CurrentPhase : {currentPhase}");
+
         if (forcedPatterns.Count > 0)
         {
             return forcedPatterns.Dequeue();
         }
 
-        return currentPhase.GetNextPattern();
+        BossPattern pattern = currentPhase.GetNextPattern();
+        Debug.Log($"Pattern : {pattern}");
+        return pattern;
     }
 
     public void OnTurnStart()
@@ -48,10 +53,18 @@ public class BossPhaseController : MonoBehaviour
 
     private void PhaseCheck()
     {
-        ChangePhase(GetPhaseByHP());
+        if (bossPhase != GetPhaseByHP())
+        {
+            bossPhase = GetPhaseByHP();
+            ChangePatternPhase(GetPatternPhaseByHP(bossPhase));
+        }
+        else
+        {
+            Debug.Log("아직 페이즈가 변화하지 않았습니다.");
+        }
     }
 
-    private void ChangePhase(BossPatternPhase newPhase)
+    private void ChangePatternPhase(BossPatternPhase newPhase)
     {
         if (currentPhase != newPhase)
         {
@@ -62,14 +75,28 @@ public class BossPhaseController : MonoBehaviour
         }
     }
 
-    private BossPatternPhase GetPhaseByHP()
+    private BossPatternPhase GetPatternPhaseByHP(BossPhase phase)
+    {
+        switch (phase)
+        {
+            case BossPhase.Phase1: return new BossPatternPhase1();
+            case BossPhase.Phase2: return new BossPatternPhase2();
+            case BossPhase.Phase3: return new BossPatternPhase3();
+            case BossPhase.Phase4: return new BossPatternPhase4();
+            default: break;
+        }
+        return null;
+    }
+
+    private BossPhase GetPhaseByHP()
     {
         float hp = bossStats.GetBossHPByLine();
-        if (hp >= Phase1HP) return new BossPatternPhase1(); // 조우 ~ 벽부수기
-        if (hp >= Phase2HP) return new BossPatternPhase2(); // 벽부수기 ~ 지파 
-        if (hp >= Phase3HP) return new BossPatternPhase3(); // 지파 ~ 사방치기후 유령
-        if (hp >= Phase4HP) return new BossPatternPhase4(); // 유령
-        return new BossPatternPhase4();
+        if (hp >= Phase1HP) return BossPhase.Phase1; // 조우 ~ 벽부수기
+        if (hp >= Phase2HP) return BossPhase.Phase2; // 벽부수기 ~ 지파 
+        if (hp >= Phase3HP) return BossPhase.Phase3; // 지파 ~ 사방치기 이후 유령
+        if (hp >= Phase4HP) return BossPhase.Phase4; // 유령
+
+        return BossPhase.Default;
     }
 
     public void RegisterAllGlobalPattern()
@@ -100,6 +127,7 @@ public class BossPhaseController : MonoBehaviour
 
 public enum BossPhase
 {
+    Default,
     Phase1,
     Phase2,
     Phase3,

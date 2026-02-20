@@ -83,6 +83,6 @@ public class AssignedPatternNo1 : BossPattern
 
     public override void OnAfterTurnExecuted(BossAI ai)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 }

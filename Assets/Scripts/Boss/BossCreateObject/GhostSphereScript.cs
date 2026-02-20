@@ -1,94 +1,143 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class GhostSphereScript : MonoBehaviour
 {
-    public float amplitude = 0.5f;
-    public float frequency = 1f;
+    [Header("Float Settings")]
+    [SerializeField] private float amplitude = 0.5f;
+    [SerializeField] private float frequency = 1f;
 
     private Vector3 startPos;
 
     private HexTile currentHexTile;
     private HexTile playerTile;
 
+    private BossAI ownerAI;
 
-    void Start()
+    // 🔥 외부 통지용 이벤트
+    public event Action<GhostSphereScript> OnSphereBroken;
+
+    // =========================================================
+    // ================== 초기화 ================================
+    // =========================================================
+
+    public void Initialize(HexTile tile, BossAI ai)
     {
+        ownerAI = ai;
+
+        transform.position = new Vector3(
+            tile.transform.position.x,
+            1.5f,
+            tile.transform.position.z
+        );
+
         startPos = transform.position;
-        currentHexTile = HexTileManager.Instance.IsThereHexTile(startPos);
+        currentHexTile = tile;
+
         SetAlpha(0.4f);
     }
 
-    void SetAlpha(float alpha)
+    private void Update()
+    {
+        FloatMotion();
+    }
+
+    private void FloatMotion()
+    {
+        float newY = startPos.y +
+                     Mathf.Sin(Time.time * frequency * Mathf.PI * 2) * amplitude;
+
+        transform.position = new Vector3(
+            startPos.x,
+            newY,
+            startPos.z
+        );
+    }
+
+    private void SetAlpha(float alpha)
     {
         Renderer renderer = GetComponent<Renderer>();
-        if (renderer != null)
-        {
-            Color color = renderer.material.color;
-            color.a = alpha;
-            renderer.material.color = color;
-        }
+        if (renderer == null) return;
+
+        Color color = renderer.material.color;
+        color.a = alpha;
+        renderer.material.color = color;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        float newY = startPos.y + Mathf.Sin(Time.time * frequency * Mathf.PI * 2) * amplitude;
-        transform.position = new Vector3(startPos.x, newY, startPos.z);
-    }
+    // =========================================================
+    // ================== 플레이어 관련 ==========================
+    // =========================================================
 
-    private void SetPlayerTile()
+    private void UpdatePlayerTile()
     {
-        PlayerMove playerMove = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
+        PlayerMove playerMove =
+            GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
+
         playerTile = playerMove.GetCurrentTile();
     }
 
-    public bool CheckIsPlayerNearby()
+    public bool IsPlayerNearby()
     {
-        SetPlayerTile();
+        UpdatePlayerTile();
 
-        if (HexTileManager.Instance.GetTileDistance(currentHexTile, playerTile) <= 1) return true;
-        return false;
-    }
-
-    public void SetPosition(HexTile tile)
-    {
-        this.transform.position = new Vector3(tile.transform.position.x, 1.5f, tile.transform.position.z);
+        return HexTileManager.Instance
+            .GetTileDistance(currentHexTile, playerTile) <= 1;
     }
 
     public HexTile GetHexTile() => currentHexTile;
 
-    public void OnBreak()
+    // =========================================================
+    // ================== 파괴 처리 =============================
+    // =========================================================
+
+    public void Break()
     {
-        GameManager.Instance.GetBoss().GetComponent<BossAI>().bossPatternHelper.OnSummonedObjectDestroyed(this.gameObject);
+        // 🔥 이벤트만 던진다
+        OnSphereBroken?.Invoke(this);
+
+        Destroy(gameObject);
     }
+
+    // =========================================================
+    // ================== 패턴용 타일 계산 =======================
+    // =========================================================
 
     public List<HexTile> GetOddTiles()
     {
-        SetPlayerTile();
+        UpdatePlayerTile();
 
-        List<HexTile> returnTiles = new();
+        List<HexTile> tiles = new();
 
         for (int i = 0; i < 3; i++)
         {
-            returnTiles.AddRange(HexTileManager.Instance.tileDirectionHelper.GetDistanceTiles(currentHexTile, playerTile, 2 * i + 1, (2 * i + 1) * 6));
+            int dist = 2 * i + 1;
+
+            tiles.AddRange(
+                HexTileManager.Instance.tileDirectionHelper
+                    .GetDistanceTiles(currentHexTile, playerTile, dist, dist * 6)
+            );
         }
 
-        return returnTiles;
+        return tiles;
     }
 
     public List<HexTile> GetEvenTiles()
     {
-        SetPlayerTile();
-        List<HexTile> returnTiles = new();
+        UpdatePlayerTile();
+
+        List<HexTile> tiles = new();
 
         for (int i = 0; i < 3; i++)
         {
-            returnTiles.AddRange(HexTileManager.Instance.tileDirectionHelper.GetDistanceTiles(currentHexTile, playerTile, 2 * i, (2 * i) * 6));
+            int dist = 2 * i;
+
+            tiles.AddRange(
+                HexTileManager.Instance.tileDirectionHelper
+                    .GetDistanceTiles(currentHexTile, playerTile, dist, dist * 6)
+            );
         }
 
-        return returnTiles;
-
+        return tiles;
     }
 }

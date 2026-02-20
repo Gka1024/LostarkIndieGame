@@ -30,7 +30,7 @@ public class PatternNo1 : BossPattern
     {
         base.OnStartPattern(ai);
 
-        startStagger = ai.GetBoss().stats.staggerAmount;
+        startStagger = ai.GetBoss().stats.GetCurrentStagger();
         isCounterTriggered = false;
 
         // 성공 패턴
@@ -60,11 +60,11 @@ public class PatternNo1 : BossPattern
             return;
         }
 
-        float currentStagger = ai.GetBoss().stats.staggerAmount;
+        float currentStagger = ai.GetBoss().stats.GetCurrentStagger();
 
         // 대기 턴 중에 조건 달성하면
         if (currentTurn < WAIT_TURNS &&
-            currentStagger <= startStagger - staggerThreshold)
+            startStagger - currentStagger >= staggerThreshold)
         {
             isCounterTriggered = true;
 
@@ -75,9 +75,9 @@ public class PatternNo1 : BossPattern
 
     private BossPatternTurnInfo MakeCounterTurn(BossAI ai)
     {
-        float currentStagger = ai.GetBoss().stats.staggerAmount;
+        float currentStagger = ai.GetBoss().stats.GetCurrentStagger();
 
-        if (currentStagger <= startStagger - staggerThreshold)
+        if (startStagger - currentStagger >= staggerThreshold)
         {
             Debug.Log("보스가 강하게 반격합니다!");
             return counterSuccess;

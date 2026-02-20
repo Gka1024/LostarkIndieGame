@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -87,40 +88,28 @@ public class BossController : MonoBehaviour
         return bossInteraction.GetCurrentTile();
     }
 
-    // 타일 관련 로직
-
-
-
-    // ==== 패턴 보스 제어
-
-    public void MakeBossGroggy(int turns)
-    {
-        bossStatus.MakeBossGroggy(turns);
-        bossAI.ResetCurrentPattern();
-    }
-
-    public void MakeBossDestroyable(int turns, int destroyGoals)
-    {
-        bossStats.SetBossDestroyAvailable(destroyGoals, turns);
-    }
-
-    public void StaggerSuccess()
-    {
-        // todo
-    }
-
-    private void RecoverFromGroggy()
-    {
-
-    }
-
     // 보스 데미지, 무력화, 파괴 및 디버프
 
-    public void GetBossDamage(BossDamageInfo info)
+    public void GetBossDamageData(BossDamageData data)
     {
-        bossStats.ReceiveDamage(new BossDamageData(info.damage));
-        bossStats.GetBossStagger(info.stagger);
-        bossStats.GetBossDestroy(info.destroy);
+        GetBossDamage(data);
+        GetBossStagger(data);
+        GetBossDestroy(data);
+    }
+
+    public void GetBossDamage(BossDamageData data)
+    {
+        bossStats.ApplyDamage(data);
+    }
+
+    public void GetBossStagger(BossDamageData data)
+    {
+        bossStats.ApplyStagger(data);
+    }
+
+    public void GetBossDestroy(BossDamageData data)
+    {
+        bossStats.ApplyDestroy(data);
     }
 
     public void GetBossDebuff(BossDebuff debuff)
@@ -128,16 +117,27 @@ public class BossController : MonoBehaviour
         bossStatus.AddBossDebuff(debuff);
     }
 
-    // 
 
     public void ShowAttackPreview(BossPatternTurnInfo info)
     {
-        
+        List<HexTile> tiles = info.TargetTiles;
+
+        foreach (HexTile tile in tiles)
+        {
+            tile.isBossAttackRange = true;
+            tile.ResetColor();
+        }
     }
 
     public void ClearAttackPreview(BossPatternTurnInfo info)
     {
-        
+        List<HexTile> tiles = info.TargetTiles;
+
+        foreach (HexTile tile in tiles)
+        {
+            tile.isBossAttackRange = false;
+            tile.ResetColor();
+        }
     }
 
 

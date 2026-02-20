@@ -62,8 +62,8 @@ public class AssignedPatternNo2 : BossPattern
 
         if (willHitWall)
         {
-            ai.bossController.MakeBossGroggy(3);
-            ai.bossController.MakeBossDestroyable(3, 5);
+            ai.bossStatus.MakeBossGroggy(3);
+            ai.bossStats.EnableDestroy(30, 5);
             ai.bossStatus.AddBossBuff(
                 BossBuffFactory.CreateBuff(102, 1, 5)
             );

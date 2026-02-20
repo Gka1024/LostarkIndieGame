@@ -24,7 +24,7 @@ public class BossBuffsUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnTurnStart()
     {
-        bossBuffsCopy = bossStatus.GetBossBuffs();
+        bossStatus.AlertBuffsUpdate();
     }
 
     public void UpdateBuffs(Dictionary<int, BossBuff> buffs, Dictionary<int, BossDebuff> debuffs)
@@ -60,7 +60,7 @@ public class BossBuffsUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
             BuffIconUI iconUI = iconObj.GetComponent<BuffIconUI>();
 
-           iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.stack);
+            iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.stack);
 
             if (buff.data == null)
             {

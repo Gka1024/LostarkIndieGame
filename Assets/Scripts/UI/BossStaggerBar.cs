@@ -17,7 +17,7 @@ public class BossStaggerBar : MonoBehaviour
 
     public void UpdateBossStagger()
     {
-        float ratio = Mathf.Clamp01(bossStats.staggerAmount / maxStagger);
+        float ratio = Mathf.Clamp01(bossStats.GetCurrentStagger() / maxStagger);
         staggerMask.sizeDelta = new Vector2(maskFullWidth * ratio, staggerMask.sizeDelta.y);
     }
 }

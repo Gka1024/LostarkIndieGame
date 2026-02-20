@@ -600,7 +600,7 @@ public class BattleItemManager : MonoBehaviour
 
     private void ApplyOnBoss(float damage, float stagger, int destruction, DebuffType debuffType, float effectValue, int duration)
     {
-        bossController.GetBossDamage(new BossDamageInfo(damage, stagger, destruction));
+        bossController.GetBossDamageData(new BossDamageData(damage, stagger, destruction));
 
         if (duration != 0) bossController.GetBossDebuff(new BossDebuff(debuffType, effectValue, duration));
     }

@@ -35,6 +35,7 @@ public abstract class BossPatternPhase
     {
         if (openingPatternsQueue.Count > 0)
         {
+            Debug.Log($"openingPatternsQueue : {openingPatternsQueue.Count} left");
             return openingPatternsQueue.Dequeue();
         }
 
@@ -44,6 +45,8 @@ public abstract class BossPatternPhase
     public virtual BossPattern GetRandomPattern()
     {
         int rand = UnityEngine.Random.Range(0, patterns.Count);
+
+        Debug.Log($"Pattern : {patterns[rand]}");
         return patterns[rand];
     }
 

@@ -20,8 +20,8 @@ public class SkillManager : MonoBehaviour
 
     public ChainSkillList chainSkillList;
 
-    public GameObject Boss;
-    public GameObject Player;
+    public GameObject boss;
+    public GameObject player;
 
     private enum SkillState
     {
@@ -241,13 +241,13 @@ public class SkillManager : MonoBehaviour
 
         if (bossInRange)
         {
-            GiveBossDamage(stats.skill_damage);
-            GiveBossStagger(stats.stagger);
+            ApplyBossSkills(stats);
+
             GivePlayerIdentity(stats.identityGain);
         }
 
         // 4. 애니메이션 & 이펙트
-        Player.GetComponent<Player>().anim.ChangeWeapon(baseStat.playerWeapon);
+        player.GetComponent<Player>().anim.ChangeWeapon(baseStat.playerWeapon);
         cardSkill.PlayAnimation(data.mainTile);
 
         // 5. 실행 (코루틴 대기)
@@ -306,8 +306,7 @@ public class SkillManager : MonoBehaviour
 
         if (bossInRange)
         {
-            GiveBossDamage(chainStat.skill_damage);
-            GiveBossStagger(chainStat.stagger);
+            ApplyBossSkills(chainStat);
             GivePlayerIdentity(chainStat.identityGain);
         }
 
@@ -323,21 +322,20 @@ public class SkillManager : MonoBehaviour
         Destroy(chainGO);
     }
 
-    public void CallGiveBossDamage(float damage)
+    public void ApplyBossSkills(CardStats stat)
     {
-        GiveBossDamage(damage);
+        float damage = stat.skill_damage;
+        float stagger = stat.stagger;
+
+        boss.GetComponent<Boss>().bossController.GetBossDamageData(new BossDamageData(damage, stagger));
     }
 
-    public void GiveBossDamage(float damage)
+    public void ApplyBossSkills(ChainStats stat)
     {
-        Boss.GetComponent<BossStats>().ReceiveDamage(new BossDamageData(damage, false, false));
-        Boss.GetComponent<BossEffectController>().SpawnHitEffect();
-        Boss.GetComponent<BossDamagePopup>().ShowDamage(damage);
-    }
+        float damage = stat.skill_damage;
+        float stagger = stat.stagger;
 
-    public void GiveBossStagger(float stagger)
-    {
-        Boss.GetComponent<BossStats>().GetBossStagger(stagger);
+        boss.GetComponent<Boss>().bossController.GetBossDamageData(new BossDamageData(damage, stagger));
     }
 
     public void GivePlayerIdentity(float identity)
@@ -349,7 +347,7 @@ public class SkillManager : MonoBehaviour
     {
         BossDebuff tauntDebuffs = new BossDebuff(DebuffType.Taunt, 1, tauntTurns, 1);
 
-        Boss.GetComponent<BossStatus>().AddBossDebuff(tauntDebuffs);
+        boss.GetComponent<BossStatus>().AddBossDebuff(tauntDebuffs);
     }
 
     // ========== 유틸 함수 ==========

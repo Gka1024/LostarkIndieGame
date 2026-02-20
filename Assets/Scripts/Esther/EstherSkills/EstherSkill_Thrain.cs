@@ -8,6 +8,9 @@ public class EstherSkill_Thrain : EstherSkill
     public float stagger1;
     public float stagger2;
 
+    public int destroy1;
+    public int destroy2;
+
     public override void Execute()
     {
         EstherSkillTurnMax = 5;
@@ -16,14 +19,14 @@ public class EstherSkill_Thrain : EstherSkill
         RegisterTurnAction(2, () =>
         {
             if (estherAnimationController != null) estherAnimationController.PlayAttackAnimation();
-            estherManager.ProcessEstherSkillDamage(skillDamage1);
+            estherManager.ProcessEstherSkillDamageData(new BossDamageData(skillDamage1, stagger1, destroy1));
         });
 
         // 5턴 후 데미지 + 무력화
         RegisterTurnAction(5, () =>
         {
             if (estherAnimationController != null) estherAnimationController.PlayAttackAnimation();
-            estherManager.ProcessEstherSkillDamage(skillDamage2);
+            estherManager.ProcessEstherSkillDamageData(new BossDamageData(skillDamage2, stagger2, destroy2));
         });
     }
 }

@@ -11,6 +11,9 @@ public class EstherManager : MonoBehaviour
     public GameManager manager;
     public HexTileManager tileManager;
 
+    public Boss boss;
+    public Player player;
+
     [SerializeField] private bool isEstherUsing;
 
     // 에스더 스킬 오브젝트들
@@ -180,30 +183,11 @@ public class EstherManager : MonoBehaviour
     }
 
     // 에스더 스킬 데미지, 무력화, 파괴 처리
-    public void ProcessEstherSkillDamage(float damage)
+    public void ProcessEstherSkillDamageData(BossDamageData data)
     {
         if (tileManager.IsBossTile(selectedEstherTiles))
         {
-            var boss = manager.GetBoss().GetComponent<BossStats>();
-            boss?.ReceiveDamage(new BossDamageData(damage, isTrueDamage: true));
-        }
-    }
-
-    public void ProcessEstherSkillStagger(float stagger)
-    {
-        if (tileManager.IsBossTile(selectedEstherTiles))
-        {
-            var boss = manager.GetBoss().GetComponent<BossStats>();
-            boss?.GetBossStagger(stagger);
-        }
-    }
-
-    public void ProcessEstherSkillDestroy(int destroy)
-    {
-        if (tileManager.IsBossTile(selectedEstherTiles))
-        {
-            var boss = manager.GetBoss().GetComponent<BossStats>();
-            boss?.GetBossDestroy(destroy);
+            boss.bossController.GetBossDamageData(data);
         }
     }
 
