@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class AssignedPatternNo3 : BossPattern
+public class PatternA_JumpAttack : BossPattern
 { // 점프찍기
-    public AssignedPatternNo3()
+    public PatternA_JumpAttack()
     {
-        turnGenerators.Add(MakePattern0);
+        turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern1);
     }
 
@@ -20,15 +20,10 @@ public class AssignedPatternNo3 : BossPattern
 
     public override void OnAfterTurnExecuted(BossAI ai)
     {
-        if (currentTurn == 2)
+        if (currentTurn == 1)
         {
             ai.bossInteraction.Moveto(targetTile);
         }
-    }
-
-    private BossPatternTurnInfo MakePattern0(BossAI ai)
-    {
-        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)

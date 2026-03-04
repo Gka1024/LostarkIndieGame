@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BossPatternHelper : MonoBehaviour
@@ -7,6 +8,8 @@ public class BossPatternHelper : MonoBehaviour
     private BossStats bossStats;
     private BossStatus bossStatus;
     private BossAnimation bossAnimation;
+
+    public ObjectManager objectManager;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject ghostSpherePrefab;
@@ -26,15 +29,9 @@ public class BossPatternHelper : MonoBehaviour
     // ================== 카운터 관련 ==========================
     // =========================================================
 
-    public void MakeBossCounter(int duration = 3)
+    public void MakeBossCounter(int duration)
     {
         bossAnimation.FlashCounterBlueLight();
-        bossStats.CounterReady(duration);
-    }
-
-    public void NotifyCounterResult(bool isSuccess)
-    {
-        bossAI.NotifyCounterResult(isSuccess);
     }
 
     // =========================================================
@@ -71,13 +68,11 @@ public class BossPatternHelper : MonoBehaviour
         bossAI.NotifyShieldBroken();
     }
 
-    // =========================================================
     // ================== Ghost Sphere (패턴4용 실행) ===========
-    // =========================================================
 
     public void SpawnGhostSphere(HexTile tile = null)
     {
-        if(tile == null)
+        if (tile == null)
         {
             tile = HexTileManager.Instance.GetRandomTile(HexTileManager.Instance.GetAllTiles());
         }
@@ -102,6 +97,25 @@ public class BossPatternHelper : MonoBehaviour
     public void ClearCurrentSphere()
     {
         currentSphere = null;
+    }
+
+    // ========= BreakWalls & BreakPillars (PatternF_Break_Walls_Pillars 용 실행)=========
+
+    public void BreakAllWalls()
+    {
+        GameManager.Instance.objectManager.BreakAllWalls();
+    }
+
+    public void BreakAllPillars()
+    {
+        GameManager.Instance.objectManager.BreakAllPillars();
+    }
+
+    // ================ CreatePillars (PatternF_CreatePillars* 패턴용)
+
+    public void CreatePillars()
+    {
+        objectManager.CreatePillarForImposter();
     }
 
     // =========================================================

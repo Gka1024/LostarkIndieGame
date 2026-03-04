@@ -199,4 +199,25 @@ public class PatternUtility
         return builder.Build();
     }
 
+    public static List<HexTile> GetAttackRangeByDistance(
+    BossAI ai,
+    (int direction, int count, bool clockwise)[] patterns)
+    {
+        HashSet<HexTile> attackRangeSet = new();
+
+        var current = ai.bossController.GetCurrentTile();
+        var facing = ai.bossController.GetPlayerTile();
+
+        foreach (var (dir, count, clockwise) in patterns)
+        {
+            var tiles = HexTileManager.Instance.tileDirectionHelper
+                .GetDistanceTiles(current, facing, dir, count, clockwise);
+
+            if (tiles != null)
+                attackRangeSet.UnionWith(tiles);
+        }
+
+        return new List<HexTile>(attackRangeSet);
+    }
+
 }

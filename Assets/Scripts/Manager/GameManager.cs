@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     public void TurnEnd()
     {
-        boss.GetComponent<BossStats>().ProceedTurn();
+        boss.GetComponent<BossStats>().OnTurnEnd();
         player.GetComponent<PlayerStats>().ProcessTurn();
 
         cardManager.OnTurnEnd();

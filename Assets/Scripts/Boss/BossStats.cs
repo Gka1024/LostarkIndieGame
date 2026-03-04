@@ -68,18 +68,20 @@ public class BossStats : MonoBehaviour
         staggerAmount = MAX_STAGGER;
     }
 
-    public void OnTurnEnd()
-    {
-        ReduceDestroyDuration();
-    }
-
     // =========================================================
     // ================== 데미지 처리 ===========================
     // =========================================================
 
-    public void ApplyDamage(BossDamageData data)
+    public void ApplyDamageData(BossDamageData data)
     {
         ReceiveDamage(data);
+        ReceiveStagger(data.stagger);
+        ReceiveDestroy(data.destroy);
+
+        if (data.isCounter)
+        {
+            ReceiveCounter();
+        }
     }
 
     public float CalculateDamage(float incomeDamage)
@@ -102,16 +104,6 @@ public class BossStats : MonoBehaviour
             : CalculateDamage(damage);
 
         finalDamage *= bossGetDamageRatio;
-
-        // =========================
-        // Counter 처리
-        // =========================
-
-        if (data.isCounter || isCounterReady)
-        {
-            isCounterReady = false;
-            bossAI.NotifyCounterResult(true);
-        }
 
         // =========================
         // Shield 처리
@@ -173,32 +165,19 @@ public class BossStats : MonoBehaviour
     // ================== Counter ===============================
     // =========================================================
 
-    public void CounterReady(int duration)
+    private void ReceiveCounter()
     {
-        isCounterReady = true;
-        counterDuration = duration;
+        bossAI.NotifyCounterHit();
     }
 
-    private void ReduceCounterDuration()
-    {
-        if (!isCounterReady) return;
-
-        counterDuration--;
-
-        if (counterDuration <= 0)
-        {
-            isCounterReady = false;
-            bossAI.NotifyCounterResult(false);
-        }
-    }
 
     // =========================================================
     // ================== Stagger ===============================
     // =========================================================
 
-    public void ApplyStagger(BossDamageData data)
+    private void ReceiveStagger(float amount)
     {
-        GetBossStagger(data.stagger);
+        GetBossStagger(amount);
     }
 
     public void GetBossStagger(float amount)
@@ -218,9 +197,9 @@ public class BossStats : MonoBehaviour
     // ================== Destroy ===============================
     // =========================================================
 
-    public void ApplyDestroy(BossDamageData data)
+    private void ReceiveDestroy(int amount)
     {
-        GetBossDestroy(data.destroy);
+        GetBossDestroy(amount);
     }
 
     public void GetBossDestroy(int amount)
@@ -270,9 +249,9 @@ public class BossStats : MonoBehaviour
     // ================== 턴 진행 ===============================
     // =========================================================
 
-    public void ProceedTurn()
+    public void OnTurnEnd()
     {
-        ReduceCounterDuration();
+        ReduceDestroyDuration();
     }
 
     // =========================================================

@@ -19,6 +19,8 @@ public class BossAI : MonoBehaviour
     public BossPatternTurnInfo currentTurnInfo;
     public BossPatternHelper bossPatternHelper;
 
+    private bool interruptFlag = false;
+
     private bool isTaunted;
     private bool isGroggied;
 
@@ -72,6 +74,8 @@ public class BossAI : MonoBehaviour
 
         currentPattern.OnAfterTurnExecuted(this);
 
+        if (currentPattern == null) Debug.Log("currentPattern Null!");
+
         currentPattern.CompleteTurn();
 
         if (currentPattern.IsFinished)
@@ -80,6 +84,8 @@ public class BossAI : MonoBehaviour
             currentPattern.OnPatternEnd(this);
             currentPattern = null;
         }
+
+        CheckBossPatternInterrupted();
 
         currentTurnInfo = null;
     }
@@ -161,15 +167,19 @@ public class BossAI : MonoBehaviour
     public void SetBossGroggy()
     {
         isGroggied = true;
+        RequestInterruptCurrentPattern();
 
         // 그로기 들어가면 패턴 중단
         if (currentTurnInfo != null)
             bossController.ClearAttackPreview(currentTurnInfo);
 
+        //bossAnimation.PlayGroggyAnimation();
+    }
+
+    private void SetBossGroggyOnTurnEnds()
+    {
         currentPattern = null;
         currentTurnInfo = null;
-
-        //bossAnimation.PlayGroggyAnimation();
     }
 
     public void RecoverFromGroggy()
@@ -181,6 +191,19 @@ public class BossAI : MonoBehaviour
         // 그로기 끝난 뒤 새 패턴 시작
         currentPattern = null;
         currentTurnInfo = null;
+    }
+
+    public void RequestInterruptCurrentPattern()
+    {
+        interruptFlag = true;
+    }
+
+    private void CheckBossPatternInterrupted()
+    {
+        if(interruptFlag)
+        {
+            InterruptCurrentPattern();
+        }
     }
 
     public void InterruptCurrentPattern()
@@ -210,9 +233,9 @@ public class BossAI : MonoBehaviour
         currentPattern?.OnSummonedObjectDestroyed(sphere.gameObject);
     }
 
-    public void NotifyCounterResult(bool isSuccess)
+    public void NotifyCounterHit()
     {
-
+        currentPattern?.OnBossCounterSuccess(this);
     }
 
     public void NotifyShieldBroken()

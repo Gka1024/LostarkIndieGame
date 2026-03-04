@@ -2550,6 +2550,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 882632984}
   tileManager: {fileID: 130202507}
+  boss: {fileID: 0}
+  player: {fileID: 0}
   isEstherUsing: 0
   ThirainSkillObject: {fileID: 5294419918705370510, guid: 0cead42036dd30a438ca81030f1bc637, type: 3}
   WayeSkillObject: {fileID: 7174195550263659820, guid: be3b81987c074e74187a8dc9850cfcd8, type: 3}
@@ -2662,6 +2664,12 @@ MonoBehaviour:
   wallFront: {fileID: 809598669}
   obstacleLeftUp: {fileID: 0}
   obstacleRightUp: {fileID: 1271174345}
+  imposterTiles:
+  - {fileID: 3469287836689291694}
+  - {fileID: 3469287837014207972}
+  - {fileID: 50155356}
+  - {fileID: 1989045076}
+  pillarObject: {fileID: 3022125418824130856, guid: d747ef04486c0b340a80fe97d1523546, type: 3}
 --- !u!1 &162158560
 GameObject:
   m_ObjectHideFlags: 0
@@ -11467,28 +11475,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9676c838564bb543866bba3af4ffb40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 882632984}
-  boss: {fileID: 514132754}
   bossAI: {fileID: 514132753}
   bossController: {fileID: 514132758}
-  bossPatternHelper: {fileID: 0}
   bossStatus: {fileID: 514132757}
   bossHPBar: {fileID: 648000549}
   staggerBar: {fileID: 314394360}
-  health: 24000
-  bossShield: 0
   isStaggerAble: 1
-  staggerAmount: 0
-  specialStaggerAble: 0
-  specialStaggerAmount: 0
-  isDestroyAble: 0
-  destroyDuration: 0
-  destroyAmount: 0
-  attackBase: 20
-  attackCur: 0
   bossGetDamageRatio: 1
   defenceBase: 80
-  defenceCur: 0
 --- !u!114 &514132751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11543,10 +11537,7 @@ MonoBehaviour:
   bossInteraction: {fileID: 514132751}
   bossAnimation: {fileID: 514132752}
   bossPhaseController: {fileID: 514132761}
-  bossPatternList: {fileID: 1868109048}
   bossPatternHelper: {fileID: 1868109047}
-  isPatternNull: 0
-  GhostSpherePrefab: {fileID: 0}
 --- !u!114 &514132754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11582,11 +11573,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boss: {fileID: 514132754}
-  status: 0
-  ai: {fileID: 514132753}
   bossStats: {fileID: 514132750}
   bossBuffsUI: {fileID: 474025880}
-  bossGroggyValue: 0
+  status: 0
 --- !u!114 &514132758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20841,8 +20830,8 @@ MonoBehaviour:
   battleItemManager: {fileID: 1131925908}
   playerStats: {fileID: 1380444491}
   chainSkillList: {fileID: 475392900}
-  Boss: {fileID: 514132748}
-  Player: {fileID: 1380444485}
+  boss: {fileID: 514132748}
+  player: {fileID: 1380444485}
   currentState: 0
   isCardUsing: 0
   currentCard: {fileID: 0}
@@ -38401,12 +38390,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd9225d4fd1df94a890ff2eb2c4c23f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boss: {fileID: 0}
-  bossAI: {fileID: 0}
-  bossStats: {fileID: 0}
-  bossAnimation: {fileID: 0}
-  GhostSpherePrefab: {fileID: 0}
-  sphereCurrent: {fileID: 0}
+  objectManager: {fileID: 0}
+  ghostSpherePrefab: {fileID: 0}
 --- !u!114 &1868109048
 MonoBehaviour:
   m_ObjectHideFlags: 0

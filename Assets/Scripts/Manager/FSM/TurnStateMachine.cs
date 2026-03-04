@@ -70,7 +70,7 @@ public class TurnStateMachine : MonoBehaviour
     private async Task HandleBossStartMotion()
     {
         boss.ai.OnTurnStart();
-        Debug.Log($"보스 모션 시작 : {manager.GetTurn()}");
+        Debug.Log($"{manager.GetTurn()} - 보스 패턴 예고");
         await Task.Delay(1000);
     }
 
@@ -78,7 +78,7 @@ public class TurnStateMachine : MonoBehaviour
 
     private async Task HandlePlayerTurn()
     {
-        Debug.Log($"플레이어 턴 시작 : {manager.GetTurn()}");
+        Debug.Log($"{manager.GetTurn()} - 플레이어 턴 시작");
 
         isPlayerTurnDone = false;
 
@@ -108,7 +108,7 @@ public class TurnStateMachine : MonoBehaviour
 
         PlayerTurnEnd();
         DisablePlayerControl();
-        Debug.Log($"플레이어 턴 종료 : {manager.GetTurn()}");
+        Debug.Log($"{manager.GetTurn()} - 플레이어 턴 종료");
 
     }
 
@@ -149,7 +149,7 @@ public class TurnStateMachine : MonoBehaviour
     private async Task HandleBossAttack()
     {
         await Task.Delay(1000);
-        Debug.Log($"보스 행동 시작 : {manager.GetTurn()}");
+        Debug.Log($"{manager.GetTurn()} - 보스 행동 시작");
         boss.bossController.OnTurnEnd();
     }
 
@@ -158,7 +158,7 @@ public class TurnStateMachine : MonoBehaviour
     {
         await Task.Delay(1000);
 
-        Debug.Log($"턴 계산 : {manager.GetTurn()}");
+        Debug.Log($"{manager.GetTurn()} - 턴 계산");
         manager.TurnEnd();
         manager.ProceedTurnCounter();
     }

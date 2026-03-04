@@ -5,17 +5,17 @@ public class BossPatternPhase3 : BossPatternPhase
     protected override void RegisterPatterns()
     {
         RegisterRegularPattern(new PatternNo9());
-        RegisterRegularPattern(new AssignedPatternNo1());
+        RegisterRegularPattern(new PatternA_WhirlWind());
     }
 
     protected override void RegisterOpeningPatterns()
     {
-        RegisterRegularPattern(new AssignedPatternNo1());
-        RegisterRegularPattern(new AssignedPatternNo2());
-        RegisterRegularPattern(new AssignedPatternNo3());
-        RegisterRegularPattern(new AssignedPatternNo4());
-        RegisterRegularPattern(new AssignedPatternNo5());
-        RegisterRegularPattern(new ForcedPatternNo1());
+        RegisterRegularPattern(new PatternA_WhirlWind());
+        RegisterRegularPattern(new PatternA_Rush());
+        RegisterRegularPattern(new PatternA_JumpAttack());
+        RegisterRegularPattern(new PatternA_Whirlwind_Back());
+        RegisterRegularPattern(new PatternA_SpearAttack());
+        RegisterRegularPattern(new PatternF_Brandish_Annihilate());
     }
 
     protected override void RegisterForcedPattern()

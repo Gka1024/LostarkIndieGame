@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AssignedPatternNo1 : BossPattern
+public class PatternA_WhirlWind : BossPattern
 {
     private bool isSpinning = false;
 
@@ -10,13 +10,13 @@ public class AssignedPatternNo1 : BossPattern
 
     private BossAI cachedAI;
 
-    public AssignedPatternNo1()
+    public PatternA_WhirlWind()
     {
-        turnGenerators.Add(MakePattern0); // 0
-        turnGenerators.Add(MakePattern0); // 1
+        //turnGenerators.Add(MakeIdleTurn); // 0
+        turnGenerators.Add(MakeIdleTurn); // 1
         turnGenerators.Add(MakePattern1); // 2
-        turnGenerators.Add(MakePattern1); // 3
-        turnGenerators.Add(MakePattern1); // 4
+                                          // turnGenerators.Add(MakePattern1); // 3
+                                          // turnGenerators.Add(MakePattern1); // 4
     }
 
     public override void OnStartPattern(BossAI ai)
@@ -64,10 +64,6 @@ public class AssignedPatternNo1 : BossPattern
         }
     }
 
-    private BossPatternTurnInfo MakePattern0(BossAI ai)
-    {
-        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
-    }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {

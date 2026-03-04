@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AssignedPatternNo2 : BossPattern
+public class PatternA_Rush : BossPattern
 {
     private HexTile targetTile;
     private bool willHitWall;
 
-    public AssignedPatternNo2()
+    public PatternA_Rush()
     {
-        turnGenerators.Add(MakePattern0); // 0
+        turnGenerators.Add(MakeIdleTurn); // 0
         turnGenerators.Add(MakePattern1); // 1
     }
 
@@ -22,13 +22,9 @@ public class AssignedPatternNo2 : BossPattern
     // 턴 데이터 생성
     // ===============================
 
-    private BossPatternTurnInfo MakePattern0(BossAI ai)
-    {
-        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
-    }
-
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
+        Debug.Log("Pattern2");
         var current = ai.bossController.GetCurrentTile();
         var playerTile = ai.bossController.GetPlayerTile();
 
@@ -50,29 +46,48 @@ public class AssignedPatternNo2 : BossPattern
 
     public override void OnAfterTurnExecuted(BossAI ai)
     {
-        // 🔥 마지막 턴에서만 돌진 처리
         if (currentTurn != 1)
             return;
 
-        HexTile moveTile = TileDirectionHelper.Instance
-            .GetFrontTile(targetTile, ai.bossController.GetCurrentTile());
+        if (targetTile == null)
+        {
+            Debug.LogWarning("Rush targetTile is null.");
+            return;
+        }
 
-        ai.GetBoss().GetComponent<BossInteraction>()
-            .Moveto(willHitWall ? moveTile : targetTile);
+        HexTile currentTile = ai.bossController.GetCurrentTile();
+
+        // 벽을 칠 경우, 실제 이동 위치는 벽 바로 앞 타일
+        HexTile moveTile = TileDirectionHelper.Instance
+            .GetFrontTile(targetTile, currentTile);
+
+        HexTile finalTile = willHitWall ? moveTile : targetTile;
+
+        if (finalTile == null)
+        {
+            Debug.LogWarning("Rush finalTile is null.");
+            return;
+        }
+
+        ai.GetBoss()
+          .GetComponent<BossInteraction>()
+          .Moveto(finalTile);
 
         if (willHitWall)
         {
             ai.bossStatus.MakeBossGroggy(3);
+
+            // 파괴 가능 상태 부여 (30 누적, 5턴 유지)
             ai.bossStats.EnableDestroy(30, 5);
+
             ai.bossStatus.AddBossBuff(
                 BossBuffFactory.CreateBuff(102, 1, 5)
             );
         }
 
-        // 오브젝트 파괴 처리
         HexTile objectTile =
             GameManager.Instance.objectManager
-            .IsObjectExist(ai.currentTurnInfo.TargetTiles, TileState.IsPillar);
+            .IsObjectExist(currentTurnInfo.TargetTiles, TileState.IsPillar);
 
         if (objectTile != null)
         {
@@ -86,5 +101,5 @@ public class AssignedPatternNo2 : BossPattern
         //animation.PlayRush();
     }
 
-    
+
 }

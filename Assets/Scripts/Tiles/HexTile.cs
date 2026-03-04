@@ -262,4 +262,5 @@ public enum TileSpecific
     ObstacleLeftDown,
     ObstacleRightUp,
     ObstacleRightDown,
+    PillarForPattern,
 }

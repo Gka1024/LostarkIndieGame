@@ -2,15 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class AssignedPatternNo5 : BossPattern
+public class PatternA_SpearAttack : BossPattern
 { // 공중에서 창 내려찍기
-    public AssignedPatternNo5()
+    public PatternA_SpearAttack()
     {
-        turnGenerators.Add(MakePattern0);
+        turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);
-        turnGenerators.Add(MakePattern0);
+        turnGenerators.Add(MakeIdleTurn);
     }
 
     private HexTile centerTile;
@@ -19,11 +19,6 @@ public class AssignedPatternNo5 : BossPattern
     {
         isTileFixed = false;
         base.OnStartPattern(ai);
-    }
-
-    private BossPatternTurnInfo MakePattern0(BossAI ai)
-    {
-        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)

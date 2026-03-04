@@ -88,35 +88,17 @@ public class BossController : MonoBehaviour
         return bossInteraction.GetCurrentTile();
     }
 
-    // 보스 데미지, 무력화, 파괴 및 디버프
+    // 보스 데미지 및 디버프
 
     public void GetBossDamageData(BossDamageData data)
     {
-        GetBossDamage(data);
-        GetBossStagger(data);
-        GetBossDestroy(data);
-    }
-
-    public void GetBossDamage(BossDamageData data)
-    {
-        bossStats.ApplyDamage(data);
-    }
-
-    public void GetBossStagger(BossDamageData data)
-    {
-        bossStats.ApplyStagger(data);
-    }
-
-    public void GetBossDestroy(BossDamageData data)
-    {
-        bossStats.ApplyDestroy(data);
+        bossStats.ApplyDamageData(data);
     }
 
     public void GetBossDebuff(BossDebuff debuff)
     {
         bossStatus.AddBossDebuff(debuff);
     }
-
 
     public void ShowAttackPreview(BossPatternTurnInfo info)
     {

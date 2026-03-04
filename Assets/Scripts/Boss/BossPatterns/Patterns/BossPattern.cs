@@ -49,8 +49,6 @@ public abstract class BossPattern
 
         currentTurnInfo = turnGenerators[currentTurn](ai);
 
-        currentTurn++;
-
         return currentTurnInfo;
     }
 
@@ -74,6 +72,7 @@ public abstract class BossPattern
 
     public virtual void OnSummonedObjectDestroyed(GameObject obj) { }
     public virtual void OnBossShieldBroke(BossPatternHelper helper) { }
+    public virtual void OnBossCounterSuccess(BossAI ai) { }
 
     public virtual void Reset()
     {
@@ -81,8 +80,6 @@ public abstract class BossPattern
         isFinished = false;
         currentTurnInfo = null;
     }
-
-    public virtual void ProcessCounter(bool isSuccess) { }
 
     protected virtual BossPatternTurnInfo MakeIdleTurn(BossAI ai)
     {

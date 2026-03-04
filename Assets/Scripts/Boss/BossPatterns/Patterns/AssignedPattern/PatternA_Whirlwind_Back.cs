@@ -2,15 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class AssignedPatternNo4 : BossPattern
+public class PatternA_Whirlwind_Back : BossPattern
 { // 휠윈드 하며 돌아가기
-    public AssignedPatternNo4()
+    public PatternA_Whirlwind_Back()
     {
-        turnGenerators.Add(MakePattern0);
+        turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);
-        turnGenerators.Add(MakePattern0);
+        turnGenerators.Add(MakeIdleTurn);
     }
 
     private HexTile centerTile;
@@ -23,20 +23,15 @@ public class AssignedPatternNo4 : BossPattern
 
     public override void OnAfterTurnExecuted(BossAI ai)
     {
-        if (currentTurn != 1 && currentTurn != 5)
+        if (currentTurn != 0 && currentTurn != 4)
         {
             HexTile targetTile = GetNextTile(ai.bossController.GetCurrentTile());
             GameManager.Instance.GetBoss().GetComponent<BossInteraction>().Moveto(targetTile);
         }
-        if (currentTurn == 5)
+        if (currentTurn == 4)
         {
             GameManager.Instance.GetBoss().GetComponent<BossInteraction>().Moveto(centerTile);
         }
-    }
-
-    private BossPatternTurnInfo MakePattern0(BossAI ai)
-    {
-        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)

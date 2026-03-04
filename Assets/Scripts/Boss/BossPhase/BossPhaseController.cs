@@ -101,7 +101,7 @@ public class BossPhaseController : MonoBehaviour
 
     public void RegisterAllGlobalPattern()
     {
-        RegisterGlobalPattern(() => bossStats.GetBossHPByLine() <= 130, new ForcedPatternNo1(), true);
+        RegisterGlobalPattern(() => bossStats.GetBossHPByLine() <= 130, new PatternF_Brandish_Annihilate(), true);
     }
 
     private void EvaluateGlobalPatterns()

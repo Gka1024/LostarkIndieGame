@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForcedPatternNo1 : BossPattern
-{
-    public ForcedPatternNo1()
+public class PatternF_Brandish_Annihilate : BossPattern
+{ // 휘적휘적 후 전멸
+    public PatternF_Brandish_Annihilate()
     {
         turnGenerators.Add(MakePattern1); // 0
         turnGenerators.Add(MakePattern2); // 1

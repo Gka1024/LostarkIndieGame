@@ -5,16 +5,16 @@ public class BossPatternPhase1 : BossPatternPhase
     protected override void RegisterPatterns()
     {
         RegisterRegularPattern(new PatternNo9());
-        RegisterRegularPattern(new AssignedPatternNo1());
+        //RegisterRegularPattern(new AssignedPatternNo1());
     }
 
     protected override void RegisterOpeningPatterns()
     {
-        RegisterOpeningPattern(new AssignedPatternNo1());
-        RegisterOpeningPattern(new AssignedPatternNo2());
-        RegisterOpeningPattern(new AssignedPatternNo3());
-        RegisterOpeningPattern(new AssignedPatternNo4());
-        RegisterOpeningPattern(new AssignedPatternNo5());
+        RegisterOpeningPattern(new PatternA_WhirlWind());
+        RegisterOpeningPattern(new PatternA_Rush());
+        RegisterOpeningPattern(new PatternA_JumpAttack());
+        RegisterOpeningPattern(new PatternA_Whirlwind_Back());
+        RegisterOpeningPattern(new PatternA_SpearAttack());
     }
 
     public override void OnEnter()
@@ -27,7 +27,7 @@ public class BossPatternPhase1 : BossPatternPhase
         forcedPatterns.Add(
             new AssignedPatternRule(
                 () => ai.bossStats.GetBossHPByLine() <= 120,
-                new ForcedPatternNo1(),
+                new PatternF_Brandish_Annihilate(),
                 true
             )
         );
