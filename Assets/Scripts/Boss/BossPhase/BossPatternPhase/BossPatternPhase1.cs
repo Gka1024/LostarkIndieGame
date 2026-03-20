@@ -2,9 +2,15 @@ using UnityEngine;
 
 public class BossPatternPhase1 : BossPatternPhase
 {   // 조우~기둥부수기
-    protected override void RegisterPatterns()
+    protected override void RegisterRegularPatterns()
     {
-        RegisterRegularPattern(new PatternNo9());
+        RegisterRegularPattern(new PatternR_Scribble_And_Spin());
+        RegisterRegularPattern(new PatternR_Rush());
+        RegisterRegularPattern(new PatternR_Cross_Attack());
+        RegisterRegularPattern(new PatternR_Sector_Attack_Twice());
+        RegisterRegularPattern(new PatternR_Sector_Attack_Once());
+        RegisterRegularPattern(new PatternR_Scribble_And_Cross());
+
         //RegisterRegularPattern(new AssignedPatternNo1());
     }
 
@@ -22,14 +28,8 @@ public class BossPatternPhase1 : BossPatternPhase
         Debug.Log("Phase 0 Enter");
     }
 
-    protected override void RegisterForcedPattern()
+    protected override void RegisterAssignedPattern()
     {
-        forcedPatterns.Add(
-            new AssignedPatternRule(
-                () => ai.bossStats.GetBossHPByLine() <= 120,
-                new PatternF_Brandish_Annihilate(),
-                true
-            )
-        );
+        assignedPatterns.Add(new AssignedPatternRule(() => ai.bossStats.GetBossHPByLine() <= 140, new PatternA_SpearAttack(), true));
     }
 }

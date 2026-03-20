@@ -15,7 +15,6 @@ public abstract class BossPattern
     protected BossPatternTurnInfo currentTurnInfo;
 
     public bool IsFinished => isFinished;
-    public int CurrentTurn => currentTurn;
     public BossPatternTurnInfo CurrentTurnInfo => currentTurnInfo;
 
     // 패턴 시작

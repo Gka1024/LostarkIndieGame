@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PatternNo8 : BossPattern
+public class PatternR_Sector_Attack_Twice : BossPattern
 { // 부채꼴 두번 찍기 패턴입니다.
-    public PatternNo8()
+    public PatternR_Sector_Attack_Twice()
     {
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);

@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PatternNo11 : BossPattern
+public class PatternR_Smash_4Times : BossPattern
 { // 4번찍기 패턴입니다. 
-    public PatternNo11()
+    public PatternR_Smash_4Times()
     {
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);

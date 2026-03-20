@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-public class PatternNo9 : BossPattern
+public class PatternR_Scribble_And_Spin : BossPattern
 { // 휘적휘적 찍고 돌리기 패턴입니다. 
-    public PatternNo9()
+    public PatternR_Scribble_And_Spin()
     {
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern2);

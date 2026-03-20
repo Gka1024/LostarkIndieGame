@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class BossPatternPhase2 : BossPatternPhase
 { // 기둥부수기 ~ 지형파괴
-    protected override void RegisterPatterns()
+    protected override void RegisterRegularPatterns()
     {
-        RegisterRegularPattern(new PatternNo9());
+        RegisterRegularPattern(new PatternR_Scribble_And_Spin());
         RegisterRegularPattern(new PatternA_WhirlWind());
     }
 
@@ -18,7 +18,7 @@ public class BossPatternPhase2 : BossPatternPhase
         RegisterRegularPattern(new PatternF_Brandish_Annihilate());
     }
 
-    protected override void RegisterForcedPattern()
+    protected override void RegisterAssignedPattern()
     {
         
     }

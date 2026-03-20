@@ -167,6 +167,23 @@ public class HexTileManager : MonoBehaviour
         return resultTile;
     }
 
+    public HexTile GetNearestTileByPosition(Vector3 pos)
+    {
+        HexTile best = null;
+        float minDist = float.MaxValue;
+
+        foreach (var tile in allTiles)
+        {
+            float dist = (tile.transform.position - pos).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                best = tile;
+            }
+        }
+
+        return best;
+    }
 
     // 타일의 속성(색 및 좌표)와 관련된 코드들입니다.
 

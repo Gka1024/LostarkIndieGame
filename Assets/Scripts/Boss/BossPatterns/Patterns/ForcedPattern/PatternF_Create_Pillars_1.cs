@@ -23,23 +23,24 @@ public class PatternF_Create_Pillars_1 : BossPattern
 
     public override void OnAfterTurnExecuted(BossAI ai)
     {
-        if (currentTurn != 3 || currentTurnInfo == null)
-            return;
-
-        List<HexTile> pillarsToBreak = new();
-
-        foreach (HexTile tile in currentTurnInfo.TargetTiles)
+        if (currentTurn == 3 || currentTurnInfo != null)
         {
-            if (tile.currentTileState == TileState.IsPillar)
-                pillarsToBreak.Add(tile);
+            List<HexTile> pillarsToBreak = new();
+
+            foreach (HexTile tile in currentTurnInfo.TargetTiles)
+            {
+                if (tile.currentTileState == TileState.IsPillar)
+                    pillarsToBreak.Add(tile);
+            }
+
+            foreach (HexTile pillar in pillarsToBreak)
+            {
+                brokenPillarTiles.Add(pillar);
+                GameManager.Instance.objectManager
+                    .DestroyObjectBySpecificTile(pillar);
+            }
         }
 
-        foreach (HexTile pillar in pillarsToBreak)
-        {
-            brokenPillarTiles.Add(pillar);
-            GameManager.Instance.objectManager
-                .DestroyObjectByTile(pillar);
-        }
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
@@ -65,8 +66,8 @@ public class PatternF_Create_Pillars_1 : BossPattern
         {
             (2, 2, true), (2, 2, false),
             (3, 3, true), (3, 3, false),
-            (4, 3, true), (4, 3, false),
-            (5, 3, true), (5, 3, false),
+            (4, 4, true), (4, 4, false),
+            (5, 5, true), (5, 5, false),
         };
 
         List<HexTile> attackRange = PatternUtility.GetAttackRangeByDistance(ai, patterns);
@@ -81,7 +82,7 @@ public class PatternF_Create_Pillars_1 : BossPattern
         foreach (HexTile tile in brokenPillarTiles)
         {
             explosionTiles.Add(tile);
-            explosionTiles.AddRange(tile.neighbors);
+            explosionTiles.AddRange(HexTileManager.Instance.GetTilesWithinRange(tile, 2));
         }
 
         return BossPatternTurnBuilder
@@ -111,7 +112,7 @@ public class PatternF_Create_Pillars_1 : BossPattern
                     continue;
 
                 explosionTiles.Add(tile);
-                explosionTiles.AddRange(tile.neighbors);
+                explosionTiles.AddRange(HexTileManager.Instance.GetTilesWithinRange(tile, 3));
             }
         }
 

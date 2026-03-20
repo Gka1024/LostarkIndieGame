@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PatternNo5 : BossPattern
+public class PatternR_Portal_Rush : BossPattern
 { // 포탈 돌진
 
-    public PatternNo5()
+    public PatternR_Portal_Rush()
     {
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern2);

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatternNo2 : BossPattern
+public class PatternR_Front_Back_Front : BossPattern
 {
     // 앞뒤앞 패턴
 
-    public PatternNo2()
+    public PatternR_Front_Back_Front()
     {
         turnGenerators.Add(ai => MakePatternCommon(ai));
         turnGenerators.Add(ai => MakePatternCommon(ai));

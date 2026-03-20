@@ -258,13 +258,10 @@ public class SkillManager : MonoBehaviour
         CardList.Instance.ApplyCardCooldown(baseStat);
         CardList.Instance.RemoveCardFromHand(baseStat);
 
-        if (!stats.HasChainSkill)
+        if (!stats.isSuperArmor)
         {
             ApplyPlayerSuperArmor(false);
         }
-
-        // 체인 스킬
-        //if (data.isChainSkill) StartCoroutine(ExecuteChainSkill(data));
 
         Destroy(skillGO);
     }

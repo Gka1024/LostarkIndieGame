@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PatternNo3 : BossPattern
+public class PatternR_Silence_InOut : BossPattern
 { // 침묵 후 안밖 패턴입니다.
 
     private bool isPatternInverted;
 
-    public PatternNo3()
+    public PatternR_Silence_InOut()
     {
         turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakeIdleTurn);

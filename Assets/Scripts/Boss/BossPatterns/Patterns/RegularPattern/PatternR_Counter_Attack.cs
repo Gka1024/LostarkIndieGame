@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatternNo1 : BossPattern
+public class PatternR_Counter_Attack : BossPattern
 {
     // 반격 패턴
 
@@ -14,7 +14,7 @@ public class PatternNo1 : BossPattern
 
     private const int WAIT_TURNS = 3;
 
-    public PatternNo1()
+    public PatternR_Counter_Attack()
     {
         // 대기 턴들
         for (int i = 0; i < WAIT_TURNS; i++)

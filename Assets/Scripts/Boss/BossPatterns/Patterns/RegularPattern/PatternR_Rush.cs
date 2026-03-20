@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PatternNo6 : BossPattern
+public class PatternR_Rush : BossPattern
 { // 돌진 패턴입니다.
-    public PatternNo6()
+    public PatternR_Rush()
     {
         turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakeIdleTurn);

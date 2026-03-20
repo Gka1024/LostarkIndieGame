@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PatternNo7 : BossPattern
+public class PatternR_3Counter : BossPattern
 { // 3카운터 패턴입니다. 
-    public PatternNo7()
+    public PatternR_3Counter()
     {
-
+        
     }
 
     public override void OnStartPattern(BossAI ai)

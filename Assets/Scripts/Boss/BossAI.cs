@@ -200,7 +200,7 @@ public class BossAI : MonoBehaviour
 
     private void CheckBossPatternInterrupted()
     {
-        if(interruptFlag)
+        if (interruptFlag)
         {
             InterruptCurrentPattern();
         }
@@ -208,6 +208,8 @@ public class BossAI : MonoBehaviour
 
     public void InterruptCurrentPattern()
     {
+        interruptFlag = false;
+
         if (currentPattern == null)
             return;
 

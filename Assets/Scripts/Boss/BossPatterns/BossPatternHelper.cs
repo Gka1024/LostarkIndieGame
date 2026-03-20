@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class BossPatternHelper : MonoBehaviour
 {
@@ -11,8 +13,23 @@ public class BossPatternHelper : MonoBehaviour
 
     public ObjectManager objectManager;
 
-    [Header("Prefabs")]
+    [Header("Ghost Sphere Create Pattern")]
     [SerializeField] private GameObject ghostSpherePrefab;
+
+    [Header("Pillar Create Pattern")]
+    [SerializeField] private GameObject displayName;
+    [SerializeField] private List<HexTile> tile_PillarCreate1;
+
+
+    [Header("Tile Break Pattern")]
+    [SerializeField] private List<HexTile> tile_ToBreak_Down;
+    [SerializeField] private List<HexTile> tile_ToBreak_Up;
+    [SerializeField] private List<HexTile> tile_ToBreak_Middle;
+    [SerializeField] private HexTile tileBossLand_Down;
+    [SerializeField] private HexTile tileBossLand_Up;
+
+    private bool isDownTileBroke;
+    private bool isUpTileBroke;
 
     private GameObject currentSphere;
 
@@ -115,7 +132,70 @@ public class BossPatternHelper : MonoBehaviour
 
     public void CreatePillars()
     {
-        objectManager.CreatePillarForImposter();
+        objectManager.CreatePillarForImposter(tile_PillarCreate1);
+    }
+
+    // ================ BreakTiles
+
+    public List<HexTile> GetBreakTilesDown()
+    {
+        return tile_ToBreak_Down;
+    }
+
+    public List<HexTile> GetBreakTilesUp()
+    {
+        return tile_ToBreak_Up;
+    }
+
+    public List<HexTile> GetBreakTilesMiddle()
+    {
+        return tile_ToBreak_Middle;
+    }
+
+    public HexTile GetDownBossTile()
+    {
+        return tileBossLand_Down;
+    }
+
+    public HexTile GetUpBossTile()
+    {
+        return tileBossLand_Up;
+    }
+
+    public void DestroyDownTiles()
+    {
+        foreach (HexTile tile in tile_ToBreak_Down)
+        {
+            tile.DestroyTile();
+        }
+        isDownTileBroke = true;
+
+        if (isUpTileBroke)
+        {
+            DestroyMiddleTiles();
+        }
+    }
+
+    public void DestroyUpTiles()
+    {
+        foreach (HexTile tile in tile_ToBreak_Up)
+        {
+            tile.DestroyTile();
+        }
+        isUpTileBroke = true;
+
+        if (isDownTileBroke)
+        {
+            DestroyMiddleTiles();
+        }
+    }
+
+    private void DestroyMiddleTiles()
+    {
+        foreach (HexTile tile in tile_ToBreak_Middle)
+        {
+            tile.DestroyTile();
+        }
     }
 
     // =========================================================

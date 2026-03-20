@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PatternNo10 : BossPattern
+public class PatternR_Whirlwind : BossPattern
 { // 휠윈드
-    public PatternNo10()
+    public PatternR_Whirlwind()
     {
         turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakeIdleTurn);

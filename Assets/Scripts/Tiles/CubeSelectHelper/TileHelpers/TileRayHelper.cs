@@ -157,4 +157,51 @@ public class TileRayHelper : MonoBehaviour
 
         return false;
     }
+
+    public static List<HexTile> GetCrossTiles(HexTile startTile, HexTile targetTile, int width, bool includeBack = true)
+    {
+        HashSet<HexTile> result = new();
+
+        if (startTile == null || targetTile == null)
+            return result.ToList();
+
+        // 기본 방향
+        Vector3 forward = (targetTile.transform.position - startTile.transform.position).normalized;
+
+        // 좌우 방향 (수평 회전)
+        Vector3 left = Quaternion.Euler(0, -90, 0) * forward;
+        Vector3 right = Quaternion.Euler(0, 90, 0) * forward;
+        Vector3 back = -forward;
+
+        // 방향 리스트 구성
+        List<Vector3> directions = new() { forward, left, right };
+
+        if (includeBack)
+            directions.Add(back);
+
+        foreach (var dir in directions)
+        {
+            // 방향에 맞는 가짜 타겟 생성
+            Vector3 fakeTargetPos = startTile.transform.position + dir * 10f;
+
+            HexTile fakeTarget = HexTileManager.Instance
+                .GetNearestTileByPosition(fakeTargetPos);
+
+            if (fakeTarget == null) continue;
+
+            List<HexTile> ray = TileRayHelper.GetRayTiles(
+                startTile,
+                fakeTarget,
+                width,
+                true
+            );
+
+            foreach (var tile in ray)
+            {
+                result.Add(tile);
+            }
+        }
+
+        return result.ToList();
+    }
 }

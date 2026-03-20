@@ -8,18 +8,18 @@ public abstract class BossPatternPhase
     public void Init(BossAI ai)
     {
         this.ai = ai;
-        RegisterPatterns();
+        RegisterRegularPatterns();
         RegisterOpeningPatterns();
-        RegisterForcedPattern();
+        RegisterAssignedPattern();
     }
 
     protected List<BossPattern> patterns = new();
     protected Queue<BossPattern> openingPatternsQueue = new();
-    protected List<AssignedPatternRule> forcedPatterns = new();
+    protected List<AssignedPatternRule> assignedPatterns = new();
 
-    protected abstract void RegisterPatterns();
+    protected abstract void RegisterRegularPatterns();
     protected abstract void RegisterOpeningPatterns();
-    protected abstract void RegisterForcedPattern();
+    protected abstract void RegisterAssignedPattern();
 
     protected void RegisterRegularPattern(BossPattern pattern)
     {

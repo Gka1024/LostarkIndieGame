@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PatternNo0 : BossPattern
+public class PatternR_Dummy : BossPattern
 { // 더미 패턴입니다. 
-    public PatternNo0()
+    public PatternR_Dummy()
     {
         turnGenerators.Add(MakePattern0);
         turnGenerators.Add(MakePattern1);

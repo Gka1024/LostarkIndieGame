@@ -12,7 +12,7 @@ public class TileFrontHelper : MonoBehaviour
 
         HexTile bestTile = null;
         float bestDot = -Mathf.Infinity;
-
+ 
         foreach (HexTile neighbor in playerTile.neighbors)
         {
             if (neighbor == null) continue;

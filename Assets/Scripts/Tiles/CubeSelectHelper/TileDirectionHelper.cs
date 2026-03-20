@@ -11,6 +11,7 @@ public class TileDirectionHelper : MonoBehaviour
     public TileBackHelper backHelper;
     public TileDistanceHelper distanceHelper;
     public TileRayHelper tileRayHelper;
+    public TileSectorHelper sectorHelper;
 
     void Awake()
     {
@@ -38,5 +39,10 @@ public class TileDirectionHelper : MonoBehaviour
     {
         return distanceHelper.GetClockWiseTiles(currentTile, facingTile, distance, tileCount, isClockWise);
     }
+
+    public List<HexTile> GetSectorTiles(HexTile currentTile, HexTile facingTile, int radius, int angle)
+    {
+        return sectorHelper.GetSectorTiles(currentTile, facingTile, radius, angle);
+    } 
 
 }

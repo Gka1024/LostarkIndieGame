@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 public class BossPatternTurnInfo
@@ -132,6 +133,11 @@ public class BossPatternTurnBuilder
     public BossPatternTurnBuilder SetSpecial()
     {
         info.SetSpecial();
+        return this;
+    }
+
+    public BossPatternTurnBuilder SetPreview(Color color)
+    {
         return this;
     }
 

@@ -79,7 +79,7 @@ public class BossPhaseController : MonoBehaviour
     {
         switch (phase)
         {
-            case BossPhase.Phase1: return new BossPatternPhase1();
+            case BossPhase.Phase1: return new BossPatternPhaseDummy(); // BossPatternPhase1();
             case BossPhase.Phase2: return new BossPatternPhase2();
             case BossPhase.Phase3: return new BossPatternPhase3();
             case BossPhase.Phase4: return new BossPatternPhase4();

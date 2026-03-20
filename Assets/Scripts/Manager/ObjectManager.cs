@@ -6,6 +6,7 @@ public class ObjectManager : MonoBehaviour
 {
     private Dictionary<TileSpecific, List<HexTile>> tileGroups = new();
     private Dictionary<TileSpecific, GameObject> tileObjects = new();
+    private Dictionary<HexTile, GameObject> tileObjectMap = new();
 
     [Header("Pillars")]
     public GameObject pillarLeftUp;
@@ -22,13 +23,14 @@ public class ObjectManager : MonoBehaviour
     public GameObject wallRightDown;
     public GameObject wallFront;
 
+    public GameObject OuterWalls;
+
     [Header("Obstacles")]
     public GameObject obstacleLeftUp;
     public GameObject obstacleRightUp;
 
     // ==== PatternF_Create_Pillars
 
-    public List<HexTile> imposterTiles;
     public GameObject pillarObject;
 
 
@@ -56,7 +58,7 @@ public class ObjectManager : MonoBehaviour
 
     public void Register(HexTile tile)
     {
-        if (tile.currentTileSpecific == TileSpecific.Default) return;
+        if (tile.currentTileState == TileState.Default) return;
 
         var type = tile.currentTileSpecific;
 
@@ -82,22 +84,37 @@ public class ObjectManager : MonoBehaviour
 
     public void DestroyObjectByTile(HexTile tile)
     {
-        if (tile.currentTileSpecific == TileSpecific.Default) return;
+        if (tile.currentTileState == TileState.Default) return;
 
-        tileObjects.TryGetValue(tile.currentTileSpecific, out GameObject obj);
-        Destroy(obj);
-
-        tileGroups.TryGetValue(tile.currentTileSpecific, out List<HexTile> tiles);
-
-        foreach (HexTile objectTile in tiles)
+        if (tileObjectMap.TryGetValue(tile, out GameObject obj))
         {
-            objectTile.currentTileSpecific = TileSpecific.Default;
+            Destroy(obj);
+            tileObjectMap.Remove(tile);
+        }
+
+        if (tileGroups.TryGetValue(tile.currentTileSpecific, out List<HexTile> tiles))
+        {
+            foreach (HexTile tileA in tiles)
+            {
+                if (tileA == tile)
+                {
+                    tileA.SetTileState(TileState.Default);
+                }
+            }
         }
     }
 
-    public void DestroyObject(GameObject obj)
+    public void DestroyObjectBySpecificTile(HexTile tile)
     {
+        if (tile.currentTileState == TileState.Default) return;
 
+        if (tileObjectMap.TryGetValue(tile, out GameObject obj))
+        {
+            Destroy(obj);
+            tileObjectMap.Remove(tile);
+        }
+
+        tile.SetTileState(TileState.Default);
     }
 
     public void BreakAllWalls()
@@ -177,7 +194,7 @@ public class ObjectManager : MonoBehaviour
 
     // ================== 
 
-    public void CreatePillarForImposter()
+    public void CreatePillarForImposter(List<HexTile> imposterTiles)
     {
         foreach (HexTile tile in imposterTiles)
         {
@@ -185,9 +202,13 @@ public class ObjectManager : MonoBehaviour
             tile.currentTileState = TileState.IsPillar;
             Vector3 ObjectPos = new Vector3(tile.transform.position.x, 1.5f, tile.transform.position.z);
 
-            Instantiate(pillarObject, ObjectPos, quaternion.identity);
+            Register(tile);
+
+            GameObject obj = Instantiate(pillarObject, ObjectPos, quaternion.identity);
+
+            tileObjectMap[tile] = obj;
         }
     }
 
-    
+
 }

@@ -34,7 +34,7 @@ public class HexTile : MonoBehaviour
         RegisterObject();
 
         Init();
-        
+
     }
 
     private void Init()
@@ -223,14 +223,29 @@ public class HexTile : MonoBehaviour
         return tileManager.IsTileMoveable(player.GetComponent<PlayerMove>().GetCurrentTile(), this, player.GetComponent<PlayerMove>().moveAbleDistance);
     }
 
-    public void ChangeTileState(TileState state)
+    public void SetTileState(TileState state, TileSpecific specific = TileSpecific.Default)
     {
-        if (currentTileState == TileState.IsWall)
-        {
-            currentTileState = TileState.Default;
-        }
+        currentTileState = state;
+        currentTileSpecific = specific;
     }
 
+    public void DestroyTile()
+    {
+        SetTileState(TileState.Destroyed);
+
+        MeshRenderer renderer = GetComponent<MeshRenderer>();
+        if(renderer != null)
+        {
+            renderer.enabled = false;
+        }
+
+        Collider collider = GetComponent<Collider>();
+        if(collider != null)
+        {
+            collider.enabled = false;
+        }
+        
+    }
 }
 
 public enum TileState

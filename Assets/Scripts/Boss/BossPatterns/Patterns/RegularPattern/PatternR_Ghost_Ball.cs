@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatternNo4 : BossPattern
+public class PatternR_Ghost_Ball : BossPattern
 { // 원래는 감금 후 
     private const int SHIELD_DURATION = 15;
 
     private bool isSphereDestroyed;
     private bool isShieldBroken;
 
-    public PatternNo4()
+    public PatternR_Ghost_Ball()
     {
         for (int i = 0; i < SHIELD_DURATION; i++)
         {
