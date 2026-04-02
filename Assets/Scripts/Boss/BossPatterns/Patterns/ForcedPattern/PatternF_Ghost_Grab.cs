@@ -1,11 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatternF_Create_Pillars_After_BreakTiles : BossPattern
-{ // 임포스터 패턴
-    public PatternF_Create_Pillars_After_BreakTiles()
+public class PatternF_Ghost_Grab : BossPattern
+{  // 벽 파괴 패턴
+    public PatternF_Ghost_Grab()
     {
-        turnGenerators.Add(MakeIdleTurn); // 2
+        turnGenerators.Add(MakePattern1); // 2
+    }
+
+    private BossPatternTurnInfo MakePattern1(BossAI ai)
+    {
+        ai.bossPatternHelper.BreakAllWalls();
+        ai.bossPatternHelper.BreakAllPillars();
+        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     public override void OnStartPattern(BossAI ai)

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8f413d872016784da9ee60e0724d071, type: 3}
-  m_Name: Hammer_PerfectSwing
+  m_Name: 131_Hammer_PerfectSwing
   m_EditorClassIdentifier: 
   CardID: 131
   cardName: 
@@ -29,18 +29,18 @@ MonoBehaviour:
   aroundRange: 0
   rayDistance: 0
   rayWidth: 0
-  skill_damage: 10
-  manaUse: 10
-  identityGain: 0
-  stagger: 0
-  coolDownTurn: 0
+  skill_damage: 15
+  manaUse: 30
+  identityGain: 5
+  stagger: 50
+  coolDownTurn: 30
   isCounterAble: 0
   isHeadAttack: 0
   isBackAttack: 0
   isSuperArmor: 0
-  opt1_turns: 0
-  opt1_damage_coef: 0
-  opt2_isTaunt: 0
-  opt2_taunt_turns: 0
-  opt3_skill_damage_1: 0
-  opt3_skill_damage_2: 0
+  opt1_turns: 2
+  opt1_damage_coef: 100
+  opt2_isTaunt: 1
+  opt2_taunt_turns: 3
+  opt3_skill_damage_1: 9
+  opt3_skill_damage_2: 10

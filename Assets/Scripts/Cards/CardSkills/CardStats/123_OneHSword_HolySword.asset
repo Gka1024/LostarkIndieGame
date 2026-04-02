@@ -9,33 +9,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f678709ed827f244dac8b1b55ac27014, type: 3}
-  m_Name: Hammer_JumpingSmash
+  m_Script: {fileID: 11500000, guid: ffaf26cd4de147b4bb5fc51ca80cf9cb, type: 3}
+  m_Name: 123_OneHSword_HolySword
   m_EditorClassIdentifier: 
-  CardID: 133
+  CardID: 123
   cardName: 
   isCardSkill: 1
   HasChainSkill: 0
   ChainSkill: {fileID: 0}
-  playerWeapon: 4
+  playerWeapon: 2
   beforeActTurn: 1
-  afterActTurn: 0
+  afterActTurn: 1
   needToSelectTile: 1
-  tileSelectType: 2
+  tileSelectType: 4
   skillAngle: 0
   skillAngleRange: 0
-  skillDistance: 2
-  skillDistanceRange: 2
+  skillDistance: 0
+  skillDistanceRange: 0
   aroundRange: 0
-  rayDistance: 0
-  rayWidth: 0
-  skill_damage: 10
-  manaUse: 0
-  identityGain: 0
-  stagger: 0
-  coolDownTurn: 0
+  rayDistance: 3
+  rayWidth: 2
+  skill_damage: 7
+  manaUse: 30
+  identityGain: 20
+  stagger: 40
+  coolDownTurn: 30
   isCounterAble: 0
   isHeadAttack: 0
   isBackAttack: 0
   isSuperArmor: 0
-  opt3_skill_damage: 0
+  chain_stagger: 5
+  chain_identity: 3
+  base_skill_damage_2: 5
+  base_skill_range: 3
+  opt2_damage: 0.5
+  opt2_turns: 3
+  opt3_damage_coef: 30

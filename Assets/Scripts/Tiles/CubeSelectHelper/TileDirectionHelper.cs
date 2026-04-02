@@ -27,12 +27,12 @@ public class TileDirectionHelper : MonoBehaviour
 
     public HexTile GetFrontTile(HexTile playerTile, HexTile targetTile)
     {
-        return frontHelper.GetFrontCube(playerTile, targetTile);
+        return frontHelper.GetFrontTile(playerTile, targetTile);
     }
 
     public HexTile GetBackTile(HexTile playerTile, HexTile targetTile, int distance)
     {
-        return backHelper.GetBackCube(playerTile, targetTile, distance);
+        return backHelper.GetBackTile(playerTile, targetTile, distance);
     }
 
     public List<HexTile> GetDistanceTiles(HexTile currentTile, HexTile facingTile, int distance, int tileCount, bool isClockWise = true)

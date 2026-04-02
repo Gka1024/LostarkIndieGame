@@ -9,37 +9,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d6d038080ed90f4ea5866da3e28fc03, type: 3}
-  m_Name: OneHSword_HolyProtection
+  m_Script: {fileID: 11500000, guid: 92ad3c5a527f5cb41909a95df264df33, type: 3}
+  m_Name: 111_GunLance_Bash
   m_EditorClassIdentifier: 
-  CardID: 121
-  cardName: 
+  CardID: 111
+  cardName: bash
   isCardSkill: 1
   HasChainSkill: 0
   ChainSkill: {fileID: 0}
-  playerWeapon: 2
+  playerWeapon: 3
   beforeActTurn: 0
-  afterActTurn: 0
-  needToSelectTile: 0
-  tileSelectType: 0
-  skillAngle: 0
-  skillAngleRange: 0
+  afterActTurn: 1
+  needToSelectTile: 1
+  tileSelectType: 1
+  skillAngle: 3
+  skillAngleRange: 1
   skillDistance: 0
   skillDistanceRange: 0
   aroundRange: 0
   rayDistance: 0
   rayWidth: 0
-  skill_damage: 0
-  manaUse: 0
-  identityGain: 0
-  stagger: 0
-  coolDownTurn: 0
-  isCounterAble: 0
-  isHeadAttack: 0
+  skill_damage: 1
+  manaUse: 10
+  identityGain: 5
+  stagger: 20
+  coolDownTurn: 10
+  isCounterAble: 1
+  isHeadAttack: 1
   isBackAttack: 0
   isSuperArmor: 0
-  shield_amount: 0
-  shield_turns: 0
-  opt1_shield_bonus: 0
-  opt1_shield_duration: 0
-  opt2_heal: 0
+  opt1_defenceDebuff: 10
+  opt1_turns: 5
+  opt2_staggerBonus: 10
+  opt3_identityBonus: 10

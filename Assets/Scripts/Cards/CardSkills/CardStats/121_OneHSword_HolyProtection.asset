@@ -9,37 +9,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61c5aebe6d52c3e4ba50f38e53eb3520, type: 3}
-  m_Name: GunLance_ShoutOfHatred
+  m_Script: {fileID: 11500000, guid: 4d6d038080ed90f4ea5866da3e28fc03, type: 3}
+  m_Name: 121_OneHSword_HolyProtection
   m_EditorClassIdentifier: 
-  CardID: 113
+  CardID: 121
   cardName: 
   isCardSkill: 1
   HasChainSkill: 0
   ChainSkill: {fileID: 0}
-  playerWeapon: 3
+  playerWeapon: 2
   beforeActTurn: 1
   afterActTurn: 0
-  needToSelectTile: 1
-  tileSelectType: 3
+  needToSelectTile: 0
+  tileSelectType: 0
   skillAngle: 0
   skillAngleRange: 0
   skillDistance: 0
   skillDistanceRange: 0
-  aroundRange: 2
+  aroundRange: 0
   rayDistance: 0
   rayWidth: 0
   skill_damage: 0
-  manaUse: 0
+  manaUse: 30
   identityGain: 0
   stagger: 0
-  coolDownTurn: 0
+  coolDownTurn: 20
   isCounterAble: 0
   isHeadAttack: 0
   isBackAttack: 0
   isSuperArmor: 0
-  taunt_turns: 0
-  opt1_taunt_turns: 0
-  opt2_shield_turns: 0
-  opt2_shield: 0
-  opt3_identity_bonus: 0
+  shield_amount: 100
+  shield_turns: 10
+  opt1_shield_bonus: 30
+  opt1_shield_duration: 5
+  opt2_heal: 10

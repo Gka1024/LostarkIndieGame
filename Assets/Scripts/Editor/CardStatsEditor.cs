@@ -27,6 +27,9 @@ public class CardStatsEditor : Editor
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("==== 딜레이 변수 ====", EditorStyles.boldLabel);
 
+        card.beforeActTurn = EditorGUILayout.IntField("Before Act Turn", card.beforeActTurn);
+        card.afterActTurn = EditorGUILayout.IntField("After Act Turn", card.afterActTurn);
+
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("==== 타일 선택 관련 변수 ====", EditorStyles.boldLabel);
         card.needToSelectTile = EditorGUILayout.Toggle("Need To Select Tile", card.needToSelectTile);

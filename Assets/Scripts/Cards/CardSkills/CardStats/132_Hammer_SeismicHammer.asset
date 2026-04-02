@@ -9,36 +9,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92ad3c5a527f5cb41909a95df264df33, type: 3}
-  m_Name: GunLance_Bash
+  m_Script: {fileID: 11500000, guid: 3118f0de1546d49409855a1c0aac9c3a, type: 3}
+  m_Name: 132_Hammer_SeismicHammer
   m_EditorClassIdentifier: 
-  CardID: 111
-  cardName: bash
+  CardID: 132
+  cardName: 
   isCardSkill: 1
   HasChainSkill: 0
   ChainSkill: {fileID: 0}
-  playerWeapon: 3
-  beforeActTurn: 1
-  afterActTurn: 1
+  playerWeapon: 4
+  beforeActTurn: 2
+  afterActTurn: 0
   needToSelectTile: 1
-  tileSelectType: 1
-  skillAngle: 3
-  skillAngleRange: 1
+  tileSelectType: 4
+  skillAngle: 0
+  skillAngleRange: 0
   skillDistance: 0
   skillDistanceRange: 0
   aroundRange: 0
-  rayDistance: 0
-  rayWidth: 0
-  skill_damage: 1
-  manaUse: 0
-  identityGain: 0
-  stagger: 1
-  coolDownTurn: 2
+  rayDistance: 3
+  rayWidth: 2
+  skill_damage: 8
+  manaUse: 35
+  identityGain: 10
+  stagger: 50
+  coolDownTurn: 30
   isCounterAble: 0
   isHeadAttack: 0
   isBackAttack: 0
   isSuperArmor: 0
-  opt1_defenceDebuff: 10
-  opt1_turns: 5
-  opt2_staggerBonus: 10
-  opt3_identityBonus: 10
+  opt1_damage_coef: 50
+  opt3_damage: 4

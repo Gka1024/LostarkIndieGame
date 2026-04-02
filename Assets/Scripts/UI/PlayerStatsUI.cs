@@ -21,8 +21,8 @@ public class PlayerStatsUI : MonoBehaviour
 
     public void Awake()
     {
-        PlayerMaxHP = playerStats.maxHealth;
-        PlayerMaxMana = playerStats.maxMana;
+        PlayerMaxHP = PlayerStats.MAX_HEALTH;
+        PlayerMaxMana = PlayerStats.MAX_MANA;
     }
 
     public void UpdateHPBar(float currentHealth)

@@ -17,6 +17,12 @@ public abstract class CardSkill : MonoBehaviour
     [SerializeField] protected int selectedTripod = 1;
     protected SkillObject skillOption;
 
+    void Start()
+    {
+        manager = GameManager.Instance;
+        playerAnimation = manager.playerAnimation;
+    }
+
     public CardStats Initialize(CardStats stats, int tripodIndex)
     {
         manager = GameManager.Instance;
@@ -30,14 +36,14 @@ public abstract class CardSkill : MonoBehaviour
         return runtimeCardStats;
     }
 
-    void Start()
+    public void SelectTripod(int num)
     {
-        manager = GameManager.Instance;
-        playerAnimation = manager.playerAnimation;
-        
+        selectedTripod = num;
+        skillOption = CreateOption(num);
+        skillOption?.ApplyOption(this); // 옵션 선택 시 stats 변화
     }
 
-    private void SetBaseCardStats(CardStats stat )
+    private void SetBaseCardStats(CardStats stat)
     {
         baseCardStats = stat;
         Debug.Log(CardID);
@@ -54,15 +60,9 @@ public abstract class CardSkill : MonoBehaviour
         return runtimeCardStats;
     }
 
-    public void SelectTripod(int num)
-    {
-        selectedTripod = num;
-        skillOption = CreateOption(num);
-        skillOption?.ApplyOption(this); // 옵션 선택 시 stats 변화
-    }
 
 
-    public virtual IEnumerator Execute()
+    public virtual IEnumerator Execute(SkillQueueData data, bool isBossHit)
     {
         Debug.Log("currentSkillExecute");
 
@@ -72,7 +72,7 @@ public abstract class CardSkill : MonoBehaviour
             yield break;
         }
 
-        yield return skillOption.Execute(this);
+        yield return skillOption.Execute(this, data, isBossHit);
     }
 
     public virtual void ApplySkill(bool isBossInRange = false, HexTile tile = null) { }

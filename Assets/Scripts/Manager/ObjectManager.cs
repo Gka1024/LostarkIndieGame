@@ -34,7 +34,12 @@ public class ObjectManager : MonoBehaviour
     public GameObject pillarObject;
 
 
-    private void Awake()
+    private void Start()
+    {
+        RegisterTileObjects();
+    }
+
+    private void RegisterTileObjects()
     {
         tileObjects.Clear();
 
@@ -70,6 +75,11 @@ public class ObjectManager : MonoBehaviour
         tileGroups[type].Add(tile);
     }
 
+    public void RegisterObject(ObstaclesScript obj)
+    {
+        
+    }
+
     public HexTile IsObjectExist(List<HexTile> tiles, TileState state)
     {
         foreach (HexTile tile in tiles)
@@ -82,29 +92,23 @@ public class ObjectManager : MonoBehaviour
         return null;
     }
 
-    public void DestroyObjectByTile(HexTile tile)
+    public void DestroyObjectByTile(HexTile tile) // 여러개에 걸쳐 있는 오브젝트를 제거하기 위해 사용
     {
         if (tile.currentTileState == TileState.Default) return;
 
-        if (tileObjectMap.TryGetValue(tile, out GameObject obj))
+        if (tileObjects.TryGetValue(tile.currentTileSpecific, out GameObject obj))
         {
-            Destroy(obj);
-            tileObjectMap.Remove(tile);
-        }
+            obj.GetComponent<ObstaclesScript>().DestroyObject();
 
-        if (tileGroups.TryGetValue(tile.currentTileSpecific, out List<HexTile> tiles))
-        {
-            foreach (HexTile tileA in tiles)
+            foreach(HexTile tileToChange in tileGroups.GetValueOrDefault(tile.currentTileSpecific))
             {
-                if (tileA == tile)
-                {
-                    tileA.SetTileState(TileState.Default);
-                }
+                tileToChange.SetTileState(TileState.Default);
             }
         }
+
     }
 
-    public void DestroyObjectBySpecificTile(HexTile tile)
+    public void DestroyObjectBySpecificTile(HexTile tile) // 하나의 타일에 있는 오브젝트 제거하기 위해 사용
     {
         if (tile.currentTileState == TileState.Default) return;
 

@@ -17,9 +17,9 @@ public abstract class BossPatternPhase
     protected Queue<BossPattern> openingPatternsQueue = new();
     protected List<AssignedPatternRule> assignedPatterns = new();
 
-    protected abstract void RegisterRegularPatterns();
-    protected abstract void RegisterOpeningPatterns();
-    protected abstract void RegisterAssignedPattern();
+    protected abstract void RegisterRegularPatterns(); // 해당 페이즈에서 통상적으로 사용하는 패턴
+    protected abstract void RegisterOpeningPatterns(); // 해당 페이즈 진입 시 확정적으로 사용하는 패턴
+    protected abstract void RegisterAssignedPattern(); // 해당 페이즈 내에서 특정 체력 이하시 사용하는 패턴(페이즈 변화 x)
 
     protected void RegisterRegularPattern(BossPattern pattern)
     {

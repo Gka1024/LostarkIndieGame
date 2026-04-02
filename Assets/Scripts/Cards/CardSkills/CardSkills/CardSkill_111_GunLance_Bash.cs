@@ -41,9 +41,9 @@ public class GunLance_Bash_Option1 : SkillObject
         }
     }
 
-    public override IEnumerator Execute(CardSkill card)
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
-        base.Execute(card);
+        base.Execute(card, data, isBossHit);
 
         if (isBossHit)
         {

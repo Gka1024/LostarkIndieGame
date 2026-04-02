@@ -37,9 +37,9 @@ public class CardSkill_QuickMove : SkillObject
         card.runtimeCardStats.ApplyOption(2);
     }
 
-    public override IEnumerator Execute(CardSkill card)
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
-        base.Execute(card);
+        base.Execute(card, data, isBossHit);
 
         HexTile tile = SkillManager.Instance.GetSelectedTile();
 

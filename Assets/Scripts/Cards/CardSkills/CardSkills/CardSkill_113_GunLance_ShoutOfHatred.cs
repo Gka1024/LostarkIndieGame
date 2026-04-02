@@ -30,9 +30,9 @@ public class GunLance_ShoutOfHatred1 : SkillObject
         card.runtimeCardStats.ApplyOption(1);
     }
 
-    public override IEnumerator Execute(CardSkill card)
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
-        yield return base.Execute(card);
+        yield return base.Execute(card, data, isBossHit);
 
         if (card.runtimeCardStats is CardStats_GunLance_ShoutOfHatred stat)
         {
@@ -52,9 +52,9 @@ public class GunLance_ShoutOfHatred2 : SkillObject
         card.runtimeCardStats.ApplyOption(2);
     }
 
-    public override IEnumerator Execute(CardSkill card)
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
-        yield return base.Execute(card);
+        yield return base.Execute(card, data, isBossHit);
 
         if (card.runtimeCardStats is CardStats_GunLance_ShoutOfHatred stat)
         {
@@ -76,9 +76,9 @@ public class GunLance_ShoutOfHatred3 : SkillObject
         card.runtimeCardStats.ApplyOption(3);
     }
 
-    public override IEnumerator Execute(CardSkill card)
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
-        yield return base.Execute(card);
+        yield return base.Execute(card, data, isBossHit);
 
         if (card.runtimeCardStats is CardStats_GunLance_ShoutOfHatred stat)
         {

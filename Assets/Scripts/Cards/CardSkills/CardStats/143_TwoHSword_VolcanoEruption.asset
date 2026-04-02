@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8e1c4b4c549f8f4a816b9118ed26641, type: 3}
-  m_Name: TwoHSword_VolcanoEruption
+  m_Name: 143_TwoHSword_VolcanoEruption
   m_EditorClassIdentifier: 
   CardID: 143
   cardName: 
@@ -29,14 +29,14 @@ MonoBehaviour:
   aroundRange: 0
   rayDistance: 0
   rayWidth: 0
-  skill_damage: 0
-  manaUse: 0
-  identityGain: 0
-  stagger: 0
-  coolDownTurn: 0
+  skill_damage: 10
+  manaUse: 40
+  identityGain: 10
+  stagger: 40
+  coolDownTurn: 20
   isCounterAble: 0
   isHeadAttack: 0
   isBackAttack: 0
   isSuperArmor: 0
-  base_skill_damage_2: 0
-  opt2_damage_coef: 0
+  base_skill_damage_2: 5
+  opt2_damage_coef: 40

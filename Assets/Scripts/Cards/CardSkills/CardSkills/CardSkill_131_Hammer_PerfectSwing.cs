@@ -37,9 +37,9 @@ public class Hammer_PerfectSwing_2 : SkillObject
         card.runtimeCardStats.ApplyOption(2);
     }
 
-    public override IEnumerator Execute(CardSkill card)
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
-        yield return base.Execute(card);
+        yield return base.Execute(card, data, isBossHit);
 
         if (isBossHit)
         {

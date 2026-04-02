@@ -28,8 +28,8 @@ public class CardText : MonoBehaviour
     {
         cardStats = CardList.Instance.GetCardStats(GetComponent<CardSkill>().CardID);
         playerStats = FindAnyObjectByType<PlayerStats>();
-        uiManager = FindAnyObjectByType<UIManager>();
-        cardDataBase = FindAnyObjectByType<CardDataBase>();
+        uiManager = GameManager.Instance.UIManager;
+        cardDataBase =GameManager.Instance.cardManager.cardDataBase;
 
         cardData = cardDataBase.GetCardById(cardStats.CardID);
 

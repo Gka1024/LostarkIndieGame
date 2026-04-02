@@ -9,34 +9,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9914a819725c7ce4ab4ecefdc2fde592, type: 3}
-  m_Name: TwoHSword_FinishStrike
+  m_Script: {fileID: 11500000, guid: f678709ed827f244dac8b1b55ac27014, type: 3}
+  m_Name: 133_Hammer_JumpingSmash
   m_EditorClassIdentifier: 
-  CardID: 141
+  CardID: 133
   cardName: 
   isCardSkill: 1
   HasChainSkill: 0
   ChainSkill: {fileID: 0}
-  playerWeapon: 1
-  beforeActTurn: 0
-  afterActTurn: 1
+  playerWeapon: 4
+  beforeActTurn: 1
+  afterActTurn: 0
   needToSelectTile: 1
-  tileSelectType: 1
-  skillAngle: 3
-  skillAngleRange: 1
-  skillDistance: 0
-  skillDistanceRange: 0
+  tileSelectType: 2
+  skillAngle: 0
+  skillAngleRange: 0
+  skillDistance: 2
+  skillDistanceRange: 2
   aroundRange: 0
   rayDistance: 0
   rayWidth: 0
-  skill_damage: 1
-  manaUse: 0
-  identityGain: 0
-  stagger: 0
-  coolDownTurn: 0
+  skill_damage: 10
+  manaUse: 30
+  identityGain: 10
+  stagger: 40
+  coolDownTurn: 15
   isCounterAble: 0
   isHeadAttack: 0
   isBackAttack: 0
   isSuperArmor: 0
-  opt2_skill_damage: 0
-  opt3_skill_damage: 0
+  opt3_skill_damage: 2

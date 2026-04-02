@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a799123693044f4ea275518e045797f, type: 3}
-  m_Name: GunLance_BurstCannon
+  m_Name: 112_GunLance_BurstCannon
   m_EditorClassIdentifier: 
   CardID: 112
   cardName: 
@@ -29,18 +29,18 @@ MonoBehaviour:
   aroundRange: 0
   rayDistance: 0
   rayWidth: 0
-  skill_damage: 10
-  manaUse: 0
+  skill_damage: 12
+  manaUse: 40
   identityGain: 0
-  stagger: 10
-  coolDownTurn: 0
+  stagger: 50
+  coolDownTurn: 20
   isCounterAble: 0
   isHeadAttack: 0
   isBackAttack: 0
   isSuperArmor: 0
   opt1_isChain: 1
-  opt1_damage: 0
-  opt1_stagger: 0
+  opt1_damage: 10
+  opt1_stagger: 30
   opt1_identity: 0
-  opt3_shield: 0
-  opt3_damage: 0
+  opt3_shield: 200
+  opt3_damage: 2

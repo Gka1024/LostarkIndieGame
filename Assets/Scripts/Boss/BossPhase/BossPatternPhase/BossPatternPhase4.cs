@@ -4,22 +4,24 @@ public class BossPatternPhase4 : BossPatternPhase
 {
     protected override void RegisterRegularPatterns()
     {
-        RegisterRegularPattern(new PatternR_Scribble_And_Spin());
-        RegisterRegularPattern(new PatternA_WhirlWind());
+        RegisterRegularPattern(new PatternR_Whirlwind());
+        RegisterRegularPattern(new PatternR_Front_Back_Front());
+        RegisterRegularPattern(new PatternR_Swing_And_Spin());
+        RegisterRegularPattern(new PatternR_Sector_Attack_Twice());
+        RegisterRegularPattern(new PatternR_Swing_Cross_Attack());
+        RegisterRegularPattern(new PatternR_Counter_Attack());
+
     }
 
     protected override void RegisterOpeningPatterns()
     {
-        RegisterRegularPattern(new PatternA_WhirlWind());
-        RegisterRegularPattern(new PatternA_Rush());
-        RegisterRegularPattern(new PatternA_JumpAttack());
-        RegisterRegularPattern(new PatternA_Whirlwind_Back());
-        RegisterRegularPattern(new PatternA_SpearAttack());
-        RegisterRegularPattern(new PatternF_Brandish_Annihilate());
+                                                                        
     }
 
     protected override void RegisterAssignedPattern()
     {
-        
+        assignedPatterns.Add(new AssignedPatternRule(() => ai.bossStats.GetBossHPByLine() <= 39, new PatternF_Trash_Guys(), true)); // 잡기
+        assignedPatterns.Add(new AssignedPatternRule(() => ai.bossStats.GetBossHPByLine() <= 26, new PatternF_Trash_Guys(), true)); // 잡기
+        assignedPatterns.Add(new AssignedPatternRule(() => ai.bossStats.GetBossHPByLine() <= 13, new PatternF_Trash_Guys(), true)); // 잡기
     }
 }

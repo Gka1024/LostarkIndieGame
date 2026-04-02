@@ -10,6 +10,8 @@ public class CardManager : MonoBehaviour
     public ObjectClickHandler objectClickHandler;
     public SkillManager skillManager;
 
+    public CardDataBase cardDataBase;
+
     [SerializeField]
     private Vector3 centerPosition = new Vector3(350, -450, 0); // 카드들의 중앙 위치
     public float cardSpace; // 카드 간격 

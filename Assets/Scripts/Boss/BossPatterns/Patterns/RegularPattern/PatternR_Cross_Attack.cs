@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 public class PatternR_Cross_Attack : BossPattern
-{ // 더미 패턴입니다. 
+{ // 십자로 찍기 패턴입니다.
     public PatternR_Cross_Attack()
     {
         turnGenerators.Add(MakePattern0);
@@ -25,9 +25,9 @@ public class PatternR_Cross_Attack : BossPattern
     {
         HexTile curTile = ai.bossController.GetCurrentTile();
         HexTile playerTile = ai.bossController.GetPlayerTile();
-       List<HexTile> attackRange = TileRayHelper.GetCrossTiles(playerTile, curTile, 2 );
+        List<HexTile> attackRange = TileRayHelper.GetCrossTiles(playerTile, curTile, 2);
 
-       return BossPatternTurnBuilder.Create(attackRange).SetDamage(1).Build();
+        return BossPatternTurnBuilder.Create(attackRange).SetDamage(1).Build();
     }
 
     public override void PerformActionAnimation(BossAnimation animation)

@@ -10,10 +10,7 @@ public class BossPatternPhaseDummy : BossPatternPhase
 
     protected override void RegisterOpeningPatterns()
     {
-        RegisterOpeningPattern(new PatternF_Break_All_Walls_Pillars());
-        //RegisterOpeningPattern(new PatternF_Create_Pillars_1());
-
-       // RegisterOpeningPattern(new PatternF_Destroy_Land_Down());
+        RegisterOpeningPattern(new PatternR_Dummy());
         
     }
 

@@ -69,9 +69,7 @@ public class PatternA_Rush : BossPattern
             return;
         }
 
-        ai.GetBoss()
-          .GetComponent<BossInteraction>()
-          .Moveto(finalTile);
+        ai.GetBoss().GetComponent<BossInteraction>().Moveto(finalTile);
 
         if (willHitWall)
         {
@@ -85,14 +83,13 @@ public class PatternA_Rush : BossPattern
             );
         }
 
-        HexTile objectTile =
-            GameManager.Instance.objectManager
-            .IsObjectExist(currentTurnInfo.TargetTiles, TileState.IsPillar);
+        HexTile objectTile = GameManager.Instance.objectManager.IsObjectExist(currentTurnInfo.TargetTiles, TileState.IsPillar);
+
+        Debug.Log(objectTile);
 
         if (objectTile != null)
         {
-            GameManager.Instance.objectManager
-                .DestroyObjectByTile(objectTile);
+            GameManager.Instance.objectManager.DestroyObjectByTile(objectTile);
         }
     }
 

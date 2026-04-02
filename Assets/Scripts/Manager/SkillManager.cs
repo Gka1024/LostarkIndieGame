@@ -238,20 +238,11 @@ public class SkillManager : MonoBehaviour
 
         // 3. 대상 판정 및 효과 처리
         bool bossInRange = tileManager.IsBossTile(data.selectedTiles);
-
-        if (bossInRange)
-        {
-            ApplyBossSkills(stats);
-
-            GivePlayerIdentity(stats.identityGain);
-        }
+        yield return StartCoroutine(cardSkill.Execute(data, bossInRange));
 
         // 4. 애니메이션 & 이펙트
         player.GetComponent<Player>().anim.ChangeWeapon(baseStat.playerWeapon);
         cardSkill.PlayAnimation(data.mainTile);
-
-        // 5. 실행 (코루틴 대기)
-        yield return StartCoroutine(cardSkill.Execute());
 
         // 6. 사후 처리
         playerStats.UseMana(data.manaCost);
@@ -324,7 +315,9 @@ public class SkillManager : MonoBehaviour
         float damage = stat.skill_damage;
         float stagger = stat.stagger;
 
-        boss.GetComponent<Boss>().bossController.GetBossDamageData(new BossDamageData(damage, stagger));
+        BossDamageData data = DamageSystem.Instance.ApplyPlayerStats(new BossDamageData(damage, stagger));
+
+        boss.GetComponent<Boss>().bossController.GetBossDamageData(data);
     }
 
     public void ApplyBossSkills(ChainStats stat)

@@ -13,7 +13,7 @@ public class Chain_Hammer_Sizemic : ChainSkill
         {
             if (GetOriginalCardStats() is CardStats_Hammer_SeismicHammer stat)
             {
-                chainStats.skill_damage = stat.opt3_damage_coef;
+                chainStats.skill_damage = stat.opt3_damage;
                 chainStats.needToSelectTile = true;
                 
                 chainStats.tileSelectType = TileSelectType.Distance;

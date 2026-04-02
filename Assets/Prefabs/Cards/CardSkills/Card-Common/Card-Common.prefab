@@ -364,11 +364,11 @@ MonoBehaviour:
   cardDes: {fileID: 4975623930293762462}
   isCardDataNull: 0
   cardData:
-    id: 0
+    id: 1
     name: 
     description: 
     options: []
-  cardStats: {fileID: 0}
+  cardStats: {fileID: 11400000, guid: 7d09ebb84e58e61468b7bed98520ee8f, type: 2}
 --- !u!114 &4631419663774595742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,11 +383,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardID: 1
   manager: {fileID: 0}
-  tileSelector: {fileID: 0}
-  skillManager: {fileID: 0}
-  cardList: {fileID: 0}
-  bossStats: {fileID: 0}
-  playerStats: {fileID: 0}
   playerAnimation: {fileID: 0}
   chainSkill: {fileID: 0}
   baseCardStats: {fileID: 0}

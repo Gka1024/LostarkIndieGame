@@ -23,7 +23,7 @@ public class PlayerBuffState : MonoBehaviour
     void Start()
     {
         playerStats = GetComponent<PlayerStats>();
-        maxHealth = playerStats.maxHealth;
+        maxHealth = PlayerStats.MAX_HEALTH;
     }
 
     // ==== 마나 로직

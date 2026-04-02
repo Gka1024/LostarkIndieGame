@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TileRayHelper : MonoBehaviour
@@ -12,7 +14,6 @@ public class TileRayHelper : MonoBehaviour
 
             return null;
         }
-
 
         Vector3 forwardDir = (targetTile.transform.position - startTile.transform.position).normalized;
 
@@ -158,50 +159,55 @@ public class TileRayHelper : MonoBehaviour
         return false;
     }
 
-    public static List<HexTile> GetCrossTiles(HexTile startTile, HexTile targetTile, int width, bool includeBack = true)
+    public static List<HexTile> GetCrossTiles(HexTile centerTile, HexTile targetTile, int width, bool includeBack = true)
     {
         HashSet<HexTile> result = new();
 
-        if (startTile == null || targetTile == null)
+        if (centerTile == null || targetTile == null || centerTile.CubeCoord == targetTile.CubeCoord)
             return result.ToList();
 
-        // 기본 방향
-        Vector3 forward = (targetTile.transform.position - startTile.transform.position).normalized;
-
-        // 좌우 방향 (수평 회전)
-        Vector3 left = Quaternion.Euler(0, -90, 0) * forward;
-        Vector3 right = Quaternion.Euler(0, 90, 0) * forward;
-        Vector3 back = -forward;
-
-        // 방향 리스트 구성
-        List<Vector3> directions = new() { forward, left, right };
+        // 1. 기존 직선 (forward + back)
+        result.UnionWith(GetRayTiles(centerTile, targetTile, width, true));
 
         if (includeBack)
-            directions.Add(back);
+            result.UnionWith(GetRayTiles(targetTile, centerTile, width, true));
 
-        foreach (var dir in directions)
+        // 2. 수직 방향 계산 (90도 회전)
+        Vector3 forward = (targetTile.transform.position - centerTile.transform.position).normalized;
+
+        Vector3 perpendicular = Quaternion.Euler(0, 90, 0) * forward;
+
+        // 3. center 기준으로 양쪽 방향 ray 생성
+        Vector3 posA = centerTile.transform.position + perpendicular * 10f;
+        Vector3 posB = centerTile.transform.position - perpendicular * 10f;
+
+        HexTile tileA = HexTileManager.Instance.GetNearestTileByPosition(posA);
+        HexTile tileB = HexTileManager.Instance.GetNearestTileByPosition(posB);
+
+        if (tileA != null)
+            result.UnionWith(GetRayTiles(centerTile, tileA, width, true));
+
+        if (tileB != null)
+            result.UnionWith(GetRayTiles(centerTile, tileB, width, true));
+
+        return result.ToList();
+    }
+
+    public static List<HexTile> GetHexagramTiles(HexTile startTile)
+    {
+        HashSet<HexTile> result = new();
+
+        if (startTile == null) return result.ToList();
+
+        List<HexTile> tileNeighbor = startTile.neighbors.ToList();
+
+        foreach (HexTile tile in tileNeighbor)
         {
-            // 방향에 맞는 가짜 타겟 생성
-            Vector3 fakeTargetPos = startTile.transform.position + dir * 10f;
-
-            HexTile fakeTarget = HexTileManager.Instance
-                .GetNearestTileByPosition(fakeTargetPos);
-
-            if (fakeTarget == null) continue;
-
-            List<HexTile> ray = TileRayHelper.GetRayTiles(
-                startTile,
-                fakeTarget,
-                width,
-                true
-            );
-
-            foreach (var tile in ray)
-            {
-                result.Add(tile);
-            }
+            result.UnionWith(GetRayTiles(startTile, tile, 2, true));
         }
 
         return result.ToList();
     }
+
+
 }

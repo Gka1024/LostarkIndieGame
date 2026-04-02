@@ -22,7 +22,7 @@ public class ChainSkill_GunLance_BurstCannon : ChainSkill
         
         // 플레이어의 앞쪽 타일 계산
 
-        HexTile frontTile = HexTileManager.Instance.tileFrontHelper.GetFrontCube(playerTile, targetTile);
+        HexTile frontTile = HexTileManager.Instance.tileFrontHelper.GetFrontTile(playerTile, targetTile);
 
         Debug.Log($"FrontTile : {frontTile}, TileCoord : {frontTile.CubeCoord}");
 

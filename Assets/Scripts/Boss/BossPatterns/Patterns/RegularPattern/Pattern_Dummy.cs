@@ -6,8 +6,12 @@ public class PatternR_Dummy : BossPattern
 { // 더미 패턴입니다. 
     public PatternR_Dummy()
     {
-        turnGenerators.Add(MakePattern0);
-        turnGenerators.Add(MakePattern1);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
     }
 
     public override void OnStartPattern(BossAI ai)

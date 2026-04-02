@@ -31,9 +31,9 @@ public class GunLance_BurstCannon1 : SkillObject
         card.runtimeCardStats.ApplyOption(1);
     }
 
-    public override IEnumerator Execute(CardSkill card)
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
-        yield return base.Execute(card);
+        yield return base.Execute(card, data, isBossHit);
 
         Debug.Log("Execute - GunLance_BurstCannon1");
         // 기본 Execute 로직을 먼저 실행합니다. (보스 피격 여부 등 확인)
@@ -47,7 +47,7 @@ public class GunLance_BurstCannon1 : SkillObject
 
         // 플레이어의 뒤쪽 타일 계산
 
-        HexTile backTile = HexTileManager.Instance.tileBackHelper.GetBackCube(playerTile, targetTile);
+        HexTile backTile = HexTileManager.Instance.tileBackHelper.GetBackTile(playerTile, targetTile);
 
         Debug.Log($"BackTile : {backTile}");
 

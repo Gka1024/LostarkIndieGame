@@ -73,7 +73,7 @@ public class BossController : MonoBehaviour
             BossTile = GetCurrentTile();
         }
 
-        HexTile tile = HexTileManager.Instance.tileBackHelper.GetBackCube(PlayerTile, BossTile, KnockbackDistance);
+        HexTile tile = HexTileManager.Instance.tileBackHelper.GetBackTile(PlayerTile, BossTile, KnockbackDistance);
         player.move.PlayerKnockBack(tile);
     }
 
@@ -120,6 +120,12 @@ public class BossController : MonoBehaviour
             tile.isBossAttackRange = false;
             tile.ResetColor();
         }
+    }
+
+    public void GiveBossDamageForDebug(float damage)
+    {
+        BossDamageData data = new(damage);
+        GetBossDamageData(data);
     }
 
 

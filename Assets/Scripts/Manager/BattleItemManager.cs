@@ -514,7 +514,7 @@ public class BattleItemManager : MonoBehaviour
                 break;
 
             case PotionType.Identity:
-                playerStats.AddPlayerIdentity(PlayerStats.IDENTITY_MAX);
+                playerStats.AddPlayerIdentity(PlayerStats.MAX_IDENTITY);
                 break;
 
             case PotionType.Atropine:

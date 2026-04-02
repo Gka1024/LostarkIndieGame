@@ -15,9 +15,10 @@ public class BossHPBar : MonoBehaviour
     public RectTransform shieldBar;
     public float currentShield;
 
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI textBossHP;
+    public TextMeshProUGUI textBossHPLine;
 
-    public float MaxHealth = 24000; // 보스 총 체력 (160줄 * 150)
+    public const float MaxHealth = 24000; // 보스 총 체력 (160줄 * 150)
     public float currentHealth;
 
     public float healthPerStage = 150; // 한 줄당 체력
@@ -50,7 +51,7 @@ public class BossHPBar : MonoBehaviour
         {
             currentHealth = 0;
             currentHealthOnStage = 0;
-            text.SetText("X0");
+            textBossHPLine.SetText("X0");
             GameOver();
         }
 
@@ -64,6 +65,7 @@ public class BossHPBar : MonoBehaviour
             }
         }
 
+        UpdateHP(currentHealth);
         UpdateHPBar(isBarColorChange);
     }
 
@@ -76,6 +78,11 @@ public class BossHPBar : MonoBehaviour
         }
     }
 
+    private void UpdateHP(float hp)
+    {
+        textBossHP.SetText(((int)hp).ToString() + " / " + MaxHealth.ToString());
+    }
+
     private void UpdateHPBar(bool isBarColorChange)
     {
         float bossHPRatio = Mathf.Clamp01(currentHealthOnStage / healthPerStage); // 비율 계산 (0~1 사이로 제한)
@@ -84,7 +91,7 @@ public class BossHPBar : MonoBehaviour
         if (isBarColorChange)
         {
             ResetHPBar();
-            text.SetText("X" + (160 - currentStage).ToString()); // 남은 체력 줄 표시
+            textBossHPLine.SetText("X" + (160 - currentStage).ToString()); // 남은 체력 줄 표시
             HealthLines[currentStage % 7].SetActive(true); // 현재 스테이지 HP 줄 활성화
 
             if (currentStage != 159)
@@ -125,12 +132,12 @@ public class BossHPBar : MonoBehaviour
         {
             currentHealth = 0;
             currentHealthOnStage = 0;
-            text.SetText("X0");
+            textBossHPLine.SetText("X0");
             GameOver();
         }
         else
         {
-            text.SetText("X" + (160 - currentStage).ToString());
+            textBossHPLine.SetText("X" + (160 - currentStage).ToString());
         }
 
         ResetHPBar();

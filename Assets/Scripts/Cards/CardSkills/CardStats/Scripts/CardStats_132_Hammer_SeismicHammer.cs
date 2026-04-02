@@ -6,7 +6,7 @@ public class CardStats_Hammer_SeismicHammer : CardStats
 {
     public float opt1_damage_coef;
 
-    public float opt3_damage_coef;
+    public float opt3_damage;
 
     public override void ApplyOption(int num)
     {

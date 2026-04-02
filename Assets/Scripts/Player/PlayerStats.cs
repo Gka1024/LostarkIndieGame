@@ -11,23 +11,26 @@ public class PlayerStats : MonoBehaviour
     public PlayerAnimation anim;
 
     // ==== 체력 관련 변수
-    public float maxHealth = 500;
+    public const float MAX_HEALTH = 500;
     public float currentHealth;
 
     // ==== 마나 관련 변수
-    public float maxMana = 250;
+    public const float MAX_MANA = 250;
     public float currentMana;
     public float regenManaOnTurns = 20;
 
     // ==== 아덴 관련 변수
-    public const float IDENTITY_MAX = 200;
+    public const float MAX_IDENTITY = 200;
     public float playerIdentity;
     public PlayerIdentity identityUI;
     public bool isIdentityReady;
 
     // ==== 공격 관련 변수
     private const float BASE_PLAYER_ATTACK = 120;
-    public float playerAttack;
+    private float playerAttack;
+
+    private float playerStaggerMultiflyer = 1;
+
 
     // ==== 방어 관련 변수
     private float basePlayerDefence;
@@ -53,8 +56,8 @@ public class PlayerStats : MonoBehaviour
 
     public void Start()
     {
-        currentHealth = maxHealth;
-        currentMana = maxMana;
+        currentHealth = MAX_HEALTH;
+        currentMana = MAX_MANA;
         playerAttack = BASE_PLAYER_ATTACK;
         basePlayerDefence = playerDefence;
         playerBuffState = GetComponent<PlayerBuffState>();
@@ -187,8 +190,8 @@ public class PlayerStats : MonoBehaviour
 
     public void Heal(float amount, bool isPercent = false)
     {
-        currentHealth += isPercent ? maxHealth * amount * 0.01f : amount;
-        currentHealth = Mathf.Max(currentHealth, maxHealth);
+        currentHealth += isPercent ? MAX_HEALTH * amount * 0.01f : amount;
+        currentHealth = Mathf.Max(currentHealth, MAX_HEALTH);
         playerStatsUI.UpdateHPBar(currentHealth);
     }
 
@@ -221,6 +224,7 @@ public class PlayerStats : MonoBehaviour
     public void RegenMana()
     {
         currentMana += regenManaOnTurns;
+        if(currentMana >= MAX_MANA) currentMana = MAX_MANA;
         currentMana += playerBuffState.GetManaRegen(regenManaOnTurns);
         playerStatsUI.UpdateManaBar(currentMana);
     }
@@ -242,6 +246,11 @@ public class PlayerStats : MonoBehaviour
         return playerBuffState.GetPlayerAttack(playerAttack);
     }
 
+    public float GetStaggerMultiflyer()
+    {
+        return playerStaggerMultiflyer;
+    }
+
     // ========== 아덴 로직
 
     public void AddPlayerIdentity(float value)
@@ -250,7 +259,7 @@ public class PlayerStats : MonoBehaviour
         identityUI.SetIdentity(playerIdentity);
         identityUI.UpdateIdentityBar();
 
-        if (playerIdentity == IDENTITY_MAX)
+        if (playerIdentity == MAX_IDENTITY)
         {
             isIdentityReady = true;
             identityUI.SetIdentityReady(true);

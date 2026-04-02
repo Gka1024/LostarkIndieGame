@@ -9,38 +9,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa82e1486c146e84b80f5090fbccf19b, type: 3}
-  m_Name: TwoHSword_RedDust
+  m_Script: {fileID: 11500000, guid: adc618a1e48a92b4b9b6d290d008eb40, type: 3}
+  m_Name: 122_OneHSword_HeavenlyBlessing
   m_EditorClassIdentifier: 
-  CardID: 142
+  CardID: 122
   cardName: 
   isCardSkill: 1
   HasChainSkill: 0
   ChainSkill: {fileID: 0}
-  playerWeapon: 1
-  beforeActTurn: 1
-  afterActTurn: 1
+  playerWeapon: 2
+  beforeActTurn: 0
+  afterActTurn: 0
   needToSelectTile: 1
-  tileSelectType: 1
-  skillAngle: 3
-  skillAngleRange: 1
+  tileSelectType: 3
+  skillAngle: 0
+  skillAngleRange: 0
   skillDistance: 0
   skillDistanceRange: 0
-  aroundRange: 0
+  aroundRange: 1
   rayDistance: 0
   rayWidth: 0
-  skill_damage: 0
-  manaUse: 0
-  identityGain: 0
+  skill_damage: 1
+  manaUse: 60
+  identityGain: 20
   stagger: 0
-  coolDownTurn: 0
+  coolDownTurn: 40
   isCounterAble: 0
   isHeadAttack: 0
   isBackAttack: 0
   isSuperArmor: 0
-  base_buff_turns: 0
-  base_buff_attack: 0
-  base_skill_damage: 0
-  opt1_identity_bonus: 0
-  opt2_attack_increase: 0
-  opt2_increase_turns: 0
+  base_buff_attack: 30
+  base_buff_turns: 15
+  opt1_turns: 15
+  opt1_mana_regen: 20
+  opt2_buff_attack: 10
+  opt2_buff_turns: 5
+  opt3_identity_bonus: 50

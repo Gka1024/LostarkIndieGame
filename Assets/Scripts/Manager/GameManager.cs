@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public CardManager cardManager;
     public EstherManager estherManager;
     public ObjectManager objectManager;
+    public UIManager UIManager;
+    public FieldEffectManager fieldEffectManager;
+
 
     public PlayerAnimation playerAnimation;
 
@@ -51,6 +54,12 @@ public class GameManager : MonoBehaviour
         return boss;
     }
 
+    public void TurnStart()
+    {
+        boss.GetComponent<Boss>().ai.OnTurnStart();
+        fieldEffectManager.OnTurnStart();
+    }
+
     public void TurnEnd()
     {
         boss.GetComponent<BossStats>().OnTurnEnd();
@@ -59,6 +68,7 @@ public class GameManager : MonoBehaviour
         cardManager.OnTurnEnd();
         battleItemManager.OnTurnEnd();
         estherManager.OnTurnEnd();
+        fieldEffectManager.OnTurnEnd();
     }
 
     public int GetTurn()

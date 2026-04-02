@@ -9,34 +9,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3118f0de1546d49409855a1c0aac9c3a, type: 3}
-  m_Name: Hammer_SeismicHammer
+  m_Script: {fileID: 11500000, guid: fa82e1486c146e84b80f5090fbccf19b, type: 3}
+  m_Name: 142_TwoHSword_RedDust
   m_EditorClassIdentifier: 
-  CardID: 132
+  CardID: 142
   cardName: 
   isCardSkill: 1
   HasChainSkill: 0
   ChainSkill: {fileID: 0}
-  playerWeapon: 4
-  beforeActTurn: 2
-  afterActTurn: 0
+  playerWeapon: 1
+  beforeActTurn: 1
+  afterActTurn: 1
   needToSelectTile: 1
-  tileSelectType: 4
-  skillAngle: 0
-  skillAngleRange: 0
+  tileSelectType: 1
+  skillAngle: 3
+  skillAngleRange: 1
   skillDistance: 0
   skillDistanceRange: 0
   aroundRange: 0
-  rayDistance: 3
-  rayWidth: 2
-  skill_damage: 0
-  manaUse: 0
-  identityGain: 0
-  stagger: 0
-  coolDownTurn: 0
+  rayDistance: 0
+  rayWidth: 0
+  skill_damage: 5
+  manaUse: 30
+  identityGain: 10
+  stagger: 10
+  coolDownTurn: 20
   isCounterAble: 0
   isHeadAttack: 0
   isBackAttack: 0
   isSuperArmor: 0
-  opt1_damage_coef: 0.5
-  opt3_damage_coef: 0
+  base_buff_turns: 10
+  base_buff_attack: 20
+  base_skill_damage: 30
+  opt1_identity_bonus: 100
+  opt2_attack_increase: 10
+  opt2_increase_turns: 5

@@ -127,7 +127,7 @@
         {
           "option_id": 1,
           "option_name": "넓은 타격",
-          "option_description": "피해를 주는 범위가 1칸 증가하고, 2턴간 추가로 도발한다. "
+          "option_description": "피해를 주는 범위가 1칸 증가하고, 3턴간 추가로 도발한다. "
         },
         {
           "option_id": 2,
@@ -159,7 +159,7 @@
         {
           "option_id": 3,
           "option_name": "호흡 조절",
-          "option_description": "스킬 사용 후 다음 스킬을 사용할 수 있다."
+          "option_description": "스킬을 더 빠르게 사용할 수 있다."
         }
       ]
     },

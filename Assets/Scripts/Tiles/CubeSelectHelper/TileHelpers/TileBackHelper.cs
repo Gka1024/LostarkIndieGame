@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class TileBackHelper : MonoBehaviour
 {
-    public HexTile GetBackCube(HexTile playerTile, HexTile targetTile)
+    public HexTile GetBackTile(HexTile playerTile, HexTile targetTile)
     {
-        return GetBackCube(playerTile, targetTile, 1);
+        return GetBackTile(playerTile, targetTile, 1);
     }
 
-    public HexTile GetBackCube(HexTile playerTile, HexTile targetTile, int distance)
+    public HexTile GetBackTile(HexTile playerTile, HexTile targetTile, int distance)
     {
         if (playerTile == null || targetTile == null) return null;
 

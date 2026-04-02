@@ -14,6 +14,8 @@ public class TurnStateMachine : MonoBehaviour
     public Boss boss;
     public Player player;
 
+    private bool isLoopStarted = false;
+
     [SerializeField] private GameTurnState currentState;
 
     public TaskCompletionSource<bool> chainSkillTCS;
@@ -43,6 +45,10 @@ public class TurnStateMachine : MonoBehaviour
 
     public async void StartTurnLoop()
     {
+        if(isLoopStarted) return;
+
+        isLoopStarted = true;
+
         while (true)
         {
             await RunTurnCycle();
@@ -69,7 +75,7 @@ public class TurnStateMachine : MonoBehaviour
 
     private async Task HandleBossStartMotion()
     {
-        boss.ai.OnTurnStart();
+        manager.TurnStart();
         Debug.Log($"{manager.GetTurn()} - 보스 패턴 예고");
         await Task.Delay(1000);
     }
@@ -115,7 +121,8 @@ public class TurnStateMachine : MonoBehaviour
     private void GivePlayerCard()
     {
         manager.cardManager.ResetHand();
-        manager.cardManager.GiveCard(5);
+        //manager.cardManager.GiveCard(5);
+        manager.cardManager.GiveSpecificCard(111);
         manager.cardManager.GiveBasicCard();
     }
 
@@ -148,7 +155,7 @@ public class TurnStateMachine : MonoBehaviour
 
     private async Task HandleBossAttack()
     {
-        await Task.Delay(1000);
+        await Task.Delay(500);
         Debug.Log($"{manager.GetTurn()} - 보스 행동 시작");
         boss.bossController.OnTurnEnd();
     }
@@ -156,7 +163,7 @@ public class TurnStateMachine : MonoBehaviour
     // =============
     private async Task HandleTurnEnd()
     {
-        await Task.Delay(1000);
+        await Task.Delay(500);
 
         Debug.Log($"{manager.GetTurn()} - 턴 계산");
         manager.TurnEnd();
