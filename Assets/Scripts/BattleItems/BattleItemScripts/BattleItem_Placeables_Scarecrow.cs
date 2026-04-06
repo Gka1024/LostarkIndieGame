@@ -1,12 +1,16 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleItem_Placeables_Scarecrow : BattleItemPlaceable
 {
-    public override void OnturnEnds()
+    public int tauntRange = 2;
+
+    public override void OnItemPlaced()
     {
-        base.OnturnEnds();
-        BossController controller = GameManager.Instance.GetBoss().GetComponent<BossController>();
-        controller.Taunt(this.gameObject, duration: 5);
+        List<HexTile> range = HexTileManager.Instance.GetTilesWithinRange(currentTile, tauntRange);
+        AreaTauntEffect effect = new AreaTauntEffect(range, placeDuration, gameObject);
+
+        FieldEffectManager.Instance.AddEffect(effect);
     }
 }

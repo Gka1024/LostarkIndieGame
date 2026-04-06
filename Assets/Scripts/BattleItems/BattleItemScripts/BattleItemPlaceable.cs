@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class BattleItemPlaceable : MonoBehaviour
 {
-    public HexTile currentHextile;
+    public HexTile currentTile;
     public int placeDuration;
 
     public void RegisterHextile(HexTile tile)
     {
-        currentHextile = tile;
+        currentTile = tile;
     }
 
     public virtual void OnturnEnds()
@@ -22,6 +22,8 @@ public class BattleItemPlaceable : MonoBehaviour
             }
         }
     }
+
+    public virtual void OnItemPlaced(){}
 
     public void SetPlaceDuration(int duration)
     {

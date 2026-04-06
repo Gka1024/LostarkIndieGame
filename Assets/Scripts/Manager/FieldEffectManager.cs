@@ -18,6 +18,7 @@ public class FieldEffectManager : MonoBehaviour
 
     public void AddEffect(FieldEffect effect)
     {
+        effect.Init();
         effects.Add(effect);
     }
 

@@ -3,10 +3,17 @@ using UnityEngine;
 
 public class FieldEffect : MonoBehaviour
 {
+    public FieldEffectManager effectManager;
+
     public List<HexTile> tiles;
     public int duration;
 
-    public virtual void OnTurnStart(){}
+    public void Init()
+    {
+        effectManager = FieldEffectManager.Instance;
+    }
+
+    public virtual void OnTurnStart() { }
 
     public void OnTurnEnd()
     {
@@ -20,5 +27,5 @@ public class FieldEffect : MonoBehaviour
 
 
 
-    
+
 }

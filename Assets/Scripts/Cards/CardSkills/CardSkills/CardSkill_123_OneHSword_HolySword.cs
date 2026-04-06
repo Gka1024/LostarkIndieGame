@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CardSkill_OneHSword_HolySword : CardSkill
@@ -34,6 +35,19 @@ public class OneHSword_HolySword_2 : SkillObject
     public override void ApplyOption(CardSkill card)
     {
         card.runtimeCardStats.ApplyOption(2);
+    }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+
+        if (card.runtimeCardStats is CardStats_OneHSword_HolySword stats)
+        {
+            AreaDamageEffect effect = new AreaDamageEffect(data.selectedTiles, stats.opt2_damage, stats.opt2_turns);
+            FieldEffectManager.Instance.AddEffect(effect);
+
+        }
+
+        return base.Execute(card, data, isBossHit);
     }
 }
 

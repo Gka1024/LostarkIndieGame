@@ -1,21 +1,17 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleItem_Placeables_CampFire : BattleItemPlaceable
 {
     public int healRange = 3;
+    public float healAmount = 10;
 
-    public override void OnturnEnds()
+    public override void OnItemPlaced()
     {
-        base.OnturnEnds();
+        List<HexTile> range = HexTileManager.Instance.GetTilesWithinRange(currentTile,healRange);
+        AreaHealEffect effect = new AreaHealEffect(range, healAmount, placeDuration);
 
-        GameObject player = GameManager.Instance.GetPlayer();
-        HexTile playerTile = player.GetComponent<PlayerMove>().GetCurrentTile();
-
-        if (HexTileManager.Instance.GetTileDistance(currentHextile, playerTile) <= healRange)
-        {
-            player.GetComponent<PlayerStats>().Heal(15);
-        }
-
+        FieldEffectManager.Instance.AddEffect(effect);
     }
 }

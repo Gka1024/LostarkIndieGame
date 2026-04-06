@@ -338,6 +338,7 @@ public class SkillManager : MonoBehaviour
         BossDebuff tauntDebuffs = new BossDebuff(DebuffType.Taunt, 1, tauntTurns, 1);
 
         boss.GetComponent<BossStatus>().AddBossDebuff(tauntDebuffs);
+        boss.GetComponent<Boss>().bossController.Taunt(player, tauntTurns);
     }
 
     // ========== 유틸 함수 ==========

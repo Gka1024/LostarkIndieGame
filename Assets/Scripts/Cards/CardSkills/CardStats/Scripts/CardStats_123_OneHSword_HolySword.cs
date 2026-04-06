@@ -10,7 +10,7 @@ public class CardStats_OneHSword_HolySword : CardStats
     public int base_skill_range;
 
     public float opt2_damage;
-    public float opt2_turns;
+    public int opt2_turns;
 
     public float opt3_damage_coef;
 
