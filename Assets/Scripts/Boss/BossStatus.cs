@@ -173,7 +173,7 @@ public class BossStatus : MonoBehaviour
 
     public void AddBossDebuff(BossDebuff debuff)
     {
-        int id = debuff.BuffID;
+        int id = debuff.buffID;
 
         if (bossDebuffs.ContainsKey(id))
             bossDebuffs[id].stack += debuff.stack;

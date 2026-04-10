@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CardSkill_GunLance_Bash : CardSkill
 {
-    public bool applyDebuffOnHit = false;
 
     protected override SkillObject CreateOption(int num)
     {
@@ -34,11 +33,7 @@ public class GunLance_Bash_Option1 : SkillObject
 {
     public override void ApplyOption(CardSkill card)
     {
-        if (card is CardSkill_GunLance_Bash cardSkill_GunLance_Bash)
-        {
-            cardSkill_GunLance_Bash.runtimeCardStats.ApplyOption(1);
-            cardSkill_GunLance_Bash.applyDebuffOnHit = true;
-        }
+        card.runtimeCardStats.ApplyOption(1);
     }
 
     public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
@@ -48,7 +43,8 @@ public class GunLance_Bash_Option1 : SkillObject
         if (isBossHit)
         {
             var cardStat = card.GetStats<CardStats_GunLance_Bash>();
-            card.manager.GetBoss().GetComponent<BossStatus>().AddBossDebuff(new BossDebuff(DebuffType.DefenceDown, cardStat.opt1_defenceDebuff, cardStat.opt1_turns, 1));
+
+            SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateDebuff(BuffID.DEBUFF_DEFENCEDOWN, 1, cardStat.opt1_turns));
         }
 
         yield return null;

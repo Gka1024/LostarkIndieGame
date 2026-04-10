@@ -10,6 +10,8 @@ public abstract class SkillObject
 
     public virtual IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
+        if (isBossHit) SkillManager.Instance.ApplyBossSkills(card.runtimeCardStats);
+        card.manager.GetPlayer().GetComponent<PlayerStats>().UseMana(card.runtimeCardStats.manaUse);
         yield return null;
     } // 스킬 실행
 }

@@ -221,13 +221,18 @@ public class HexTileSelectHandler : MonoBehaviour
                 SelectTileByDistance(stats.skillDistance, stats.skillDistanceRange);
                 break;
 
-            case TileSelectType.Ray:
+            case TileSelectType.Around:
                 SelectTileByAround(stats.aroundRange);
+                break;
+
+            case TileSelectType.Ray:
+                Debug.Log(stats.rayWidth + " / " + stats.rayDistance);
+                SelectTileByRay(stats.rayDistance, stats.rayWidth);
                 break;
 
             case TileSelectType.HexRay:
                 isHexRayNeeded = true;
-                SelectTileByRay(stats.rayDistance, stats.rayWidth);
+                SelectTileByHexRay(stats.rayDistance, stats.rayWidth);
                 break;
 
             default: break;

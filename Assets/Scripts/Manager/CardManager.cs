@@ -113,7 +113,7 @@ public class CardManager : MonoBehaviour
         return null;
     }
 
-    public void GiveCard(int? count)
+    public void GiveRandomCard(int? count)
     {
         for (int i = 0; i < count; i++)
         {

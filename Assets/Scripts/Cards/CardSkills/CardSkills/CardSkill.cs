@@ -60,8 +60,6 @@ public abstract class CardSkill : MonoBehaviour
         return runtimeCardStats;
     }
 
-
-
     public virtual IEnumerator Execute(SkillQueueData data, bool isBossHit)
     {
         Debug.Log("currentSkillExecute");
@@ -73,7 +71,8 @@ public abstract class CardSkill : MonoBehaviour
         }
 
         yield return skillOption.Execute(this, data, isBossHit);
-    }
+        
+    } // 마나 소비 로직 만들것
 
     public virtual void ApplySkill(bool isBossInRange = false, HexTile tile = null) { }
 

@@ -22,9 +22,9 @@ public static class BossBuffFactory
             Debug.LogWarning($"Buff ID 중복: {data.buffID}");
     }
 
-    public static BossBuff CreateBuff(int buffID, int stack = 1, int duration = 1)
+    public static BossBuff CreateBuff(BuffID buffID, int stack = 1, int duration = 1)
     {
-        if (!buffTable.TryGetValue(buffID, out var data))
+        if (!buffTable.TryGetValue((int)buffID, out var data))
         {
             Debug.LogError($"등록되지 않은 BuffID: {buffID}");
             return null;
@@ -35,15 +35,15 @@ public static class BossBuffFactory
         return buff;
     }
 
-    public static BossDebuff CreateDebuff(int debuffID, int stack = 1, int duration = 1)
+    public static BossDebuff CreateDebuff(BuffID debuffID, int stack = 1, int duration = 1)
     {
-        if (!buffTable.TryGetValue(debuffID, out var data))
+        if (!debuffTable.TryGetValue((int)debuffID, out var data))
         {
             Debug.LogError($"등록되지 않은 BuffID: {debuffID}");
             return null;
         }
 
-        BossDebuff debuff = new BossDebuff(data.debuffType, data.effectValue, duration, stack);
+        BossDebuff debuff = new BossDebuff(data, duration, stack);
 
         return debuff;
     }

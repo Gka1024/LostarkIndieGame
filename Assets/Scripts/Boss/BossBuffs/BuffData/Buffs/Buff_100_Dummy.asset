@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4197e8182c5754e9ceab01a0c0825f, type: 3}
+  m_Name: Buff_100_Dummy
+  m_EditorClassIdentifier: 
+  buffID: 100
+  buffName: "\uB354\uBBF8"
+  effectValue: 0
+  buffType: 0
+  debuffType: 0
+  description: "\uB354\uBBF8"
+  Icon: {fileID: -1750011613, guid: d299cf7968f5d1b44ad984264e417119, type: 3}

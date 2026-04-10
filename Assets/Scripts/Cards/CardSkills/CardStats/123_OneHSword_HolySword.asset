@@ -27,7 +27,7 @@ MonoBehaviour:
   skillDistance: 0
   skillDistanceRange: 0
   aroundRange: 0
-  rayDistance: 3
+  rayDistance: 7
   rayWidth: 2
   skill_damage: 7
   manaUse: 30

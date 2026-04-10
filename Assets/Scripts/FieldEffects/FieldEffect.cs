@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FieldEffect : MonoBehaviour
+public class FieldEffect
 {
     public FieldEffectManager effectManager;
+
+    public bool removeFlag;
 
     public List<HexTile> tiles;
     public int duration;
@@ -24,8 +26,5 @@ public class FieldEffect : MonoBehaviour
     {
         return duration <= 0;
     }
-
-
-
 
 }

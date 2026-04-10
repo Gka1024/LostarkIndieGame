@@ -121,7 +121,7 @@ public class TurnStateMachine : MonoBehaviour
     private void GivePlayerCard()
     {
         manager.cardManager.ResetHand();
-        //manager.cardManager.GiveCard(5);
+        manager.cardManager.GiveRandomCard(5);
         manager.cardManager.GiveSpecificCard(111);
         manager.cardManager.GiveBasicCard();
     }

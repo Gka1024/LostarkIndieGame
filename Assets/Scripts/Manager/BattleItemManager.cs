@@ -602,7 +602,7 @@ public class BattleItemManager : MonoBehaviour
     {
         bossController.GetBossDamageData(new BossDamageData(damage, stagger, destruction));
 
-        if (duration != 0) bossController.GetBossDebuff(new BossDebuff(debuffType, effectValue, duration));
+       // if (duration != 0) bossController.GetBossDebuff(new BossDebuff(debuffType, effectValue, duration));
     }
 
     // ==== 특수 아이템

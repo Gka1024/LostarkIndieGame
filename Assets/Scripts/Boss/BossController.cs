@@ -95,8 +95,14 @@ public class BossController : MonoBehaviour
         bossStats.ApplyDamageData(data);
     }
 
+    public void GetBossBuff(BossBuff buff)
+    {
+        bossStatus.AddBossBuff(buff);
+    }
+
     public void GetBossDebuff(BossDebuff debuff)
     {
+        Debug.Log($"debuff : {debuff.buffID}");
         bossStatus.AddBossDebuff(debuff);
     }
 

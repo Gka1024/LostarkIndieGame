@@ -78,7 +78,7 @@ public class SkillManager : MonoBehaviour
                 break;
 
             case SkillState.ExecutingSkill:
-                if (!queueManager.HasActions())
+                if (!queueManager.IsFrozen())
                     currentState = SkillState.Idle;
                 break;
 
@@ -144,10 +144,10 @@ public class SkillManager : MonoBehaviour
             ApplyPlayerSuperArmor(currentStats);
         }
 
+        isCardUsing = false;
         cardManager.DisposeCard(currentCard);
         manager.EndPlayerTurn();
         ShowCancelButton(false);
-        isCardUsing = false;
         currentState = SkillState.Idle;
     }
 
@@ -175,15 +175,13 @@ public class SkillManager : MonoBehaviour
             tripodIndex: tripodIndex,
             mainTile: selectedTile,
             selectedTiles: selectedTiles,
-            damage: stats.skill_damage,
-            stagger: stats.stagger,
-            identity: stats.identityGain,
-            manaCost: stats.manaUse,
-            isChainSkill: false
+            isChainSkill: false,
+            beforeDelay: stats.beforeActTurn,
+            afterDelay: stats.afterActTurn
         );
 
         // 큐에 등록
-        QueueManager.Instance.EnqueueSkill(data, stats.beforeActTurn, stats.afterActTurn);
+        QueueManager.Instance.EnqueueSkill(data);
         Debug.Log($"[EnqueueCardSkill] CardID {cardID} (트라이포드 {tripodIndex}) 스킬이 큐에 등록됨");
     }
 
@@ -208,19 +206,16 @@ public class SkillManager : MonoBehaviour
             tripodIndex: tripodIndex,
             mainTile: selectedTile,
             selectedTiles: selectedTiles,
-            damage: chainStats.skill_damage,
-            stagger: chainStats.stagger,
-            identity: chainStats.identityGain,
-            manaCost: 0,
-            isChainSkill: true
+            isChainSkill: true,
+            afterDelay: stats.afterActTurn
         );
 
-        queueManager.EnqueueSkill(data, 0, chainStats.afterDelay);
+        queueManager.EnqueueSkill(data);
 
     }
     // ========== 스킬 실행 ==========
 
-    public IEnumerator ExecuteSkillFromQueue(SkillQueueData data)
+    public IEnumerator ExecuteCardSkillFromQueue(SkillQueueData data)
     {
         // 1. 데이터 가져오기
         var baseStat = CardList.Instance.GetCardStats(data.skillId);
@@ -245,7 +240,6 @@ public class SkillManager : MonoBehaviour
         cardSkill.PlayAnimation(data.mainTile);
 
         // 6. 사후 처리
-        playerStats.UseMana(data.manaCost);
         CardList.Instance.ApplyCardCooldown(baseStat);
         CardList.Instance.RemoveCardFromHand(baseStat);
 
@@ -310,6 +304,8 @@ public class SkillManager : MonoBehaviour
         Destroy(chainGO);
     }
 
+    // ========== 스킬 적용 ==========
+
     public void ApplyBossSkills(CardStats stat)
     {
         float damage = stat.skill_damage;
@@ -333,20 +329,15 @@ public class SkillManager : MonoBehaviour
         playerStats.AddPlayerIdentity(identity);
     }
 
-    public void MakeBossTaunt(int tauntTurns)
+    public void ApplyBossDebuff(BossDebuff debuff)
     {
-        BossDebuff tauntDebuffs = new BossDebuff(DebuffType.Taunt, 1, tauntTurns, 1);
-
-        boss.GetComponent<BossStatus>().AddBossDebuff(tauntDebuffs);
-        boss.GetComponent<Boss>().bossController.Taunt(player, tauntTurns);
+        boss.GetComponent<Boss>().bossController.GetBossDebuff(debuff);
     }
 
     // ========== 유틸 함수 ==========
     public void SelectTripod(int tripodIndex)
     {
         isTripodSelected = true;
-
-        currentStats.ApplyOption(tripodIndex);
         selectedTripod = tripodIndex;
     }
 
@@ -377,8 +368,9 @@ public class SkillManager : MonoBehaviour
 
     public bool CanMove()
     {
-        if (queueManager.IsFrozen()) return false;
-        if (queueManager.HasActions()) return false; // 후딜레이가 있을 때
+        Debug.Log($"queuemanger : {queueManager.IsFrozen()} / iscardUsing : {isCardUsing} / playerStats : {playerStats.GetPlayerDown()} {playerStats.GetPlayerStun()} ");
+
+        if (queueManager.IsFrozen()) return false; // 후딜레이가 있을 때
         if (isCardUsing) return false;
 
         if (playerStats.GetPlayerDown()) return false;

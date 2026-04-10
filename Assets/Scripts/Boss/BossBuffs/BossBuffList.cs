@@ -7,14 +7,27 @@ public class BuffRegistry : MonoBehaviour
 
     void Awake()
     {
-        foreach(var buff in allBuffDatas)
+        foreach (var buff in allBuffDatas)
         {
             BossBuffFactory.RegisterBuff(buff);
         }
 
-        foreach(var buff in allDebuffDatas)
+        foreach (var buff in allDebuffDatas)
         {
             BossBuffFactory.RegisterDebuff(buff);
         }
     }
+}
+
+public enum BuffID
+{
+    NONE = 0,
+
+    BUFF_VALTAN_ARMOR = 101,
+    BUFF_RAGE = 102,
+
+
+    DEBUFF_DEFENCEDOWN = 201,
+    DEBUFF_TAUNT = 202,
+
 }

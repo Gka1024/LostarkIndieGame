@@ -8,7 +8,7 @@ public class FieldEffectManager : MonoBehaviour
     public Boss boss;
     public Player player;
 
-    private List<FieldEffect> effects;
+    private List<FieldEffect> effects = new();
 
     void Awake()
     {
@@ -24,7 +24,9 @@ public class FieldEffectManager : MonoBehaviour
 
     public void OnTurnStart()
     {
-        foreach(FieldEffect effect in effects)
+        if (effects.Count == 0) return;
+
+        foreach (FieldEffect effect in effects)
         {
             effect.OnTurnStart();
         }
@@ -32,12 +34,20 @@ public class FieldEffectManager : MonoBehaviour
 
     public void OnTurnEnd()
     {
-        foreach(FieldEffect effect in effects)
+        for (int i = effects.Count - 1; i >= 0; i--)
         {
+            var effect = effects[i];
             effect.OnTurnEnd();
+
+            if (effect.IsFinished())
+            {
+                effects.RemoveAt(i);
+            }
+            else
+            {
+                effects[i] = effect;
+            }
         }
     }
-
-
 
 }

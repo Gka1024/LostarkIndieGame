@@ -10101,9 +10101,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allBuffDatas:
+  - {fileID: 11400000, guid: 78f6692193dec1c4eb113d26b38b52ef, type: 2}
   - {fileID: 11400000, guid: b0c90944593c12c4d9de4cf0c21c7fc0, type: 2}
   - {fileID: 11400000, guid: d153db958a1ddc0439b9904c46809a83, type: 2}
-  allDebuffDatas: []
+  allDebuffDatas:
+  - {fileID: 11400000, guid: 182df2d33c34e2348b61d8129c2c0da5, type: 2}
+  - {fileID: 11400000, guid: 14ccd6ec702652047b67bd8925ba849b, type: 2}
 --- !u!1 &463530240 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1489641904301601454, guid: 590732a21f9935749ab7f5148dd4797a, type: 3}
@@ -18316,6 +18319,7 @@ MonoBehaviour:
   estherManager: {fileID: 136102435}
   objectManager: {fileID: 155616927}
   UIManager: {fileID: 797953851}
+  fieldEffectManager: {fileID: 1961864444}
   playerAnimation: {fileID: 1380444492}
   cardList: {fileID: 1669036333}
   objectClickHandler: {fileID: 181648197}
@@ -39457,10 +39461,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnStateMachine: {fileID: 79886787}
   skillManager: {fileID: 969112555}
-  cardManager: {fileID: 399683477}
-  playerStats: {fileID: 1380444491}
-  tileManager: {fileID: 130202507}
-  Boss: {fileID: 514132748}
+  activeSkill:
+    skillId: 0
+    tripodIndex: 0
+    mainTile: {fileID: 0}
+    selectedTiles: []
+    isChainSkill: 0
+    beforeDelay: 0
+    afterDelay: 0
+  remainingBeforeDelay: 0
+  remainingAfterDelay: 0
   isCharacterFrozen: 0
 --- !u!1 &1886691787
 GameObject:
@@ -41960,10 +41970,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 514132758}
-        m_TargetAssemblyTypeName: BossController, Assembly-CSharp
-        m_MethodName: GiveBossDamageForDebug
-        m_Mode: 4
+      - m_Target: {fileID: 1885974531}
+        m_TargetAssemblyTypeName: QueueManager, Assembly-CSharp
+        m_MethodName: Actionqueuesize
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

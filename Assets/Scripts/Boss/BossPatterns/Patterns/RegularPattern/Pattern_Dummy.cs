@@ -12,6 +12,24 @@ public class PatternR_Dummy : BossPattern
         turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeIdleTurn);
     }
 
     public override void OnStartPattern(BossAI ai)

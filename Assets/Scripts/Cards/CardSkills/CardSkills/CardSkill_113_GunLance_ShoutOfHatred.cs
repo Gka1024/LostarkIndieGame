@@ -38,7 +38,7 @@ public class GunLance_ShoutOfHatred1 : SkillObject
         {
             if (isBossHit)
             {
-                SkillManager.Instance.MakeBossTaunt(stat.taunt_turns);
+                SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateDebuff(BuffID.DEBUFF_TAUNT, 1, stat.taunt_turns));
             }
         }
     }
@@ -61,7 +61,7 @@ public class GunLance_ShoutOfHatred2 : SkillObject
             GameManager.Instance.GetPlayer().GetComponent<Player>().stats.AddShield(stat.opt2_shield, stat.opt2_shield_turns);
             if (isBossHit)
             {
-                SkillManager.Instance.MakeBossTaunt(stat.taunt_turns);
+                SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateDebuff(BuffID.DEBUFF_TAUNT, 1, stat.taunt_turns));
             }
         }
 
@@ -84,7 +84,7 @@ public class GunLance_ShoutOfHatred3 : SkillObject
         {
             if (isBossHit)
             {
-                SkillManager.Instance.MakeBossTaunt(stat.opt1_taunt_turns);
+                SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateDebuff(BuffID.DEBUFF_TAUNT, 1, stat.taunt_turns));
             }
         }
     }
