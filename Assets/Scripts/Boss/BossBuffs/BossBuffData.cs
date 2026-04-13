@@ -9,8 +9,7 @@ public class BossBuffData : ScriptableObject
 
     public float effectValue;
 
-    public BuffType buffType;
-    public DebuffType debuffType;
+    public EffectSide buffType;
 
     [TextArea(3, 6)]
     public string description;

@@ -90,6 +90,18 @@ public class BossController : MonoBehaviour
 
     // 보스 데미지 및 디버프
 
+    public void AddEffect(IBossBuff buff)
+    {
+        if (buff is BossBuff bossBuff)
+        {
+            bossStatus.AddBossBuff(bossBuff);
+        }
+        else if(buff is BossDebuff bossDebuff)
+        {
+            bossStatus.AddBossDebuff(bossDebuff);
+        }
+    }
+
     public void GetBossDamageData(BossDamageData data)
     {
         bossStats.ApplyDamageData(data);
@@ -102,8 +114,8 @@ public class BossController : MonoBehaviour
 
     public void GetBossDebuff(BossDebuff debuff)
     {
-        Debug.Log($"debuff : {debuff.buffID}");
-        bossStatus.AddBossDebuff(debuff);
+        Debug.Log($"debuff : {debuff.ID}");
+
     }
 
     public void ShowAttackPreview(BossPatternTurnInfo info)

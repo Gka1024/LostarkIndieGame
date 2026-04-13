@@ -1,30 +1,44 @@
 using System;
+using UnityEngine;
 
-public enum DebuffType { Unset, AttackDown, MoreDestruct, DefenceDown, LessShield, Flaming, Stunning, Taunt, }
+public class BossDebuff : IBossBuff
+{ // 데이터 보관용
+    public BossBuffData Data { get; set; }
 
-public class BossDebuff
-{
-    public BossBuffData data;
+    public int ID => Data.buffID;              // 읽기 전용 (람다식 표현)
+    public EffectSide Type => Data.buffType;    // 데이터로부터 타입 가져오기
 
-    public int buffID;
-    public DebuffType type;
+    public int Stack { get; set; }
+    public int Duration { get; set; }
 
-    public int duration;
-    public int stack;
     public float effectValue;
 
     public BossDebuff(BossBuffData data, int duration, int stack = 1)
     {
-        this.data = data;
-        buffID = data.buffID;
-        type = data.debuffType;
-        effectValue = data.effectValue;
-        this.duration = duration;
-        this.stack = stack;
+        this.Data = data;
+        this.effectValue = data.effectValue;
+        this.Duration = duration;
+        this.Stack = stack;
     }
 
-    public virtual float ModifyIncomeDamage(float value)
+    // --- 인터페이스 공통 메서드 구현 ---
+    public virtual void OnApply(BossController boss)
     {
-        return value;
+        Debug.Log($"{ID} 버프 적용됨");
+    }
+
+    public virtual void OnTick(BossController boss)
+    {
+        if (Duration > 0) Duration--;
+    }
+
+    public virtual void OnRemove(BossController boss)
+    {
+        Debug.Log($"{ID} 버프 제거됨");
+    }
+
+    public virtual float ModifyIncomeDamage(float damage)
+    {
+        return damage;
     }
 }

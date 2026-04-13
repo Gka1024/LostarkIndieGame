@@ -8,7 +8,6 @@ public class TurnStateMachine : MonoBehaviour
     public GameManager manager;
     public QueueManager queueManager;
     public SkillManager skillManager;
-
     public ObjectClickHandler objectClickHandler;
 
     public Boss boss;
@@ -21,7 +20,9 @@ public class TurnStateMachine : MonoBehaviour
     public TaskCompletionSource<bool> chainSkillTCS;
 
     private bool isPlayerTurnDone = false;
-    private bool isPlayerActionDone = false;
+
+    public bool CanPlayerInteract => currentState == GameTurnState.PlayerTurn;
+
 
     void Start()
     {
@@ -45,7 +46,7 @@ public class TurnStateMachine : MonoBehaviour
 
     public async void StartTurnLoop()
     {
-        if(isLoopStarted) return;
+        if (isLoopStarted) return;
 
         isLoopStarted = true;
 
@@ -143,7 +144,7 @@ public class TurnStateMachine : MonoBehaviour
 
     public void CompletePlayerAction()
     {
-        isPlayerActionDone = true;
+
     }
 
     public void PlayerTurnEnd()

@@ -19,6 +19,12 @@ public class BuffRegistry : MonoBehaviour
     }
 }
 
+public enum EffectSide
+{
+    Buff,
+    Debuff
+}
+
 public enum BuffID
 {
     NONE = 0,
@@ -31,3 +37,10 @@ public enum BuffID
     DEBUFF_TAUNT = 202,
 
 }
+
+/*
+
+public enum BuffSpecific { Unset, Armor }
+public enum DebuffSpecific { Unset, AttackDown, MoreDestruct, DefenceDown, LessShield, Flaming, Stunning, Taunt, }
+
+*/

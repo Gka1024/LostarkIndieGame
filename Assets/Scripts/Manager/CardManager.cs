@@ -295,6 +295,7 @@ public class CardManager : MonoBehaviour
     private void CancelPlayerClicked()
     {
         objectClickHandler.isPlayerClicked = false;
+        BattleItemManager.Instance.HandsOnCards();
         HexTileManager.Instance.ResetTileColor();
     }
 

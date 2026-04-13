@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class BossBuffsUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class BossBuffsUI : MonoBehaviour
 {
     public BossStatus bossStatus;
 
@@ -60,11 +60,11 @@ public class BossBuffsUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
             BuffIconUI iconUI = iconObj.GetComponent<BuffIconUI>();
 
-            iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.stack);
+            iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.Stack);
 
-            if (buff.data == null)
+            if (buff.Data == null)
             {
-                Debug.LogError($"Buff [{buff.buffID}] 의 data가 null입니다!");
+                Debug.LogError($"Buff [{buff.ID}] 의 data가 null입니다!");
             }
 
             index++;
@@ -80,24 +80,27 @@ public class BossBuffsUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
 
         int index = 0;
-        foreach (var buff in bossDebuffsCopy)
+        foreach (var kvp in bossDebuffsCopy)
         {
-            Vector3 MoveVector = new Vector3(ICON_MOVE_MARGIN * index, 0, 0);
-            Instantiate(bossBuffIcon, debuffIconStartTransform.position + MoveVector, debuffIconStartTransform.rotation, buffs.transform);
+            var buff = kvp.Value;
+
+            Vector3 move = new Vector3(ICON_MOVE_MARGIN * index, 0, 0);
+            var iconObj = Instantiate(bossBuffIcon,
+                buffIconStartTransform.position + move,
+                buffIconStartTransform.rotation,
+                buffs.transform);
+
+            BuffIconUI iconUI = iconObj.GetComponent<BuffIconUI>();
+
+            iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.Stack);
+
+            if (buff.Data == null)
+            {
+                Debug.LogError($"Buff [{buff.ID}] 의 data가 null입니다!");
+            }
+
             index++;
         }
     }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-
-        buffDescribtionUI.SetActive(true);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        buffDescribtionUI.SetActive(false);
-    }
-
 
 }

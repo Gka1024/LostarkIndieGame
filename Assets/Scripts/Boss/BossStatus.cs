@@ -161,10 +161,10 @@ public class BossStatus : MonoBehaviour
 
     public void AddBossBuff(BossBuff buff)
     {
-        int id = buff.buffID;
+        int id = buff.ID;
 
         if (bossBuffs.ContainsKey(id))
-            bossBuffs[id].stack += buff.stack;
+            bossBuffs[id].Stack += buff.Stack;
         else
             bossBuffs.Add(id, buff);
 
@@ -173,10 +173,10 @@ public class BossStatus : MonoBehaviour
 
     public void AddBossDebuff(BossDebuff debuff)
     {
-        int id = debuff.buffID;
+        int id = debuff.ID;
 
         if (bossDebuffs.ContainsKey(id))
-            bossDebuffs[id].stack += debuff.stack;
+            bossDebuffs[id].Stack += debuff.Stack;
         else
             bossDebuffs.Add(id, debuff);
 
@@ -189,10 +189,10 @@ public class BossStatus : MonoBehaviour
 
         foreach (var kvp in bossBuffs)
         {
-            if (kvp.Value.duration > 0)
-                kvp.Value.duration--;
+            if (kvp.Value.Duration > 0)
+                kvp.Value.Duration--;
 
-            if (kvp.Value.duration == 0)
+            if (kvp.Value.Duration == 0)
                 removeList.Add(kvp.Key);
         }
 
@@ -208,9 +208,9 @@ public class BossStatus : MonoBehaviour
 
         foreach (var kvp in bossDebuffs)
         {
-            kvp.Value.duration--;
+            kvp.Value.Duration--;
 
-            if (kvp.Value.duration <= 0)
+            if (kvp.Value.Duration <= 0)
                 removeList.Add(kvp.Key);
         }
 

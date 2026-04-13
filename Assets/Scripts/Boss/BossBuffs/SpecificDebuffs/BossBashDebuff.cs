@@ -9,6 +9,6 @@ public class BossBashDebuff : BossBuff
 
     public override float ModifyIncomeDamage(float damage)
     {
-        return damage * (1f - (effectValue * stack));
+        return damage * (1f - (effectValue * Stack));
     }
 }

@@ -1,9 +1,10 @@
 public enum ItemType
 {
-    Unset,
     Potion,
     Granade,
-    Special
+    Special,
+    Unset,
+
 }
 
 public enum PotionType
