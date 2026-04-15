@@ -9,15 +9,20 @@ public class BattleItemData : ScriptableObject
     public ItemType itemType;
 
     [Header("Item Stats")]
+    public float value;
+    public int duration;
+
+    public float HP_decrease; // 아트로핀용
+    public int additional_move; // 추가 이동 아이템용
+
+    [Header("Boss Effects")]
     public float damage;
     public int destruction;
     public float stagger;
 
-    [Header("Boss Effects")]
     public bool hasDebuff;
     public BuffID buffID;
-    public float effectValue;
-    public int duration;
+    public int buff_duration;
 
     [Header("Item Type")]
     public GranadeType granadeType;

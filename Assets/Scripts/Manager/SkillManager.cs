@@ -329,9 +329,9 @@ public class SkillManager : MonoBehaviour
         playerStats.AddPlayerIdentity(identity);
     }
 
-    public void ApplyBossDebuff(BossDebuff debuff)
+    public void ApplyBossDebuff(BossBuff buff)
     {
-        boss.GetComponent<Boss>().bossController.GetBossDebuff(debuff);
+        boss.GetComponent<Boss>().bossController.AddBuff(buff);
     }
 
     // ========== 유틸 함수 ==========

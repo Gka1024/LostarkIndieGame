@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class BossBuff : IBossBuff
+[System.Serializable]
+public class BossBuff 
 {
     // 데이터 보관용
     public BossBuffData Data { get; set; }
 
     public int ID => Data.buffID;              // 읽기 전용 (람다식 표현)
-    public EffectSide Type => Data.buffType;    // 데이터로부터 타입 가져오기
+    public BuffSide Side => Data.buffSide;    // 데이터로부터 타입 가져오기
 
     public int Stack { get; set; }
     public int Duration { get; set; }

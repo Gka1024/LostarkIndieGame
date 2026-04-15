@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,7 +6,7 @@ using UnityEngine.UI;
 public class BattleItemUI : MonoBehaviour
 {
     public BattleItemManager battleItemManager;
-    
+
 
     [Header("Item Description UI")]
     public GameObject itemDescWindow;
@@ -41,13 +42,13 @@ public class BattleItemUI : MonoBehaviour
         if (data == null) return;
 
         // 1. SO에 저장된 ID로 JSON 데이터베이스에서 정보를 찾아옴
-        ItemData jsonTextData = BattleItemDataBase.Instance.GetItemDataByID(data.itemID);
+        ItemJSON originJSON = BattleItemDataBase.Instance.GetItemJSONByID(data.itemID);
 
-        if (jsonTextData != null)
+        if (originJSON != null)
         {
-            // 2. 찾은 이름과 설명을 UI에 적용
-            itemNameText.SetText(jsonTextData.Name);
-            itemDescText.SetText(jsonTextData.Description);
+            ItemJSON processedText = ReplaceItemText(originJSON, data);
+            itemNameText.SetText(processedText.Name);
+            itemDescText.SetText(processedText.Description);
         }
         else
         {
@@ -58,9 +59,33 @@ public class BattleItemUI : MonoBehaviour
 
         itemDescWindow.SetActive(true);
     }
+
     public void ShowDescWindow(bool show)
     {
         itemDescWindow.SetActive(show);
+    }
+
+    private ItemJSON ReplaceItemText(ItemJSON json, BattleItemData data)
+    {
+        ItemJSON result = new()
+        {
+            ID = json.ID,
+            Name = json.Name
+        };
+
+        string desc = json.Description;
+
+        result.Description = desc
+            .Replace("{value}", data.value.ToString("G0"))
+            .Replace("{duration}", data.duration.ToString("G0"))
+            .Replace("{HP_decrease}", data.HP_decrease.ToString("G0"))
+            .Replace("{additional_move}", data.additional_move.ToString("G0"))
+            .Replace("{damage}", data.damage.ToString("G0"))
+            .Replace("{destruction}", data.destruction.ToString("G0"))
+            .Replace("{stagger}", data.stagger.ToString("G0"))
+            .Replace("{buff_duration}", data.buff_duration.ToString("G0"));
+
+        return result;
     }
 
     // --- 버튼 UI 제어 ---
@@ -115,11 +140,13 @@ public class BattleItemUI : MonoBehaviour
 
     public void ShowChangeConfirmWindow(BattleItemData soData)
     {
-        ItemData jsonTextData = BattleItemDataBase.Instance.GetItemDataByID(soData.itemID);
+        ItemJSON jsonTextData = BattleItemDataBase.Instance.GetItemJSONByID(soData.itemID);
         if (jsonTextData != null)
         {
-            changeWindowName.SetText(jsonTextData.Name);
-            changeWindowDesc.SetText(jsonTextData.Description);
+            ItemJSON processedData = ReplaceItemText(jsonTextData, soData);
+
+            changeWindowName.SetText(processedData.Name);
+            changeWindowDesc.SetText(processedData.Description);
             itemChangeWindow.SetActive(true);
         }
     }
@@ -159,9 +186,17 @@ public class BattleItemUI : MonoBehaviour
     {
         switch (type)
         {
-            case ItemType.Potion: iconPotion.sprite = newIcon; break;
-            case ItemType.Granade: iconGranade.sprite = newIcon; break;
-            case ItemType.Special: iconSpecial.sprite = newIcon; break;
+            case ItemType.Potion: UpdateIcon(iconPotion, newIcon); break;
+            case ItemType.Granade: UpdateIcon(iconGranade, newIcon); break;
+            case ItemType.Special: UpdateIcon(iconSpecial, newIcon); break;
         }
+    }
+
+    private void UpdateIcon(Image targetImage, Sprite newIcon)
+    {
+        if (targetImage == null || newIcon == null) return;
+
+        targetImage.sprite = newIcon;
+        targetImage.SetNativeSize();
     }
 }

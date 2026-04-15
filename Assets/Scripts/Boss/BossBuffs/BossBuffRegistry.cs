@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class BuffRegistry : MonoBehaviour
@@ -16,10 +17,12 @@ public class BuffRegistry : MonoBehaviour
         {
             BossBuffFactory.RegisterDebuff(buff);
         }
+
+        Debug.Log($"BuffRegistry : {allBuffDatas.Count() + allDebuffDatas.Count()} 개의 버프 등록 완료.");
     }
 }
 
-public enum EffectSide
+public enum BuffSide
 {
     Buff,
     Debuff
@@ -34,7 +37,13 @@ public enum BuffID
 
 
     DEBUFF_DEFENCEDOWN = 201,
-    DEBUFF_TAUNT = 202,
+    DEBUFF_ATTACKDOWN = 202,
+    DEBUFF_TAUNT = 203,
+    DEBUFF_STUN = 204,
+    DEBUFF_CORROSION = 205,
+    DEBUFF_LESS_SHIELD = 206,
+    DEBUFF_FLAME = 207,
+    
 
 }
 

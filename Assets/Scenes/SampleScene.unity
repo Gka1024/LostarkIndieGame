@@ -39630,6 +39630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jsonText: {fileID: 4900000, guid: 20ee2074d40082947ae075fbc4133c29, type: 3}
   items: []
+  battleItemDatas: []
 --- !u!1 &2010616313
 GameObject:
   m_ObjectHideFlags: 0

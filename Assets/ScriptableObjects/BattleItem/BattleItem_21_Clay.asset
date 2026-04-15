@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad7aa33987fbd34587a08d93c313112, type: 3}
+  m_Name: BattleItem_21_Clay
+  m_EditorClassIdentifier: 
+  itemID: 21
+  itemIcon: {fileID: 1554003831, guid: 3a0e268b32accd945b18d3d1bc29a8be, type: 3}
+  itemType: 1
+  value: 0
+  duration: 0
+  HP_decrease: 0
+  additional_move: 0
+  damage: 70
+  destruction: 0
+  stagger: 0
+  hasDebuff: 1
+  buffID: 202
+  buff_duration: 10
+  granadeType: 1
+  potionType: 0
+  specialType: 0

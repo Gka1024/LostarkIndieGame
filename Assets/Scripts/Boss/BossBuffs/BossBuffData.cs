@@ -9,12 +9,13 @@ public class BossBuffData : ScriptableObject
 
     public float effectValue;
 
-    public EffectSide buffType;
+    public BuffSide buffSide;
 
     [TextArea(3, 6)]
     public string description;
     public Sprite Icon;
 
-    
+    [SerializeReference]
+    public BossBuff specificBuff;
 
 }

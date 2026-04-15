@@ -147,14 +147,14 @@ public class BattleItemManager : MonoBehaviour
     private void ApplyEffectToBoss()
     {
         // 1. 데미지/무력화/파괴 적용
-        bossController.GetBossDamageData(new BossDamageData(currentItem.damage, currentItem.stagger, currentItem.destruction));
+        bossController.GetBossDamageData(new BossDamageData(currentItem.value, currentItem.stagger, currentItem.destruction));
 
         // 2. 디버프 인터페이스 적용 (중요!)
         if (currentItem.hasDebuff)
         {
             // Factory를 통해 인터페이스 객체 생성 및 전달
-            IBossBuff debuff = BossBuffFactory.CreateBuff(currentItem.buffID, currentItem.duration);
-            bossController.AddEffect(debuff);
+            BossBuff debuff = BossBuffFactory.CreateBuff(currentItem.buffID, 1 ,currentItem.buff_duration);
+            bossController.AddBuff(debuff);
         }
     }
 

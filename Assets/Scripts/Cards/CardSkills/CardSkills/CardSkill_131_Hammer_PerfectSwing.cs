@@ -45,7 +45,7 @@ public class Hammer_PerfectSwing_2 : SkillObject
         {
             if (card.runtimeCardStats is CardStats_Hammer_PerfectSwing stat)
             {
-                SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateDebuff(BuffID.DEBUFF_TAUNT, 1, stat.opt2_taunt_turns));
+                SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateBuff(BuffID.DEBUFF_TAUNT, 1, stat.opt2_taunt_turns));
             }
         }
     }

@@ -17,7 +17,7 @@ public class BuffIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] private GameObject stackNum;
     private int stack;
 
-    public void Init(IBossBuff buff, GameObject toolTip, TextMeshProUGUI name, TextMeshProUGUI desc, int stack)
+    public void Init(BossBuff buff, GameObject toolTip, TextMeshProUGUI name, TextMeshProUGUI desc, int stack)
     {
         data = buff.Data;
         this.toolTipUI = toolTip;

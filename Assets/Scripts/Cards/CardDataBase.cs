@@ -34,6 +34,8 @@ public class CardDataBase : MonoBehaviour
         {
             Debug.LogError("json 파일을 찾을 수 없습니다.");
         }
+
+        Debug.Log($"CardDataBase : {cardList.Count} 개의 카드 로드 완료.");
     }
 
     public CardData GetCardById(int id)

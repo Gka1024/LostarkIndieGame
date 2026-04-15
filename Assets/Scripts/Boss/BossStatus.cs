@@ -40,7 +40,7 @@ public class BossStatus : MonoBehaviour
     // ==============================
 
     private Dictionary<int, BossBuff> bossBuffs = new();
-    private Dictionary<int, BossDebuff> bossDebuffs = new();
+    private Dictionary<int, BossBuff> bossDebuffs = new();
 
     // =========================================================
     // ====================== 상태 제어 ========================
@@ -171,7 +171,7 @@ public class BossStatus : MonoBehaviour
         AlertBuffsUpdate();
     }
 
-    public void AddBossDebuff(BossDebuff debuff)
+    public void AddBossDebuff(BossBuff debuff)
     {
         int id = debuff.ID;
 

@@ -20,14 +20,14 @@ public class BossBuffsUI : MonoBehaviour
     public TextMeshProUGUI buffDesc;
 
     public Dictionary<int, BossBuff> bossBuffsCopy;
-    public Dictionary<int, BossDebuff> bossDebuffsCopy;
+    public Dictionary<int, BossBuff> bossDebuffsCopy;
 
     public void OnTurnStart()
     {
         bossStatus.AlertBuffsUpdate();
     }
 
-    public void UpdateBuffs(Dictionary<int, BossBuff> buffs, Dictionary<int, BossDebuff> debuffs)
+    public void UpdateBuffs(Dictionary<int, BossBuff> buffs, Dictionary<int, BossBuff> debuffs)
     {
         this.bossBuffsCopy = buffs;
         this.bossDebuffsCopy = debuffs;
