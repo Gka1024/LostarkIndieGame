@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public PlayerAnimation playerAnimation;
 
     public CardList cardList;
-    public GameObject objectClickHandler;
+    public ObjectClickHandler objectClickHandler;
     public HexTileSelectHandler hexTileSelectHandler;
 
     public TextMeshProUGUI turnCounter;
@@ -78,8 +78,7 @@ public class GameManager : MonoBehaviour
 
     public bool IsPlayerClicked()
     {
-        ObjectClickHandler objectClickHandlerSC = objectClickHandler.GetComponent<ObjectClickHandler>();
-        return objectClickHandlerSC.isPlayerClicked;
+        return objectClickHandler.isPlayerClicked;
     }
 
     public void EndPlayerTurn()
@@ -94,10 +93,21 @@ public class GameManager : MonoBehaviour
         turnCounter.SetText(GameTurn.ToString());
     }
 
-    public void ResetTileColor()
+    public void CursorOnCards()
     {
-        hexTileManager.ResetTileColor();
+        CancelPlayerClicked();
     }
 
-}
+    public void CursorOnItems()
+    {
+        CancelPlayerClicked();
+    }
 
+    private void CancelPlayerClicked()
+    {
+        objectClickHandler.isPlayerClicked = false;
+        BattleItemManager.Instance.HandsOnCards();
+        HexTileManager.Instance.ResetTileColor();
+        player.GetComponent<Player>().PlayerCursor.SetActive(false);
+    }
+}

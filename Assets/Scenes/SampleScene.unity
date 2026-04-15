@@ -3317,9 +3317,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClickAvailable: 0
   manager: {fileID: 882632984}
+  player: {fileID: 1380444493}
   cardManager: {fileID: 399683477}
   skillManager: {fileID: 969112555}
-  player: {fileID: 1380444490}
+  playerMove: {fileID: 1380444490}
   playerCursor: {fileID: 1754419788}
   tileManager: {fileID: 130202507}
   hexTileSelectHandler: {fileID: 1574261588}
@@ -9341,7 +9342,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d153db958a1ddc0439b9904c46809a83, type: 2}
   allDebuffDatas:
   - {fileID: 11400000, guid: 182df2d33c34e2348b61d8129c2c0da5, type: 2}
+  - {fileID: 11400000, guid: 53e6705f113b9a34cb19341dc39e423c, type: 2}
   - {fileID: 11400000, guid: 14ccd6ec702652047b67bd8925ba849b, type: 2}
+  - {fileID: 11400000, guid: 934024802b52afd488898efaf1b1c3b2, type: 2}
+  - {fileID: 11400000, guid: 1f5d37aa329f39a41957531859c6323f, type: 2}
+  - {fileID: 11400000, guid: 06a998cdecb6cf64696d1db7576ae736, type: 2}
+  - {fileID: 11400000, guid: 6e0c478df42c12c4993fc9fe43a9b916, type: 2}
 --- !u!1 &466276763
 GameObject:
   m_ObjectHideFlags: 0
@@ -10895,8 +10901,8 @@ MonoBehaviour:
   bossHPBar: {fileID: 648000549}
   staggerBar: {fileID: 314394360}
   isStaggerAble: 1
+  bossAttackRatio: 0
   bossGetDamageRatio: 1
-  defenceBase: 80
 --- !u!114 &514132751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10946,6 +10952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boss: {fileID: 514132754}
   bossController: {fileID: 514132758}
+  isGameStarted: 0
   bossStats: {fileID: 514132750}
   bossStatus: {fileID: 514132757}
   bossInteraction: {fileID: 514132751}
@@ -16930,7 +16937,7 @@ MonoBehaviour:
   fieldEffectManager: {fileID: 1961864444}
   playerAnimation: {fileID: 1380444492}
   cardList: {fileID: 1669036333}
-  objectClickHandler: {fileID: 181648197}
+  objectClickHandler: {fileID: 181648198}
   hexTileSelectHandler: {fileID: 1574261588}
   turnCounter: {fileID: 1729198387}
   player: {fileID: 1380444485}
@@ -28857,6 +28864,7 @@ MonoBehaviour:
   anim: {fileID: 1380444492}
   move: {fileID: 1380444490}
   stats: {fileID: 1380444491}
+  PlayerCursor: {fileID: 1754419788}
 --- !u!114 &1380444494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39630,7 +39638,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jsonText: {fileID: 4900000, guid: 20ee2074d40082947ae075fbc4133c29, type: 3}
   items: []
-  battleItemDatas: []
+  battleItemDatas:
+  - {fileID: 11400000, guid: e63117296eb39124881a047cd7226bcf, type: 2}
+  - {fileID: 11400000, guid: 8a18d1845f080f4409e7695dbd58ad14, type: 2}
+  - {fileID: 11400000, guid: 6e68da91d03eb374591925178e44f885, type: 2}
+  - {fileID: 11400000, guid: eb07fd61f8a996f488aa39240cc472eb, type: 2}
+  - {fileID: 11400000, guid: 428b1f7f149b93c4e9febee6eda334a1, type: 2}
+  - {fileID: 11400000, guid: 35fbd59f599651c4281284c3ed3b81ba, type: 2}
+  - {fileID: 11400000, guid: 11e34b150d0c05e4184f71f6f2bf67ee, type: 2}
+  - {fileID: 11400000, guid: 05090a94c50e9104d91249045089e3fd, type: 2}
+  - {fileID: 11400000, guid: 5105e776a5261d844a490b664e9022d6, type: 2}
+  - {fileID: 11400000, guid: b1125cb5298c0384eb21f12fddeae175, type: 2}
+  - {fileID: 11400000, guid: 99ca8c38f8e452544bed7271e857cf74, type: 2}
+  - {fileID: 11400000, guid: 0a38637b6d099cb4cbbf2e9545ae2a66, type: 2}
+  - {fileID: 11400000, guid: 47e66b90f158f4146ba7214e786ca221, type: 2}
+  - {fileID: 11400000, guid: c61d936d77e64c34db0200ef66d2b6eb, type: 2}
+  - {fileID: 11400000, guid: eef3bfd246705414b8af0226069d7e62, type: 2}
+  - {fileID: 11400000, guid: 6fa2f276564112e4f85cc6ab2d692b99, type: 2}
+  - {fileID: 11400000, guid: ec7b0c23212b9bb439f83aa3b0da0b06, type: 2}
+  - {fileID: 11400000, guid: 6e2ec8a98154fee4b904b84b50fc8f2f, type: 2}
 --- !u!1 &2010616313
 GameObject:
   m_ObjectHideFlags: 0

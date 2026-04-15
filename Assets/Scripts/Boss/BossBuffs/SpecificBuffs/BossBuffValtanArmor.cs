@@ -1,8 +1,8 @@
 using System;
 
-public class BossArmorBuff : BossBuff
+public class BossBuffValtanArmor : BossBuff
 {
-    public BossArmorBuff(BossBuffData data, int duration, int stack = 1) : base(data, duration, stack)
+    public BossBuffValtanArmor(BossBuffData data, int duration, int stack = 1) : base(data, duration, stack)
     {
 
     }

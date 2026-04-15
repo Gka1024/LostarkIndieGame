@@ -198,8 +198,9 @@ public class CardManager : MonoBehaviour
 
     public void PointerEnter(CardInteraction card)
     {
+        manager.CursorOnCards();
+
         int cardIndex = cardsInHand.IndexOf(card.gameObject);
-        CancelPlayerClicked();
         for (int i = 0; i < cardsInHand.Count; i++)
         {
             if (i < cardIndex)
@@ -292,12 +293,7 @@ public class CardManager : MonoBehaviour
     // 기타 유틸
     // ======================
 
-    private void CancelPlayerClicked()
-    {
-        objectClickHandler.isPlayerClicked = false;
-        BattleItemManager.Instance.HandsOnCards();
-        HexTileManager.Instance.ResetTileColor();
-    }
+    
 
     public void ShowCards(bool show)
     {

@@ -41,7 +41,7 @@ public enum BuffID
     DEBUFF_TAUNT = 203,
     DEBUFF_STUN = 204,
     DEBUFF_CORROSION = 205,
-    DEBUFF_LESS_SHIELD = 206,
+    DEBUFF_FRAGILE = 206,
     DEBUFF_FLAME = 207,
     
 

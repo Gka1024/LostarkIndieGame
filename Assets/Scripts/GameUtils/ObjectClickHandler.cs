@@ -7,9 +7,12 @@ public class ObjectClickHandler : MonoBehaviour
     public bool isClickAvailable;
 
     [SerializeField] private GameManager manager;
+
+    [SerializeField] private Player player;
+
     [SerializeField] private CardManager cardManager;
     [SerializeField] private SkillManager skillManager;
-    [SerializeField] private PlayerMove player;
+    [SerializeField] private PlayerMove playerMove;
     [SerializeField] private GameObject playerCursor;
     [SerializeField] private HexTileManager tileManager;
     [SerializeField] private HexTileSelectHandler hexTileSelectHandler;
@@ -72,7 +75,7 @@ public class ObjectClickHandler : MonoBehaviour
     {
         SetPlayerClickState(false);
 
-        if (!tileManager.IsTileMoveable(player.GetCurrentTile(), tile, player.moveAbleDistance))
+        if (!tileManager.IsTileMoveable(playerMove.GetCurrentTile(), tile, playerMove.moveAbleDistance))
         {
             Debug.Log("그곳으로는 움직일 수 없습니다.");
             tile.ResetColor();
@@ -85,13 +88,13 @@ public class ObjectClickHandler : MonoBehaviour
             return;
         }
 
-        player.MoveToTile(new PlayerMoveInfo(tile, isTurnEnd: true));
+        playerMove.MoveToTile(new PlayerMoveInfo(tile, isTurnEnd: true));
     }
 
     private void SetPlayerClickState(bool clicked)
     {
         isPlayerClicked = clicked;
-        playerCursor.SetActive(clicked);
+        player.PlayerCursor.SetActive(true);
         tileManager.ChangeTileColorIfMoveable(clicked);
     }
 

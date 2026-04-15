@@ -8,6 +8,8 @@ public class BossAI : MonoBehaviour
     public Boss boss;
     public BossController bossController;
 
+    public bool isGameStarted;
+
     public BossStats bossStats;
     public BossStatus bossStatus;
     public BossInteraction bossInteraction;
@@ -27,6 +29,7 @@ public class BossAI : MonoBehaviour
     private void Start()
     {
         bossPhaseController.Initialize();
+        isGameStarted = false;
 
         // 🔥 이벤트 기반 연결 (추천 구조)
         bossStatus.OnTauntApplied += SetBossTaunted;
@@ -36,14 +39,24 @@ public class BossAI : MonoBehaviour
         bossStatus.OnGroggyRecovered += RecoverFromGroggy;
     }
 
+    public void OnGameStart()
+    {
+        bossController.OnGameStart();
+    }
+
     // ===============================
     // 턴 시작 (예고 단계)
     // ===============================
 
     public void OnTurnStart()
     {
-        if (IsBossCrowdControlled())
-            return;
+        if (!isGameStarted)
+        {
+            isGameStarted = true;
+            OnGameStart();
+        }
+
+        if (IsBossCrowdControlled()) return;
 
         if (currentPattern == null)
             SetPattern(bossPhaseController.GetNextPattern());

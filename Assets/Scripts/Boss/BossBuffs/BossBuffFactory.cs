@@ -22,7 +22,7 @@ public static class BossBuffFactory
     }
 
 
-    public static BossBuff CreateBuff(BuffID buffID, int stack = 1, int duration = 1)
+    public static BossBuff CreateBuff(BuffID buffID, int stack = 1, int duration = 1, GameObject target = null)
     {
         if (!buffTable.TryGetValue((int)buffID, out var data))
         {
@@ -30,17 +30,19 @@ public static class BossBuffFactory
             return null;
         }
 
-        // --- 여기서 자식 클래스를 분기하여 생성합니다 ---
-        // buffID(Enum)를 기반으로 switch를 돌리는 것이 가장 깔끔합니다.
         BossBuff buff = buffID switch
         {
-            // 예시: 111번 ID가 화상이라면 BurnBuff(자식)를 생성
+            BuffID.BUFF_VALTAN_ARMOR => new BossBuffValtanArmor(data, duration, stack),
+            BuffID.BUFF_RAGE => new BossBuffRage(data, duration, stack),
+
             BuffID.DEBUFF_DEFENCEDOWN => new BossDebuffDefenceDown(data, duration, stack),
-
-            // 예시: 222번 ID가 방어력 감소라면 DefenseBuff(자식)를 생성
             BuffID.DEBUFF_ATTACKDOWN => new BossDebuffAttackDown(data, duration, stack),
+            BuffID.DEBUFF_TAUNT => new BossDebuffTaunt(data, duration, stack, target),
+            BuffID.DEBUFF_STUN => new BossDebuffStun(data, duration, stack),
+            BuffID.DEBUFF_CORROSION => new BossDebuffCorrosion(data, duration, stack),
+            BuffID.DEBUFF_FRAGILE => new BossDebuffFragile(data, duration, stack),
+            BuffID.DEBUFF_FLAME => new BossDebuffFlame(data, duration, stack),
 
-            // 특별한 로직이 필요 없는 일반 버프들은 부모 클래스로 생성
             _ => new BossBuff(data, duration, stack)
         };
 

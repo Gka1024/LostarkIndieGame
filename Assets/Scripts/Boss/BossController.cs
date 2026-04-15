@@ -30,6 +30,12 @@ public class BossController : MonoBehaviour
         RegisterCurrentTile();
     }
 
+    public void OnGameStart()
+    {
+        AddBuff(BossBuffFactory.CreateBuff(BuffID.BUFF_VALTAN_ARMOR, 2, -1));
+        AddBuff(BossBuffFactory.CreateBuff(BuffID.BUFF_RAGE, 2, -1));
+    }
+
     private void RegisterCurrentTile()
     {
         if (curHexTile == null && bossInteraction.currentTile != null)
@@ -54,6 +60,11 @@ public class BossController : MonoBehaviour
     {
         FindPlayer();
         return curPlayerTile;
+    }
+
+    public void Stun(int duration)
+    {
+        bossStatus.MakeBossGroggy(duration);
     }
 
     public void Taunt(GameObject obj, int duration)
@@ -81,7 +92,6 @@ public class BossController : MonoBehaviour
     {
         bossAnimation.RotateToTile(tile);
     }
-
 
     public HexTile GetCurrentTile()
     {

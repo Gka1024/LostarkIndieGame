@@ -48,14 +48,21 @@ public class BossStats : MonoBehaviour
     private int destroyDuration;
 
     // =========================
+    // Attack
+    // =========================
+
+    private const float BOSS_ATTACK_BASE = 1;
+    public float bossAttackRatio;
+
+    // =========================
     // Defence
     // =========================
 
     private const float k = 100f;
 
     public float bossGetDamageRatio = 1f;
-    public float defenceBase = 80f;
-    private float defenceCur;
+    public const float BOSS_DEFENCE_BASE = 80f;
+    private float bossDefence;
 
     // =========================================================
     // ================== 초기화 ================================
@@ -64,7 +71,8 @@ public class BossStats : MonoBehaviour
     private void Awake()
     {
         bossAI = GetComponent<BossAI>();
-        defenceCur = defenceBase;
+        bossDefence = BOSS_DEFENCE_BASE;
+        bossAttackRatio = BOSS_ATTACK_BASE;
         staggerAmount = MAX_STAGGER;
     }
 
@@ -87,7 +95,7 @@ public class BossStats : MonoBehaviour
     public float CalculateDamage(float incomeDamage)
     {
         float defenceDamage =
-            incomeDamage * (1 - (defenceCur / (defenceCur + k)));
+            incomeDamage * (1 - (bossDefence / (bossDefence + k)));
 
         float finalDamage =
             bossStatus.CalculateDamageOnBuffsAndDebuffs(defenceDamage);
@@ -157,6 +165,13 @@ public class BossStats : MonoBehaviour
     {
         bossShield = 0;
         bossHPBar.UpdateShieldBar(bossShield);
+    }
+
+    public void AdjustShield(float ratio)
+    {
+        if(!HasShield()) return;
+
+        bossShield *= ratio;
     }
 
     public bool HasShield() => bossShield > 0;
@@ -257,6 +272,16 @@ public class BossStats : MonoBehaviour
     // =========================================================
     // ================== 외부 접근 =============================
     // =========================================================
+
+    public void OnAttackBuffApplied(float value)
+    {
+        bossAttackRatio *= value;
+    }
+
+    public void OnAttackBuffRemoved(float value)
+    {
+        bossAttackRatio /= value;
+    }
 
     public void SetDefenceRatio(float ratio)
     {

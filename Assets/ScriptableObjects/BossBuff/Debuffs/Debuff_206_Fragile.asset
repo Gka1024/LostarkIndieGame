@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a4197e8182c5754e9ceab01a0c0825f, type: 3}
-  m_Name: Debuff_206_LessShield
+  m_Name: Debuff_206_Fragile
   m_EditorClassIdentifier: 
   buffID: 206
   buffName: "\uC274\uB4DC \uAC10\uC18C"

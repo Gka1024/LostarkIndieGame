@@ -115,6 +115,11 @@ public class BattleItemUI : MonoBehaviour
         ResetSlotCursor();
     }
 
+    public void CursorOnItem()
+    {
+        GameManager.Instance.CursorOnItems();
+    }
+
     // --- 아이템 교체(Change) 관련 UI ---
     public void OpenChangePanel()
     {

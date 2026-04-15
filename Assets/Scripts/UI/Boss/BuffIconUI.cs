@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class BuffIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Sprite iconImage;
+    public const float DESCTRIPTION_OFFSET_Y = -200;
 
     [SerializeField] private GameObject bufficonImage;
     [SerializeField] private BossBuffData data;
@@ -47,12 +48,17 @@ public class BuffIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         nameText.text = data.buffName;
         descText.text = data.description;
-
+        MoveToolTipUI();
         toolTipUI.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         toolTipUI.SetActive(false);
+    }
+
+    private void MoveToolTipUI()
+    {
+        toolTipUI.transform.position = this.gameObject.transform.position + new Vector3(0, DESCTRIPTION_OFFSET_Y, 0);
     }
 }

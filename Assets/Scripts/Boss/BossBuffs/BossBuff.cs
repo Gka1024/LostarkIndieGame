@@ -42,4 +42,9 @@ public class BossBuff
     {
         return damage;
     }
+
+    public virtual int ModifyIncomeDestruction(int destruction)
+    {
+        return destruction;
+    }
 }

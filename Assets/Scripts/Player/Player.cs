@@ -7,4 +7,6 @@ public class Player : MonoBehaviour
     public PlayerMove move;
     public PlayerStats stats;
 
+    public GameObject PlayerCursor;
+
 }
