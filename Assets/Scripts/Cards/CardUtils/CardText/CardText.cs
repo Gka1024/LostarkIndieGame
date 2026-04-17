@@ -51,8 +51,6 @@ public class CardText : MonoBehaviour
     // 카드 사용 시 호출 (트라이포드 적용)
     public virtual void SetTripodText()
     {
-        Debug.Log("SetTripodText");
-
         if (cardStats.isCardSkill)
         {
             var values = CreateCardValues();

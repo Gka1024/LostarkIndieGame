@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class BuffIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Sprite iconImage;
-    public const float DESCTRIPTION_OFFSET_Y = -200;
+    public const float DESCTRIPTION_OFFSET_Y = -150;
 
     [SerializeField] private GameObject bufficonImage;
     [SerializeField] private BossBuffData data;
@@ -18,17 +18,32 @@ public class BuffIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] private GameObject stackNum;
     private int stack;
 
-    public void Init(BossBuff buff, GameObject toolTip, TextMeshProUGUI name, TextMeshProUGUI desc, int stack)
+    [SerializeField] private GameObject durationNum;
+    private int duration;
+
+    public void Init(BossBuff buff, GameObject toolTip, TextMeshProUGUI name, TextMeshProUGUI desc, int stack, int duration)
     {
         data = buff.Data;
         this.toolTipUI = toolTip;
         this.nameText = name;
         this.descText = desc;
         this.stack = stack;
+        this.duration = duration;
+
+        stackNum = transform.GetChild(1).gameObject;
+        durationNum = transform.GetChild(2).gameObject;
+
+        ChangeIconImage();
+
+        DisplayStackNumber();
+        DisplayDurationNumber();
+
+    }
+
+    private void ChangeIconImage()
+    {
         iconImage = data.Icon;
         transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = iconImage;
-        stackNum = transform.GetChild(1).gameObject;
-        DisplayStackNumber();
     }
 
     private void DisplayStackNumber()
@@ -41,6 +56,19 @@ public class BuffIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         else
         {
             stackNum.SetActive(false);
+        }
+    }
+
+    private void DisplayDurationNumber()
+    {
+        if (duration != -1)
+        {
+            durationNum.GetComponent<TextMeshProUGUI>().SetText(duration + "초");
+            durationNum.SetActive(true);
+        }
+        else
+        {
+            durationNum.SetActive(false);
         }
     }
 

@@ -59,6 +59,7 @@ public class ObjectClickHandler : MonoBehaviour
             if (isPlayerClicked)
             {
                 HandleTileMovement(clickedTile);
+                SetPlayerClickState(false);
             }
         }
     }
@@ -94,7 +95,7 @@ public class ObjectClickHandler : MonoBehaviour
     private void SetPlayerClickState(bool clicked)
     {
         isPlayerClicked = clicked;
-        player.PlayerCursor.SetActive(true);
+        player.PlayerCursor.SetActive(clicked);
         tileManager.ChangeTileColorIfMoveable(clicked);
     }
 

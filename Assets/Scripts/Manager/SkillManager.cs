@@ -86,6 +86,7 @@ public class SkillManager : MonoBehaviour
     }
 
     // ========== 스킬 시퀀스 시작 ==========
+
     public void StartSkillSequence(GameObject card)
     {
         currentCard = card;
@@ -97,6 +98,7 @@ public class SkillManager : MonoBehaviour
 
     private IEnumerator SkillSequenceRoutine()
     {
+        // 카드 사용
         // 1. 데이터 불러오기
         currentSkill = currentCard.GetComponent<CardSkill>();
         currentStats = CardList.Instance.GetCardStats(currentSkill.CardID);
@@ -104,22 +106,33 @@ public class SkillManager : MonoBehaviour
         // 2. 플레이어 상황 체크
         if (playerStats.GetPlayerDown() || playerStats.GetPlayerSilenced() || playerStats.GetPlayerStun())
         {
-            if (currentSkill.CardID != 001)
+            if (currentSkill.CardID != 100)
             {
                 Debug.Log("현재 움직일 수 없습니다. 다른 카드를 사용하세요.");
             }
         }
 
+        // 트라이포드 카드 선택
         // 3. UI 불러오기 및 트라이포드 & 타일 선택
 
         ShowTripodUI(true);
         ShowCancelButton(true);
 
-        //currentStats.ApplyOption(selectedTripod);
+        if (playerStats.GetPlayerDown() || playerStats.GetPlayerSilenced() || playerStats.GetPlayerStun())
+        {
+            if (currentSkill.CardID != 100 && selectedTripod != 2)
+            {
+                Debug.Log("현재 움직일 수 없습니다. 다른 카드를 사용하세요.");
+            }
+        }
 
         yield return new WaitUntil(() => currentState == SkillState.SelectingTile);
-
         ShowTripodUI(false);
+
+        Debug.Log(currentStats);
+        currentStats.ApplyOption(selectedTripod);
+
+        // 타일 선택
         if (currentStats.needToSelectTile)
         {
             hexTileSelectHandler.StartSelection(currentStats);
@@ -157,6 +170,7 @@ public class SkillManager : MonoBehaviour
     }
 
     // ========== 큐 등록 ==========
+
     private void EnqueueCardSkill(CardStats stats, int cardID, int tripodIndex)
     {
         if (stats == null)
@@ -231,13 +245,11 @@ public class SkillManager : MonoBehaviour
         var cardSkill = skillGO.GetComponent<CardSkill>();
         CardStats stats = cardSkill.Initialize(baseStat, data.tripodIndex);
 
-        // 3. 대상 판정 및 효과 처리
+        // 3. 대상 판정 및 스킬 실행
         bool bossInRange = tileManager.IsBossTile(data.selectedTiles);
         yield return StartCoroutine(cardSkill.Execute(data, bossInRange));
 
         // 4. 애니메이션 & 이펙트
-        player.GetComponent<Player>().anim.ChangeWeapon(baseStat.playerWeapon);
-        cardSkill.PlayAnimation(data.mainTile);
 
         // 6. 사후 처리
         CardList.Instance.ApplyCardCooldown(baseStat);
@@ -332,6 +344,12 @@ public class SkillManager : MonoBehaviour
     public void ApplyBossDebuff(BossBuff buff)
     {
         boss.GetComponent<Boss>().bossController.AddBuff(buff);
+    }
+
+    public void PlayAnimaion(CardSkill skill, PlayerWeapon playerWeapon, HexTile tile)
+    {
+        player.GetComponent<Player>().anim.ChangeWeapon(playerWeapon);
+        skill.PlayAnimation(tile);
     }
 
     // ========== 유틸 함수 ==========

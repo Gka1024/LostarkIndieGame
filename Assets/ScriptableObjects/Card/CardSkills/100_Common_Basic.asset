@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e665739a2aa8f83448c4b0b8770b41cb, type: 3}
-  m_Name: Common_Basic
+  m_Script: {fileID: 11500000, guid: 20db041b3d3420e40a2bd11dcd43f163, type: 3}
+  m_Name: 100_Common_Basic
   m_EditorClassIdentifier: 
-  CardID: 1
+  CardID: 100
   cardName: 
   isCardSkill: 1
   HasChainSkill: 0
@@ -38,3 +38,5 @@ MonoBehaviour:
   isHeadAttack: 0
   isBackAttack: 0
   isSuperArmor: 0
+  basicAttackRange: 1
+  QuickMoveRange: 3

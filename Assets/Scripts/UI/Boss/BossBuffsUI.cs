@@ -7,12 +7,12 @@ public class BossBuffsUI : MonoBehaviour
 {
     public BossStatus bossStatus;
 
-    public GameObject buffs;
-    public GameObject debuffs;
+    public GameObject buffsParentGameObject;
+    public GameObject debuffsParentGameObject;
 
     public Transform buffIconStartTransform;
     public Transform debuffIconStartTransform;
-    private const float ICON_MOVE_MARGIN = 150;
+    private const float ICON_MOVE_MARGIN = 60;
 
     public GameObject bossBuffIcon; // prefab
     public GameObject buffDescribtionUI;
@@ -42,7 +42,7 @@ public class BossBuffsUI : MonoBehaviour
 
     private void UpdateBuffUI()
     {
-        foreach (Transform child in buffs.transform)
+        foreach (Transform child in buffsParentGameObject.transform)
         {
             Destroy(child.gameObject);
         }
@@ -56,11 +56,11 @@ public class BossBuffsUI : MonoBehaviour
             var iconObj = Instantiate(bossBuffIcon,
                 buffIconStartTransform.position + move,
                 buffIconStartTransform.rotation,
-                buffs.transform);
+                buffsParentGameObject.transform);
 
             BuffIconUI iconUI = iconObj.GetComponent<BuffIconUI>();
 
-            iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.Stack);
+            iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.Stack, buff.Duration);
 
             if (buff.Data == null)
             {
@@ -74,7 +74,7 @@ public class BossBuffsUI : MonoBehaviour
 
     private void UpdateDebuffUI()
     {
-        foreach (Transform child in debuffs.transform)
+        foreach (Transform child in debuffsParentGameObject.transform)
         {
             Destroy(child.gameObject);
         }
@@ -86,13 +86,13 @@ public class BossBuffsUI : MonoBehaviour
 
             Vector3 move = new Vector3(ICON_MOVE_MARGIN * index, 0, 0);
             var iconObj = Instantiate(bossBuffIcon,
-                buffIconStartTransform.position + move,
-                buffIconStartTransform.rotation,
-                buffs.transform);
+                debuffIconStartTransform.position + move,
+                debuffIconStartTransform.rotation,
+                debuffsParentGameObject.transform);
 
             BuffIconUI iconUI = iconObj.GetComponent<BuffIconUI>();
 
-            iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.Stack);
+            iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.Stack,buff.Duration);
 
             if (buff.Data == null)
             {

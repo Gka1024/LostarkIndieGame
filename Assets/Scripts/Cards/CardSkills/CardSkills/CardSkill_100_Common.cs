@@ -7,9 +7,9 @@ public class CardSkill_Common : CardSkill
     {
         return num switch
         {
-            1 => new CardSkill_BasicAttack(),
+            1 => new CardSkill_TurnEnd(),
             2 => new CardSkill_QuickMove(),
-            3 => new CardSkill_TurnEnd(),
+            3 => new CardSkill_BasicAttack(),
             _ => null
         };
     }
@@ -22,11 +22,11 @@ public class CardSkill_Common : CardSkill
     }
 }
 
-public class CardSkill_BasicAttack : SkillObject
+public class CardSkill_TurnEnd : SkillObject
 {
     public override void ApplyOption(CardSkill card)
     {
-        throw new System.NotImplementedException();
+        card.runtimeCardStats.ApplyOption(1);
     }
 }
 
@@ -39,29 +39,33 @@ public class CardSkill_QuickMove : SkillObject
 
     public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
-        base.Execute(card, data, isBossHit);
+        PlayerMove playerMove = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
 
-        HexTile tile = SkillManager.Instance.GetSelectedTile();
-
-        PlayerMove playerSC = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
-
-        if (!card.manager.hexTileManager.IsBossTile(tile))
+        if (!card.manager.hexTileManager.IsBossTile(data.mainTile))
         {
             Debug.Log("Move Accepted");
-            playerSC.MoveToTile(new PlayerMoveInfo(targetTile, isDash: true, isFace: true));
+            playerMove.MoveToTile(new PlayerMoveInfo(data.mainTile, isDash: true, isFace: true, ignoreDistance: true));
         }
+
+        isPlayAnimation = false;
+
+        base.Execute(card, data, isBossHit);
 
         yield return 0;
     }
 }
 
-public class CardSkill_TurnEnd : SkillObject
+public class CardSkill_BasicAttack : SkillObject
 {
     public override void ApplyOption(CardSkill card)
     {
-        throw new System.NotImplementedException();
+        card.runtimeCardStats.ApplyOption(3);
     }
 }
+
+
+
+
 
 
 

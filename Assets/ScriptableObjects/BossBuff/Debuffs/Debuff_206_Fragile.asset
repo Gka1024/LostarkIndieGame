@@ -15,6 +15,13 @@ MonoBehaviour:
   buffID: 206
   buffName: "\uC274\uB4DC \uAC10\uC18C"
   effectValue: 0
-  buffSide: 0
+  buffSide: 1
   description: "\uB85C\uB818\uC785\uC12C "
   Icon: {fileID: 0}
+  specificBuff:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

@@ -1,28 +1,6 @@
 {
   "cards": [
     {
-      "id": 1,
-      "name": "기본 카드",
-      "description": "기본 카드입니다. 턴 종료, 긴급 이동, 기본 공격이 있습니다.",
-      "options": [
-        {
-          "option_id": 1,
-          "option_name": "턴 종료",
-          "option_description": "무언가 더 할 건 없는지 더블 체크!"
-        },
-        {
-          "option_id": 2,
-          "option_name": "긴급 이동",
-          "option_description": "2칸 내 원하는 위치로 이동할 수 있다. 남발하지 않도록 하자."
-        },
-        {
-          "option_id": 3,
-          "option_name": "기본 공격",
-          "option_description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
-        }
-      ]
-    },
-    {
       "id": 71,
       "esther": "실리안",
       "name": "완성된 패자의 검",
@@ -69,6 +47,28 @@
       "esther": "카단",
       "name": "아르스의 방패",
       "description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
+    },
+    {
+      "id": 100,
+      "name": "기본 카드",
+      "description": "기본 카드입니다. 턴 종료, 긴급 이동, 기본 공격이 있습니다.",
+      "options": [
+        {
+          "option_id": 1,
+          "option_name": "턴 종료",
+          "option_description": "무언가 더 할 건 없는지 더블 체크!"
+        },
+        {
+          "option_id": 2,
+          "option_name": "긴급 이동",
+          "option_description": "2칸 내 원하는 위치로 이동할 수 있다. 남발하지 않도록 하자."
+        },
+        {
+          "option_id": 3,
+          "option_name": "기본 공격",
+          "option_description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
+        }
+      ]
     },
     {
       "id": 111,

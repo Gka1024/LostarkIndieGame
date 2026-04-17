@@ -364,7 +364,7 @@ MonoBehaviour:
   cardDes: {fileID: 4975623930293762462}
   isCardDataNull: 0
   cardData:
-    id: 1
+    id: 100
     name: 
     description: 
     options: []
@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b4eaef8dfa5c447b298d6833150a4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardID: 1
+  CardID: 100
   manager: {fileID: 0}
   playerAnimation: {fileID: 0}
   chainSkill: {fileID: 0}

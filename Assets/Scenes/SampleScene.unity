@@ -9655,7 +9655,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -210}
+  m_AnchoredPosition: {x: 0, y: -240}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &474025879
@@ -9679,8 +9679,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossStatus: {fileID: 514132757}
-  buffs: {fileID: 150031654}
-  debuffs: {fileID: 1678278017}
+  buffsParentGameObject: {fileID: 150031654}
+  debuffsParentGameObject: {fileID: 1678278017}
   buffIconStartTransform: {fileID: 150031655}
   debuffIconStartTransform: {fileID: 1678278018}
   bossBuffIcon: {fileID: 8984005817963481638, guid: d4a57c934f19e374380389dd72161363, type: 3}
@@ -23782,7 +23782,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 230.87, y: -77.3}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1167734732
@@ -32815,6 +32815,7 @@ MonoBehaviour:
   cardManager: {fileID: 399683477}
   basicCard: {fileID: 6051099079234759249, guid: 99e0a9c26ce9e444089e35161a6f0180, type: 3}
   cardsList:
+  - {fileID: 6051099079234759249, guid: 99e0a9c26ce9e444089e35161a6f0180, type: 3}
   - {fileID: 6631775693681692380, guid: 188d194dbb1e6af4d863700228263aa2, type: 3}
   - {fileID: 3869069462170026942, guid: 29cae56c717ff844a8cd0bdc2056450a, type: 3}
   - {fileID: 3551414333127144010, guid: 1cce9b2008128ef4db67ffa14c1834b1, type: 3}
@@ -32828,7 +32829,7 @@ MonoBehaviour:
   - {fileID: 2395156013775085454, guid: e7af57ed2cef8c044ad3e1a4ecf575d8, type: 3}
   - {fileID: 4146159729531193245, guid: 4394f8bd5bb025c4db4417243edb781a, type: 3}
   cardStatsList:
-  - {fileID: 11400000, guid: 7d09ebb84e58e61468b7bed98520ee8f, type: 2}
+  - {fileID: 11400000, guid: 111e88ef911efdb438cb6691623a57ac, type: 2}
   - {fileID: 11400000, guid: aeb1ac7315248c84fb3b4bb082a409ab, type: 2}
   - {fileID: 11400000, guid: 9963f7fd2cb79d649a206b1e24f8fe57, type: 2}
   - {fileID: 11400000, guid: 56e857cce4270484c8e44bf7ed7ebb46, type: 2}
