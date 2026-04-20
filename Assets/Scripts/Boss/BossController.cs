@@ -11,6 +11,7 @@ public class BossController : MonoBehaviour
     public BossInteraction bossInteraction;
     public BossAnimation bossAnimation;
     public BossStatus bossStatus;
+    public BossDamagePopup bossDamagePopup;
 
     public HexTile curHexTile;
     public Player player;
@@ -24,6 +25,7 @@ public class BossController : MonoBehaviour
         bossInteraction = boss.interaction;
         bossAnimation = boss.animaton;
         bossStatus = boss.status;
+        bossDamagePopup = boss.bossDamagePopup;
 
         player = boss.player.GetComponent<Player>();
 
@@ -102,30 +104,12 @@ public class BossController : MonoBehaviour
 
     public void AddBuff(BossBuff buff)
     {
-        if (buff.Side == BuffSide.Buff)
-        {
-            bossStatus.AddBossBuff(buff);
-        }
-        else if (buff.Side == BuffSide.Debuff)
-        {
-            bossStatus.AddBossDebuff(buff);
-        }
+        bossStatus.AddBossBuff(buff);
     }
 
     public void GetBossDamageData(BossDamageData data)
     {
-        bossStats.ApplyDamageData(data);
-    }
-
-    public void GetBossBuff(BossBuff buff)
-    {
-        bossStatus.AddBossBuff(buff);
-    }
-
-    public void GetBossDebuff(BossBuff debuff)
-    {
-        Debug.Log($"debuff : {debuff.ID}");
-        bossStatus.AddBossDebuff(debuff);
+        bossDamagePopup.ShowDamage(bossStats.ApplyDamageData(data));
     }
 
     public void ShowAttackPreview(BossPatternTurnInfo info)

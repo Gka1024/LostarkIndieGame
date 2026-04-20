@@ -270,6 +270,7 @@ public class BossAI : MonoBehaviour
             InterruptCurrentPattern();
 
             bossStatus.MakeBossGroggy(5);
+            bossStatus.AddBossBuff(BossBuffFactory.CreateBuff(BuffID.BUFF_VALTAN_ARMOR, -1, 0));
         }
     }
 

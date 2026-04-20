@@ -14,7 +14,6 @@ public class PlayerMove : MonoBehaviour
     public float moveDuration;
     public float rotationSpeed;
 
-    private bool isMoving = false;
     private Queue<HexTile> path = new Queue<HexTile>();
 
 
@@ -29,26 +28,13 @@ public class PlayerMove : MonoBehaviour
         currentTile = hexTileManager.GetObjectHextile(gameObject);
     }
 
-    void Update()
-    {
-        TryMoveAlongPath();
-    }
-
-    private void TryMoveAlongPath()
-    {
-        if (path.Count > 0 && !isMoving)
-        {
-            MoveToTile(path.Dequeue(), rotate: true);
-        }
-    }
-
     public HexTile GetCurrentTile() => currentTile;
 
     public void MoveToTile(PlayerMoveInfo info)
     {
         HexTile tile = info.tile;
 
-        if (tile == null) return;
+        if (tile == null || !tile.GetIsTileMoveable()) return;
 
         // 강제 이동이 아닐 경우엔 이동 가능 여부를 체크
         if (!info.ignoreDistance)
@@ -77,10 +63,6 @@ public class PlayerMove : MonoBehaviour
         StartCoroutine(MoveCoroutine(targetPosition, info.isTurnEnd));
     }
 
-    public void MoveToTile(HexTile tile, bool rotate = true, bool isForceMove = false, bool isTurnEnd = false)
-    {
-
-    }
 
     public void PlayerKnockBack(HexTile tile)
     {

@@ -7,6 +7,10 @@ public class BattleItemUI : MonoBehaviour
 {
     public BattleItemManager battleItemManager;
 
+    [Header("Current Item Type")]
+    public PotionType itemPotionType;
+    public GranadeType itemGranadeType;
+    public SpecialType itemSpecialType;
 
     [Header("Item Description UI")]
     public GameObject itemDescWindow;
@@ -115,19 +119,20 @@ public class BattleItemUI : MonoBehaviour
         ResetSlotCursor();
     }
 
-    public void CursorOnItem()
+    public void UserCursorOnItem()
     {
         GameManager.Instance.CursorOnItems();
     }
 
     // --- 아이템 교체(Change) 관련 UI ---
+
     public void OpenChangePanel()
     {
         OpenChangePanel(battleItemManager.currentItemType);
         ResetSlotCursor();
     }
 
-    public void OpenChangePanel(ItemType type)
+    private void OpenChangePanel(ItemType type)
     {
         // 모든 패널 일단 끄기
         itemChangePotionPanel.SetActive(false);
@@ -163,6 +168,8 @@ public class BattleItemUI : MonoBehaviour
         itemChangeSpecialPanel.SetActive(false);
         itemChangeWindow.SetActive(false);
     }
+
+    // --- 아이템 선택 관련 UI 
 
     public void SetSlotHighlight(ItemType type, bool show)
     {

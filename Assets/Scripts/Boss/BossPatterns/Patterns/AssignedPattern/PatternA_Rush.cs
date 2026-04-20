@@ -78,7 +78,7 @@ public class PatternA_Rush : BossPattern
             // 파괴 가능 상태 부여 (30 누적, 5턴 유지)
             ai.bossStats.EnableDestroy(30, 5);
 
-            ai.bossController.GetBossBuff(BossBuffFactory.CreateBuff(BuffID.BUFF_RAGE, 1, 5));
+            ai.bossController.AddBuff(BossBuffFactory.CreateBuff(BuffID.BUFF_RAGE, 1, 5));
         }
 
         HexTile objectTile = GameManager.Instance.objectManager.IsObjectExist(currentTurnInfo.TargetTiles, TileState.IsPillar);

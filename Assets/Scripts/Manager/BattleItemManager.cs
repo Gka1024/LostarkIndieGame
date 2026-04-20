@@ -46,12 +46,11 @@ public class BattleItemManager : MonoBehaviour
 
         // 1. 장착된 데이터 가져오기
         currentItem = GetEquippedData(type);
+        currentItemType = type;
         if (currentItem == null) return;
 
         // 2. UI에게 "이 데이터로 설명창 띄워줘"라고 명령 (데이터 전달)
         battleItemUI.ShowControlButtons(true);
-
-        currentItemType = type;
     }
 
     // ==== 아이템 데이터 교체 ====
@@ -128,7 +127,6 @@ public class BattleItemManager : MonoBehaviour
     private IEnumerator UseThrowableSequence()
     {
         hexTileSelectHandler.StartSelectionItemGranades();
-        hexTileSelectHandler.isSelectStopped = false;
 
         yield return new WaitUntil(() => hexTileSelectHandler.isTileSelected || isCancelRequested);
         if (isCancelRequested) yield break;
@@ -147,7 +145,7 @@ public class BattleItemManager : MonoBehaviour
     private void ApplyEffectToBoss()
     {
         // 1. 데미지/무력화/파괴 적용
-        bossController.GetBossDamageData(new BossDamageData(currentItem.value, currentItem.stagger, currentItem.destruction));
+        bossController.GetBossDamageData(new BossDamageData(currentItem.damage, currentItem.stagger, currentItem.destruction, isTrueDamage: true));
 
         // 2. 디버프 인터페이스 적용 (중요!)
         if (currentItem.hasDebuff)
@@ -160,7 +158,7 @@ public class BattleItemManager : MonoBehaviour
 
     private IEnumerator UseSpecialSequence()
     {
-        hexTileSelectHandler.StartSelectionItemCampFire();
+        hexTileSelectHandler.StartSelectionItemSpecial();
 
         yield return new WaitUntil(() => hexTileSelectHandler.isTileSelected || isCancelRequested);
         if (isCancelRequested) yield break;
@@ -195,13 +193,14 @@ public class BattleItemManager : MonoBehaviour
         currentItem = null;
     }
 
-    public void HandsOnCards()
+    public void ResetSelect()
     {
         battleItemUI.ItemCancelButtonClick();
     }
 
     private void PlaceItem(HexTile tile, GameObject obj, int duration)
     {
+        Debug.Log("123123123123123123");
         Vector3 pos = new Vector3(tile.transform.position.x, 1.5f, tile.transform.position.z);
         GameObject item = Instantiate(obj, pos, Quaternion.identity);
         var placeable = item.GetComponent<BattleItemPlaceable>();

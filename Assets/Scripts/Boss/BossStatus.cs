@@ -163,31 +163,34 @@ public class BossStatus : MonoBehaviour
     {
         int id = buff.ID;
 
-        if (bossBuffs.ContainsKey(id))
-            bossBuffs[id].Stack += buff.Stack;
+        var buffsToChange = (buff.Side == BuffSide.Buff) ? bossBuffs : bossDebuffs;
+
+        if (buffsToChange.ContainsKey(id))
+        {
+            buffsToChange[id].Stack += buff.Stack;
+            buffsToChange[id].Duration += buff.Duration;
+
+        }
         else
-            bossBuffs.Add(id, buff);
-
-        AlertBuffsUpdate();
-    }
-
-    public void AddBossDebuff(BossBuff debuff)
-    {
-        int id = debuff.ID;
-
-        if (bossDebuffs.ContainsKey(id))
-            bossDebuffs[id].Stack += debuff.Stack;
-        else
-            bossDebuffs.Add(id, debuff);
+        {
+            buffsToChange.Add(id, buff);
+        }
 
         AlertBuffsUpdate();
     }
 
     private void ReduceBuffDuration()
     {
+        ReduceBuffDurationDictionary(bossBuffs);
+        ReduceBuffDurationDictionary(bossDebuffs);
+        AlertBuffsUpdate();
+    }
+
+    private void ReduceBuffDurationDictionary(Dictionary<int, BossBuff> dictionary)
+    {
         List<int> removeList = new();
 
-        foreach (var kvp in bossBuffs)
+        foreach (var kvp in dictionary)
         {
             if (kvp.Value.Duration > 0)
                 kvp.Value.Duration--;
@@ -197,27 +200,7 @@ public class BossStatus : MonoBehaviour
         }
 
         foreach (int key in removeList)
-            bossBuffs.Remove(key);
-
-        AlertBuffsUpdate();
-    }
-
-    private void ReduceDebuffDuration()
-    {
-        List<int> removeList = new();
-
-        foreach (var kvp in bossDebuffs)
-        {
-            kvp.Value.Duration--;
-
-            if (kvp.Value.Duration <= 0)
-                removeList.Add(kvp.Key);
-        }
-
-        foreach (int key in removeList)
-            bossDebuffs.Remove(key);
-
-        AlertBuffsUpdate();
+            dictionary.Remove(key);
     }
 
     public float CalculateDamageOnBuffsAndDebuffs(float damage)
@@ -247,7 +230,6 @@ public class BossStatus : MonoBehaviour
         ReduceGroggyTurns();
         ReduceTauntTurns();
         ReduceBuffDuration();
-        ReduceDebuffDuration();
     }
 }
 

@@ -80,9 +80,9 @@ public class BossStats : MonoBehaviour
     // ================== 데미지 처리 ===========================
     // =========================================================
 
-    public void ApplyDamageData(BossDamageData data)
+    public float ApplyDamageData(BossDamageData data)
     {
-        ReceiveDamage(data);
+        float finalDamage = ReceiveDamage(data);
         ReceiveStagger(data.stagger);
         ReceiveDestroy(data.destroy);
 
@@ -90,6 +90,8 @@ public class BossStats : MonoBehaviour
         {
             ReceiveCounter();
         }
+
+        return finalDamage;
     }
 
     public float CalculateDamage(float incomeDamage)
@@ -103,13 +105,12 @@ public class BossStats : MonoBehaviour
         return finalDamage;
     }
 
-    public void ReceiveDamage(BossDamageData data)
+    public float ReceiveDamage(BossDamageData data)
     {
         float damage = data.damage;
 
-        float finalDamage = data.isTrueDamage
-            ? damage
-            : CalculateDamage(damage);
+        float finalDamage = data.isTrueDamage ? 
+        damage : CalculateDamage(damage);
 
         finalDamage *= bossGetDamageRatio;
 
@@ -149,6 +150,8 @@ public class BossStats : MonoBehaviour
                 bossAI.NotifyBossDead();
             }
         }
+
+        return finalDamage;
     }
 
     // =========================================================
@@ -169,7 +172,7 @@ public class BossStats : MonoBehaviour
 
     public void AdjustShield(float ratio)
     {
-        if(!HasShield()) return;
+        if (!HasShield()) return;
 
         bossShield *= ratio;
     }

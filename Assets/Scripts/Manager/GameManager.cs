@@ -95,18 +95,25 @@ public class GameManager : MonoBehaviour
 
     public void CursorOnCards()
     {
-        CancelPlayerClicked();
+        UserCursorOnCards();
     }
 
     public void CursorOnItems()
     {
-        CancelPlayerClicked();
+        UserCursorOnItems();
     }
 
-    private void CancelPlayerClicked()
+    private void UserCursorOnCards()
     {
         objectClickHandler.isPlayerClicked = false;
-        BattleItemManager.Instance.HandsOnCards();
+        BattleItemManager.Instance.ResetSelect();
+        HexTileManager.Instance.ResetTileColor();
+        player.GetComponent<Player>().PlayerCursor.SetActive(false);
+    }
+
+    private void UserCursorOnItems()
+    {
+        objectClickHandler.isPlayerClicked = false;
         HexTileManager.Instance.ResetTileColor();
         player.GetComponent<Player>().PlayerCursor.SetActive(false);
     }

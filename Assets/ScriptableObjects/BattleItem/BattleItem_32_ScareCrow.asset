@@ -15,13 +15,16 @@ MonoBehaviour:
   itemID: 32
   itemIcon: {fileID: -246931424, guid: 3a0e268b32accd945b18d3d1bc29a8be, type: 3}
   itemType: 2
+  value: 0
+  duration: 0
+  HP_decrease: 0
+  additional_move: 0
   damage: 0
   destruction: 0
   stagger: 0
   hasDebuff: 0
   buffID: 0
-  effectValue: 0
-  duration: 0
+  buff_duration: 0
   granadeType: 0
   potionType: 0
-  specialType: 0
+  specialType: 1

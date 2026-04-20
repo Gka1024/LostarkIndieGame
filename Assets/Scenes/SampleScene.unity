@@ -5745,8 +5745,8 @@ MonoBehaviour:
   meshRenderer: {fileID: 0}
   objectManager: {fileID: 0}
   CubeCoord: {x: 0, y: 0, z: 0}
-  currentTileState: 0
-  currentTileSpecific: 0
+  currentTileState: 4
+  currentTileSpecific: 3
   isMoveable: 1
   isBossAttackRange: 0
   playerMoveRangeColor: {r: 0, g: 0, b: 0, a: 0}
@@ -18837,6 +18837,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleItemManager: {fileID: 1131925908}
+  itemPotionType: 0
+  itemGranadeType: 0
+  itemSpecialType: 0
   itemDescWindow: {fileID: 48631757}
   itemNameText: {fileID: 1311399435}
   itemDescText: {fileID: 1361813825}
@@ -23438,8 +23441,8 @@ MonoBehaviour:
   equippedGranade: {fileID: 11400000, guid: 35fbd59f599651c4281284c3ed3b81ba, type: 2}
   equippedSpecial: {fileID: 11400000, guid: c61d936d77e64c34db0200ef66d2b6eb, type: 2}
   battleItemUI: {fileID: 942281569}
-  itemPrefabCampFire: {fileID: 0}
-  itemPrefabScareCrow: {fileID: 0}
+  itemPrefabCampFire: {fileID: 696249653265975027, guid: a9ab9112893e98d40b0cac00d83cf811, type: 3}
+  itemPrefabScareCrow: {fileID: 7387727220207849038, guid: 01c57b7acc491f74e849508db2e3357c, type: 3}
 --- !u!64 &1134064447
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -49361,7 +49364,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1067443064, guid: 3a0e268b32accd945b18d3d1bc29a8be, type: 3}
+  m_Sprite: {fileID: 369830324, guid: 3a0e268b32accd945b18d3d1bc29a8be, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

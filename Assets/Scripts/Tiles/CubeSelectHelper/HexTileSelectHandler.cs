@@ -279,15 +279,15 @@ public class HexTileSelectHandler : MonoBehaviour
     {
         ResetVariables();
         SelectTileByDistance(3, 1);
+        isSelectStopped = false;
     }
 
-    public void StartSelectionItemCampFire()
+    public void StartSelectionItemSpecial()
     {
         ResetVariables();
         SelectTileByDistance(1, 0);
+        isSelectStopped = false;
     }
-
-    public void StartSelectionItemSpecial() => SelectTileByDistance(1, 0);
 
     public bool IsTileValid()
     {

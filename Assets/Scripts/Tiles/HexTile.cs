@@ -18,7 +18,6 @@ public class HexTile : MonoBehaviour
     public TileState currentTileState;
     public TileSpecific currentTileSpecific;
 
-    public bool isMoveable = true;
     public bool isBossAttackRange = false;
 
     private Color originalColor;
@@ -215,7 +214,7 @@ public class HexTile : MonoBehaviour
 
     public bool GetIsTileMoveable()
     {
-        return isMoveable && currentTileState == TileState.Default;
+        return currentTileState == TileState.Default;
     }
 
     public bool GetIsPlayerMoveable()

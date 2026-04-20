@@ -13,7 +13,7 @@ public class BattleItemInteraction : MonoBehaviour, IPointerEnterHandler, IPoint
     /// 마우스가 슬롯 위에 올라갔을 때 (하이라이트 + 설명창)
     public void OnPointerEnter(PointerEventData eventData)
     {
-        battleItemUI.CursorOnItem();
+        battleItemUI.UserCursorOnItem();
 
         if (!TurnStateMachine.Instance.CanPlayerInteract) return;
 
