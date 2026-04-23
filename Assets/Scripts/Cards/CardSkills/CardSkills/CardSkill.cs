@@ -81,16 +81,6 @@ public abstract class CardSkill : MonoBehaviour
 
     public bool HasChainSkill() => chainSkill != null;
 
-    public GameObject GetChainSkill()
-    {
-        CardStats stat = GetRunTimeCardStats();
-        if (stat.HasChainSkill)
-        {
-            return stat.ChainSkill;
-        }
-        return null;
-    }
-
     public T GetStats<T>() where T : CardStats
     {
         return runtimeCardStats as T;

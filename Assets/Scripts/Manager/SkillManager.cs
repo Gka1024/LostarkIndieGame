@@ -42,9 +42,6 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private int beforeDelayTurns;
     [SerializeField] private int afterDelayTurns;
 
-    public List<HexTile> selectedTiles;
-    public HexTile selectedTile;
-
     private bool isTripodSelected = false;
     private int selectedTripod = -1;
 
@@ -145,6 +142,8 @@ public class SkillManager : MonoBehaviour
 
         if (currentStats.HasChainSkill)
         {
+            ChainStats chainStats = currentStats.GetChainStats(selectedTripod);
+
             EnqueueChainSkill(currentStats, currentSkill.CardID, selectedTripod);
         }
 
@@ -180,8 +179,8 @@ public class SkillManager : MonoBehaviour
         }
 
         // 타일 정보 가져오기
-        selectedTiles = hexTileSelectHandler.GetSelectedTiles();
-        selectedTile = selectedTiles.Count > 0 ? hexTileSelectHandler.GetSelectedTile() : null;
+        List<HexTile> selectedTiles = hexTileSelectHandler.GetSelectedTiles();
+        HexTile selectedTile = selectedTiles.Count > 0 ? hexTileSelectHandler.GetSelectedTile() : null;
 
         // 큐 데이터 생성
         SkillQueueData data = new SkillQueueData(
@@ -201,31 +200,33 @@ public class SkillManager : MonoBehaviour
 
     public void EnqueueChainSkill(CardStats stats, int cardID, int tripodIndex)
     {
-        if (stats == null)
+        Debug.Log("EnqueueChainSkill");
+
+        if (stats == null) return;
+
+        ChainStats chainStats = stats.chainPaths.Find(p => p.tripodIndex == tripodIndex)?.chainStats;
+
+        if (chainStats == null)
         {
-            Debug.LogError("EnqueueChainSkill: stats가 null입니다.");
+            Debug.LogError($"트라이포드 {tripodIndex}에 맞는 ChainStats를 찾을 수 없습니다.");
             return;
         }
 
-        Debug.Log($"[EnqueueChainSkill] CardID {cardID} (트라이포드 {tripodIndex}) 스킬이 큐에 등록됨");
-
-        ChainSkill chain = stats.ChainSkill.GetComponent<ChainSkill>();
-        ChainStats chainStats = chain.chainStats;
-
-        HexTile selectedTile = stats.needToSelectTile ? null : chain.GetTargetTile(GetSelectedTile());
-        List<HexTile> selectedTiles = stats.needToSelectTile ? null : GetSelectedTiles();
+        List<HexTile> selectedTiles = hexTileSelectHandler.GetSelectedTiles();
+        HexTile selectedTile = selectedTiles.Count > 0 ? hexTileSelectHandler.GetSelectedTile() : null;
 
         SkillQueueData data = new SkillQueueData(
-           skillId: cardID,
+            skillId: stats.CardID,            // SO에서 가져온 ID
             tripodIndex: tripodIndex,
-            mainTile: selectedTile,
-            selectedTiles: selectedTiles,
             isChainSkill: true,
-            afterDelay: stats.afterActTurn
+            beforeDelay: 0,
+            afterDelay: stats.afterActTurn,
+            mainTile: selectedTile,
+            selectedTiles: selectedTiles
         );
 
         queueManager.EnqueueSkill(data);
-
+        Debug.Log($"[EnqueueChainSkill] CardID {cardID} (트라이포드 {tripodIndex}) 스킬이 큐에 등록됨");
     }
     // ========== 스킬 실행 ==========
 
@@ -249,7 +250,7 @@ public class SkillManager : MonoBehaviour
         bool bossInRange = tileManager.IsBossTile(data.selectedTiles);
         yield return StartCoroutine(cardSkill.Execute(data, bossInRange));
 
-        // 4. 애니메이션 & 이펙트
+        // 4. 애니메이션 & 이펙트 - cardSkill.Execute(data, bossInRange)에서 처리함
 
         // 6. 사후 처리
         CardList.Instance.ApplyCardCooldown(baseStat);
@@ -281,7 +282,8 @@ public class SkillManager : MonoBehaviour
 
         // 2.5 트라이포드 적용 및 타일 선택 
         chainSkill.SetTripod(data.tripodIndex);
-        var chainStat = chainSkill.chainStats;
+        var chainStat = CardList.Instance.GetChainStats(data.skillId, data.tripodIndex);
+        chainSkill.chainStats = chainStat;
 
         if (chainStat.needToSelectTile)
         { // 타일 선택이 필요하다면 
@@ -322,10 +324,12 @@ public class SkillManager : MonoBehaviour
     {
         float damage = stat.skill_damage;
         float stagger = stat.stagger;
+        float identityGain = stat.identityGain;
 
         BossDamageData data = DamageSystem.Instance.ApplyPlayerStats(new BossDamageData(damage, stagger));
 
         boss.GetComponent<Boss>().bossController.GetBossDamageData(data);
+        GivePlayerIdentity(identityGain);
     }
 
     public void ApplyBossSkills(ChainStats stat)
@@ -386,8 +390,6 @@ public class SkillManager : MonoBehaviour
 
     public bool CanMove()
     {
-        Debug.Log($"queuemanger : {queueManager.IsFrozen()} / iscardUsing : {isCardUsing} / playerStats : {playerStats.GetPlayerDown()} {playerStats.GetPlayerStun()} ");
-
         if (queueManager.IsFrozen()) return false; // 후딜레이가 있을 때
         if (isCardUsing) return false;
 

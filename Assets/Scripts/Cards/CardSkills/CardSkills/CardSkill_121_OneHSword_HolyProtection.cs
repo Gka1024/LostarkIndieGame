@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CardSkill_OneHSword_HolyProtection : CardSkill
@@ -19,8 +20,6 @@ public class CardSkill_OneHSword_HolyProtection : CardSkill
         playerAnimation.PlayAnimation(1);
     }
 
-
-
 }
 
 public class OneHSword_HolyProtection_1 : SkillObject
@@ -28,6 +27,16 @@ public class OneHSword_HolyProtection_1 : SkillObject
     public override void ApplyOption(CardSkill card)
     {
         card.runtimeCardStats.ApplyOption(1);
+    }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        if (card.runtimeCardStats is CardStats_OneHSword_HolyProtection stat)
+        {
+            GameManager.Instance.GetPlayer().GetComponent<Player>().stats.AddShield(stat.shield_amount, stat.shield_turns);
+        }
     }
 }
 
@@ -37,6 +46,17 @@ public class OneHSword_HolyProtection_2 : SkillObject
     {
         card.runtimeCardStats.ApplyOption(2);
     }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        if (card.runtimeCardStats is CardStats_OneHSword_HolyProtection stat)
+        {
+            PlayerStats playerStats = GameManager.Instance.GetPlayer().GetComponent<Player>().stats;
+            playerStats.AddShield(stat.shield_amount, stat.shield_turns, () => playerStats.Heal(stat.opt2_heal, true));
+        }
+    }
 }
 
 public class OneHSword_HolyProtection_3 : SkillObject
@@ -44,6 +64,18 @@ public class OneHSword_HolyProtection_3 : SkillObject
     public override void ApplyOption(CardSkill card)
     {
         card.runtimeCardStats.ApplyOption(3);
+    }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        if (card.runtimeCardStats is CardStats_OneHSword_HolyProtection stat)
+        {
+            PlayerStats playerStats = GameManager.Instance.GetPlayer().GetComponent<Player>().stats;
+            playerStats.AddShield(stat.shield_amount, stat.shield_turns, () => playerStats.ApplyPlayerSuperArmor(false));
+            playerStats.ApplyPlayerSuperArmor(true);
+        }
     }
 }
 

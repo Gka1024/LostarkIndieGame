@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New CardStats", menuName = "CardSystem/CardStats")]
@@ -8,7 +9,7 @@ public class CardStats : ScriptableObject
     public bool isCardSkill; // 카드 스킬인지를 확인하는 변수입니다. 카드 스킬이 아닌 경우는 더미 데이터, 체인 스킬 등이 있습니다.
 
     public bool HasChainSkill;
-    public GameObject ChainSkill;
+    public List<ChainPath> chainPaths;
 
     public PlayerWeapon playerWeapon;
 
@@ -43,7 +44,7 @@ public class CardStats : ScriptableObject
     public bool isCounterAble;
     public bool isHeadAttack;
     public bool isBackAttack;
-    public bool isSuperArmor= false;
+    public bool isSuperArmor = false;
 
     public virtual void ApplyOption(int num) { }
 
@@ -51,4 +52,16 @@ public class CardStats : ScriptableObject
     {
         return Instantiate(this) as T;
     }
+
+    public virtual ChainStats GetChainStats(int tripodIndex)
+    {
+        return chainPaths.Find(p => p.tripodIndex == tripodIndex)?.chainStats;
+    }
+}
+
+[System.Serializable]
+public class ChainPath
+{
+    public int tripodIndex;
+    public ChainStats chainStats;
 }

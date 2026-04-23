@@ -35,7 +35,6 @@ public abstract class BossPatternPhase
     {
         if (openingPatternsQueue.Count > 0)
         {
-            Debug.Log($"openingPatternsQueue : {openingPatternsQueue.Count} left");
             return openingPatternsQueue.Dequeue();
         }
 

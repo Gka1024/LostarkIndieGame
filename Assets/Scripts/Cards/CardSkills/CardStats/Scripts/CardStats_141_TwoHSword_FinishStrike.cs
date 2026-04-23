@@ -12,12 +12,14 @@ public class CardStats_TwoHSword_FinishStrike : CardStats
         switch (num)
         {
             case 1:
+                this.beforeActTurn = 0;
                 break;
 
             case 2:
                 break;
 
             case 3:
+                this.HasChainSkill = true;
                 break;
 
             default:

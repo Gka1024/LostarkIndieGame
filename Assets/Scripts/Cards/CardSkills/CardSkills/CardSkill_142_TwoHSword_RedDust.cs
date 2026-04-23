@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CardSkill_TwoHSword_RedDust : CardSkill
@@ -27,6 +28,23 @@ public class TwoHSword_RedDust_1 : SkillObject
     {
         card.runtimeCardStats.ApplyOption(1);
     }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        if (card.runtimeCardStats is CardStats_TwoHSword_RedDust stats)
+        {
+            PlayerStats playerStats = Player.Instance.stats;
+            playerStats.AddAttackBuff(stats.base_buff_attack, 0, stats.base_buff_turns);
+
+            if (isBossHit)
+            {
+                SkillManager.Instance.GivePlayerIdentity(stats.identityGain * stats.opt1_identity_bonus * 0.01f);
+            }
+        }
+
+    }
 }
 
 public class TwoHSword_RedDust_2 : SkillObject
@@ -34,6 +52,18 @@ public class TwoHSword_RedDust_2 : SkillObject
     public override void ApplyOption(CardSkill card)
     {
         card.runtimeCardStats.ApplyOption(2);
+    }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        if (card.runtimeCardStats is CardStats_TwoHSword_RedDust stats)
+        {
+            PlayerStats playerStats = Player.Instance.stats;
+            playerStats.AddAttackBuff(stats.base_buff_attack, 0, stats.base_buff_turns);
+        }
+
     }
 }
 

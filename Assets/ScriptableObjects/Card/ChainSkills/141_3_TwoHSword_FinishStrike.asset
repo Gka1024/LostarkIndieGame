@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9006ec8c3d9592f488f61f740ab9af6d, type: 3}
-  m_Name: ChainStat_TwoHSword_JumpingSmash
+  m_Name: 141_3_TwoHSword_FinishStrike
   m_EditorClassIdentifier: 
   afterDelay: 0
-  damage: 0
+  skill_damage: 0
   stagger: 0
-  identity: 0
+  identityGain: 0
   isCounterAble: 0
   damageRange: []
   targetTile: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6318093363705721712}
   - component: {fileID: 3874686487355633594}
   m_Layer: 0
-  m_Name: GameObject_BurstCannon
+  m_Name: ChainSkill_112_1_BurstCannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

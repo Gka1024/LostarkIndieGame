@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class CardSkill_GunLance_ShoutOfHatred : CardSkill
@@ -85,6 +86,7 @@ public class GunLance_ShoutOfHatred3 : SkillObject
             if (isBossHit)
             {
                 SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateBuff(BuffID.DEBUFF_TAUNT, 1, stat.taunt_turns));
+                SkillManager.Instance.GivePlayerIdentity(stat.identityGain * stat.opt3_identity_bonus * 0.01f);
             }
         }
     }

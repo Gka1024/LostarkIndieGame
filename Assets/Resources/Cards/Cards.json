@@ -127,7 +127,7 @@
         {
           "option_id": 1,
           "option_name": "넓은 타격",
-          "option_description": "피해를 주는 범위가 1칸 증가하고, 3턴간 추가로 도발한다. "
+          "option_description": "피해를 주는 범위가 1칸 증가하고, {opt1_taunt_turns}턴간 추가로 도발한다. "
         },
         {
           "option_id": 2,
@@ -154,12 +154,12 @@
         {
           "option_id": 2,
           "option_name": "빛의 서약",
-          "option_description": "보호막이 해제될 때 최대 생명력의 {opt2_heal}에 해당하는 생명력을 회복한다."
+          "option_description": "보호막이 해제될 때 최대 생명력의 {opt2_heal}%에 해당하는 생명력을 회복한다."
         },
         {
           "option_id": 3,
-          "option_name": "호흡 조절",
-          "option_description": "스킬을 더 빠르게 사용할 수 있다."
+          "option_name": "강인함",
+          "option_description": "보호막이 유지되는 동안 피격이상에 면역이 된다."
         }
       ]
     },
@@ -210,7 +210,7 @@
     {
       "id": 1234,
       "name": "신성검 - 분출",
-      "description": "해머를 즉시 휘둘러 {opt3_skill_damage_1} 의 피해를 주며, 이후 한 번 더 휘둘러 {opt3_skill_damage_2}의 피해를 준다."
+      "description": "--"
     },
     {
       "id": 131,
@@ -225,7 +225,7 @@
         {
           "option_id": 2,
           "option_name": "도발",
-          "option_description": "차지를 시작할 때 보스에게 3턴간 도발 상태이상을 부여한다."
+          "option_description": "차지를 시작할 때 보스에게 {opt2_taunt_turns}턴간 도발 상태이상을 부여한다."
         },
         {
           "option_id": 3,

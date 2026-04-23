@@ -89,11 +89,12 @@ public class TurnStateMachine : MonoBehaviour
 
         isPlayerTurnDone = false;
 
-        GivePlayerCard();
+
         EnablePlayerControl();
 
         if (skillManager.CanMove())
         {
+            GivePlayerCard();
             while (!isPlayerTurnDone)
                 await Task.Yield();
         }
@@ -122,8 +123,8 @@ public class TurnStateMachine : MonoBehaviour
     private void GivePlayerCard()
     {
         manager.cardManager.ResetHand();
-        manager.cardManager.GiveRandomCard(5);
-        manager.cardManager.GiveSpecificCard(111);
+        //manager.cardManager.GiveRandomCard(5);
+        manager.cardManager.GiveSpecificCard(123);
         manager.cardManager.GiveBasicCard();
     }
 

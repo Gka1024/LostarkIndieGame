@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9006ec8c3d9592f488f61f740ab9af6d, type: 3}
-  m_Name: ChainStat_TwoHSword_RedDust
+  m_Name: 143_2_TwoHSword_VolcanoEruption
   m_EditorClassIdentifier: 
   afterDelay: 0
   damage: 0

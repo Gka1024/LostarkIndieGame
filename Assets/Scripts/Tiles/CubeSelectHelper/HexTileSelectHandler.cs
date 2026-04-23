@@ -25,11 +25,11 @@ public class HexTileSelectHandler : MonoBehaviour
     public List<HexTile> selectedTiles = new();
 
     // Selection Settings
-    private bool isDistanceNeeded, isAngleNeeded, isAroundNeeded, isRayNeeded, isHexRayNeeded;
-    private int selectDistance, selectDistanceRange;
-    private int selectAngle, selectAngleRange;
-    private int aroundRange;
-    private int selectRaydistance, selectRaywidth;
+    [SerializeField] private bool isDistanceNeeded, isAngleNeeded, isAroundNeeded, isRayNeeded, isHexRayNeeded;
+    [SerializeField] private int selectDistance, selectDistanceRange;
+    [SerializeField] private int selectAngle, selectAngleRange;
+    [SerializeField] private int aroundRange;
+    [SerializeField] private int selectRaydistance, selectRaywidth;
 
     private readonly Vector3[] HexDir = new Vector3[] {
         new Vector3(1, 0, 0),
@@ -239,27 +239,32 @@ public class HexTileSelectHandler : MonoBehaviour
         }
     }
 
-    public void StartSelection(ChainStats stat)
+    public void StartSelection(ChainStats stats)
     {
         ResetVariables();
 
-        switch (stat.tileSelectType)
+        switch (stats.tileSelectType)
         {
             case TileSelectType.Angle:
-                SelectTileByAngle(stat.skillAngle, stat.skillAngleRange);
+                SelectTileByAngle(stats.skillAngle, stats.skillAngleRange);
                 break;
 
             case TileSelectType.Distance:
-                SelectTileByDistance(stat.skillDistance, stat.skillDistanceRange);
+                SelectTileByDistance(stats.skillDistance, stats.skillDistanceRange);
+                break;
+
+            case TileSelectType.Around:
+                SelectTileByAround(stats.aroundRange);
                 break;
 
             case TileSelectType.Ray:
-                SelectTileByAround(stat.aroundRange);
+                Debug.Log(stats.rayWidth + " / " + stats.rayDistance);
+                SelectTileByRay(stats.rayDistance, stats.rayWidth);
                 break;
 
             case TileSelectType.HexRay:
                 isHexRayNeeded = true;
-                SelectTileByRay(stat.rayDistance, stat.rayWidth);
+                SelectTileByHexRay(stats.rayDistance, stats.rayWidth);
                 break;
 
             default: break;

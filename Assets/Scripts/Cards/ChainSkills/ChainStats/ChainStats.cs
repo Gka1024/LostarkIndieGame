@@ -4,6 +4,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New ChainStats", menuName = "CardSystem/ChainStats/ChainStats")]
 public class ChainStats : ScriptableObject
 { // 인스펙터 창에서 기입
+    public int cardID;
+    public int tripodIndex;
+
+    public GameObject chainSkillPrefab;
+
     public int afterDelay;
 
     public float skill_damage;
@@ -29,6 +34,10 @@ public class ChainStats : ScriptableObject
     public int rayDistance;
     public int rayWidth;
 
-    public virtual void ApplyOption(int index){}
-   
+    public virtual void ApplyOption(int index) { }
+    
+    public virtual void ChangeDamage(float damageOverride)
+    {
+        skill_damage *= damageOverride * 0.01f;
+    }
 }

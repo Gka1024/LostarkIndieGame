@@ -10,25 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9006ec8c3d9592f488f61f740ab9af6d, type: 3}
-  m_Name: ChainStat_OneHSword_HolySword
+  m_Name: 112_1_GunLance_BurstCannon
   m_EditorClassIdentifier: 
-  afterDelay: 0
-  damage: 0
+  cardID: 112
+  tripodIndex: 1
+  chainSkillPrefab: {fileID: 7064955508541714225, guid: 0e14d4787599f7844b81e9279da1fed9, type: 3}
+  afterDelay: 1
+  skill_damage: 0
   stagger: 0
-  identity: 0
+  identityGain: 0
   isCounterAble: 0
   damageRange: []
   targetTile: {fileID: 0}
-  needToSelectTile: 0
-  isAngleSkill: 0
+  needToSelectTile: 1
+  tileSelectType: 5
   skillAngle: 0
   skillAngleRange: 0
-  isDistanceSkill: 0
   skillDistance: 0
   skillDistanceRange: 0
-  isAroundSkill: 0
   aroundRange: 0
-  isRaySkill: 0
-  isHexRaySkill: 0
-  rayDistance: 0
-  rayWidth: 0
+  rayDistance: 3
+  rayWidth: 1

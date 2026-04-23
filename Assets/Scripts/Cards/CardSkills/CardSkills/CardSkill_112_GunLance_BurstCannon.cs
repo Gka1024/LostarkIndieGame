@@ -41,7 +41,7 @@ public class GunLance_BurstCannon1 : SkillObject
         // 플레이어를 타겟 타일의 반대 방향으로 1칸 이동시킵니다.
         PlayerMove playerSC = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
         HexTile playerTile = playerSC.GetCurrentTile();
-        HexTile targetTile = SkillManager.Instance.selectedTile; // 스킬이 사용된 타일
+        HexTile targetTile = data.mainTile; // 스킬이 사용된 타일
 
         Debug.Log(targetTile.CubeCoord);
 

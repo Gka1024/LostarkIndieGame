@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CardSkill_Hammer_JumpingSmash : CardSkill
@@ -27,6 +28,26 @@ public class Hammer_JumpingSmash_option1 : SkillObject
     {
         card.runtimeCardStats.ApplyOption(1);
     }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        PlayerMove playerMove = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
+
+        HexTile moveTile = data.mainTile;
+
+        if (!card.manager.hexTileManager.IsBossTile(data.mainTile))
+        {
+            Debug.Log("Move Accepted");
+        }
+        else
+        {
+            moveTile = TileDirectionHelper.Instance.GetFrontTile(playerMove.GetCurrentTile(), data.mainTile);
+        }
+
+        playerMove.MoveToTile(new PlayerMoveInfo(moveTile, isDash: true, isFace: true, ignoreDistance: true));
+    }
 }
 
 public class Hammer_JumpingSmash_option2 : SkillObject
@@ -35,6 +56,26 @@ public class Hammer_JumpingSmash_option2 : SkillObject
     {
         card.runtimeCardStats.ApplyOption(2);
     }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        PlayerMove playerMove = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
+
+        HexTile moveTile = data.mainTile;
+
+        if (!card.manager.hexTileManager.IsBossTile(data.mainTile))
+        {
+            Debug.Log("Move Accepted");
+        }
+        else
+        {
+            moveTile = TileDirectionHelper.Instance.GetFrontTile(playerMove.GetCurrentTile(), data.mainTile);
+        }
+
+        playerMove.MoveToTile(new PlayerMoveInfo(moveTile, isDash: true, isFace: true, ignoreDistance: true));
+    }
 }
 
 public class Hammer_JumpingSmash_option3 : SkillObject
@@ -42,6 +83,26 @@ public class Hammer_JumpingSmash_option3 : SkillObject
     public override void ApplyOption(CardSkill card)
     {
         card.runtimeCardStats.ApplyOption(3);
+    }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        PlayerMove playerMove = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
+
+        HexTile moveTile = data.mainTile;
+
+        if (!card.manager.hexTileManager.IsBossTile(data.mainTile))
+        {
+            Debug.Log("Move Accepted");
+        }
+        else
+        {
+            moveTile = TileDirectionHelper.Instance.GetFrontTile(playerMove.GetCurrentTile(), data.mainTile);
+        }
+
+        playerMove.MoveToTile(new PlayerMoveInfo(moveTile, isDash: true, isFace: true, ignoreDistance: true));
     }
 }
 

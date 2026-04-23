@@ -18,15 +18,17 @@ public class ChainSkill_GunLance_BurstCannon : ChainSkill
     {
         PlayerMove playerSC = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
         HexTile playerTile = playerSC.GetCurrentTile();
-        HexTile targetTile = SkillManager.Instance.selectedTile; // 스킬이 사용된 타일
+        HexTile targetTile = data.mainTile;
         
         // 플레이어의 앞쪽 타일 계산
+
+        Debug.Log("ExecuteChain : ChainSkill_GunLance_BurstCannon");
 
         HexTile frontTile = HexTileManager.Instance.tileFrontHelper.GetFrontTile(playerTile, targetTile);
 
         Debug.Log($"FrontTile : {frontTile}, TileCoord : {frontTile.CubeCoord}");
 
-        // 뒤쪽 타일이 존재하고, 보스 타일이 아닐 경우 이동
+        // 앞쪽 타일이 존재하고, 보스 타일이 아닐 경우 이동
 
         if (frontTile != null && !GameManager.Instance.hexTileManager.IsBossTile(frontTile))
         {

@@ -19,7 +19,7 @@ public class CardStats_OneHSword_HeavenlyBlessing : CardStats
         switch (num)
         {
             case 1:
-                base_buff_turns += opt1_turns;
+
                 break;
 
             case 2:

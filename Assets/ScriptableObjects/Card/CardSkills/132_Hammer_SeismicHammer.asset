@@ -16,7 +16,9 @@ MonoBehaviour:
   cardName: 
   isCardSkill: 1
   HasChainSkill: 0
-  ChainSkill: {fileID: 0}
+  chainPaths:
+  - tripodIndex: 3
+    chainStats: {fileID: 11400000, guid: a83442d208246f543a29fc101382cc9b, type: 2}
   playerWeapon: 4
   beforeActTurn: 2
   afterActTurn: 0

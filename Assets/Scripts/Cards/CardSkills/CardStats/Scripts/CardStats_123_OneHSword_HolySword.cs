@@ -19,12 +19,15 @@ public class CardStats_OneHSword_HolySword : CardStats
         switch (num)
         {
             case 1:
+                this.rayDistance += 3;
                 break;
 
             case 2:
                 break;
 
             case 3:
+                this.rayDistance--;
+                this.skill_damage *= 1 + opt3_damage_coef;
                 break;
 
             default:

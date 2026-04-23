@@ -19,7 +19,6 @@ public class CardStats_GunLance_BurstCannon : CardStats
             case 1:
                 opt1_isChain = true;
                 this.HasChainSkill = true;
-                ChainSkill = CardList.Instance.GetChainSkills(this.CardID, 1);
                 break;
 
             case 2:

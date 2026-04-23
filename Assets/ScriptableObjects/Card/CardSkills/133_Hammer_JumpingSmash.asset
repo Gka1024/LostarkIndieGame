@@ -16,7 +16,9 @@ MonoBehaviour:
   cardName: 
   isCardSkill: 1
   HasChainSkill: 0
-  ChainSkill: {fileID: 0}
+  chainPaths:
+  - tripodIndex: 3
+    chainStats: {fileID: 11400000, guid: 56982eac46daf344fbf7a18b5282b2d7, type: 2}
   playerWeapon: 4
   beforeActTurn: 1
   afterActTurn: 0
@@ -25,7 +27,7 @@ MonoBehaviour:
   skillAngle: 0
   skillAngleRange: 0
   skillDistance: 2
-  skillDistanceRange: 2
+  skillDistanceRange: 1
   aroundRange: 0
   rayDistance: 0
   rayWidth: 0

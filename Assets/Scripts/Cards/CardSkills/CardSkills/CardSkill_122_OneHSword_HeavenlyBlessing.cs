@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CardSkill_OneHSword_HeavenlyBlessing : CardSkill
@@ -27,6 +28,18 @@ public class OneHSword_HeavenlyBlessing_1 : SkillObject
     {
         card.runtimeCardStats.ApplyOption(1);
     }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        if (card.runtimeCardStats is CardStats_OneHSword_HeavenlyBlessing stat)
+        {
+            PlayerStats playerStats = GameManager.Instance.GetPlayer().GetComponent<Player>().stats;
+            playerStats.AddManaRegenBuff(stat.opt1_mana_regen, stat.opt1_turns);
+            playerStats.AddAttackBuff(stat.base_buff_attack, 0, duration: stat.base_buff_turns);
+        }
+    }
 }
 
 public class OneHSword_HeavenlyBlessing_2 : SkillObject
@@ -35,6 +48,18 @@ public class OneHSword_HeavenlyBlessing_2 : SkillObject
     {
         card.runtimeCardStats.ApplyOption(2);
     }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        if (card.runtimeCardStats is CardStats_OneHSword_HeavenlyBlessing stat)
+        {
+            PlayerStats playerStats = GameManager.Instance.GetPlayer().GetComponent<Player>().stats;
+            playerStats.AddAttackBuff(stat.base_buff_attack, 0, duration: stat.base_buff_turns);
+        }
+    }
+
 }
 
 public class OneHSword_HeavenlyBlessing_3 : SkillObject
@@ -42,6 +67,22 @@ public class OneHSword_HeavenlyBlessing_3 : SkillObject
     public override void ApplyOption(CardSkill card)
     {
         card.runtimeCardStats.ApplyOption(3);
+    }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        if (card.runtimeCardStats is CardStats_OneHSword_HeavenlyBlessing stat)
+        {
+            PlayerStats playerStats = GameManager.Instance.GetPlayer().GetComponent<Player>().stats;
+            playerStats.AddAttackBuff(stat.base_buff_attack, 0, duration: stat.base_buff_turns);
+
+            if (isBossHit)
+            {
+                SkillManager.Instance.GivePlayerIdentity(stat.opt3_identity_bonus * stat.identityGain * 0.01f);
+            }
+        }
     }
 }
 

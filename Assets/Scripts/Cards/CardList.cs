@@ -13,13 +13,21 @@ public class CardList : MonoBehaviour
     public List<CardStats> cardStatsList = new();
 
     public List<GameObject> chainCardsList = new();
+    public List<ChainStats> chainStatsList = new();
+
+    private HashSet<int> cardsInHands = new(); // 현재 손에 있는 카드 ID들
+    private Dictionary<int, int> cardsCooldown = new(); // CardID , 남은 쿨타임
 
     [Header("카드 ID 관리용")]
-    private Dictionary<int, CardStats> cardStatsDictionary = new();
+    [Header("카드스킬")]
     private Dictionary<int, GameObject> cardsDictionary = new();
-    private Dictionary<(int, int), GameObject> chainsDictionary = new();
-    private Dictionary<int, int> cardsCooldown = new(); // CardID , 남은 쿨타임
-    private HashSet<int> cardsInHands = new(); // 현재 손에 있는 카드 ID들
+    private Dictionary<int, CardStats> cardStatsDictionary = new();
+
+    [Header("체인스킬")]
+    private Dictionary<int, GameObject> chainsDictionary = new();
+    private Dictionary<int, ChainStats> chainStatsDictionary = new();
+
+
 
     private void Awake()
     {
@@ -31,9 +39,12 @@ public class CardList : MonoBehaviour
         {
             Destroy(gameObject); // 중복된 인스턴스가 있으면 삭제
         }
-        RegisterCardStats();
+
         RegisterCardID();
+        RegisterCardStats();
+        
         RegisterChainID();
+        RegisterChainStats();
     }
 
     // ==== 카드 등록 관련 함수
@@ -59,7 +70,15 @@ public class CardList : MonoBehaviour
         foreach (GameObject obj in chainCardsList)
         {
             ChainSkill skill = obj.GetComponent<ChainSkill>();
-            chainsDictionary.Add((skill.CardID, skill.CardTripodNum), obj);
+            chainsDictionary.Add(skill.CardID * 10 + skill.CardTripodNum, obj);
+        }
+    }
+
+    private void RegisterChainStats()
+    {
+        foreach (var stat in chainStatsList)
+        {
+            chainStatsDictionary.Add(stat.cardID * 10 + stat.tripodIndex, stat);
         }
     }
 
@@ -83,8 +102,14 @@ public class CardList : MonoBehaviour
 
     public GameObject GetChainSkills(int cardID, int tripodNum)
     {
-        chainsDictionary.TryGetValue((cardID, tripodNum), out GameObject obj);
+        chainsDictionary.TryGetValue(cardID * 10 + tripodNum, out GameObject obj);
         return obj;
+    }
+
+    public ChainStats GetChainStats(int cardID, int tripodNum)
+    {
+        chainStatsDictionary.TryGetValue(cardID* 10 + tripodNum, out ChainStats stats);
+        return stats;
     }
 
     // ===== 랜덤 카드 관련 함수
@@ -200,13 +225,4 @@ public class CardList : MonoBehaviour
         ProgressCooldownTurn();
     }
     // =====
-
-
-
-
-
-
-
-
-
 }

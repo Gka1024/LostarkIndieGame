@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CardSkill_TwoHSword_FinishStrike : CardSkill
@@ -34,6 +35,17 @@ public class TwoHSword_FinishStrike_2 : SkillObject
     public override void ApplyOption(CardSkill card)
     {
         card.runtimeCardStats.ApplyOption(2);
+    }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        if (card.runtimeCardStats is CardStats_TwoHSword_FinishStrike stats)
+        {
+            AreaDamageEffect effect = new AreaDamageEffect(data.selectedTiles, stats.opt2_skill_damage, 1);
+            FieldEffectManager.Instance.AddEffect(effect);
+        }
     }
 }
 

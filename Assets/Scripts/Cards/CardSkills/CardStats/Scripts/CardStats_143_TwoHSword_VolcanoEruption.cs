@@ -13,7 +13,7 @@ public class CardStats_TwoHSword_VolcanoEruption : CardStats
         switch (num)
         {
             case 1:
-                this.skillDistance ++;
+                this.skillDistance++;
                 break;
 
             case 2:
@@ -28,5 +28,22 @@ public class CardStats_TwoHSword_VolcanoEruption : CardStats
                 Debug.LogWarning("ApplyOption: 알 수 없는 옵션 번호입니다: " + num);
                 break;
         }
+    }
+
+    public override ChainStats GetChainStats(int tripodIndex)
+    {
+        ChainStats original = chainPaths.Find(p => p.tripodIndex == tripodIndex)?.chainStats;
+
+        if (original == null) return null;
+
+        ChainStats clonedStats = Instantiate(original);
+
+        if (tripodIndex == 2)
+        {
+            clonedStats.ChangeDamage(opt2_damage_coef);
+            clonedStats.skillDistanceRange++;
+        }
+
+        return clonedStats;
     }
 }

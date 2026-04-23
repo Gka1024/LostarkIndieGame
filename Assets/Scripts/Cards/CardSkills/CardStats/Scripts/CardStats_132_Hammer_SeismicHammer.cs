@@ -22,8 +22,6 @@ public class CardStats_Hammer_SeismicHammer : CardStats
 
             case 3:
                 this.HasChainSkill = true;
-                this.ChainSkill = CardList.Instance.GetChainSkills(this.CardID, 3);
-
                 this.tileSelectType = TileSelectType.Around;
                 this.aroundRange = 1;
                 break;

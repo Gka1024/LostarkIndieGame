@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4965296924335745937}
   - component: {fileID: 4355695367634940892}
   m_Layer: 0
-  m_Name: GameObject_HolySword_1
+  m_Name: ChainSkill_123_3_HolySword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardID: 123
-  CardTripodNum: 4
+  CardTripodNum: 3
   chainStats: {fileID: 11400000, guid: fd45b0cdc11ec5d439a42c569b2fcc39, type: 2}
   manager: {fileID: 0}
   skillManager: {fileID: 0}

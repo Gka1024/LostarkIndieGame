@@ -11,6 +11,8 @@ public class CardText_ShoutOfHatred : CardText
         if (shoutStats != null)
         {
             baseValues["taunt_turns"] = shoutStats.taunt_turns.ToString();
+
+            baseValues["opt1_taunt_turns"] = shoutStats.opt1_taunt_turns.ToString();
             
             baseValues["opt2_shield_turns"] = shoutStats.opt2_shield_turns.ToString();
             baseValues["opt2_shields"] = shoutStats.opt2_shield.ToString();
