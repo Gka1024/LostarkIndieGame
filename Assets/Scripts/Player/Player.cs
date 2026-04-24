@@ -22,4 +22,15 @@ public class Player : MonoBehaviour
         if (stats == null) stats = GetComponent<PlayerStats>();
     }
 
+    public bool IsMoveable()
+    {
+        bool value = true;
+        if (stats.GetPlayerStun()) return false;
+        if (stats.GetPlayerDown()) return false;
+        if (QueueManager.Instance.HasAction()) return false;
+
+        return value;
+
+    }
+
 }

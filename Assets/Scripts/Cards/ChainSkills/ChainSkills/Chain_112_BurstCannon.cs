@@ -4,17 +4,7 @@ using UnityEngine;
 
 public class ChainSkill_GunLance_BurstCannon : ChainSkill
 {
-    public override HexTile GetTargetTile(HexTile tile)
-    {
-        return base.GetTargetTile(tile);
-    }
-
-    public override List<HexTile> GetDamageTiles(List<HexTile> tiles)
-    {
-        return base.GetDamageTiles(tiles);
-    }
-
-    public override IEnumerator ExecuteChain(SkillQueueData data)
+    public override IEnumerator ExecuteChain(SkillQueueData data, bool isBossHit)
     {
         PlayerMove playerSC = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
         HexTile playerTile = playerSC.GetCurrentTile();

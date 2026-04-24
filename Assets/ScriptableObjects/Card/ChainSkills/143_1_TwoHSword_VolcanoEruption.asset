@@ -12,23 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9006ec8c3d9592f488f61f740ab9af6d, type: 3}
   m_Name: 143_1_TwoHSword_VolcanoEruption
   m_EditorClassIdentifier: 
+  cardID: 143
+  tripodIndex: 1
+  chainSkillPrefab: {fileID: 386013937582889413, guid: eda7de09bfd1b404ea0d88e3031a5857, type: 3}
   afterDelay: 0
-  damage: 0
+  skill_damage: 0
   stagger: 0
-  identity: 0
+  identityGain: 0
   isCounterAble: 0
   damageRange: []
   targetTile: {fileID: 0}
   needToSelectTile: 0
-  isAngleSkill: 0
+  tileSelectType: 0
   skillAngle: 0
   skillAngleRange: 0
-  isDistanceSkill: 0
   skillDistance: 0
   skillDistanceRange: 0
-  isAroundSkill: 0
   aroundRange: 0
-  isRaySkill: 0
-  isHexRaySkill: 0
   rayDistance: 0
   rayWidth: 0

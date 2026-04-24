@@ -10,54 +10,16 @@ public abstract class ChainSkill : MonoBehaviour
 
     public ChainStats chainStats;
 
-    public GameManager manager;
-    public SkillManager skillManager;
-    public CardList cardList;
-
-    public GameObject Player;
-    public PlayerStats playerStats;
-    public PlayerMove playerSC;
-    public GameObject Boss;
-
     public CardSkill baseCardSkill;
     public int tripodNum;
 
-
-    protected virtual void Awake()
+    public virtual IEnumerator ExecuteChain(SkillQueueData data, bool isBossHit)
     {
-        manager = FindAnyObjectByType<GameManager>();
-        skillManager = FindAnyObjectByType<SkillManager>();
-        cardList = FindAnyObjectByType<CardList>();
-        Player = manager.GetPlayer();
-        playerStats = Player.GetComponent<PlayerStats>();
-        playerSC = Player.GetComponent<PlayerMove>();
-        Boss = manager.GetBoss();
-    }
+        if (isBossHit) ApplyBossSkills(chainStats); // 스킬의 스탯의 데미지, 무력화, 파괴 처리
 
-    public virtual void InitFromCardSkill(CardSkill skill)
-    {
-        var card = cardList.GetCardByID(skill.GetComponent<CardStats>().CardID);
-        //SetTripod(skillManager.GetTripod());
-        if (card != null)
-        {
-            baseCardSkill = card.GetComponent<CardSkill>();
-        }
-        else
-        {
-            Debug.LogWarning("CardSkill을 초기화하는데 실패했습니다. CardList에서 ID를 찾을 수 없습니다.");
-        }
-    }
+        PlayAnimation(data.mainTile); // 애니메이션 처리
 
-    public abstract IEnumerator ExecuteChain(SkillQueueData data);
-
-    protected CardStats GetOriginalCardStats(int index = 0)
-    {
-        if(index == 0)
-        {
-            index = this.CardID;
-        }
-
-        return cardList.GetCardStats(index);
+        yield return null;
     }
 
     public virtual void SetTripod(int index)
@@ -66,24 +28,24 @@ public abstract class ChainSkill : MonoBehaviour
         chainStats.ApplyOption(index);
     }
 
-    public void TileSelect()
-    {
-        skillManager.hexTileSelectHandler.StartSelection(this.chainStats);
-    }
-
-    public virtual HexTile GetTargetTile(HexTile tile)
-    {
-        return tile;
-    }
-
-    public virtual List<HexTile> GetDamageTiles(List<HexTile> tiles)
-    {
-        return tiles;
-    }
-
-
     public float GetDamage() => chainStats.skill_damage;
     public float GetIdentity() => chainStats.identityGain;
     public float GetStagger() => chainStats.stagger;
 
+
+    private void ApplyBossSkills(ChainStats stat)
+    {
+        SkillManager.Instance.ApplyBossSkills(stat);
+    }
+
+    private void UseMana(float mana)
+    {
+        Player.Instance.stats.UseMana(mana);
+    }
+
+    protected void PlayAnimation(HexTile tile)
+    {
+        Player.Instance.move.RotateToTile(tile);
+        Player.Instance.anim.PlayAnimation(1);
+    }
 }

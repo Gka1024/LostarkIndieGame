@@ -45,7 +45,7 @@ public class ObjectClickHandler : MonoBehaviour
 
         if (hit.collider.TryGetComponent<PlayerMove>(out PlayerMove _))
         {
-            if (skillManager.CanMove())
+            if (skillManager.CheckPlayerMoveable())
             {
                 SetPlayerClickState(true);
             }
@@ -83,7 +83,7 @@ public class ObjectClickHandler : MonoBehaviour
             return;
         }
 
-        if (!skillManager.CanMove())
+        if (!skillManager.CheckPlayerMoveable())
         {
             Debug.Log("캐릭터 후딜레이 중입니다.");
             return;

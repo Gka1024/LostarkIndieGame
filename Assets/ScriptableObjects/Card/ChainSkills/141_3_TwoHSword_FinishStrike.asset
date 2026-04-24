@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9006ec8c3d9592f488f61f740ab9af6d, type: 3}
   m_Name: 141_3_TwoHSword_FinishStrike
   m_EditorClassIdentifier: 
+  cardID: 141
+  tripodIndex: 3
+  chainSkillPrefab: {fileID: 7613833997128739375, guid: cb1e4402974306648abb62998258f22e, type: 3}
   afterDelay: 0
   skill_damage: 0
   stagger: 0
@@ -20,15 +23,11 @@ MonoBehaviour:
   damageRange: []
   targetTile: {fileID: 0}
   needToSelectTile: 0
-  isAngleSkill: 0
+  tileSelectType: 0
   skillAngle: 0
   skillAngleRange: 0
-  isDistanceSkill: 0
   skillDistance: 0
   skillDistanceRange: 0
-  isAroundSkill: 0
   aroundRange: 0
-  isRaySkill: 0
-  isHexRaySkill: 0
   rayDistance: 0
   rayWidth: 0

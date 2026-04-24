@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9006ec8c3d9592f488f61f740ab9af6d, type: 3}
   m_Name: 132_3_Hammer_SeismicHammer
   m_EditorClassIdentifier: 
-  cardID: 0
-  tripodIndex: 0
+  cardID: 132
+  tripodIndex: 3
   chainSkillPrefab: {fileID: 1062242446172029682, guid: d29118b3988afde4486d93ec9ff23184, type: 3}
   afterDelay: 0
   skill_damage: 0

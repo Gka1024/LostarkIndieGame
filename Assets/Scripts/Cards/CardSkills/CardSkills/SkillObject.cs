@@ -9,15 +9,29 @@ public abstract class SkillObject
 
     public virtual IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
-        if (isBossHit) SkillManager.Instance.ApplyBossSkills(card.runtimeCardStats); // 스킬의 스탯의 데미지, 무력화, 파괴 처리
+        CardStats cardStats = card.runtimeCardStats;
 
-        card.manager.GetPlayer().GetComponent<PlayerStats>().UseMana(card.runtimeCardStats.manaUse); // 스킬의 스탯의 마나 처리
+        if (isBossHit) ApplyBossSkills(cardStats); // 스킬의 스탯의 데미지, 무력화, 파괴 처리
 
-        if(isPlayAnimation)
-        {
-            SkillManager.Instance.PlayAnimaion(card, card.runtimeCardStats.playerWeapon, data.mainTile);
-        }
+        UseMana(cardStats.manaUse); // 스킬의 스탯의 마나 처리
+
+        if (isPlayAnimation) PlayAnimaion(card, data.mainTile); // 애니메이션 처리
 
         yield return null;
-    } // 스킬 실행
+    }
+
+    private void ApplyBossSkills(CardStats stat)
+    {
+        SkillManager.Instance.ApplyBossSkills(stat);
+    }
+
+    private void UseMana(float mana)
+    {
+        Player.Instance.stats.UseMana(mana);
+    }
+
+    private void PlayAnimaion(CardSkill card, HexTile tile)
+    {
+        SkillManager.Instance.PlayAnimaion(card, card.runtimeCardStats.playerWeapon, tile);
+    }
 }

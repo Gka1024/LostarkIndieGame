@@ -226,7 +226,6 @@ public class HexTileSelectHandler : MonoBehaviour
                 break;
 
             case TileSelectType.Ray:
-                Debug.Log(stats.rayWidth + " / " + stats.rayDistance);
                 SelectTileByRay(stats.rayDistance, stats.rayWidth);
                 break;
 
@@ -258,7 +257,6 @@ public class HexTileSelectHandler : MonoBehaviour
                 break;
 
             case TileSelectType.Ray:
-                Debug.Log(stats.rayWidth + " / " + stats.rayDistance);
                 SelectTileByRay(stats.rayDistance, stats.rayWidth);
                 break;
 

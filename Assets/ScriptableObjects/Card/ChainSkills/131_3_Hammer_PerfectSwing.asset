@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9006ec8c3d9592f488f61f740ab9af6d, type: 3}
   m_Name: 131_3_Hammer_PerfectSwing
   m_EditorClassIdentifier: 
-  cardID: 0
-  tripodIndex: 0
+  cardID: 131
+  tripodIndex: 3
   chainSkillPrefab: {fileID: 3221078657083030816, guid: acb75729dee1a974d96ef6381a77001a, type: 3}
   afterDelay: 0
   skill_damage: 0

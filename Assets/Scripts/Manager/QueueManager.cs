@@ -14,10 +14,15 @@ public class QueueManager : MonoBehaviour
     [Header("Status")]
     [SerializeField] private Queue<SkillQueueData> actionQueue = new();
     [SerializeField] private SkillQueueData activeSkill = null;
-    [SerializeField] private int remainingBeforeDelay;
-    [SerializeField] private int remainingAfterDelay;
+    [SerializeField] private bool activeSkillEmpty = true;
+
+    // 현재 활성화된 스킬의 딜레이를 관리
+    [SerializeField] private int beforeDelay;
+    [SerializeField] private int afterDelay;
+    [SerializeField] private int chainDelay;
+
     [SerializeField] private bool isCharacterFrozen;
-    private bool isProcessing = false;
+    [SerializeField] private bool isProcessing = false;
 
     private void Awake()
     {
@@ -28,78 +33,92 @@ public class QueueManager : MonoBehaviour
 
     public void EnqueueSkill(SkillQueueData data)
     {
-        Debug.Log($"data.isChain? : {data.isChainSkill}");
+        isProcessing = true;
+
+        beforeDelay += data.beforeDelay;
+        afterDelay += data.isChainSkill ? 0 : data.afterDelay;
+        chainDelay += data.isChainSkill ? data.afterDelay : 0; // 예시 로직
         actionQueue.Enqueue(data);
+
+        Debug.Log($"Queuemanager - Enqueue {beforeDelay} {afterDelay} {chainDelay}");
     }
 
     public void ProcessTurn()
     {
-        if (isProcessing) return;
-
-        // 1. 후딜레이 처리
-        if (TryConsumeAfterDelay()) return;
-
-        // 2. 현재 실행할 스킬이 없다면 큐에서 꺼내기
-        if (activeSkill == null)
+        if (beforeDelay > 0)
         {
-            if (!TryDequeueNextSkill()) return;
+            ConsumeDelay(0);
+            return;
         }
 
-        // 3. 선딜레이 처리
-        if (TryConsumeBeforeDelay()) return;
+        if (actionQueue.Count > 0)
+        {
+            TryDequeueNextSkill();
+        }
 
-        // 4. 스킬 실행
-        StartCoroutine(ExecuteSkillSequence());
+        if (!activeSkillEmpty && activeSkill.isChainSkill == false)
+        {
+            StartCoroutine(ExecuteSkillSequence());
+            return;
+        }
+
+        if (afterDelay > 0)
+        {
+            ConsumeDelay(1);
+            return;
+        }
+
+        if (!activeSkillEmpty && activeSkill.isChainSkill)
+        {
+            StartCoroutine(ExecuteSkillSequence());
+            return;
+        }
+
+        if (chainDelay > 0)
+        {
+            ConsumeDelay(2);
+            return;
+        }
+
+        if (isProcessing) CheckProcess();
     }
 
-    private bool TryConsumeAfterDelay()
+    private void ConsumeDelay(int index)
     {
-        if (remainingAfterDelay <= 0) return false;
-
-        remainingAfterDelay--;
-        Debug.Log($"후딜레이 소모 중... 남은 턴: {remainingAfterDelay}");
         isCharacterFrozen = true;
-        ActionEnd(); // 딜레이 소모 시 턴 종료
-        return true;
+        switch (index)
+        {
+            case 0: beforeDelay--; Debug.Log($"선딜레이 소모: {beforeDelay}"); break;
+            case 1: afterDelay--; Debug.Log($"후딜레이 소모: {afterDelay}"); break;
+            case 2: chainDelay--; Debug.Log($"체인딜레이 소모: {chainDelay}"); break;
+        }
+        ActionEnd();
     }
 
-    private bool TryConsumeBeforeDelay()
+    private void CheckProcess()
     {
-        if (remainingBeforeDelay <= 0) return false;
-
-        remainingBeforeDelay--;
-        Debug.Log($"선딜레이 소모 중... 남은 턴: {remainingBeforeDelay}");
-        isCharacterFrozen = true;
-        ActionEnd(); // 딜레이 소모 시 턴 종료
-        return true;
+        if (beforeDelay == 0 && afterDelay == 0 && chainDelay == 0 && actionQueue.Count == 0 && activeSkillEmpty)
+        {
+            isCharacterFrozen = false;
+            isProcessing = false;
+            ActionEnd();
+        }
     }
 
     private bool TryDequeueNextSkill()
     {
-        if (actionQueue.Count == 0)
-        {
-            isCharacterFrozen = false;
-            ActionEnd(); // 모든 큐 소진 시 턴 종료
-            return false;
-        }
+        if (actionQueue.Count == 0) return false;
 
         activeSkill = actionQueue.Dequeue();
-
-        // 여기서 딜레이 변수를 스킬 데이터로부터 초기화 (중요!)
-        remainingBeforeDelay = activeSkill.beforeDelay;
-        remainingAfterDelay = activeSkill.afterDelay;
+        activeSkillEmpty = false;
 
         return true;
     }
 
     private IEnumerator ExecuteSkillSequence()
     {
-        isProcessing = true;
-        isCharacterFrozen = false;
+        if(activeSkill.skillId == 0) yield return 0;
 
-        Debug.Log($"스킬 실행 시작: {activeSkill.skillId} :: {activeSkill.isChainSkill}");
-
-        // 스킬 로직 분기 처리
         if (activeSkill.isChainSkill)
         {
             turnStateMachine.chainSkillTCS = new TaskCompletionSource<bool>();
@@ -110,25 +129,23 @@ public class QueueManager : MonoBehaviour
             yield return StartCoroutine(skillManager.ExecuteCardSkillFromQueue(activeSkill));
         }
 
-        activeSkill = null;
-        isProcessing = false;
+        activeSkill = null; // 스킬이 끝났으므로 비움
+        activeSkillEmpty = true;
 
-        Debug.Log("스킬 연출 종료");
         ActionEnd();
     }
 
-    private void ActionEnd()
-    {
-        GameManager.Instance.EndPlayerTurn();
-    }
+    private void ActionEnd() => GameManager.Instance.EndPlayerTurn();
 
     public void Clear()
     {
         StopAllCoroutines();
         actionQueue.Clear();
         activeSkill = null;
-        remainingBeforeDelay = 0;
-        remainingAfterDelay = 0;
+        activeSkillEmpty = true;
+        beforeDelay = 0;
+        afterDelay = 0;
+        chainDelay = 0;
         isProcessing = false;
         isCharacterFrozen = false;
     }
@@ -138,7 +155,20 @@ public class QueueManager : MonoBehaviour
 
     public void GetQueueCountForDebug()
     {
-        Debug.Log($"Queue: {GetQueueCount()} - beforeActTurn : {remainingBeforeDelay} afterActTurn : {remainingBeforeDelay}");
+        Debug.Log($"Queue: {HasAction()} - beforeActTurn : {beforeDelay} afterActTurn : {afterDelay}");
+    }
+
+    public bool HasAction()
+    {
+        bool value = false;
+
+        if (beforeDelay > 0) return true;
+        if (afterDelay > 0) return true;
+        if (chainDelay > 0) return true;
+        if (actionQueue.Count > 0) return true;
+        if (isProcessing) return true;
+
+        return value;
     }
 }
 

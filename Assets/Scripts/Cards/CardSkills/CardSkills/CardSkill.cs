@@ -43,23 +43,6 @@ public abstract class CardSkill : MonoBehaviour
         skillOption?.ApplyOption(this); // 옵션 선택 시 stats 변화
     }
 
-    private void SetBaseCardStats(CardStats stat)
-    {
-        baseCardStats = stat;
-        Debug.Log(CardID);
-    }
-
-    public CardStats RegisterRuntimeCardStats(CardStats stat)
-    {
-        runtimeCardStats = Instantiate(baseCardStats);
-        return runtimeCardStats;
-    }
-
-    public CardStats GetRunTimeCardStats()
-    {
-        return runtimeCardStats;
-    }
-
     public virtual IEnumerator Execute(SkillQueueData data, bool isBossHit)
     {
         Debug.Log("currentSkillExecute");
@@ -72,7 +55,7 @@ public abstract class CardSkill : MonoBehaviour
 
         yield return skillOption.Execute(this, data, isBossHit);
         
-    } // 마나 소비 로직 만들것
+    } // 마나 소비 로직 만들것 // 만들음
 
     public virtual void ApplySkill(bool isBossInRange = false, HexTile tile = null) { }
 
@@ -98,37 +81,3 @@ public abstract class CardSkill : MonoBehaviour
 
     protected abstract void SkillAnimation(HexTile tile);
 }
-/*
-protected GameObject GetOriginalCard()
-    {
-        return cardList.GetCard(cardStats.CardID);
-    }
-
-    protected void ResetCardStats()
-    {
-        GameObject originalCard = GetOriginalCard();
-
-        if (originalCard == null)
-        {
-            Debug.LogError("원본 카드를 찾을 수 없습니다.");
-            return;
-        }
-
-        CardStats originalStats = originalCard.GetComponent<CardStats>();
-
-        if (originalStats == null)
-        {
-            Debug.LogError("원본 카드에 CardStats가 없습니다.");
-            return;
-        }
-
-        if (cardStats == null)
-        {
-            Debug.LogError("현재 카드에 CardStats가 없습니다.");
-            return;
-        }
-
-        // CardUtils를 이용해서 stats 복사
-        CardUtils.CopyStats(originalStats, cardStats);
-    }
-    */

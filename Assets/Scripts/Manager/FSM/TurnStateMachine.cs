@@ -72,27 +72,27 @@ public class TurnStateMachine : MonoBehaviour
 
     }
 
-    // =============
+    // ============= GameTurnState.BossStartMotion;
 
     private async Task HandleBossStartMotion()
     {
-        manager.TurnStart();
+
         Debug.Log($"{manager.GetTurn()} - 보스 패턴 예고");
         await Task.Delay(1000);
     }
 
-    // =============
+    // ============= GameTurnState.PlayerTurn;
 
     private async Task HandlePlayerTurn()
     {
         Debug.Log($"{manager.GetTurn()} - 플레이어 턴 시작");
+        manager.TurnStart();
 
         isPlayerTurnDone = false;
-
-
         EnablePlayerControl();
 
-        if (skillManager.CanMove())
+        // 플레이어 턴(카드 선택 등) 대기
+        if (player.IsMoveable())
         {
             GivePlayerCard();
             while (!isPlayerTurnDone)
@@ -100,24 +100,20 @@ public class TurnStateMachine : MonoBehaviour
         }
         else
         {
-            // 스킬 사용했으므로 바로 종료
-            CompletePlayerTurn();
-        }
-
-        queueManager.ProcessTurn();
-
-        if (chainSkillTCS != null)
-        {
-            Debug.Log("체인스킬 실행 대기 중...");
-            await chainSkillTCS.Task;
-            chainSkillTCS = null;
-            Debug.Log("체인스킬 실행 완료!");
+            if(Player.Instance.stats.GetPlayerDown() || Player.Instance.stats.GetPlayerStun())
+            {
+                CompletePlayerTurn();
+            }
+            else if(QueueManager.Instance.HasAction())
+            {
+                queueManager.ProcessTurn();
+            }
+            
         }
 
         PlayerTurnEnd();
         DisablePlayerControl();
         Debug.Log($"{manager.GetTurn()} - 플레이어 턴 종료");
-
     }
 
     private void GivePlayerCard()
@@ -153,7 +149,7 @@ public class TurnStateMachine : MonoBehaviour
         manager.cardManager.DisposeAllCards();
     }
 
-    // =============
+    // ============= GameTurnState.BossAttack;
 
     private async Task HandleBossAttack()
     {
@@ -162,7 +158,7 @@ public class TurnStateMachine : MonoBehaviour
         boss.bossController.OnTurnEnd();
     }
 
-    // =============
+    // ============= GameTurnState.TurnEnd
     private async Task HandleTurnEnd()
     {
         await Task.Delay(500);

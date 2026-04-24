@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9006ec8c3d9592f488f61f740ab9af6d, type: 3}
   m_Name: 123_2_OneHSword_HolySword
   m_EditorClassIdentifier: 
-  cardID: 0
-  tripodIndex: 0
+  cardID: 123
+  tripodIndex: 2
   chainSkillPrefab: {fileID: 7714835881792039693, guid: fa689788a284107479837810bb8623ff, type: 3}
   afterDelay: 0
   skill_damage: 0

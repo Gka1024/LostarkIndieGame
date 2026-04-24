@@ -126,7 +126,6 @@ public class SkillManager : MonoBehaviour
         yield return new WaitUntil(() => currentState == SkillState.SelectingTile);
         ShowTripodUI(false);
 
-        Debug.Log(currentStats);
         currentStats.ApplyOption(selectedTripod);
 
         // 타일 선택
@@ -195,7 +194,7 @@ public class SkillManager : MonoBehaviour
 
         // 큐에 등록
         QueueManager.Instance.EnqueueSkill(data);
-        Debug.Log($"[EnqueueCardSkill] CardID {cardID} (트라이포드 {tripodIndex}) 스킬이 큐에 등록됨");
+        Debug.Log($"[EnqueueCardSkill] CardID {data.skillId} (트라이포드 {tripodIndex}) 스킬이 큐에 등록됨 {data.beforeDelay} {data.afterDelay}");
     }
 
     public void EnqueueChainSkill(CardStats stats, int cardID, int tripodIndex)
@@ -299,23 +298,13 @@ public class SkillManager : MonoBehaviour
 
         // 3. 대상 판정 및 효과 처리
         bool bossInRange = tileManager.IsBossTile(data.selectedTiles);
+        yield return StartCoroutine(chainSkill.ExecuteChain(data, bossInRange));
 
-        if (bossInRange)
-        {
-            ApplyBossSkills(chainStat);
-            GivePlayerIdentity(chainStat.identityGain);
-        }
-
-        // 4. 애니메이션 & 이펙트
-        // chainSkill.PlayAnimation(data.mainTile);
-
-        // 5. 실행 (코루틴 대기)
-        Debug.Log("ExecuteChain");
-        yield return StartCoroutine(chainSkill.ExecuteChain(data));
 
         // 6. 사후 처리 
         ApplyPlayerSuperArmor(false);
         Destroy(chainGO);
+
     }
 
     // ========== 스킬 적용 ==========
@@ -337,7 +326,8 @@ public class SkillManager : MonoBehaviour
         float damage = stat.skill_damage;
         float stagger = stat.stagger;
 
-        boss.GetComponent<Boss>().bossController.GetBossDamageData(new BossDamageData(damage, stagger));
+        BossDamageData data = DamageSystem.Instance.ApplyPlayerStats(new BossDamageData(damage, stagger));
+        boss.GetComponent<Boss>().bossController.GetBossDamageData(data);
     }
 
     public void GivePlayerIdentity(float identity)
@@ -388,9 +378,9 @@ public class SkillManager : MonoBehaviour
         ShowCancelButton(false);
     }
 
-    public bool CanMove()
+    public bool CheckPlayerMoveable()
     {
-        if (queueManager.IsFrozen()) return false; // 후딜레이가 있을 때
+        if (queueManager.IsFrozen() ) return false; // 후딜레이가 있을 때
         if (isCardUsing) return false;
 
         if (playerStats.GetPlayerDown()) return false;

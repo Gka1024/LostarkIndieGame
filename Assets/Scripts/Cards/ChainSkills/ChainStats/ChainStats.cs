@@ -35,6 +35,11 @@ public class ChainStats : ScriptableObject
     public int rayWidth;
 
     public virtual void ApplyOption(int index) { }
+
+    public virtual void SetDamage(float damage)
+    {
+        skill_damage = damage;
+    }
     
     public virtual void ChangeDamage(float damageOverride)
     {
