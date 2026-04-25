@@ -142,6 +142,7 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetTrigger("DrinkPotion");
         yield return new WaitForSeconds(2.3f);
         ShowPlayerWeapon();
+        
 
         yield return null;
     }

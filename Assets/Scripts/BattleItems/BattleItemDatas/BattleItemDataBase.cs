@@ -34,6 +34,7 @@ public class BattleItemDataBase : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// JSON 텍스트를 파싱하여 리스트와 딕셔너리에 담습니다.
     /// </summary>

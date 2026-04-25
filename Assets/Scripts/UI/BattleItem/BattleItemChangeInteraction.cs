@@ -4,9 +4,9 @@ using UnityEngine.EventSystems;
 public class BattleItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     // 이제 개별 변수 대신 ScriptableObject 데이터 하나만 가집니다.
-    public BattleItemData itemData; 
+    public BattleItemData itemData;
     public GameObject battleItemHighlight;
-    
+
     // UI와 로직 매니저 참조
     private BattleItemUI battleItemUI;
     private BattleItemManager battleItemManager;
@@ -48,5 +48,7 @@ public class BattleItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         // 마무리
         battleItemHighlight.SetActive(false);
         battleItemUI.CloseAllChangeUI();
+        battleItemUI.ShowDescWindow(false);
+        battleItemManager.CancelItem();
     }
 }

@@ -115,9 +115,27 @@ public class BattleItemManager : MonoBehaviour
         {
             case PotionType.Heal:
                 playerStats.Heal(30, true);
+                VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Heal, 1);
                 break;
+
             case PotionType.Atropine:
                 playerStats.AddAttackBuff(30, 0, 20);
+                VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Buff, 1);
+                break;
+
+            case PotionType.Shield:
+                //playerStats.AddAttackBuff(30, 0, 20);
+                VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Shield, 1);
+                break;
+
+            case PotionType.TimeStop:
+                //playerStats.AddAttackBuff(30, 0, 20);
+                VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Gold, 1);
+                break;
+
+            case PotionType.Identity:
+                //playerStats.AddAttackBuff(30, 0, 20);
+                VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Identity, 1);
                 break;
                 // ... 나머지 물약 로직
         }
@@ -131,7 +149,11 @@ public class BattleItemManager : MonoBehaviour
         yield return new WaitUntil(() => hexTileSelectHandler.isTileSelected || isCancelRequested);
         if (isCancelRequested) yield break;
 
-        playerAnimation.ThrowItem(currentItem.granadeType, hexTileSelectHandler.selectedTile);
+        HexTile tile = hexTileSelectHandler.selectedTile;
+
+        playerAnimation.ThrowItem(currentItem.granadeType, tile);
+        StartCoroutine(PlaySmoke(0.5f, tile));
+
 
         // 보스 히트 판정 및 효과 적용
         if (HexTileManager.Instance.IsBossTile(hexTileSelectHandler.selectedTiles))
@@ -140,6 +162,13 @@ public class BattleItemManager : MonoBehaviour
         }
 
         EndItemTurn();
+    }
+
+    private IEnumerator PlaySmoke(float time, HexTile target)
+    {
+        yield return new WaitForSeconds(time);
+
+        VFXManager.Instance.PlayEffect(VFXID.Player_Smoke, target, 0.4f);
     }
 
     private void ApplyEffectToBoss()
@@ -151,7 +180,7 @@ public class BattleItemManager : MonoBehaviour
         if (currentItem.hasDebuff)
         {
             // Factory를 통해 인터페이스 객체 생성 및 전달
-            BossBuff debuff = BossBuffFactory.CreateBuff(currentItem.buffID, 1 ,currentItem.buff_duration);
+            BossBuff debuff = BossBuffFactory.CreateBuff(currentItem.buffID, 1, currentItem.buff_duration);
             bossController.AddBuff(debuff);
         }
     }
@@ -200,7 +229,6 @@ public class BattleItemManager : MonoBehaviour
 
     private void PlaceItem(HexTile tile, GameObject obj, int duration)
     {
-        Debug.Log("123123123123123123");
         Vector3 pos = new Vector3(tile.transform.position.x, 1.5f, tile.transform.position.z);
         GameObject item = Instantiate(obj, pos, Quaternion.identity);
         var placeable = item.GetComponent<BattleItemPlaceable>();
