@@ -11,34 +11,29 @@ public class EstherManager : MonoBehaviour
     public GameManager manager;
     public HexTileManager tileManager;
 
+    public EstherUI estherUI;
+
     public Boss boss;
     public Player player;
 
     [SerializeField] private bool isEstherUsing;
 
     // 에스더 스킬 오브젝트들
-    public GameObject ThirainSkillObject;
-    public GameObject WayeSkillObject;
-    public GameObject BahunturrSkillObject;
-    public GameObject NinaveSkillObject;
-    public GameObject InannaSkillObject;
-    public GameObject AzenaSkillObject;
-    public GameObject ShandiSkillObject;
-    public GameObject KadanAttackSkillObject;
-    public GameObject KadanShieldSkillObject;
-
-    // 에스더 카드들
-    public GameObject estherCard1;
-    public GameObject estherCard2;
-    public GameObject estherCard3;
+    public GameObject SkillObject_Thirain;
+    public GameObject SkillObject_Waye;
+    public GameObject SkillObject_Bahunturr;
+    public GameObject SkillObject_Ninave;
+    public GameObject SkillObject_Inanna;
+    public GameObject SkillObject_Azena;
+    public GameObject SkillObject_Shandi;
+    public GameObject SkillObject_KadanAttack;
+    public GameObject SkillObject_KadanShield;
 
     private GameObject skillObj;
     [SerializeField] private EstherSkill pendingEstherSkill;
 
     // 에스더 게이지 관련
-    public GameObject estherCancelButton;
-    public RectTransform estherGaugeMask;
-    private float maskFullWidth;
+
     public float estherGainPerTurn = 14f;
 
     private const float MAX_ESTHER_VALUE = 350;
@@ -46,11 +41,12 @@ public class EstherManager : MonoBehaviour
 
     // 에스더 스킬 타일 선택 관련
     public bool isEstherTileSelected { get; private set; }
-    private List<HexTile> selectedEstherTiles = new();
+    [SerializeField] private List<HexTile> selectedEstherTiles = new();
 
     // 에스더 캐릭터 관련
-    public GameObject EstherThirainModel;
-    public GameObject EstherBahunturrModel;
+    public GameObject Model_Thirain;
+    public GameObject Model_Bahuntur;
+    public GameObject Model_Waye;
 
     void Awake()
     {
@@ -60,22 +56,26 @@ public class EstherManager : MonoBehaviour
 
     void Start()
     {
-        maskFullWidth = estherGaugeMask.sizeDelta.x;
-        estherValue = MAX_ESTHER_VALUE;
-        UpdateEstherBar();
+        estherUI.Init();
+        estherUI.UpdateEstherBar(estherValue);
     }
 
     public void SetEstherValue(float value)
     {
         estherValue = Mathf.Clamp(value, 0, MAX_ESTHER_VALUE);
-        UpdateEstherBar();
+        estherUI.UpdateEstherBar(estherValue);
     }
 
     public void AddEstherValue(float value)
     {
         estherValue += value;
         estherValue = Mathf.Min(estherValue, MAX_ESTHER_VALUE);
-        UpdateEstherBar();
+        estherUI.UpdateEstherBar(estherValue);
+    }
+
+    public float GetMaxEstherValue()
+    {
+        return MAX_ESTHER_VALUE;
     }
 
     public void ClearEstherSkill()
@@ -84,24 +84,14 @@ public class EstherManager : MonoBehaviour
         pendingEstherSkill = null;
     }
 
-    private void EstherCardBackgroundShow(bool show)
-    {
-        estherCard1?.GetComponent<EstherCard>()?.ShowBackground(show);
-        // TODO: 추가 카드도 필요 시 활성화
-        // estherCard2?.GetComponent<EstherCard>()?.ShowBackground(show);
-        // estherCard3?.GetComponent<EstherCard>()?.ShowBackground(show);
-    }
-
-    public void UpdateEstherBar()
-    {
-        float estherRatio = Mathf.Clamp01(estherValue / MAX_ESTHER_VALUE);
-        estherGaugeMask.sizeDelta = new Vector2(estherRatio * maskFullWidth, estherGaugeMask.sizeDelta.y);
-        EstherCardBackgroundShow(IsEstherFull());
-    }
-
     public bool IsEstherFull()
     {
         return estherValue == MAX_ESTHER_VALUE;
+    }
+
+    public void MakeEstherFull()
+    {
+        AddEstherValue(MAX_ESTHER_VALUE);
     }
 
     public void UseEstherSkill(EstherType esther)
@@ -111,20 +101,20 @@ public class EstherManager : MonoBehaviour
 
         isEstherUsing = true;
 
-        estherCancelButton.SetActive(true);
+        estherUI.estherCancelButton.SetActive(true);
 
         switch (esther)
         {
             case EstherType.Sillian:
-                StartCoroutine(UseThirainSkill());
+                StartCoroutine(UseEstherSkill(SkillObject_Thirain, Model_Thirain));
                 break;
 
             case EstherType.Waye:
-                UseWayeSkill();
+                StartCoroutine(UseEstherSkill(SkillObject_Waye, Model_Waye));
                 break;
 
             case EstherType.Bahunturr:
-                StartCoroutine(UseBahunturSkill());
+                StartCoroutine(UseEstherSkill(SkillObject_Bahunturr, Model_Bahuntur));
                 break;
 
             case EstherType.Ninave:
@@ -159,12 +149,12 @@ public class EstherManager : MonoBehaviour
 
     public void CancelEsther()
     {
-        skillObj = null;
+        Destroy(skillObj);
         isEstherUsing = false;
         isEstherTileSelected = false;
         selectedEstherTiles.Clear();
         GameManager.Instance.hexTileSelectHandler.CancelSelection();
-        estherCancelButton.SetActive(false);
+        estherUI.estherCancelButton.SetActive(false);
     }
 
     public void SetEstherSkill(EstherSkill skill = null)
@@ -210,9 +200,9 @@ public class EstherManager : MonoBehaviour
     private void ResetEsther()
     {
         estherValue = 0f;
-        UpdateEstherBar();
+        estherUI.UpdateEstherBar(estherValue);
         isEstherUsing = false;
-        estherCancelButton.SetActive(false);
+        estherUI.estherCancelButton.SetActive(false);
     }
 
     private GameObject InstantiateEsther(GameObject esther, HexTile spawnTile, HexTile targetTile = null)
@@ -228,83 +218,41 @@ public class EstherManager : MonoBehaviour
         return estherModel;
     }
 
-    private IEnumerator UseThirainSkill()
+    // 에스더 스킬을 통합해서 관리하는 메서드
+    private IEnumerator UseEstherSkill(GameObject skillPrefab, GameObject modelPrefab)
     {
-        if (ThirainSkillObject == null)
+        // 1. 유효성 검사
+        if (skillPrefab == null)
         {
-            Debug.LogError("ThirainSkillObject is not assigned!");
+            Debug.LogError("Skill Object is not assigned!");
             yield break;
         }
 
-        // ==== 스킬 오브젝트 생성
-        skillObj = Instantiate(ThirainSkillObject);
-        EstherSkill estherThirain = skillObj.GetComponent<EstherSkill>();
-        estherThirain.estherManager = this;
+        // 2. 스킬 오브젝트 생성 및 초기화
+        skillObj = Instantiate(skillPrefab);
+        EstherSkill estherSkill = skillObj.GetComponent<EstherSkill>();
 
-        // ==== 스킬 방향 결정
-        estherThirain.SelectTile();
+        estherSkill.estherManager = this;
+
+        // 3. 타일 선택 대기
+        estherSkill.SelectTile();
         yield return new WaitUntil(() => manager.hexTileSelectHandler.selectedTiles.Count > 0);
 
-        // ==== 모델링 생성
+        // 4. 타겟/스폰 타일 계산 및 모델 생성
         HexTile targetTile = manager.hexTileSelectHandler.selectedTile;
-        HexTile spawnTile = HexTileManager.Instance.GetNearestTile(manager.GetPlayer().GetComponent<PlayerMove>().GetCurrentTile(), targetTile);
-        EstherAnimationController skillController = InstantiateEsther(EstherThirainModel, spawnTile, targetTile).GetComponent<EstherAnimationController>();
-        estherThirain.estherAnimationController = skillController;
-        estherThirain.SpawnToGround(spawnTile);
+        HexTile spawnTile = HexTileManager.Instance.GetNearestTile(Player.Instance.move.GetCurrentTile(), targetTile);
 
-        selectedEstherTiles = manager.hexTileSelectHandler.selectedTiles;
-        SetEstherSkill(estherThirain);
+        estherSkill.Init(spawnTile);
 
-        estherThirain.Execute();
+        EstherAnimationController skillController = InstantiateEsther(modelPrefab, spawnTile, targetTile).GetComponent<EstherAnimationController>();
+        estherSkill.estherAnimationController = skillController;
+        estherSkill.SpawnToGround(spawnTile);
 
+        // 5. 실행 및 리셋
+        selectedEstherTiles = new List<HexTile>(manager.hexTileSelectHandler.selectedTiles);
+        SetEstherSkill(estherSkill);
+        estherSkill.Execute(targetTile, selectedEstherTiles);
         ResetEsther();
-    }
-
-    private IEnumerator UseBahunturSkill()
-    {
-        if (BahunturrSkillObject == null)
-        {
-            Debug.LogError("BahunturrSkillObject is not assigned!");
-            yield break;
-        }
-
-        skillObj = Instantiate(BahunturrSkillObject);
-        EstherSkill estherBahunturr = skillObj.GetComponent<EstherSkill>();
-        estherBahunturr.estherManager = this;
-
-        estherBahunturr.SelectTile();
-        yield return new WaitUntil(() => manager.hexTileSelectHandler.selectedTiles.Count > 0);
-
-        HexTile targetTile = manager.hexTileSelectHandler.selectedTile;
-        HexTile spawnTile = HexTileManager.Instance.GetNearestTile(manager.GetPlayer().GetComponent<PlayerMove>().GetCurrentTile(), targetTile);
-        EstherAnimationController skillController = InstantiateEsther(EstherBahunturrModel, spawnTile, targetTile).GetComponent<EstherAnimationController>();
-        estherBahunturr.estherAnimationController = skillController;
-        estherBahunturr.SpawnToGround(spawnTile);
-
-        selectedEstherTiles = manager.hexTileSelectHandler.selectedTiles;
-        SetEstherSkill(estherBahunturr);
-
-        estherBahunturr.Execute();
-
-        ResetEsther();
-
-
-    }
-
-    private void UseWayeSkill()
-    {
-        if (WayeSkillObject == null)
-        {
-            Debug.LogError("WayeSkillObject is not assigned!");
-            return;
-        }
-
-        skillObj = Instantiate(WayeSkillObject);
-        EstherSkill skill = skillObj.GetComponent<EstherSkill>();
-        skill.Execute(); // 만약 즉시 발동형이라면
-        estherValue = 0f;
-        UpdateEstherBar();
-        estherCancelButton.SetActive(false);
     }
 
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EstherSkill_KadanAtk : EstherSkill
 {
-    public override void Execute()
+    public override void Execute(HexTile targetTile, List<HexTile> selectedTiles)
     {
         throw new System.NotImplementedException();
     }

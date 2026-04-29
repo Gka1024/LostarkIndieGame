@@ -45,6 +45,8 @@ public class QueueManager : MonoBehaviour
 
     public void ProcessTurn()
     {
+
+
         if (beforeDelay > 0)
         {
             ConsumeDelay(0);
@@ -80,7 +82,6 @@ public class QueueManager : MonoBehaviour
             return;
         }
 
-        if (isProcessing) CheckProcess();
     }
 
     private void ConsumeDelay(int index)
@@ -92,6 +93,8 @@ public class QueueManager : MonoBehaviour
             case 1: afterDelay--; Debug.Log($"후딜레이 소모: {afterDelay}"); break;
             case 2: chainDelay--; Debug.Log($"체인딜레이 소모: {chainDelay}"); break;
         }
+
+        if (isProcessing) CheckProcess();
         ActionEnd();
     }
 
@@ -101,7 +104,6 @@ public class QueueManager : MonoBehaviour
         {
             isCharacterFrozen = false;
             isProcessing = false;
-            ActionEnd();
         }
     }
 
@@ -117,7 +119,7 @@ public class QueueManager : MonoBehaviour
 
     private IEnumerator ExecuteSkillSequence()
     {
-        if(activeSkill.skillId == 0) yield return 0;
+        if (activeSkill.skillId == 0) yield return 0;
 
         if (activeSkill.isChainSkill)
         {
@@ -132,6 +134,7 @@ public class QueueManager : MonoBehaviour
         activeSkill = null; // 스킬이 끝났으므로 비움
         activeSkillEmpty = true;
 
+        if (isProcessing) CheckProcess();
         ActionEnd();
     }
 

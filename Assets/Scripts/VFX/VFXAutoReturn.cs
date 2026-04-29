@@ -5,18 +5,29 @@ public class VFXAutoReturn : MonoBehaviour
 {
     private int _effectId;
     private ParticleSystem _ps;
+    private bool _isTurnBase;
+    private int _remainingTurns;
 
     private void Awake()
     {
         _ps = GetComponentInChildren<ParticleSystem>();
     }
 
-    public void Initialize(int id, float duration)
+    public void Initialize(int id, float duration, int turnDuration = 0)
     {
         _effectId = id;
-        
-        StopAllCoroutines();
-        StartCoroutine(SoftExitRoutine(duration));
+
+        if (turnDuration > 0)
+        {
+            _isTurnBase = true;
+            _remainingTurns = turnDuration;
+            StopAllCoroutines();
+        }
+        else
+        {
+            _isTurnBase = false;
+            StartCoroutine(SoftExitRoutine(duration));
+        }
     }
 
     private IEnumerator SoftExitRoutine(float duration)
@@ -38,5 +49,20 @@ public class VFXAutoReturn : MonoBehaviour
         }
 
         VFXManager.Instance.ReturnToPool(_effectId, gameObject);
+    }
+
+    public bool TickTurn()
+    {
+        if (!_isTurnBase) return false;
+
+        _remainingTurns--;
+
+        if (_remainingTurns <= 0)
+        {
+            VFXManager.Instance.ReturnToPool(_effectId, gameObject);
+            return true;
+        }
+
+        return false;
     }
 }

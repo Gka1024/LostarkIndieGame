@@ -9,10 +9,14 @@ public class VFXList : MonoBehaviour
     public int fieldOffset = 1001;
     public int playerOffset = 2001;
     public int bossOffset = 3001;
+    public int itemOffset = 4001;
+    public int estherOffset = 5001;
 
     public List<GameObject> VFXS_Field;
     public List<GameObject> VFXS_Player;
     public List<GameObject> VFXS_Boss;
+    public List<GameObject> VFXS_BattleItem;
+    public List<GameObject> VFXS_EstherSkill;
 
     private void Awake()
     {
@@ -28,9 +32,11 @@ public class VFXList : MonoBehaviour
         totalCount += RegisterList(VFXS_Field, fieldOffset);
         totalCount += RegisterList(VFXS_Player, playerOffset);
         totalCount += RegisterList(VFXS_Boss, bossOffset);
+        totalCount += RegisterList(VFXS_BattleItem, itemOffset);
+        totalCount += RegisterList(VFXS_EstherSkill, estherOffset);
 
         // 3. 마지막에 딱 한 번만 로그 출력
-        Debug.Log($"VFXManager: 총 {totalCount}개의 VFX 로드 완료.");
+        Debug.Log($"VFXList: 총 {totalCount}개의 VFX 로드 완료.");
     }
 
     private int RegisterList(List<GameObject> list, int offset)
@@ -75,6 +81,21 @@ public static class VFXID
     public const int Boss_Shield_Circle = 3002;
     public const int Boss_Electric = 3003;
     public const int Boss_Implosion = 3004;
+
+    public const int BattleItem_Area_Heal = 4001;
+    public const int BattleItem_Granade_Clay = 4002;
+    public const int BattleItem_Granade_Corrosion = 4003;
+    public const int BattleItem_Granade_Dark = 4004;
+    public const int BattleItem_Granade_Destruction = 4005;
+    public const int BattleItem_Granade_Lightning = 4006;
+    public const int BattleItem_Granade_Flaiming = 4007;
+    public const int BattleItem_Granade_Flasing = 4008;
+    public const int BattleItem_Granade_Tornado = 4009;
+
+    public const int Esther_Bahuntur = 5001;
+    public const int Esther_Thirain = 5002;
+    public const int Esther_Thirain_Projectile = 5003;
+    public const int Esther_Waye = 5004;
 
 
 }

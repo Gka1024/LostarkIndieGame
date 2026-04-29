@@ -137,13 +137,9 @@ public class SkillManager : MonoBehaviour
 
         // 4. 큐에 카드스킬 및 체인스킬 데이터 넣기
 
-        EnqueueCardSkill(currentStats, currentSkill.CardID, selectedTripod);
-
-        if (currentStats.HasChainSkill)
+        if (currentSkill.CardID != 100 || selectedTripod != 1)
         {
-            ChainStats chainStats = currentStats.GetChainStats(selectedTripod);
-
-            EnqueueChainSkill(currentStats, currentSkill.CardID, selectedTripod);
+            EnqueueData(currentStats, currentSkill.CardID, selectedTripod);
         }
 
         // 5. 사후 처리
@@ -161,6 +157,17 @@ public class SkillManager : MonoBehaviour
         ShowCancelButton(false);
         currentState = SkillState.Idle;
     }
+
+    private void EnqueueData(CardStats stat, int ID, int tripod)
+    {
+        EnqueueCardSkill(stat, ID, tripod);
+
+        if (stat.HasChainSkill)
+        {
+            EnqueueChainSkill(stat, ID, tripod);
+        }
+    }
+
 
     private void ApplyPlayerSuperArmor(bool value = true)
     {
@@ -380,7 +387,7 @@ public class SkillManager : MonoBehaviour
 
     public bool CheckPlayerMoveable()
     {
-        if (queueManager.IsFrozen() ) return false; // 후딜레이가 있을 때
+        if (queueManager.IsFrozen()) return false; // 후딜레이가 있을 때
         if (isCardUsing) return false;
 
         if (playerStats.GetPlayerDown()) return false;

@@ -97,7 +97,6 @@ public class CardList : MonoBehaviour
     public CardStats GetCardStats(int index)
     {
         cardStatsDictionary.TryGetValue(index, out CardStats stats);
-        Debug.Log(index);
         return Instantiate(stats);
     }
 

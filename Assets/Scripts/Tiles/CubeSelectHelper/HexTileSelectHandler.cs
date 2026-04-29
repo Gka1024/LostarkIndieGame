@@ -272,10 +272,32 @@ public class HexTileSelectHandler : MonoBehaviour
     public void StartSelection(EstherSkill skill)
     {
         ResetVariables();
-        if (skill.isAngleSkill) SelectTileByAngle(skill.skillAngle, skill.skillAngleRange);
-        if (skill.isDistanceSkill) SelectTileByDistance(skill.skillDistance, skill.skillDistanceRange);
-        if (skill.isRaySkill) SelectTileByRay(skill.rayDistance, skill.rayWidth);
-        if (skill.isHexRaySkill) isHexRayNeeded = true;
+
+        switch (skill.tileSelectType)
+        {
+            case TileSelectType.Angle:
+                SelectTileByAngle(skill.skillAngle, skill.skillAngleRange);
+                break;
+
+            case TileSelectType.Distance:
+                SelectTileByDistance(skill.skillDistance, skill.skillDistanceRange);
+                break;
+
+            case TileSelectType.Around:
+                SelectTileByAround(skill.aroundRange);
+                break;
+
+            case TileSelectType.Ray:
+                SelectTileByRay(skill.rayDistance, skill.rayWidth);
+                break;
+
+            case TileSelectType.HexRay:
+                isHexRayNeeded = true;
+                SelectTileByHexRay(skill.rayDistance, skill.rayWidth);
+                break;
+
+            default: break;
+        }
     }
 
     public void StartSelectionItemGranades()

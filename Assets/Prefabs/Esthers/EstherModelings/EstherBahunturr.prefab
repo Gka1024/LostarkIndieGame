@@ -4145,7 +4145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  esther: 0
+  esther: 2
 --- !u!1 &8522508308154807333
 GameObject:
   m_ObjectHideFlags: 0

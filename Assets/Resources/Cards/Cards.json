@@ -19,6 +19,12 @@
       "description": "공격은 최선의 방어지만 때리다가 죽으면 본말전도입니다."
     },
     {
+      "id": 74,
+      "esther": "샨디",
+      "name": "샨디스킬",
+      "description": "--"
+    },
+    {
       "id": 75,
       "esther": "니나브",
       "name": "천벌 파르쿠나스",
@@ -61,7 +67,7 @@
         {
           "option_id": 2,
           "option_name": "긴급 이동",
-          "option_description": "2칸 내 원하는 위치로 이동할 수 있다. 남발하지 않도록 하자."
+          "option_description": "3칸 내 원하는 위치로 이동할 수 있다. 남발하지 않도록 하자."
         },
         {
           "option_id": 3,
@@ -167,7 +173,7 @@
       "id": 122,
       "name": "천상의 축복",
       "description": "빛의 수호자를 소환하여 주변에 {base_skill_damage}의 피해를 주고 자신에게 축복을 내려 {base_buff_turns} 동안 공격력을 {base_attack_increase} 증가시킨다.",
-      "options" : [
+      "options": [
         {
           "option_id": 1,
           "option_name": "완전한 축복",

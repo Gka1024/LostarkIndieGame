@@ -7,27 +7,28 @@ public abstract class EstherSkill : MonoBehaviour
     public EstherManager estherManager;
     public EstherAnimationController estherAnimationController;
 
-    public int EstherSkillTurnMax;  // 최대 턴 수 (예: 5)
+    protected int EstherSkillTurnMax;
     private int currentTurn = 0;
 
     // 타일 선택 조건들
+    public TileSelectType tileSelectType;
     public bool needToSelectTile;
 
-    public bool isAngleSkill;
     public int skillAngle;
     public int skillAngleRange;
 
-    public bool isDistanceSkill;
+    public int aroundRange;
+
     public int skillDistance;
     public int skillDistanceRange;
 
-    public bool isRaySkill;
-    public bool isHexRaySkill;
     public int rayDistance;
     public int rayWidth;
 
     // 각 턴마다 실행할 액션 정의
     protected Dictionary<int, Action> turnTriggers = new();
+
+    public virtual void Init(HexTile spawnTile) { }
 
     public void SelectTile()
     {
@@ -59,17 +60,9 @@ public abstract class EstherSkill : MonoBehaviour
         if (currentTurn >= EstherSkillTurnMax)
         {
             Debug.Log($"DestroySkill | CurrentTurn : {currentTurn} | estherSkillTurnMax : {EstherSkillTurnMax}");
-            DestroyGameObject();
         }
     }
 
-    protected void DestroyGameObject()
-    {
-        if (estherManager != null)
-            estherManager.ClearEstherSkill();
-        estherAnimationController.Disappear();
-        Destroy(gameObject);
-    }
 
-    public abstract void Execute();  // 실행 시 반드시 수동 호출
+    public abstract void Execute(HexTile tile, List<HexTile> targetTiles);  // 실행 시 반드시 수동 호출
 }

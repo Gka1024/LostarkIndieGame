@@ -46,15 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   estherManager: {fileID: 0}
   estherAnimationController: {fileID: 0}
-  EstherSkillTurnMax: 2
+  tileSelectType: 2
   needToSelectTile: 1
-  isAngleSkill: 0
   skillAngle: 0
   skillAngleRange: 0
-  isDistanceSkill: 1
+  aroundRange: 0
   skillDistance: 3
   skillDistanceRange: 2
-  isRaySkill: 0
-  isHexRaySkill: 0
   rayDistance: 0
   rayWidth: 0
+  skillData: {fileID: 11400000, guid: 700cb855fbe4a3848a9ceba195a74f8c, type: 2}

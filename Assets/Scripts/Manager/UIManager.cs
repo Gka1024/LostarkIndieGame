@@ -18,9 +18,5 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI tripod3Name;
     public TextMeshProUGUI tripod3Des;
 
-    public void AddEsther(float value)
-    {
-        EstherUI.GetComponent<EstherManager>().AddEstherValue(value);
-    }
 
 }
