@@ -44,7 +44,7 @@ public class GunLance_Bash_Option1 : SkillObject
         {
             var cardStat = card.GetStats<CardStats_GunLance_Bash>();
 
-            SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateBuff(BuffID.DEBUFF_DEFENCEDOWN, 1, cardStat.opt1_turns));
+            SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateBuff(BuffID_Boss.DEBUFF_DEFENCEDOWN, 1, cardStat.opt1_turns));
         }
 
         yield return null;

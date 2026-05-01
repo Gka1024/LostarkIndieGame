@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class BuffRegistry : MonoBehaviour
+public class BossBuffRegistry : MonoBehaviour
 {
     public BossBuffData[] allBuffDatas;
     public BossBuffData[] allDebuffDatas;
@@ -28,7 +28,7 @@ public enum BuffSide
     Debuff
 }
 
-public enum BuffID
+public enum BuffID_Boss
 {
     NONE = 0,
 

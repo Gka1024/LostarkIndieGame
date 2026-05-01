@@ -22,7 +22,7 @@ public static class BossBuffFactory
     }
 
 
-    public static BossBuff CreateBuff(BuffID buffID, int stack = 1, int duration = 1, GameObject target = null)
+    public static BossBuff CreateBuff(BuffID_Boss buffID, int stack = 1, int duration = 1, GameObject target = null)
     {
         if (!buffTable.TryGetValue((int)buffID, out var data))
         {
@@ -32,16 +32,16 @@ public static class BossBuffFactory
 
         BossBuff buff = buffID switch
         {
-            BuffID.BUFF_VALTAN_ARMOR => new BossBuffValtanArmor(data, duration, stack),
-            BuffID.BUFF_RAGE => new BossBuffRage(data, duration, stack),
+            BuffID_Boss.BUFF_VALTAN_ARMOR => new BossBuffValtanArmor(data, duration, stack),
+            BuffID_Boss.BUFF_RAGE => new BossBuffRage(data, duration, stack),
 
-            BuffID.DEBUFF_DEFENCEDOWN => new BossDebuffDefenceDown(data, duration, stack),
-            BuffID.DEBUFF_ATTACKDOWN => new BossDebuffAttackDown(data, duration, stack),
-            BuffID.DEBUFF_TAUNT => new BossDebuffTaunt(data, duration, stack, target),
-            BuffID.DEBUFF_STUN => new BossDebuffStun(data, duration, stack),
-            BuffID.DEBUFF_CORROSION => new BossDebuffCorrosion(data, duration, stack),
-            BuffID.DEBUFF_FRAGILE => new BossDebuffFragile(data, duration, stack),
-            BuffID.DEBUFF_FLAME => new BossDebuffFlame(data, duration, stack),
+            BuffID_Boss.DEBUFF_DEFENCEDOWN => new BossDebuffDefenceDown(data, duration, stack),
+            BuffID_Boss.DEBUFF_ATTACKDOWN => new BossDebuffAttackDown(data, duration, stack),
+            BuffID_Boss.DEBUFF_TAUNT => new BossDebuffTaunt(data, duration, stack, target),
+            BuffID_Boss.DEBUFF_STUN => new BossDebuffStun(data, duration, stack),
+            BuffID_Boss.DEBUFF_CORROSION => new BossDebuffCorrosion(data, duration, stack),
+            BuffID_Boss.DEBUFF_FRAGILE => new BossDebuffFragile(data, duration, stack),
+            BuffID_Boss.DEBUFF_FLAME => new BossDebuffFlame(data, duration, stack),
 
             _ => new BossBuff(data, duration, stack)
         };

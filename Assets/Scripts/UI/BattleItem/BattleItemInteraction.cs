@@ -4,11 +4,11 @@ using UnityEngine.EventSystems;
 public class BattleItemInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [Header("References")]
-    public BattleItemUI battleItemUI;           
+    public BattleItemUI battleItemUI;
     public BattleItemManager battleItemManager;
-    
+
     [Header("Slot Setting")]
-    public ItemType slotType; 
+    public ItemType slotType;
 
     /// 마우스가 슬롯 위에 올라갔을 때 (하이라이트 + 설명창)
     public void OnPointerEnter(PointerEventData eventData)
@@ -22,6 +22,7 @@ public class BattleItemInteraction : MonoBehaviour, IPointerEnterHandler, IPoint
 
         battleItemUI.SetSlotHighlight(slotType, true);
         battleItemUI.UpdateDescWindow(data);
+        SoundManager.Instance.PlaySFX(1);
     }
 
     /// 마우스가 슬롯을 벗어났을 때 (하이라이트 OFF + 설명창 OFF)

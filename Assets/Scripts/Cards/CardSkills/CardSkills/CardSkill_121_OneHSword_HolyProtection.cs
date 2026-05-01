@@ -72,9 +72,9 @@ public class OneHSword_HolyProtection_3 : SkillObject
 
         if (card.runtimeCardStats is CardStats_OneHSword_HolyProtection stat)
         {
-            PlayerStats playerStats = GameManager.Instance.GetPlayer().GetComponent<Player>().stats;
-            playerStats.AddShield(stat.shield_amount, stat.shield_turns, () => playerStats.ApplyPlayerSuperArmor(false));
-            playerStats.ApplyPlayerSuperArmor(true);
+            PlayerStats playerStats = Player.Instance.stats;
+            playerStats.AddShield(stat.shield_amount, stat.shield_turns, () => playerStats.buffState.RemoveBuff(BuffID_Player.PLAYER_SUPER_ARMOR));
+            playerStats.buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.PLAYER_SUPER_ARMOR, stat.shield_turns));
         }
     }
 }

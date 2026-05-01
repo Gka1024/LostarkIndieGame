@@ -12,7 +12,7 @@ public class CardText_Hammer_JumpingSmash : CardText
         if (cardStat != null)
         {
             baseValues["base_tile"] = cardStat.skillDistance.ToString();
-            baseValues["opt3_skill_damage"] = Mathf.RoundToInt(playerStats.GetPlayerAttack() * cardStat.opt3_skill_damage).ToString();
+            baseValues["opt3_skill_damage"] = Mathf.RoundToInt(playerStats.GetCurrentAttack() * cardStat.opt3_skill_damage).ToString();
 
         }
 

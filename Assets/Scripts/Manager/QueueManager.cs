@@ -45,8 +45,6 @@ public class QueueManager : MonoBehaviour
 
     public void ProcessTurn()
     {
-
-
         if (beforeDelay > 0)
         {
             ConsumeDelay(0);

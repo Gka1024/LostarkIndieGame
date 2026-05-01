@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ public class TurnStateMachine : MonoBehaviour
     public QueueManager queueManager;
     public SkillManager skillManager;
     public ObjectClickHandler objectClickHandler;
+
+    public GameObject PlayerTurnObject;
+    public GameObject EnemyTurnObject;
 
     public Boss boss;
     public Player player;
@@ -76,7 +80,6 @@ public class TurnStateMachine : MonoBehaviour
 
     private async Task HandleBossStartMotion()
     {
-
         Debug.Log($"{manager.GetTurn()} - 보스 패턴 예고");
         await Task.Delay(1000);
     }
@@ -94,21 +97,22 @@ public class TurnStateMachine : MonoBehaviour
         // 플레이어 턴(카드 선택 등) 대기
         if (player.IsMoveable())
         {
+            StartCoroutine(DisplayPlayerTurn(1f));
             GivePlayerCard();
-            while (!isPlayerTurnDone)
-                await Task.Yield();
+            while (!isPlayerTurnDone) await Task.Yield();
         }
         else
         {
-            if(Player.Instance.stats.GetPlayerDown() || Player.Instance.stats.GetPlayerStun())
+            if (Player.Instance.stats.IsPlayerCrowdControlled())
             {
                 CompletePlayerTurn();
             }
-            else if(QueueManager.Instance.HasAction())
+            else if (QueueManager.Instance.HasAction())
             {
                 queueManager.ProcessTurn();
+                // while (!isPlayerTurnDone) await Task.Yield(); // todo: 여기서 체인스킬이 타일을 선택하는 경우에는 기다리도록 설계하기
             }
-            
+
         }
 
         PlayerTurnEnd();
@@ -119,8 +123,8 @@ public class TurnStateMachine : MonoBehaviour
     private void GivePlayerCard()
     {
         manager.cardManager.ResetHand();
-        //manager.cardManager.GiveRandomCard(5);
-        manager.cardManager.GiveSpecificCard(123);
+        manager.cardManager.GiveRandomCard(5);
+        // manager.cardManager.GiveSpecificCard(121);
         manager.cardManager.GiveBasicCard();
     }
 
@@ -149,13 +153,34 @@ public class TurnStateMachine : MonoBehaviour
         manager.cardManager.DisposeAllCards();
     }
 
+    private IEnumerator DisplayPlayerTurn(float time)
+    {
+        PlayerTurnObject.SetActive(true);
+
+        yield return new WaitForSeconds(time);
+
+        PlayerTurnObject.SetActive(false);
+    }
+
+
+
     // ============= GameTurnState.BossAttack;
 
     private async Task HandleBossAttack()
     {
+        StartCoroutine(DisplayEnemyTurn(1f));
         await Task.Delay(500);
         Debug.Log($"{manager.GetTurn()} - 보스 행동 시작");
         boss.bossController.OnTurnEnd();
+    }
+
+    private IEnumerator DisplayEnemyTurn(float time)
+    {
+        EnemyTurnObject.SetActive(true);
+
+        yield return new WaitForSeconds(time);
+
+        EnemyTurnObject.SetActive(false);
     }
 
     // ============= GameTurnState.TurnEnd

@@ -58,7 +58,7 @@ public class BossBuffsUI : MonoBehaviour
                 buffIconStartTransform.rotation,
                 buffsParentGameObject.transform);
 
-            BuffIconUI iconUI = iconObj.GetComponent<BuffIconUI>();
+            BossBuffIconUI iconUI = iconObj.GetComponent<BossBuffIconUI>();
 
             iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.Stack, buff.Duration);
 
@@ -90,7 +90,7 @@ public class BossBuffsUI : MonoBehaviour
                 debuffIconStartTransform.rotation,
                 debuffsParentGameObject.transform);
 
-            BuffIconUI iconUI = iconObj.GetComponent<BuffIconUI>();
+            BossBuffIconUI iconUI = iconObj.GetComponent<BossBuffIconUI>();
 
             iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.Stack,buff.Duration);
 

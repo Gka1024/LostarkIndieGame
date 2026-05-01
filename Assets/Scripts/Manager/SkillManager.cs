@@ -101,7 +101,7 @@ public class SkillManager : MonoBehaviour
         currentStats = CardList.Instance.GetCardStats(currentSkill.CardID);
 
         // 2. 플레이어 상황 체크
-        if (playerStats.GetPlayerDown() || playerStats.GetPlayerSilenced() || playerStats.GetPlayerStun())
+        if (playerStats.IsPlayerCrowdControlled())
         {
             if (currentSkill.CardID != 100)
             {
@@ -115,7 +115,7 @@ public class SkillManager : MonoBehaviour
         ShowTripodUI(true);
         ShowCancelButton(true);
 
-        if (playerStats.GetPlayerDown() || playerStats.GetPlayerSilenced() || playerStats.GetPlayerStun())
+        if (playerStats.IsPlayerCrowdControlled())
         {
             if (currentSkill.CardID != 100 && selectedTripod != 2)
             {
@@ -169,9 +169,17 @@ public class SkillManager : MonoBehaviour
     }
 
 
-    private void ApplyPlayerSuperArmor(bool value = true)
+    private void ApplyPlayerSuperArmor(bool value = true, int duration = 1)
     {
-        playerStats.ApplyPlayerSuperArmor(value);
+        if (value)
+        {
+            playerStats.buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.PLAYER_SUPER_ARMOR, duration));
+
+        }
+        else
+        {
+            playerStats.buffState.RemoveBuff(BuffID_Player.PLAYER_SUPER_ARMOR);
+        }
     }
 
     // ========== 큐 등록 ==========
@@ -390,8 +398,8 @@ public class SkillManager : MonoBehaviour
         if (queueManager.IsFrozen()) return false; // 후딜레이가 있을 때
         if (isCardUsing) return false;
 
-        if (playerStats.GetPlayerDown()) return false;
-        if (playerStats.GetPlayerStun()) return false;
+        if (playerStats.IsPlayerCrowdControlled()) return false;
+        if (playerStats.IsPlayerCrowdControlled()) return false;
 
         return true;
     }

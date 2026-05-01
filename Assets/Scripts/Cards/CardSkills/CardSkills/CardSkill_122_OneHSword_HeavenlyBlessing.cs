@@ -35,9 +35,9 @@ public class OneHSword_HeavenlyBlessing_1 : SkillObject
 
         if (card.runtimeCardStats is CardStats_OneHSword_HeavenlyBlessing stat)
         {
-            PlayerStats playerStats = GameManager.Instance.GetPlayer().GetComponent<Player>().stats;
-            playerStats.AddManaRegenBuff(stat.opt1_mana_regen, stat.opt1_turns);
-            playerStats.AddAttackBuff(stat.base_buff_attack, 0, duration: stat.base_buff_turns);
+            PlayerBuffState playerStats = Player.Instance.state;
+            playerStats.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.PLAYER_MANA_REGEN, stat.base_buff_turns, value: stat.opt1_mana_regen));
+            playerStats.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.PLAYER_ATTACK_UP, stat.base_buff_turns, value: stat.base_buff_attack));
         }
     }
 }
@@ -55,8 +55,7 @@ public class OneHSword_HeavenlyBlessing_2 : SkillObject
 
         if (card.runtimeCardStats is CardStats_OneHSword_HeavenlyBlessing stat)
         {
-            PlayerStats playerStats = GameManager.Instance.GetPlayer().GetComponent<Player>().stats;
-            playerStats.AddAttackBuff(stat.base_buff_attack, 0, duration: stat.base_buff_turns);
+            Player.Instance.stats.AddAttackBuff(stat.base_buff_attack, 0, duration: stat.base_buff_turns);
         }
     }
 

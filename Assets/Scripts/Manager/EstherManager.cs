@@ -170,6 +170,11 @@ public class EstherManager : MonoBehaviour
         if (pendingEstherSkill == null) return;
 
         pendingEstherSkill.OnTurnPassed();
+
+        if(pendingEstherSkill.isFinished)
+        {
+            pendingEstherSkill.FinishSkill();
+        }
     }
 
     // 에스더 스킬 데미지, 무력화, 파괴 처리
@@ -183,13 +188,13 @@ public class EstherManager : MonoBehaviour
 
     // 에스더 특수 버프 처리
 
-    public void GivePlayerBuff(string buffname, int duration)
+    public void GivePlayerBuff(int duration)
     {
         foreach (HexTile tile in selectedEstherTiles)
         {
-            if (manager.GetPlayer().GetComponent<PlayerMove>().GetCurrentTile() == tile)
+            if (player.move.GetCurrentTile() == tile)
             {
-                manager.GetPlayer().GetComponent<PlayerStats>().playerBuffState.AddPlayerSpecialBuff(buffname, duration);
+                player.state.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.ESTHER_BAHUNTUR, duration));
                 return;
             }
         }
@@ -242,11 +247,11 @@ public class EstherManager : MonoBehaviour
         HexTile targetTile = manager.hexTileSelectHandler.selectedTile;
         HexTile spawnTile = HexTileManager.Instance.GetNearestTile(Player.Instance.move.GetCurrentTile(), targetTile);
 
-        estherSkill.Init(spawnTile);
-
         EstherAnimationController skillController = InstantiateEsther(modelPrefab, spawnTile, targetTile).GetComponent<EstherAnimationController>();
         estherSkill.estherAnimationController = skillController;
         estherSkill.SpawnToGround(spawnTile);
+
+        estherSkill.Init(spawnTile, skillController.gameObject);
 
         // 5. 실행 및 리셋
         selectedEstherTiles = new List<HexTile>(manager.hexTileSelectHandler.selectedTiles);

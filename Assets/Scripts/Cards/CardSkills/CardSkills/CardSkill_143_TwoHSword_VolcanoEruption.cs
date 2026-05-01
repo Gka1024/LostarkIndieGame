@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CardSkill_TwoHSword_VolcanoEruption : CardSkill
@@ -27,6 +28,13 @@ public class TwoHSword_VolcanoEruption_1 : SkillObject
     {
         card.runtimeCardStats.ApplyOption(1);
     }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        Player.Instance.move.MoveToTile(new PlayerMoveInfo(data.mainTile, false, true, true, false));
+    }
 }
 
 public class TwoHSword_VolcanoEruption_2 : SkillObject
@@ -34,6 +42,13 @@ public class TwoHSword_VolcanoEruption_2 : SkillObject
     public override void ApplyOption(CardSkill card)
     {
         card.runtimeCardStats.ApplyOption(2);
+    }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        Player.Instance.move.MoveToTile(new PlayerMoveInfo(data.mainTile, false, true, true, false));
     }
 }
 
@@ -43,6 +58,16 @@ public class TwoHSword_VolcanoEruption_3 : SkillObject
     {
         card.runtimeCardStats.ApplyOption(3);
     }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        Player.Instance.move.MoveToTile(new PlayerMoveInfo(data.mainTile, false, true, true, false));
+        Player.Instance.stats.buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.PLAYER_SUPER_ARMOR, card.runtimeCardStats.beforeActTurn + card.runtimeCardStats.afterActTurn + 1));
+
+    }
+
 }
 
 /* // ==== 트라이포드 1번

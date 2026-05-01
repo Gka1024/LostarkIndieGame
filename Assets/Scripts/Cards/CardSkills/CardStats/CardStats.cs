@@ -38,6 +38,7 @@ public class CardStats : ScriptableObject
     public float manaUse; // 플레이어 최대 마나 250, 플레이어 턴마다 마나 회복 20;
     public float identityGain; // 플레이어 최대 아덴 200
     public float stagger; // 0~20 : 하 / 21~45 : 중 / 46+ 상
+    public int destroy; // 
     public int coolDownTurn; // 스킬 쿨타임(턴으로 계산)
 
     // ==== 스킬 속성 관련 변수

@@ -21,7 +21,7 @@ public class DamageSystem : MonoBehaviour
     {
         BossDamageData value = new BossDamageData(data.damage, data.stagger, data.destroy, data.isTrueDamage, data.isCounter);
 
-        value.damage *= playerStats.GetPlayerAttack();
+        value.damage *= playerStats.GetCurrentAttack();
         value.stagger *= playerStats.GetStaggerMultiflyer();
 
         return value;

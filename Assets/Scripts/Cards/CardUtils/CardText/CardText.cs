@@ -27,7 +27,7 @@ public class CardText : MonoBehaviour
     private void OnStart()
     {
         cardStats = CardList.Instance.GetCardStats(GetComponent<CardSkill>().CardID);
-        playerStats = FindAnyObjectByType<PlayerStats>();
+        playerStats = Player.Instance.stats;
         uiManager = GameManager.Instance.UIManager;
         cardDataBase =GameManager.Instance.cardManager.cardDataBase;
 
@@ -71,7 +71,7 @@ public class CardText : MonoBehaviour
     {
         var values = new Dictionary<string, string>
         {
-            { "base_skill_damage", Mathf.RoundToInt(playerStats.GetPlayerAttack() * cardStats.skill_damage).ToString() },
+            { "base_skill_damage", Mathf.RoundToInt(playerStats.GetCurrentAttack() * cardStats.skill_damage).ToString() },
             { "before_turn", cardStats.beforeActTurn.ToString() }
         };
         return values;

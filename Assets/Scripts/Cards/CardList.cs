@@ -42,7 +42,7 @@ public class CardList : MonoBehaviour
 
         RegisterCardID();
         RegisterCardStats();
-        
+
         RegisterChainID();
         RegisterChainStats();
     }
@@ -108,7 +108,7 @@ public class CardList : MonoBehaviour
 
     public ChainStats GetChainStats(int cardID, int tripodNum)
     {
-        chainStatsDictionary.TryGetValue(cardID* 10 + tripodNum, out ChainStats stats);
+        chainStatsDictionary.TryGetValue(cardID * 10 + tripodNum, out ChainStats stats);
         return stats;
     }
 
@@ -157,6 +157,8 @@ public class CardList : MonoBehaviour
 
         foreach (var kvp in cardsDictionary)
         {
+            if (kvp.Key == 100) continue;
+
             int cardID = kvp.Key;
             GameObject cardObj = kvp.Value;
 

@@ -12,8 +12,7 @@ public class CardManager : MonoBehaviour
 
     public CardDataBase cardDataBase;
 
-    [SerializeField]
-    private Vector3 centerPosition = new Vector3(350, -450, 0); // 카드들의 중앙 위치
+    [SerializeField] private Vector3 centerPosition = new Vector3(350, -710, 0); // 카드들의 중앙 위치
     public float cardSpace; // 카드 간격 
 
     public Transform cardParent; // 카드들이 위치할 부모 오브젝트 (Canvas 내부)
@@ -29,6 +28,8 @@ public class CardManager : MonoBehaviour
     public GameObject cardDispose; // 카드 삭제 버튼
     public GameObject TripodButton; // 트라이포드를 띄울 때 사용하는 UI
     public GameObject TripodCancelButton; // 트라이포드 취소 버튼 
+
+    public CardDescriptionUI cardDescriptionUI;
 
     public void Awake()
     {
@@ -141,7 +142,6 @@ public class CardManager : MonoBehaviour
         cardsInHandID.Clear();
     }
 
-
     // ======================
     // 카드 인터랙션 부분
     // ======================
@@ -214,6 +214,9 @@ public class CardManager : MonoBehaviour
                 cardsInHand[i].GetComponent<CardInteraction>().SetDefaultPos(cardsInHand[i].GetComponent<CardInteraction>().GetDefaultPos() + new Vector3(50, 0, 0));
             }
         }
+
+        cardDescriptionUI.SetCardText(card.GetComponent<CardSkill>().CardID);
+        cardDescriptionUI.OnPointerEnter();
     }
 
     public void PointerExit(CardInteraction card)
@@ -233,6 +236,8 @@ public class CardManager : MonoBehaviour
                 cardsInHand[i].GetComponent<CardInteraction>().SetDefaultPos(cardsInHand[i].GetComponent<CardInteraction>().GetDefaultPos() - new Vector3(50, 0, 0));
             }
         }
+
+        cardDescriptionUI.OnPointerExit();
     }
 
     // ======================
@@ -292,8 +297,6 @@ public class CardManager : MonoBehaviour
     // ======================
     // 기타 유틸
     // ======================
-
-    
 
     public void ShowCards(bool show)
     {

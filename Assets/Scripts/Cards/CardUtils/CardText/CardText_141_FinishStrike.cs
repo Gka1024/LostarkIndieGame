@@ -11,8 +11,8 @@ public class CardText_TwoHSword_FinishStrike : CardText
 
         if (cardStat != null)
         {
-            baseValues["opt2_skill_damage"] = Mathf.RoundToInt(playerStats.GetPlayerAttack() * cardStat.opt2_skill_damage).ToString();
-            baseValues["opt3_skill_damage"] = Mathf.RoundToInt(playerStats.GetPlayerAttack() * cardStat.opt3_skill_damage).ToString();
+            baseValues["opt2_skill_damage"] = Mathf.RoundToInt(playerStats.GetCurrentAttack() * cardStat.opt2_skill_damage).ToString();
+            baseValues["opt3_skill_damage"] = Mathf.RoundToInt(playerStats.GetCurrentAttack() * cardStat.opt3_skill_damage).ToString();
 
         }
 

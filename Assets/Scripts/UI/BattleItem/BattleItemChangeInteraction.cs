@@ -25,6 +25,7 @@ public class BattleItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         battleItemHighlight.SetActive(true);
         // UI에게 데이터만 넘겨주면 이름과 설명을 알아서 표시합니다.
         battleItemUI.ShowChangeConfirmWindow(itemData);
+        SoundManager.Instance.PlaySFX(1);
     }
 
     public void OnPointerExit(PointerEventData eventData)

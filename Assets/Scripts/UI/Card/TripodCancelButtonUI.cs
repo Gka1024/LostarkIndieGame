@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TripodCancelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class TripodCancelButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public void OnPointerEnter(PointerEventData eventData)
     {

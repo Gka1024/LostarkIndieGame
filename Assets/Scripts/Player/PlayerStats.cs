@@ -1,387 +1,162 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using static PlayerBuffState;
 
 public class PlayerStats : MonoBehaviour
 {
-    public PlayerBuffState playerBuffState;
-    public PlayerStatsUI playerStatsUI; // UI
-
+    [Header("Dependencies")]
+    public PlayerBuffState buffState;
+    public PlayerStatsUI statsUI;
     public PlayerAnimation anim;
 
-    // ==== 체력 관련 변수
+    [Header("Status Flags")]
+    public bool IsTimeStopped;
+    public bool IsStunned;
+    public bool IsDowned;
+    public bool IsSilenced;
+    public bool IsHiding;
+    public bool IsSuperArmor;
+
+    [Header("Base Stats")]
     public const float MAX_HEALTH = 500;
     public float currentHealth;
 
-    // ==== 마나 관련 변수
     public const float MAX_MANA = 250;
     public float currentMana;
-    public float regenManaOnTurns = 20;
 
-    // ==== 아덴 관련 변수
     public const float MAX_IDENTITY = 200;
-    public float playerIdentity;
-    public PlayerIdentity identityUI;
-    public bool isIdentityReady;
+    public float currentIdentity;
 
-    // ==== 공격 관련 변수
-    private const float BASE_PLAYER_ATTACK = 120;
-    private float playerAttack;
+    public float baseAttack = 120;
 
-    private float playerStaggerMultiflyer = 1;
-
-
-    // ==== 방어 관련 변수
-    private float basePlayerDefence;
-    public float playerDefence;
-
-    public bool isPlayerTimeStop = false;
-    public int playerTimeStopDuration;
-
-    public bool isHidingRobeUsed = false;
-    private int playerHidingRobeDuration;
-
-    // ==== 피격이상 관련 변수
-    public bool isPlayerSuperArmor = false;
-
-    [SerializeField] private bool isPlayerDown = false;
-    private int playerDownDuration;
-
-    [SerializeField] private bool isPlayerStun = false;
-    private int playerStunDuration;
-
-    [SerializeField] private bool isPlayerSilenced = false;
-    private int playerSilenceDuration;
-
-    public void Start()
+    private void Awake()
     {
         currentHealth = MAX_HEALTH;
         currentMana = MAX_MANA;
-        playerAttack = BASE_PLAYER_ATTACK;
-        basePlayerDefence = playerDefence;
-        playerBuffState = GetComponent<PlayerBuffState>();
+        currentIdentity = 0;
+        buffState = GetComponent<PlayerBuffState>();
+        statsUI.UpdateIdentityBar(currentIdentity);
     }
 
-    // ========== 체력 및 피격 로직
-
+    // [핵심] 모든 데미지 로직 통합
     public void GetPlayerDamage(PlayerGetDamageInfo info)
     {
-        if (isPlayerTimeStop) return;
+        if (IsTimeStopped) return;
 
-        if (!info.isTrueDamage)
+        // 위장 로브 해제 로직
+        if (IsHiding && !info.isTrueDamage)
         {
-            if (isHidingRobeUsed == true)
-            {
-                isHidingRobeUsed = false;
-                playerHidingRobeDuration = 0;
-                return;
-            }
+            buffState.RemoveBuff(BuffID_Player.ITEM_HIDING_ROBE);
+            return;
         }
 
-        TakeDamage(info.damage);
+        // 1. 실드 처리
+        float remainingDamage = buffState.AbsorbDamageWithShields(info.damage);
 
-        if (!isPlayerSuperArmor)
-        {
-            if (info.isKnockbackAttack)
-            {
-                GameManager.Instance.GetBoss().GetComponent<BossAI>().bossController.PlayerKnockBack(info.knockbackDistance);
-            }
+        // 2. 체력 차감
+        if (remainingDamage > 0) TakeDamage(remainingDamage);
+
+        // 3. CC 처리 (슈퍼아머 체크)
+        if (!IsSuperArmor) ApplyCC(info);
+    }
+
+    private void ApplyCC(PlayerGetDamageInfo info)
+    {
+        if (info.isKnockbackAttack)
 
             if (info.isStunAttack)
-            {
-                isPlayerStun = true;
-                playerStunDuration = info.stunDuration;
-            }
+                buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.STUN, info.stunDuration));
 
-            if (info.isDownAttack)
-            {
-                isPlayerDown = true;
-                playerDownDuration = info.downDuration;
-            }
+        if (info.isDownAttack)
+            buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.DOWN, info.downDuration));
 
-            if (info.isSilenceAttack)
-            {
-                isPlayerSilenced = true;
-                playerSilenceDuration = info.silenceDuration;
-            }
-        }
+        if (info.isSilenceAttack)
+            buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.SILENCE, info.silenceDuration));
     }
 
-    private void TakeDamage(float damage)
+    public bool IsPlayerCrowdControlled()
     {
-        List<ShieldData> shields = playerBuffState.GetShieldDatas();
+        return buffState.HasPlayerCC();
+    }
 
-        if (shields.Count > 0)
+    public void AddShield(float amount, int duration, Action action = null)
+    {
+        buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.PLAYER_SHIELD, duration, 0, amount, action));
+    }
+
+    public void AddAttackBuff(float amount, float additional, int duration)
+    {
+        buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.PLAYER_ATTACK_UP, duration, value: amount));
+    }
+
+    public void Heal(float amount, bool ispercent = false)
+    {
+        float healAmount = amount;
+
+        if (ispercent) healAmount *= MAX_HEALTH;
+
+        currentHealth = MathF.Min(currentHealth + healAmount, MAX_HEALTH);
+    }
+
+    public void AddPlayerIdentity(float amount)
+    {
+
+    }
+
+    public bool HasPlayerShield()
+    {
+        return buffState.HasPlayerBuffs(BuffID_Player.PLAYER_SHIELD);
+    }
+
+    public bool UseMana(float amount)
+    {
+        if (currentMana >= amount)
         {
-            shields.Sort((a, b) => a.duration.CompareTo(b.duration));
-
-            for (int i = 0; i < shields.Count; i++)
-            {
-                if (damage <= 0) break;
-
-                ShieldData shield = shields[i];
-                float damageToAbsorb = Mathf.Min(damage, shield.amount);
-                shield.amount -= damageToAbsorb;
-                damage -= damageToAbsorb;
-
-                if (shield.amount <= 0)
-                {
-                    shield.onExpire?.Invoke();
-                    shields.RemoveAt(i);
-                    i--;
-                }
-                else
-                {
-                    shields[i] = shield;
-                }
-
-            }
-            shields.RemoveAll(shield => shield.amount <= 0);
+            currentMana -= amount;
+            return true;
         }
 
-        if (damage > 0)
-        {
-            TakeDamageOnHealth(damage);
-        }
-
+        return false;
     }
 
-    public void TakeDamageOnHealth(float damage)
+    public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        playerStatsUI.UpdateHPBar(currentHealth);
-        if (currentHealth <= 0)
-        {
-            currentHealth = 0;
-            Die();
-        }
+        currentHealth = Mathf.Max(0, currentHealth - damage);
+        statsUI.UpdateHPBar(currentHealth);
+        if (currentHealth <= 0) Die();
     }
-
-    private void ReducePlayerCCDuration()
-    {
-        if (isPlayerDown)
-        {
-            if (--playerDownDuration == 0)
-            {
-                isPlayerDown = false;
-            }
-        }
-
-        if (isPlayerSilenced)
-        {
-            if (--playerSilenceDuration == 0)
-            {
-                isPlayerSilenced = false;
-            }
-        }
-
-        if (isPlayerStun)
-        {
-            if (--playerStunDuration == 0)
-            {
-                isPlayerStun = false;
-            }
-        }
-
-    }
-
-    // ========== 회복 로직 
-
-    public void Heal(float amount, bool isPercent = false)
-    {
-        currentHealth += isPercent ? MAX_HEALTH * amount * 0.01f : amount;
-        currentHealth = Mathf.Max(currentHealth, MAX_HEALTH);
-        playerStatsUI.UpdateHPBar(currentHealth);
-    }
-
-
-    private void RegenHealth()
-    {
-        Heal(5);
-    }
-
-    // ========== 쉴드 로직 
-
-    public void AddShield(float percent, int duration, Action onExpire = null)
-    {
-        playerBuffState.AddShield(percent, duration, onExpire);
-    }
-
-    // ========== 마나 로직
-
-    public bool IsManaEnough(float mana)
-    {
-        return currentMana >= mana;
-    }
-
-    public void UseMana(float mana)
-    {
-        currentMana -= mana;
-        playerStatsUI.UpdateManaBar(currentMana);
-    }
-
-    public void RegenMana()
-    {
-        currentMana += regenManaOnTurns;
-        if(currentMana >= MAX_MANA) currentMana = MAX_MANA;
-        currentMana += playerBuffState.GetManaRegen(regenManaOnTurns);
-        playerStatsUI.UpdateManaBar(currentMana);
-    }
-
-    public void AddManaRegenBuff(float multiflier, int duration)
-    {
-        playerBuffState.AddManaRegenBuff(multiflier, duration);
-    }
-
-    // ==== 공격력 로직
-
-    public void AddAttackBuff(float coefficient, float additional, int duration)
-    {
-        playerBuffState.AddAttackBuff(coefficient, additional, duration);
-    }
-
-    public float GetPlayerAttack()
-    {
-        return playerBuffState.GetPlayerAttack(playerAttack);
-    }
-
-    public float GetStaggerMultiflyer()
-    {
-        return playerStaggerMultiflyer;
-    }
-
-    // ========== 아덴 로직
-
-    public void AddPlayerIdentity(float value)
-    {
-        playerIdentity += value;
-        identityUI.SetIdentity(playerIdentity);
-        identityUI.UpdateIdentityBar();
-
-        if (playerIdentity == MAX_IDENTITY)
-        {
-            isIdentityReady = true;
-            identityUI.SetIdentityReady(true);
-        }
-    }
-
-    public void UsePlayerIdentity()
-    {
-        playerIdentity = 0;
-        identityUI.SetIdentity(playerIdentity);
-        identityUI.UpdateIdentityBar();
-        identityUI.SetIdentityReady(false);
-    }
-
-
-    // ========== 배틀 아이템 관련 로직
-
-    public void UsingPotionItem(PotionType item)
-    {
-        switch (item)
-        {
-            case PotionType.TimeStop:
-                playerBuffState.UsingTimeStopItem(item);
-                break;
-        }
-    }
-
-    public void UsingSpecialItem(SpecialType type)
-    {
-        playerBuffState.UsingSpecialBattleItem(type);
-    }
-
-    private void ReduceSpecialItemDuration()
-    {
-        ReducePlayerTimeStopDuration();
-        ReducePlayerHidingRobeDuration();
-    }
-
-    private void ReducePlayerTimeStopDuration()
-    {
-        if (playerTimeStopDuration > 0)
-        {
-            playerTimeStopDuration--;
-            if (playerTimeStopDuration == 0)
-            {
-                isPlayerTimeStop = false;
-            }
-        }
-    }
-
-    private void ReducePlayerHidingRobeDuration()
-    {
-        if (playerHidingRobeDuration > 0)
-        {
-            playerHidingRobeDuration--;
-            if (playerHidingRobeDuration == 0)
-            {
-                isHidingRobeUsed = false;
-            }
-        }
-    }
-    // ========== 플레이어 상태이상 관련 로직
-
-    public void ApplyPlayerSuperArmor(bool value = true)
-    {
-        isPlayerSuperArmor = value;
-    }
-
-    // ========== 플레이어 상태 확인 로직
-
-    public bool IsPlayerDead()
-    {
-        return currentHealth == 0;
-    }
-
-    public bool IsImmuvable()
-    {
-        return isPlayerDown || isPlayerStun;
-    }
-
-    public bool GetPlayerDown()
-    {
-        return isPlayerDown;
-    }
-
-    public bool GetPlayerSilenced()
-    {
-        return isPlayerSilenced;
-    }
-
-    public bool GetPlayerStun()
-    {
-        return isPlayerStun;
-    }
-
-    // ========== 공통 로직
 
     public void KillPlayerInstantly()
     {
-        Die();
-    }
 
-    private void Die()
-    {
-        return;
-    }
-
-    public bool IsPlayerTimeStopped()
-    {
-        return isPlayerTimeStop;
     }
 
     public void ProcessTurn()
     {
-        playerBuffState.OnTurnEnd();
-
-        ReduceSpecialItemDuration();
-        RegenHealth();
-        RegenMana();
-        ReducePlayerCCDuration();
+        buffState.OnTurnEnd(); // 모든 버프 지속시간 감소 및 효과 적용
+        RegenStats();
+        CheckPlayerShield();
     }
 
+    private void RegenStats()
+    {
+        // 체력/마나 회복 로직 (buffState에서 추가 회복량 가져옴)
+        float manaRegen = 20 + buffState.GetAdditionalManaRegen(20);
+        currentMana = Mathf.Min(MAX_MANA, currentMana + manaRegen);
+        statsUI.UpdateManaBar(currentMana);
+    }
+
+    private void CheckPlayerShield()
+    {
+        if(buffState.HasPlayerBuffs(BuffID_Player.PLAYER_SHIELD))
+        {
+            statsUI.UpdateShieldBar(buffState.GetCurrentShield());
+        }
+    }
+
+    public float GetCurrentAttack() => buffState.GetCalculatedAttack(baseAttack);
+    public float GetStaggerMultiflyer() => 1f;
+    public bool IsImmovable() => IsStunned || IsDowned || IsTimeStopped;
+    private void Die() { /* 사망 연출 */ }
 }
 
 public class PlayerGetDamageInfo
@@ -425,5 +200,4 @@ public class PlayerGetDamageInfo
         this.isSilenceAttack = isSilenceAttack;
         this.silenceDuration = silenceDuration;
     }
-
 }

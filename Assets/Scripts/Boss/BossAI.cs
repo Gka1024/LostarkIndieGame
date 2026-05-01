@@ -116,7 +116,7 @@ public class BossAI : MonoBehaviour
 
         if (info.IsSpecial)
         {
-            if (!player.stats.playerBuffState.HasPlayerSpecialBuffs("아크투르스의 가호"))
+            if (!player.stats.buffState.HasPlayerBuffs(BuffID_Player.ESTHER_BAHUNTUR))
             {
                 player.stats.KillPlayerInstantly();
                 return;
@@ -270,7 +270,7 @@ public class BossAI : MonoBehaviour
             InterruptCurrentPattern();
 
             bossStatus.MakeBossGroggy(5);
-            bossStatus.AddBossBuff(BossBuffFactory.CreateBuff(BuffID.BUFF_VALTAN_ARMOR, -1, 0));
+            bossStatus.AddBossBuff(BossBuffFactory.CreateBuff(BuffID_Boss.BUFF_VALTAN_ARMOR, -1, 0));
         }
     }
 

@@ -21,7 +21,7 @@ public class BattleItemData : ScriptableObject
     public float stagger;
 
     public bool hasDebuff;
-    public BuffID buffID;
+    public BuffID_Boss buffID;
     public int buff_duration;
 
     [Header("Item Type")]

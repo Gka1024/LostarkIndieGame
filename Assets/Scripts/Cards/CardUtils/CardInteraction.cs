@@ -24,7 +24,7 @@ public class CardInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private bool isDisposing = false;
     private float disposeTime = 0f;
     public float disposeDuration = 0.2f; // 카드가 Dispose 위치로 이동하는 데 걸리는 시간
-    public float hoverOffset = 10f;
+    private float hoverOffset;
 
     [HideInInspector]
     public static bool isDragging = false;
@@ -36,12 +36,7 @@ public class CardInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         canvas = GetComponentInParent<Canvas>();
         canvasGroup = GetComponent<CanvasGroup>();
         CardDispose = GameObject.FindGameObjectWithTag("CardDispose");
-        SetDefaultPos();
-    }
-
-    private void SetDefaultPos()
-    {
-        defaultCardPos = rectTransform.anchoredPosition;
+        hoverOffset = 200f;
     }
 
     public Vector3 GetDefaultPos()
@@ -160,6 +155,7 @@ public class CardInteraction : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         rectTransform.SetAsLastSibling();
         defaultCardPos += new Vector3(0, hoverOffset, 0);
         cardManager.GetComponent<CardManager>().PointerEnter(this);
+        SoundManager.Instance.PlaySFX(1);
     }
 
     public void OnPointerExit(PointerEventData eventData)

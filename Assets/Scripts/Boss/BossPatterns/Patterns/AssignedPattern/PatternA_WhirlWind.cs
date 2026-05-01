@@ -14,9 +14,9 @@ public class PatternA_WhirlWind : BossPattern
     {
         turnGenerators.Add(MakeIdleTurn); // 0
         turnGenerators.Add(MakeIdleTurn); // 1
-        //turnGenerators.Add(MakePattern1); // 2
-        //turnGenerators.Add(MakePattern1); // 3
-        //turnGenerators.Add(MakePattern1); // 4
+        turnGenerators.Add(MakePattern1); // 2
+        turnGenerators.Add(MakePattern1); // 3
+        turnGenerators.Add(MakePattern1); // 4
     }
 
     public override void OnStartPattern(BossAI ai)

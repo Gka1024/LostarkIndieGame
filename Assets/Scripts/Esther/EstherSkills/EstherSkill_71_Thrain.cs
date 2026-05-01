@@ -6,11 +6,20 @@ public class EstherSkill_Thrain : EstherSkill
     public EstherSkill_Data_Thirain skillData;
     private HexTile spawnTile;
 
-    public override void Init(HexTile spawnTile)
+    public override void Init(HexTile spawnTile, GameObject obj)
     {
-        base.Init(spawnTile);
+        base.Init(spawnTile, obj);
         EstherSkillTurnMax = skillData.EstherSkillTurnMax;
         this.spawnTile = spawnTile;
+    }
+
+    public override void OnTurnPassed()
+    {
+        base.OnTurnPassed();
+        if (currentTurn >= skillData.EstherSkillTurnMax)
+        {
+            isFinished = true;
+        }
     }
 
     public override void Execute(HexTile targetTile, List<HexTile> selectedTiles)

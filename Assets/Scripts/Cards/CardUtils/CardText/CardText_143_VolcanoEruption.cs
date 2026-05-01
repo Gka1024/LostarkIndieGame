@@ -12,7 +12,7 @@ public class CardText_TwoHSword_VolcanoEruption : CardText
         if (cardStat != null)
         {
 
-            baseValues["base_skill_damage_2"] = Mathf.RoundToInt(playerStats.GetPlayerAttack() * cardStat.base_skill_damage_2).ToString();
+            baseValues["base_skill_damage_2"] = Mathf.RoundToInt(playerStats.GetCurrentAttack() * cardStat.base_skill_damage_2).ToString();
 
             baseValues["opt2_damage_coef"] = cardStat.opt2_damage_coef.ToString();
 

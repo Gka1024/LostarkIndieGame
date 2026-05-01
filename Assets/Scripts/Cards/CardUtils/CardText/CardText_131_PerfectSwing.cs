@@ -14,8 +14,10 @@ public class CardText_PerfectSwing : CardText
             baseValues["opt1_turns"] = cardStat.opt1_turns.ToString();
             baseValues["opt1_damage_coef"] = cardStat.opt1_damage_coef.ToString();
 
-            baseValues["opt3_skill_damage_1"] = Mathf.RoundToInt(playerStats.GetPlayerAttack() * cardStat.opt3_skill_damage_1).ToString();
-            baseValues["opt3_skill_damage_2"] = Mathf.RoundToInt(playerStats.GetPlayerAttack() * cardStat.opt3_skill_damage_2).ToString();
+            baseValues["opt2_taunt_turns"] = cardStat.opt2_taunt_turns.ToString();
+
+            baseValues["opt3_skill_damage_1"] = Mathf.RoundToInt(playerStats.GetCurrentAttack() * cardStat.opt3_skill_damage_1).ToString();
+            baseValues["opt3_skill_damage_2"] = Mathf.RoundToInt(playerStats.GetCurrentAttack() * cardStat.opt3_skill_damage_2).ToString();
         }
 
         return baseValues;

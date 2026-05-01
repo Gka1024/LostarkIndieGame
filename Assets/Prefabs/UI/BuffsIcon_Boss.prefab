@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 666614958522584972}
   - component: {fileID: 6985137374812532579}
   m_Layer: 0
-  m_Name: BuffsIcon
+  m_Name: BuffsIcon_Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

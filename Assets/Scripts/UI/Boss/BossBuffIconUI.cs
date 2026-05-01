@@ -3,10 +3,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BuffIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class BossBuffIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Sprite iconImage;
-    public const float DESCTRIPTION_OFFSET_Y = -150;
+    public const float DESCTRIPTION_OFFSET_Y = -200;
 
     [SerializeField] private GameObject bufficonImage;
     [SerializeField] private BossBuffData data;
@@ -63,7 +63,7 @@ public class BuffIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (duration != -1)
         {
-            durationNum.GetComponent<TextMeshProUGUI>().SetText(duration + "초");
+            durationNum.GetComponent<TextMeshProUGUI>().SetText(duration + "턴");
             durationNum.SetActive(true);
         }
         else

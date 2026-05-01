@@ -8,7 +8,8 @@ public abstract class EstherSkill : MonoBehaviour
     public EstherAnimationController estherAnimationController;
 
     protected int EstherSkillTurnMax;
-    private int currentTurn = 0;
+    protected int currentTurn = 0;
+    public bool isFinished;
 
     // 타일 선택 조건들
     public TileSelectType tileSelectType;
@@ -25,10 +26,16 @@ public abstract class EstherSkill : MonoBehaviour
     public int rayDistance;
     public int rayWidth;
 
+    public GameObject EstherModeling;
+
     // 각 턴마다 실행할 액션 정의
     protected Dictionary<int, Action> turnTriggers = new();
 
-    public virtual void Init(HexTile spawnTile) { }
+    public virtual void Init(HexTile spawnTile, GameObject modeling)
+    {
+        EstherModeling = modeling;
+        isFinished = false;
+    }
 
     public void SelectTile()
     {
@@ -48,7 +55,7 @@ public abstract class EstherSkill : MonoBehaviour
             turnTriggers[turnNumber] = action;
     }
 
-    public void OnTurnPassed()
+    public virtual void OnTurnPassed()
     {
         currentTurn++;
 
@@ -63,6 +70,11 @@ public abstract class EstherSkill : MonoBehaviour
         }
     }
 
+    public void FinishSkill()
+    {
+        Destroy(EstherModeling);
+        Destroy(gameObject, 0.5f);
+    }
 
     public abstract void Execute(HexTile tile, List<HexTile> targetTiles);  // 실행 시 반드시 수동 호출
 }

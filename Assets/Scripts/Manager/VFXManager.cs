@@ -14,6 +14,8 @@ public class VFXManager : MonoBehaviour
         public GameObject prefab;
     }
 
+    private Vector3 tileVFXOffset;
+
     [Header("Settings")]
     public List<VFXMapping> effectLibrary; // 인스펙터에서 ID와 프리팹 연결
     public Transform poolRoot; // 하이어라키 정리용 부모
@@ -31,16 +33,18 @@ public class VFXManager : MonoBehaviour
             _prefabDict[item.effectId] = item.prefab;
             _poolDict[item.effectId] = new Queue<GameObject>();
         }
+
+        tileVFXOffset = new Vector3(0, 2f, 0);
     }
 
     public void PlayEffect(int id, HexTile tile, float duration = -1f)
     { // 시간 단위 이펙트
-        PlayEffect(id, tile.transform.position, duration);
+        PlayEffect(id, tile.transform.position + tileVFXOffset, duration);
     }
 
     public void PlayEffect(int id, HexTile tile, int turnDuration)
     { // 턴 단위 이펙트
-        PlayEffect(id, tile.transform.position, 0, turnDuration);
+        PlayEffect(id, tile.transform.position + tileVFXOffset, 0, turnDuration);
     }
 
     public void PlayEffect(int id, List<HexTile> tiles, float duration = -1f)

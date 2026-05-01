@@ -25,8 +25,8 @@ public class Player : MonoBehaviour
     public bool IsMoveable()
     {
         bool value = true;
-        if (stats.GetPlayerStun()) return false;
-        if (stats.GetPlayerDown()) return false;
+        if (state.HasPlayerBuffs(BuffID_Player.STUN)) return false;
+        if (state.HasPlayerBuffs(BuffID_Player.DOWN)) return false;
         if (QueueManager.Instance.HasAction()) return false;
 
         return value;

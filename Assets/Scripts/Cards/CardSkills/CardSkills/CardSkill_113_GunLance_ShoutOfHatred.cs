@@ -39,7 +39,7 @@ public class GunLance_ShoutOfHatred1 : SkillObject
         {
             if (isBossHit)
             {
-                SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateBuff(BuffID.DEBUFF_TAUNT, 1, stat.taunt_turns));
+                SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateBuff(BuffID_Boss.DEBUFF_TAUNT, 1, stat.taunt_turns));
             }
         }
     }
@@ -59,10 +59,10 @@ public class GunLance_ShoutOfHatred2 : SkillObject
 
         if (card.runtimeCardStats is CardStats_GunLance_ShoutOfHatred stat)
         {
-            GameManager.Instance.GetPlayer().GetComponent<Player>().stats.AddShield(stat.opt2_shield, stat.opt2_shield_turns);
+            Player.Instance.stats.AddShield(stat.opt2_shield, stat.opt2_shield_turns);
             if (isBossHit)
             {
-                SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateBuff(BuffID.DEBUFF_TAUNT, 1, stat.taunt_turns));
+                SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateBuff(BuffID_Boss.DEBUFF_TAUNT, 1, stat.taunt_turns));
             }
         }
 
@@ -85,7 +85,7 @@ public class GunLance_ShoutOfHatred3 : SkillObject
         {
             if (isBossHit)
             {
-                SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateBuff(BuffID.DEBUFF_TAUNT, 1, stat.taunt_turns));
+                SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateBuff(BuffID_Boss.DEBUFF_TAUNT, 1, stat.taunt_turns));
                 SkillManager.Instance.GivePlayerIdentity(stat.identityGain * stat.opt3_identity_bonus * 0.01f);
             }
         }

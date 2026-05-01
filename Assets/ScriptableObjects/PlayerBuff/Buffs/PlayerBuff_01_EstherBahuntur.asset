@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac3ebf2a6f9a84a46b2466226d906789, type: 3}
+  m_Name: PlayerBuff_01_EstherBahuntur
+  m_EditorClassIdentifier: 
+  buffID: 1
+  buffName: "\uC544\uD06C\uD22C\uB974\uC2A4\uC758 \uAC00\uD638"
+  buffSide: 0
+  description: "\uAD70\uB2E8\uC7A5\uC758 \uAC15\uB825\uD55C \uACF5\uACA9\uC744 \uB9C9\uB294\uB2E4."
+  Icon: {fileID: 0}
+  specificBuff:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

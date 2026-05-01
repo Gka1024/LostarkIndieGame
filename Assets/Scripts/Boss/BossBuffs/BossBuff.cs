@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class BossBuff 
+public class BossBuff : IBuff
 {
     // 데이터 보관용
     public BossBuffData Data { get; set; }
@@ -47,4 +47,9 @@ public class BossBuff
     {
         return destruction;
     }
+}
+
+public interface IBuff
+{
+
 }

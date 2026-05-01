@@ -34,8 +34,8 @@ public class BossController : MonoBehaviour
 
     public void OnGameStart()
     {
-        AddBuff(BossBuffFactory.CreateBuff(BuffID.BUFF_VALTAN_ARMOR, 2, -1));
-        AddBuff(BossBuffFactory.CreateBuff(BuffID.DEBUFF_FRAGILE, 2, -1));
+        AddBuff(BossBuffFactory.CreateBuff(BuffID_Boss.BUFF_VALTAN_ARMOR, 2, -1));
+        AddBuff(BossBuffFactory.CreateBuff(BuffID_Boss.DEBUFF_FRAGILE, 2, -1));
     }
 
     private void RegisterCurrentTile()
