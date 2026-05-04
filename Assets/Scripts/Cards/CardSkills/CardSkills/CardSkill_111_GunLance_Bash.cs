@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CardSkill_GunLance_Bash : CardSkill
 {
-
     protected override SkillObject CreateOption(int num)
     {
         return num switch
@@ -16,17 +15,12 @@ public class CardSkill_GunLance_Bash : CardSkill
         };
     }
 
-    public override void ApplySkill(bool isBossInRange = false, HexTile tile = null)
-    {
-        base.ApplySkill(isBossInRange, tile);
-    }
-
     protected override void SkillAnimation(HexTile tile)
     {
+        Debug.Log("123");
         manager.GetPlayer().GetComponent<PlayerMove>().RotateToTile(tile);
         playerAnimation.PlayAnimation(1);
     }
-
 }
 
 public class GunLance_Bash_Option1 : SkillObject
@@ -38,12 +32,13 @@ public class GunLance_Bash_Option1 : SkillObject
 
     public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
-        base.Execute(card, data, isBossHit);
+        yield return base.Execute(card, data, isBossHit);
+
+        Debug.Log("success");
 
         if (isBossHit)
         {
             var cardStat = card.GetStats<CardStats_GunLance_Bash>();
-
             SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateBuff(BuffID_Boss.DEBUFF_DEFENCEDOWN, 1, cardStat.opt1_turns));
         }
 

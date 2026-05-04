@@ -3,12 +3,9 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    public BossController bossController;
-
     public BossAI ai;
     public BossAnimation animaton;
-
-
+    public BossController bossController;
     public BossStats stats;
     public BossStatus status;
     public BossInteraction interaction;

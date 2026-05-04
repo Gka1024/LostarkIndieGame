@@ -25,6 +25,8 @@ public class TurnStateMachine : MonoBehaviour
 
     private bool isPlayerTurnDone = false;
 
+    public bool isNeedToWaitChainTileSelect = false;
+
     public bool CanPlayerInteract => currentState == GameTurnState.PlayerTurn;
 
 
@@ -94,37 +96,63 @@ public class TurnStateMachine : MonoBehaviour
         isPlayerTurnDone = false;
         EnablePlayerControl();
 
-        // 플레이어 턴(카드 선택 등) 대기
+        // 1. 플레이어가 행동 가능할 때 (카드 사용 등)
         if (player.IsMoveable())
         {
             StartCoroutine(DisplayPlayerTurn(1f));
             GivePlayerCard();
+
+            // 플레이어의 카드 선택이 완료될 때까지 대기
             while (!isPlayerTurnDone) await Task.Yield();
         }
-        else
+        // 2. 플레이어가 행동 불능일 때 (CC기 등)
+        else if (Player.Instance.stats.IsPlayerCrowdControlled())
         {
-            if (Player.Instance.stats.IsPlayerCrowdControlled())
-            {
-                CompletePlayerTurn();
-            }
-            else if (QueueManager.Instance.HasAction())
-            {
-                queueManager.ProcessTurn();
-                // while (!isPlayerTurnDone) await Task.Yield(); // todo: 여기서 체인스킬이 타일을 선택하는 경우에는 기다리도록 설계하기
-            }
-
+            CompletePlayerTurn();
         }
+
+        // 3. 큐에 쌓인 액션 처리 (이동 가능 여부와 상관없이 액션이 있다면 실행)
+        await ProcessQueueActions();
 
         PlayerTurnEnd();
         DisablePlayerControl();
         Debug.Log($"{manager.GetTurn()} - 플레이어 턴 종료");
     }
 
+    /// <summary>
+    /// 큐에 쌓인 체인 스킬 및 액션을 처리하고, 필요 시 타일 선택을 기다립니다.
+    /// </summary>
+    private async Task ProcessQueueActions()
+    {
+        if (!QueueManager.Instance.HasAction()) return;
+
+        // 타일 선택 대기를 위한 TCS 초기화
+        ResetChainSkillTCS();
+
+        // 큐 프로세스 시작
+        queueManager.ProcessTurn();
+
+        // 타일 선택이 필요한 스킬이라면 선택 완료시까지 대기
+        if (isNeedToWaitChainTileSelect)
+        {
+            Debug.Log("체인 스킬 타일 선택 대기 중...");
+            await chainSkillTCS.Task;
+        }
+    }
+
+    private void ResetChainSkillTCS()
+    {
+        // 이전 작업이 있다면 취소시키거나 초기화
+        chainSkillTCS = new TaskCompletionSource<bool>();
+        isNeedToWaitChainTileSelect = false; // 기본값은 false로 세팅 (스킬 내부에서 true로 변경 가정)
+    }
+
     private void GivePlayerCard()
     {
         manager.cardManager.ResetHand();
-        manager.cardManager.GiveRandomCard(5);
-        // manager.cardManager.GiveSpecificCard(121);
+        //manager.cardManager.GiveRandomCard(5);
+        manager.cardManager.GiveSpecificCard(112);
+        manager.cardManager.GiveSpecificCard(121);
         manager.cardManager.GiveBasicCard();
     }
 
@@ -162,7 +190,11 @@ public class TurnStateMachine : MonoBehaviour
         PlayerTurnObject.SetActive(false);
     }
 
-
+    public void SetChainSkillTCS()
+    {
+        chainSkillTCS = new TaskCompletionSource<bool>();
+        isNeedToWaitChainTileSelect = true;
+    }
 
     // ============= GameTurnState.BossAttack;
 

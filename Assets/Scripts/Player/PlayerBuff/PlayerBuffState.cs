@@ -17,7 +17,7 @@ public class PlayerBuffState : MonoBehaviour
         if (existing == null) // 아예 새로운 버프인 경우
         {
             _activeBuffs.Add(newBuff);
-            newBuff.OnApply(_stats);
+            newBuff.OnApply(_stats); // 여기서 에러나는 경우 버프 플레이어에게 등록했는지 확인
         }
         else if (existing != null) // 존재하는 버프가 중첩되는 경우
         {
@@ -99,6 +99,15 @@ public class PlayerBuffState : MonoBehaviour
         return false;
     }
 
+    public PlayerBuff GetPlayerBuff(BuffID_Player id)
+    {
+        foreach (var buff in _activeBuffs)
+        {
+            if (buff.ID == (int)id) return buff;
+        }
+        return null;
+    }
+
     // 스탯 보정치 계산 메서드들...
     public float GetCalculatedAttack(float baseAtk)
     {
@@ -136,6 +145,11 @@ public class PlayerBuffState : MonoBehaviour
             if (buff is PlayerBuffShield shieldbuff)
             {
                 shield += shieldbuff.Amount;
+            }
+
+            if (buff is PlayerBuffShieldCounter shieldCounter)
+            {
+                shield += shieldCounter.Amount;
             }
         }
 

@@ -19,7 +19,7 @@ public class AreaDamageEffect : FieldEffect
 
         if (isBossinArea)
         {
-            BossDamageData data = DamageSystem.Instance.ApplyPlayerStats(new BossDamageData(damage, 0));
+            BossDamageData data = DamageSystem.Instance.ProcessDamage(new BossDamageData(damage, 0));
             FieldEffectManager.Instance.boss.bossController.GetBossDamageData(data);
         }
 

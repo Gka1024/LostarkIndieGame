@@ -35,7 +35,7 @@ public class OneHSword_HolyProtection_1 : SkillObject
 
         if (card.runtimeCardStats is CardStats_OneHSword_HolyProtection stat)
         {
-            GameManager.Instance.GetPlayer().GetComponent<Player>().stats.AddShield(stat.shield_amount, stat.shield_turns);
+            Player.Instance.stats.AddShield(stat.shield_amount, stat.shield_turns);
         }
     }
 }

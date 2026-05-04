@@ -37,8 +37,8 @@ public enum BuffID_Player
     STUN = 201,
     DOWN = 202,
     SILENCE = 203,
-    
-    
+
+    PLAYER_SKILL_BURSTCANNON_3 = 301,
 
 }
 

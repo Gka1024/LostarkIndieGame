@@ -35,6 +35,7 @@ MonoBehaviour:
   manaUse: 40
   identityGain: 0
   stagger: 50
+  destroy: 0
   coolDownTurn: 20
   isCounterAble: 0
   isHeadAttack: 0
@@ -45,4 +46,5 @@ MonoBehaviour:
   opt1_stagger: 30
   opt1_identity: 0
   opt3_shield: 200
+  opt3_turns: 3
   opt3_damage: 2

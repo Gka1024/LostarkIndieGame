@@ -16,14 +16,14 @@ MonoBehaviour:
   cardName: bash
   isCardSkill: 1
   HasChainSkill: 0
-  ChainSkill: {fileID: 0}
+  chainPaths: []
   playerWeapon: 3
   beforeActTurn: 0
-  afterActTurn: 1
+  afterActTurn: 0
   needToSelectTile: 1
   tileSelectType: 1
   skillAngle: 3
-  skillAngleRange: 1
+  skillAngleRange: 2
   skillDistance: 0
   skillDistanceRange: 0
   aroundRange: 0
@@ -33,6 +33,7 @@ MonoBehaviour:
   manaUse: 10
   identityGain: 5
   stagger: 20
+  destroy: 0
   coolDownTurn: 10
   isCounterAble: 1
   isHeadAttack: 1

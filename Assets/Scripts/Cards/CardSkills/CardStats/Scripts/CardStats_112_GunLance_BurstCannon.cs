@@ -10,6 +10,7 @@ public class CardStats_GunLance_BurstCannon : CardStats
     public float opt1_identity;
 
     public float opt3_shield;
+    public int opt3_turns;
     public float opt3_damage;
 
     public override void ApplyOption(int num)
@@ -23,9 +24,11 @@ public class CardStats_GunLance_BurstCannon : CardStats
 
             case 2:
                 this.skillAngleRange++;
+                this.stagger *= 1.5f;
                 break;
 
             case 3:
+                this.beforeActTurn = 0;
                 this.skill_damage += opt3_damage;
                 break;
 

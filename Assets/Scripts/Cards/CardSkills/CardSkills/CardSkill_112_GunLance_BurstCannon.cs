@@ -69,6 +69,37 @@ public class GunLance_BurstCannon2 : SkillObject
     {
         card.runtimeCardStats.ApplyOption(2);
     }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        Debug.Log("Execute - GunLance_BurstCannon1");
+        // 기본 Execute 로직을 먼저 실행합니다. (보스 피격 여부 등 확인)
+
+        // 플레이어를 타겟 타일의 반대 방향으로 1칸 이동시킵니다.
+        PlayerMove playerSC = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
+        HexTile playerTile = playerSC.GetCurrentTile();
+        HexTile targetTile = data.mainTile; // 스킬이 사용된 타일
+
+        Debug.Log(targetTile.CubeCoord);
+
+        // 플레이어의 뒤쪽 타일 계산
+
+        HexTile backTile = HexTileManager.Instance.tileBackHelper.GetBackTile(playerTile, targetTile);
+
+        Debug.Log($"BackTile : {backTile}");
+
+        // 뒤쪽 타일이 존재하고, 보스 타일이 아닐 경우 이동
+        if (backTile != null && !card.manager.hexTileManager.IsBossTile(backTile))
+        {
+            Debug.Log("Move Accepted");
+            playerSC.RotateToTile(targetTile);
+            playerSC.MoveToTile(new PlayerMoveInfo(backTile, isFace: false));
+        }
+
+        yield return null;
+    }
 }
 
 public class GunLance_BurstCannon3 : SkillObject
@@ -76,6 +107,20 @@ public class GunLance_BurstCannon3 : SkillObject
     public override void ApplyOption(CardSkill card)
     {
         card.runtimeCardStats.ApplyOption(3);
+    }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, false);
+
+        if (card.runtimeCardStats is CardStats_GunLance_BurstCannon stat)
+        {
+            PlayerBuff buff = PlayerBuffFactory.CreateBuff(BuffID_Player.PLAYER_SKILL_BURSTCANNON_3, stat.opt3_turns, damage: stat.skill_damage, stagger: stat.stagger, isBossHit: isBossHit);
+            Player.Instance.state.AddBuff(buff);
+            Player.Instance.stats.AddShield(stat.opt3_shield, stat.opt3_turns);
+        }
+
+        yield return null;
     }
 }
 

@@ -38,6 +38,7 @@ public abstract class CardSkill : MonoBehaviour
 
     public void SelectTripod(int num)
     {
+        Debug.Log("SelectTripod");
         selectedTripod = num;
         skillOption = CreateOption(num);
         skillOption?.ApplyOption(this); // 옵션 선택 시 stats 변화

@@ -23,11 +23,11 @@ MonoBehaviour:
   damageRange: []
   targetTile: {fileID: 0}
   needToSelectTile: 1
-  tileSelectType: 5
+  tileSelectType: 4
   skillAngle: 0
   skillAngleRange: 0
   skillDistance: 0
   skillDistanceRange: 0
   aroundRange: 0
   rayDistance: 3
-  rayWidth: 1
+  rayWidth: 2

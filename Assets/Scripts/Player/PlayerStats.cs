@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -47,6 +48,11 @@ public class PlayerStats : MonoBehaviour
         {
             buffState.RemoveBuff(BuffID_Player.ITEM_HIDING_ROBE);
             return;
+        }
+
+        if(buffState.GetPlayerBuff(BuffID_Player.PLAYER_SKILL_BURSTCANNON_3) is PlayerBuffShieldCounter buff)
+        {
+            buff.OnDamaged(info.damage);
         }
 
         // 1. 실드 처리
@@ -135,6 +141,7 @@ public class PlayerStats : MonoBehaviour
         buffState.OnTurnEnd(); // 모든 버프 지속시간 감소 및 효과 적용
         RegenStats();
         CheckPlayerShield();
+        CheckPlayerHealth();
     }
 
     private void RegenStats()
@@ -151,6 +158,15 @@ public class PlayerStats : MonoBehaviour
         {
             statsUI.UpdateShieldBar(buffState.GetCurrentShield());
         }
+        else
+        {
+            statsUI.UpdateShieldBar(0);
+        }
+    }
+
+    private void CheckPlayerHealth()
+    {
+        statsUI.UpdateHPBar(currentHealth);
     }
 
     public float GetCurrentAttack() => buffState.GetCalculatedAttack(baseAttack);

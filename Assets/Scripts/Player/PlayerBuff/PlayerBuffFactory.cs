@@ -22,7 +22,7 @@ public static class PlayerBuffFactory
             Debug.LogWarning($"Buff ID 중복: {data.buffID}");
     }
 
-    public static PlayerBuff CreateBuff(BuffID_Player id, int duration, int stack = 0, float value = 0, Action callback = null)
+    public static PlayerBuff CreateBuff(BuffID_Player id, int duration, int stack = 0, float value = 0, Action callback = null, float damage = 0, float stagger = 0, bool isBossHit = false)
     {
         if (!buffTable.TryGetValue((int)id, out var data)) return null;
 
@@ -31,6 +31,7 @@ public static class PlayerBuffFactory
             BuffID_Player.PLAYER_ATTACK_UP => new PlayerBuffAttack(data, duration, value, stack),
             BuffID_Player.PLAYER_SHIELD => new PlayerBuffShield(data, duration, value, callback),
             BuffID_Player.PLAYER_MANA_REGEN => new PlayerBuffManaRegen(data, duration, value, stack),
+            BuffID_Player.PLAYER_SKILL_BURSTCANNON_3 => new PlayerBuffShieldCounter(data, duration, value, null, damage, stagger, isBossHit),
             _ => new PlayerBuff(data, duration, 1)
         };
     }

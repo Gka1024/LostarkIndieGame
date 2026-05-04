@@ -17,7 +17,7 @@ public class DamageSystem : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public BossDamageData ApplyPlayerStats(BossDamageData data)
+    public BossDamageData ProcessDamage(BossDamageData data)
     {
         BossDamageData value = new BossDamageData(data.damage, data.stagger, data.destroy, data.isTrueDamage, data.isCounter);
 

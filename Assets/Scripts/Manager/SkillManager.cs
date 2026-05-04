@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using NUnit.Framework;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class SkillManager : MonoBehaviour
@@ -246,6 +244,8 @@ public class SkillManager : MonoBehaviour
 
     public IEnumerator ExecuteCardSkillFromQueue(SkillQueueData data)
     {
+        Debug.Log("ExecuteCardSkillFromQueue");
+
         // 1. 데이터 가져오기
         var baseStat = CardList.Instance.GetCardStats(data.skillId);
         var prefab = CardList.Instance.GetCardByID(data.skillId);
@@ -303,6 +303,9 @@ public class SkillManager : MonoBehaviour
         { // 타일 선택이 필요하다면 
             currentState = SkillState.SelectingTile;
             hexTileSelectHandler.StartSelection(chainStat);
+
+            TurnStateMachine.Instance.SetChainSkillTCS();
+
             yield return new WaitUntil(() => currentState == SkillState.ExecutingSkill);
 
             TurnStateMachine.Instance.chainSkillTCS?.SetResult(true);
@@ -330,7 +333,7 @@ public class SkillManager : MonoBehaviour
         float stagger = stat.stagger;
         float identityGain = stat.identityGain;
 
-        BossDamageData data = DamageSystem.Instance.ApplyPlayerStats(new BossDamageData(damage, stagger));
+        BossDamageData data = DamageSystem.Instance.ProcessDamage(new BossDamageData(damage, stagger));
 
         boss.GetComponent<Boss>().bossController.GetBossDamageData(data);
         GivePlayerIdentity(identityGain);
@@ -341,8 +344,14 @@ public class SkillManager : MonoBehaviour
         float damage = stat.skill_damage;
         float stagger = stat.stagger;
 
-        BossDamageData data = DamageSystem.Instance.ApplyPlayerStats(new BossDamageData(damage, stagger));
+        BossDamageData data = DamageSystem.Instance.ProcessDamage(new BossDamageData(damage, stagger));
         boss.GetComponent<Boss>().bossController.GetBossDamageData(data);
+    }
+
+    public void ApplyBossSkills(BossDamageData data)
+    {
+        BossDamageData processedData = DamageSystem.Instance.ProcessDamage(data);
+        boss.GetComponent<Boss>().bossController.GetBossDamageData(processedData);
     }
 
     public void GivePlayerIdentity(float identity)
@@ -357,6 +366,7 @@ public class SkillManager : MonoBehaviour
 
     public void PlayAnimaion(CardSkill skill, PlayerWeapon playerWeapon, HexTile tile)
     {
+        Debug.Log("SkillAnimation");
         player.GetComponent<Player>().anim.ChangeWeapon(playerWeapon);
         skill.PlayAnimation(tile);
     }

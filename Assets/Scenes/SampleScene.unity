@@ -1322,6 +1322,7 @@ MonoBehaviour:
   boss: {fileID: 514132754}
   player: {fileID: 1380444493}
   currentState: 0
+  isNeedToWaitChainTileSelect: 0
 --- !u!4 &79886788
 Transform:
   m_ObjectHideFlags: 0
@@ -3710,7 +3711,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 28.199951, y: 9.699951}
+  m_AnchoredPosition: {x: 28.199951, y: -44.80005}
   m_SizeDelta: {x: 300, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &185920387
@@ -11796,9 +11797,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8746b3c33394de140a018fa5c9d5a59d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossController: {fileID: 514132758}
   ai: {fileID: 514132753}
   animaton: {fileID: 514132752}
+  bossController: {fileID: 514132758}
   stats: {fileID: 514132750}
   status: {fileID: 514132757}
   interaction: {fileID: 514132751}
@@ -12430,7 +12431,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 28.2, y: 54.7}
+  m_AnchoredPosition: {x: 28.2, y: 0.2}
   m_SizeDelta: {x: 300, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &547489872
@@ -17535,7 +17536,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 28.199951, y: -80.30005}
+  m_AnchoredPosition: {x: 28.199951, y: -134.80005}
   m_SizeDelta: {x: 300, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &836188619
@@ -21200,7 +21201,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &978947021
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30835,7 +30836,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 28.199951, y: -35.30005}
+  m_AnchoredPosition: {x: 28.199951, y: -89.80005}
   m_SizeDelta: {x: 300, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1424274666
@@ -41177,6 +41178,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 93b1c17af50b7b64ab4838458c6bcd33, type: 2}
   - {fileID: 11400000, guid: 2423feadd5c265e45983d996bc4c7fc3, type: 2}
   - {fileID: 11400000, guid: e630f6bc6702fc94b926a18671d7458b, type: 2}
+  - {fileID: 11400000, guid: 6f6bc832547b1c249b8afd61ba89b130, type: 2}
   allDebuffDatas: []
 --- !u!1 &1955621090
 GameObject:
