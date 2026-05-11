@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
         player.GetComponent<PlayerStats>().ProcessTurn();
 
         cardManager.OnTurnEnd();
+        hexTileManager.OnTurnEnd();
         battleItemManager.OnTurnEnd();
         estherManager.OnTurnEnd();
         fieldEffectManager.OnTurnEnd();

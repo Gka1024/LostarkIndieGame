@@ -12,7 +12,7 @@ public class PatternF_Break_All_Walls_Pillars : BossPattern
     {
         ai.bossPatternHelper.BreakAllWalls();
         ai.bossPatternHelper.BreakAllPillars();
-        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
+        return BossPatternBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     public override void OnStartPattern(BossAI ai)

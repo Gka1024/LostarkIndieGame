@@ -3,37 +3,50 @@ using UnityEngine;
 
 public class TileSectorHelper : MonoBehaviour
 {
+    /// <summary>
+    /// 섹터 타일들을 가져옵니다.
+    /// </summary>
+    /// <param name="currentTile">기준 중심 타일</param>
+    /// <param name="baseFacingTile">기본 정면 기준 타일</param>
+    /// <param name="radius">반지름</param>
+    /// <param name="sectorAngle">부채꼴의 넓이 (각도)</param>
+    /// <param name="rotationOffset">기본 정면 기준 추가 회전 각도 (0이면 정면)</param>
     public List<HexTile> GetSectorTiles(
         HexTile currentTile,
-        HexTile facingTile,
+        HexTile baseFacingTile,
         int radius,
-        int angle)
+        int sectorAngle,
+        float rotationOffset = 0f)
     {
         List<HexTile> result = new();
 
-        if (currentTile == null || facingTile == null)
+        if (currentTile == null || baseFacingTile == null)
             return result;
 
-        // 정면 방향
-        Vector3 forwardDir =
-            (facingTile.transform.position - currentTile.transform.position).normalized;
+        // 1. 기본 정면 방향 계산
+        Vector3 baseDir = (baseFacingTile.transform.position - currentTile.transform.position).normalized;
 
-        List<HexTile> tiles =
-            HexTileManager.Instance.GetTilesWithinRange(currentTile, radius);
+        // 2. [발전] 기본 방향을 rotationOffset만큼 회전시킴 (Y축 기준 회전)
+        // 보스 패턴에서 "오른쪽/왼쪽 90도 공격" 등을 구현할 때 핵심입니다.
+        Vector3 finalForwardDir = Quaternion.Euler(0, rotationOffset, 0) * baseDir;
 
-        float halfAngle = angle * 0.5f;
+        // 3. 범위 내 모든 타일 가져오기
+        List<HexTile> tiles = HexTileManager.Instance.GetTilesWithinRange(currentTile, radius);
+
+        float halfAngle = sectorAngle * 0.5f;
 
         foreach (HexTile tile in tiles)
         {
             if (tile == null || tile == currentTile)
                 continue;
 
-            Vector3 dir =
-                (tile.transform.position - currentTile.transform.position).normalized;
+            // 타일로 향하는 방향
+            Vector3 targetDir = (tile.transform.position - currentTile.transform.position).normalized;
 
-            float tileAngle = Vector3.Angle(forwardDir, dir);
+            // 4. 최종 회전된 방향과 타일 방향 사이의 각도 계산
+            float angleDiff = Vector3.Angle(finalForwardDir, targetDir);
 
-            if (tileAngle <= halfAngle)
+            if (angleDiff <= halfAngle)
             {
                 result.Add(tile);
             }

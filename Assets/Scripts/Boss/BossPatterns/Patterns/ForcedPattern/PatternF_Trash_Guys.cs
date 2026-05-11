@@ -57,14 +57,14 @@ public class PatternF_Trash_Guys : BossPattern
 
         targetTile = tile;
 
-        return BossPatternTurnBuilder.Create(result).SetDamage(10).Build();
+        return BossPatternBuilder.Create(result).SetDamage(10).Build();
     }
 
     private BossPatternTurnInfo MakePattern2(BossAI ai)
     {
         var attackTiles = HexTileManager.Instance.GetAllTiles();
 
-        return BossPatternTurnBuilder.Create(attackTiles).SetDamage(1).SetSpecial().Build();
+        return BossPatternBuilder.Create(attackTiles).SetDamage(1).SetSpecial().Build();
     }
 
     public override void OnAfterTurnExecuted(BossAI ai)

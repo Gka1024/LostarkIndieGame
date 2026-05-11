@@ -29,7 +29,7 @@ public class PatternR_Rush : BossPattern
 
         targetTile = tile;
 
-        return BossPatternTurnBuilder.Create(result).SetDamage(10).Build();
+        return BossPatternBuilder.Create(result).SetDamage(10).Build();
     }
 
 

@@ -15,6 +15,7 @@ public class BossPatternPhase2 : BossPatternPhase
         RegisterRegularPattern(new PatternR_Front_Back_Front());
         RegisterRegularPattern(new PatternR_Sector_Attack_Once());
         RegisterRegularPattern(new PatternR_Sector_Attack_Twice());
+        RegisterRegularPattern(new PatternR_Rush_Grab_Breath());
     }
 
     protected override void RegisterOpeningPatterns()

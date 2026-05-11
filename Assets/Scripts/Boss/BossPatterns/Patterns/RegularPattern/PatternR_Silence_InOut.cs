@@ -40,7 +40,7 @@ public class PatternR_Silence_InOut : BossPattern
         {
             var invertedTiles = HexTileManager.Instance.GetInvertedTiles(pattern.TargetTiles);
             // 새로운 BossPatternTurnInfo로 반환
-            return BossPatternTurnBuilder.Create(invertedTiles).SetDamage(50).SetDown(3).Build();
+            return BossPatternBuilder.Create(invertedTiles).SetDamage(50).SetDown(3).Build();
         }
 
         // 반전이 필요 없으면 원본 반환

@@ -725,6 +725,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: AllBattleItems_28
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 169
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39600f34b9516c547adaa3ef818123bf
+      internalID: -1019139705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -760,6 +782,7 @@ TextureImporter:
       AllBattleItems_25: 857462539
       AllBattleItems_26: 1067443064
       AllBattleItems_27: -1933858926
+      AllBattleItems_28: -1019139705
       AllBattleItems_3: 943746626
       AllBattleItems_4: -280944452
       AllBattleItems_5: -15957628

@@ -13,6 +13,8 @@ public abstract class SkillObject
 
         if (isBossHit) ApplyBossSkills(cardStats); // 스킬의 스탯의 데미지, 무력화, 파괴 처리
 
+        CheckHitObject(data.selectedTiles, cardStats);
+
         UseMana(cardStats.manaUse); // 스킬의 스탯의 마나 처리
 
         if (isPlayAnimation) PlayAnimaion(card, data.mainTile); // 애니메이션 처리
@@ -28,6 +30,17 @@ public abstract class SkillObject
     private void UseMana(float mana)
     {
         Player.Instance.stats.UseMana(mana);
+    }
+
+    private void CheckHitObject(List<HexTile> tiles, CardStats stat)
+    {
+        foreach(HexTile tile in tiles)
+        {
+            if(tile.isMonsterOn)
+            {
+                tile.monster.OnHitByPlayer(stat.isCounterAble);
+            }
+        }
     }
 
     private void PlayAnimaion(CardSkill card, HexTile tile)

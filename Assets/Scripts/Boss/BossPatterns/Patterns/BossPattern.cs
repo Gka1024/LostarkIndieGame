@@ -9,6 +9,7 @@ public abstract class BossPattern
     protected bool isFinished;
 
     protected bool isTileFixed = false;
+    public bool IsTileFixed() => isTileFixed;
     protected HexTile fixedPlayerTile;
 
     protected List<Func<BossAI, BossPatternTurnInfo>> turnGenerators = new();
@@ -82,7 +83,19 @@ public abstract class BossPattern
 
     protected virtual BossPatternTurnInfo MakeIdleTurn(BossAI ai)
     {
-        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
+        return BossPatternBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
+    }
+
+    protected BossPatternTurnInfo MakeBossAir(BossAI ai)
+    {
+        ai.SetAirborne(true);
+        return MakeIdleTurn(ai);
+    }
+
+    protected BossPatternTurnInfo MakeBossDown(BossAI ai)
+    {
+        ai.SetAirborne(false);
+        return MakeIdleTurn(ai);
     }
 }
 

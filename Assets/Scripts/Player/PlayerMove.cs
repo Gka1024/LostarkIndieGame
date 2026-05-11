@@ -64,7 +64,7 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    public void PlayerKnockBack(HexTile tile)
+    public void PlayerKnockBack(HexTile tile, bool KnockbackToDeath = false)
     {
         if (tile == null) return;
         Vector3 targetPosition = new Vector3(tile.transform.position.x, transform.position.y, tile.transform.position.z);

@@ -70,7 +70,7 @@ public class PatternA_WhirlWind : BossPattern
         var damageRange =
             HexTileManager.Instance.GetTilesWithinRange(ai.GetBoss().interaction.currentTile, 3);
 
-        return BossPatternTurnBuilder.Create(damageRange).SetDamage(60).SetKnockback(1).SetBreakWalls().Build();
+        return BossPatternBuilder.Create(damageRange).SetDamage(60).SetKnockback(1).SetBreakWalls().Build();
     }
 
     public override void PerformActionAnimation(BossAnimation animation)

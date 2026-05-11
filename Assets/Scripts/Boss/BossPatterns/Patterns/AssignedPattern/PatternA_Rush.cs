@@ -24,7 +24,6 @@ public class PatternA_Rush : BossPattern
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
-        Debug.Log("Pattern2");
         var current = ai.bossController.GetCurrentTile();
         var playerTile = ai.bossController.GetPlayerTile();
 
@@ -37,7 +36,7 @@ public class PatternA_Rush : BossPattern
             targetTile.currentTileState == TileState.IsWall ||
             targetTile.currentTileState == TileState.IsPillar;
 
-        return BossPatternTurnBuilder.Create(result).SetDamage(10).SetBreakWalls().Build();
+        return BossPatternBuilder.Create(result).SetDamage(10).SetBreakWalls().Build();
     }
 
     // ===============================
@@ -73,10 +72,9 @@ public class PatternA_Rush : BossPattern
 
         if (willHitWall)
         {
-            ai.bossStatus.MakeBossGroggy(3);
-
+            ai.bossStatus.MakeBossGroggy(5);
             ai.bossStats.EnableDestroy(30, 5);
-
+            EstherManager.Instance.AddEstherValue(60);
             ai.bossController.AddBuff(BossBuffFactory.CreateBuff(BuffID_Boss.BUFF_RAGE, 1, 5));
         }
 

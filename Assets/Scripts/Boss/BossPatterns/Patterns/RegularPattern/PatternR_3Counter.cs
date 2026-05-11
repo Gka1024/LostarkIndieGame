@@ -6,7 +6,7 @@ public class PatternR_3Counter : BossPattern
 { // 3카운터 패턴입니다. 
     public PatternR_3Counter()
     {
-        
+        turnGenerators.Add(MakeIdleTurn);
     }
 
     public override void OnStartPattern(BossAI ai)

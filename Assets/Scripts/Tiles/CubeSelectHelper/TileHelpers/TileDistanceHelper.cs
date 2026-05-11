@@ -91,7 +91,7 @@ public class TileDistanceHelper : MonoBehaviour
         CubeDirection nextDir = GetNextDirection(currentDir, isClockwise, isStart: true);
         Vector3Int nextVector = CubeDirectionToVectors[nextDir];
 
-        HexTile pointTile = HexTileManager.Instance.IsThereHexTileByCube(startTile.CubeCoord + nextVector);
+        HexTile pointTile = HexTileManager.Instance.GetTileByCube(startTile.CubeCoord + nextVector);
 
         while (result.Count < tileCount && pointTile != null && ring.Contains(pointTile))
         {
@@ -103,7 +103,7 @@ public class TileDistanceHelper : MonoBehaviour
             nextVector = CubeDirectionToVectors[stepDir];
 
             nextDir = stepDir;
-            pointTile = HexTileManager.Instance.IsThereHexTileByCube(pointTile.CubeCoord + nextVector);
+            pointTile = HexTileManager.Instance.GetTileByCube(pointTile.CubeCoord + nextVector);
         }
 
         return result;
@@ -220,7 +220,7 @@ public class TileDistanceHelper : MonoBehaviour
         CubeDirection approxDir = ChooseBestStartTileDirection(dir, isClockwise);
         Vector3Int nextVec = CubeDirectionToVectors[approxDir];
         Vector3Int targetCoord = checkTile.CubeCoord + nextVec;
-        HexTile targetTile = HexTileManager.Instance.IsThereHexTileByCube(targetCoord);
+        HexTile targetTile = HexTileManager.Instance.GetTileByCube(targetCoord);
 
         if (startTiles.Contains(targetTile))
         {

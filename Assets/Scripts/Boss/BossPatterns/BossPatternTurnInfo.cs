@@ -18,6 +18,7 @@ public class BossPatternTurnInfo
 
     public bool IsKnockback { get; private set; }
     public int KnockbackDistance { get; private set; }
+    public bool IsKnockbackToDeath { get; private set; }
 
     public bool IsGrab { get; private set; }
     public bool BreakWalls { get; private set; }
@@ -30,12 +31,14 @@ public class BossPatternTurnInfo
             false,
             isKnockbackAttack: IsKnockback,
             knockbackDistance: KnockbackDistance,
+            isKnockbackToDeath : IsKnockbackToDeath,
             isStunAttack: IsStunAttack,
             stunDuration: StunDuration,
             isDownAttack: IsDownAttack,
             downDuration: DownDuration,
             isSilenceAttack: IsSilenceAttack,
-            silenceDuration: SilenceDuraion
+            silenceDuration: SilenceDuraion,
+            isGrabAttack: IsGrab
         );
     }
 
@@ -62,10 +65,11 @@ public class BossPatternTurnInfo
         SilenceDuraion = duration;
     }
 
-    internal void SetKnockback(int distance)
+    internal void SetKnockback(int distance, bool death = false)
     {
         IsKnockback = true;
         KnockbackDistance = distance;
+        IsKnockbackToDeath = death;
     }
 
     internal void SetGrab() => IsGrab = true;
@@ -73,70 +77,70 @@ public class BossPatternTurnInfo
     internal void SetSpecial() => IsSpecial = true;
 }
 
-public class BossPatternTurnBuilder
+public class BossPatternBuilder
 {
     private BossPatternTurnInfo info;
 
-    private BossPatternTurnBuilder(List<HexTile> tiles)
+    private BossPatternBuilder(List<HexTile> tiles)
     {
         info = new BossPatternTurnInfo();
         info.SetTargetTiles(tiles);
     }
 
-    public static BossPatternTurnBuilder Create(List<HexTile> tiles)
+    public static BossPatternBuilder Create(List<HexTile> tiles)
     {
-        return new BossPatternTurnBuilder(tiles);
+        return new BossPatternBuilder(tiles);
     }
 
-    public BossPatternTurnBuilder SetDamage(float damage)
+    public BossPatternBuilder SetDamage(float damage)
     {
         info.SetDamage(damage);
         return this;
     }
 
-    public BossPatternTurnBuilder SetDown(int duration)
+    public BossPatternBuilder SetDown(int duration)
     {
         info.SetDown(duration);
         return this;
     }
 
-    public BossPatternTurnBuilder SetStun(int duration)
+    public BossPatternBuilder SetStun(int duration)
     {
         info.SetStun(duration);
         return this;
     }
 
-    public BossPatternTurnBuilder SetSilence(int duration)
+    public BossPatternBuilder SetSilence(int duration)
     {
         info.SetSilence(duration);
         return this;
     }
 
-    public BossPatternTurnBuilder SetKnockback(int distance)
+    public BossPatternBuilder SetKnockback(int distance, bool death = false)
     {
-        info.SetKnockback(distance);
+        info.SetKnockback(distance, death);
         return this;
     }
 
-    public BossPatternTurnBuilder SetGrab()
+    public BossPatternBuilder SetGrab()
     {
         info.SetGrab();
         return this;
     }
 
-    public BossPatternTurnBuilder SetBreakWalls()
+    public BossPatternBuilder SetBreakWalls()
     {
         info.SetBreakWalls();
         return this;
     }
 
-    public BossPatternTurnBuilder SetSpecial()
+    public BossPatternBuilder SetSpecial()
     {
         info.SetSpecial();
         return this;
     }
 
-    public BossPatternTurnBuilder SetPreview(Color color)
+    public BossPatternBuilder SetPreview(Color color)
     {
         return this;
     }
@@ -177,7 +181,7 @@ public class PatternUtility
             );
         }
 
-        var builder = BossPatternTurnBuilder
+        var builder = BossPatternBuilder
             .Create(new List<HexTile>(attackRangeSet))
             .SetDamage(damage);
 

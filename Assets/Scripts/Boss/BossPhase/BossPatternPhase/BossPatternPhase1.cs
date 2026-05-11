@@ -14,6 +14,7 @@ public class BossPatternPhase1 : BossPatternPhase
 
     protected override void RegisterOpeningPatterns()
     {
+        
         RegisterOpeningPattern(new PatternA_WhirlWind());
         RegisterOpeningPattern(new PatternA_Rush());
         RegisterOpeningPattern(new PatternA_JumpAttack());
@@ -23,6 +24,7 @@ public class BossPatternPhase1 : BossPatternPhase
         RegisterOpeningPattern(new PatternA_SpearAttack());
         RegisterOpeningPattern(new PatternA_Rush());
         RegisterOpeningPattern(new PatternA_Rush());
+        
     }
 
     public override void OnEnter()
@@ -32,7 +34,7 @@ public class BossPatternPhase1 : BossPatternPhase
 
     protected override void RegisterAssignedPattern()
     {
-        
+
     }
 }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ public class ObjectManager : MonoBehaviour
     public GameObject wallRightDown;
     public GameObject wallFront;
 
+    public GameObject InnerWalls;
     public GameObject OuterWalls;
 
     [Header("Obstacles")]
@@ -77,7 +79,7 @@ public class ObjectManager : MonoBehaviour
 
     public void RegisterObject(ObstaclesScript obj)
     {
-        
+
     }
 
     public HexTile IsObjectExist(List<HexTile> tiles, TileState state)
@@ -100,12 +102,11 @@ public class ObjectManager : MonoBehaviour
         {
             obj.GetComponent<ObstaclesScript>().DestroyObject();
 
-            foreach(HexTile tileToChange in tileGroups.GetValueOrDefault(tile.currentTileSpecific))
+            foreach (HexTile tileToChange in tileGroups.GetValueOrDefault(tile.currentTileSpecific))
             {
                 tileToChange.SetTileState(TileState.Default);
             }
         }
-
     }
 
     public void DestroyObjectBySpecificTile(HexTile tile) // 하나의 타일에 있는 오브젝트 제거하기 위해 사용
@@ -152,6 +153,7 @@ public class ObjectManager : MonoBehaviour
                 tiles.Clear();
             }
         }
+
     }
 
     public void BreakAllPillars()
@@ -186,6 +188,8 @@ public class ObjectManager : MonoBehaviour
                 tiles.Clear();
             }
         }
+
+        HexTileManager.Instance.ResetAllTileState();
     }
 
     public List<HexTile> GetTiles(TileSpecific type)
@@ -210,9 +214,23 @@ public class ObjectManager : MonoBehaviour
 
             GameObject obj = Instantiate(pillarObject, ObjectPos, quaternion.identity);
 
+            if (Player.Instance.move.GetCurrentTile() == tile)
+            {
+                int randomTileindex = UnityEngine.Random.Range(0, tile.neighbors.Count());
+                Player.Instance.move.MoveToTile(new PlayerMoveInfo(tile.neighbors[randomTileindex]));
+            }
+
             tileObjectMap[tile] = obj;
         }
     }
 
+    public void DestroyOuterWalls()
+    {
+        OuterWalls.SetActive(false);
+    }
 
+    public void DestroyInnerWalls()
+    {
+        InnerWalls.SetActive(false);
+    }
 }

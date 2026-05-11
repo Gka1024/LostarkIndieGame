@@ -87,9 +87,9 @@ public static class VFXID
     public const int BattleItem_Granade_Corrosion = 4003;
     public const int BattleItem_Granade_Dark = 4004;
     public const int BattleItem_Granade_Destruction = 4005;
-    public const int BattleItem_Granade_Lightning = 4006;
+    public const int BattleItem_Granade_Electric = 4006;
     public const int BattleItem_Granade_Flaiming = 4007;
-    public const int BattleItem_Granade_Flasing = 4008;
+    public const int BattleItem_Granade_Flashing = 4008;
     public const int BattleItem_Granade_Tornado = 4009;
 
     public const int Esther_Bahuntur = 5001;

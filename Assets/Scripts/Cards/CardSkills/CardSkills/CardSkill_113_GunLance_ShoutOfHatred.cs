@@ -59,7 +59,7 @@ public class GunLance_ShoutOfHatred2 : SkillObject
 
         if (card.runtimeCardStats is CardStats_GunLance_ShoutOfHatred stat)
         {
-            Player.Instance.stats.AddShield(stat.opt2_shield, stat.opt2_shield_turns);
+            Player.Instance.stats.AddShield(stat.opt2_shield * PlayerStats.MAX_HEALTH * 0.01f, stat.opt2_shield_turns);
             if (isBossHit)
             {
                 SkillManager.Instance.ApplyBossDebuff(BossBuffFactory.CreateBuff(BuffID_Boss.DEBUFF_TAUNT, 1, stat.taunt_turns));

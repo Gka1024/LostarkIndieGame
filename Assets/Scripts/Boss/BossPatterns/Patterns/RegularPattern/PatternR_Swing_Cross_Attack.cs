@@ -8,6 +8,7 @@ public class PatternR_Swing_Cross_Attack : BossPattern
     {
         turnGenerators.Add(MakePattern0);
         turnGenerators.Add(MakePattern1);
+        turnGenerators.Add(MakePattern2);
     }
 
     public override void OnStartPattern(BossAI ai)
@@ -18,16 +19,24 @@ public class PatternR_Swing_Cross_Attack : BossPattern
 
     private BossPatternTurnInfo MakePattern0(BossAI ai)
     {
-        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
+        return BossPatternBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
+    {
+        HexTile playerTile = ai.bossController.GetPlayerTile();
+        List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(ai.bossInteraction.GetCurrentTile(), playerTile, 120, 2);
+
+        return BossPatternBuilder.Create(attackRange).SetDamage(30).Build();
+    }
+
+    private BossPatternTurnInfo MakePattern2(BossAI ai)
     {
         HexTile curTile = ai.bossController.GetCurrentTile();
         HexTile playerTile = ai.bossController.GetPlayerTile();
         List<HexTile> attackRange = TileRayHelper.GetCrossTiles(playerTile, curTile, 2);
 
-        return BossPatternTurnBuilder.Create(attackRange).SetDamage(1).Build();
+        return BossPatternBuilder.Create(attackRange).SetDamage(1).Build();
     }
 
     public override void PerformActionAnimation(BossAnimation animation)

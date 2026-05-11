@@ -35,7 +35,7 @@ public class BossController : MonoBehaviour
     public void OnGameStart()
     {
         AddBuff(BossBuffFactory.CreateBuff(BuffID_Boss.BUFF_VALTAN_ARMOR, 2, -1));
-        AddBuff(BossBuffFactory.CreateBuff(BuffID_Boss.DEBUFF_FRAGILE, 2, -1));
+        //AddBuff(BossBuffFactory.CreateBuff(BuffID_Boss.DEBUFF_FRAGILE, 2, -1));
     }
 
     private void RegisterCurrentTile()
@@ -109,12 +109,17 @@ public class BossController : MonoBehaviour
 
     public void GetBossDamageData(BossDamageData data)
     {
-        bossDamagePopup.ShowDamage(bossStats.ApplyDamageData(data));
+        if(!bossAI.IsAirborne)
+        {
+            bossDamagePopup.ShowDamage(bossStats.ApplyDamageData(data));
+        }
     }
 
     public void ShowAttackPreview(BossPatternTurnInfo info)
     {
         List<HexTile> tiles = info.TargetTiles;
+
+        HexTileManager.Instance.RegisterAttackPreview(tiles);
 
         foreach (HexTile tile in tiles)
         {

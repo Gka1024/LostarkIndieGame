@@ -5,6 +5,7 @@ public class EstherUI : MonoBehaviour
     public GameObject estherCancelButton;
     public RectTransform estherGaugeMask;
     [SerializeField] private float maskFullWidth;
+    private const float GAUGE_FULL = 350f;
 
     public float curEstherRatio;
 
@@ -16,7 +17,7 @@ public class EstherUI : MonoBehaviour
 
     public void Init()
     {
-        maskFullWidth = estherGaugeMask.sizeDelta.x;
+        maskFullWidth = GAUGE_FULL;
         MAX_ESTHER_VALUE = EstherManager.Instance.GetMaxEstherValue();
     }
 

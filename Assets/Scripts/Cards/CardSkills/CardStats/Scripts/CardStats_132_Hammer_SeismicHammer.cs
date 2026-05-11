@@ -13,7 +13,7 @@ public class CardStats_Hammer_SeismicHammer : CardStats
         switch (num)
         {
             case 1:
-                this.skill_damage += opt1_damage_coef;
+                this.skill_damage *= 1 + opt1_damage_coef * 0.01f;
                 break;
 
             case 2:

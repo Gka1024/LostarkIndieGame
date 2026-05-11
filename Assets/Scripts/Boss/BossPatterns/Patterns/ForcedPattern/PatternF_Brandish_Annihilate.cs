@@ -21,7 +21,7 @@ public class PatternF_Brandish_Annihilate : BossPattern
 
     private BossPatternTurnInfo MakePattern0(BossAI ai)
     {
-        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
+        return BossPatternBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai) =>
@@ -52,14 +52,14 @@ public class PatternF_Brandish_Annihilate : BossPattern
 
        attackRange.AddRange( TileRayHelper.GetHexagramTiles(tileAttackCenter));
 
-        return BossPatternTurnBuilder.Create(attackRange).SetDamage(1).Build();
+        return BossPatternBuilder.Create(attackRange).SetDamage(1).Build();
     }
 
     private BossPatternTurnInfo MakePattern4(BossAI ai)
     {
         var attackTiles = HexTileManager.Instance.GetAllTiles();
 
-        return BossPatternTurnBuilder.Create(attackTiles).SetDamage(1).SetSpecial().Build();
+        return BossPatternBuilder.Create(attackTiles).SetDamage(1).SetSpecial().Build();
     }
 
     public override void OnPatternEnd(BossAI ai)

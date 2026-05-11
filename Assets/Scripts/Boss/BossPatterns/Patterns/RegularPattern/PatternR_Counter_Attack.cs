@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PatternR_Counter_Attack : BossPattern
 {
-    // 반격 패턴
-
     private bool isCounterTriggered;
     private float startStagger;
     public float staggerThreshold = 30f;

@@ -24,13 +24,18 @@ public class HexTile : MonoBehaviour
     public Color playerMoveRangeColor;
     public Color bossAttackRangeColor;
 
+    // ===== 보스 외곽 잡기용
+    public OuterGrabMonster monster;
+    public bool isMonsterOn;
+
     private void Awake()
     {
         manager = FindFirstObjectByType<GameManager>();
         tileManager = manager.hexTileManager;
         objectManager = manager.objectManager;
         player = manager.GetPlayer();
-        RegisterObject();
+        RegisterToObjectManager();
+        isMonsterOn = false;
 
         Init();
 
@@ -45,7 +50,7 @@ public class HexTile : MonoBehaviour
         CubeCoord = WorldToCube(transform.position);
     }
 
-    private void RegisterObject()
+    private void RegisterToObjectManager()
     {
         objectManager.Register(this);
     }
@@ -145,36 +150,61 @@ public class HexTile : MonoBehaviour
 
     private void ShowPlayerMoveableRange(bool isEnter)
     {
-        if (GetIsPlayerMoveable() && isEnter) // 플레이어가 이동 가능한 범위에 마우스가 들어왔을때
+        if (isEnter)
         {
-            PaintColor(Color.green);
+            // 마우스가 들어왔을 때는 이동 가능 여부에 따라 직관적으로 표시
+            Color hoverColor = GetIsPlayerMoveable() ? Color.green : Color.red;
+            PaintColor(hoverColor);
         }
-        else if (!GetIsPlayerMoveable() && isEnter) // 플레이어가 이동 불가능한 범위에 마우스가 들어왔을때
+        else
         {
-            PaintColor(Color.red);
+            // 마우스가 나갔을 때: 타일의 '원래' 상태에 따른 색상 복구
+            ApplyDefaultTileColor();
         }
-        else if (GetIsPlayerMoveable() && !isEnter) // 플레이어가 이동 가능한 범위에서 마우스가 나갔을때
+    }
+
+    /// <summary>
+    /// 타일의 현재 상태(보스 패턴, 보스 위치, 이동 범위 등)에 따라 올바른 색상을 입힙니다.
+    /// </summary>
+    private void ApplyDefaultTileColor()
+    {
+        // 1순위: 플레이어가 이동 가능한 범위인가?
+        if (GetIsPlayerMoveable())
         {
-            if (tileManager.IsBossTile(this))
-            {
-                PaintColor(tileManager.GetBossTileColor());
-            }
-            else
-            {
-                PaintColor(playerMoveRangeColor);
-            }
+            PaintColor(playerMoveRangeColor);
+            return;
         }
-        else if (!GetIsPlayerMoveable() && !isEnter) // 플레이어가 이동 불가능한 범위에서 마우스가 나갔을때
+
+        // 2순위: 보스 공격 패턴 범위 내에 있는가? (보스 타일색보다 우선)
+        // bossAI나 bossController에서 현재 공격 예고 타일인지 확인하는 로직이 필요합니다.
+        if (tileManager.IsAttackPreviewTile(this))
         {
-            if (tileManager.IsBossTile(this))
-            {
-                PaintColor(tileManager.GetBossTileColor());
-            }
-            else
-            {
-                ResetColor();
-            }
+            PaintColor(bossAttackRangeColor); // 또는 패턴용 오렌지/레드 계열
+            return;
         }
+
+        // 3순위: 보스가 점유 중인 타일인가?
+        if (tileManager.IsBossTile(this))
+        {
+            PaintColor(tileManager.GetBossTileColor());
+            return;
+        }
+
+
+        // 4순위: 아무것도 해당되지 않으면 기본 상태로 복구
+        ResetColor();
+    }
+
+    public void RegisterBossObject(OuterGrabMonster monster)
+    {
+        isMonsterOn = true;
+        this.monster = monster;
+    }
+
+    public void RemoveBossObject()
+    {
+        isMonsterOn = false;
+        this.monster = null;
     }
 
     public Vector3 GetThisSpawnPos(float Ypos = 1.5f)
@@ -233,17 +263,17 @@ public class HexTile : MonoBehaviour
         SetTileState(TileState.Destroyed);
 
         MeshRenderer renderer = GetComponent<MeshRenderer>();
-        if(renderer != null)
+        if (renderer != null)
         {
             renderer.enabled = false;
         }
 
         Collider collider = GetComponent<Collider>();
-        if(collider != null)
+        if (collider != null)
         {
             collider.enabled = false;
         }
-        
+
     }
 }
 

@@ -14,15 +14,18 @@ public class PlayerStats : MonoBehaviour
     public bool IsStunned;
     public bool IsDowned;
     public bool IsSilenced;
+    public bool IsGrabbed;
     public bool IsHiding;
     public bool IsSuperArmor;
 
     [Header("Base Stats")]
     public const float MAX_HEALTH = 500;
     public float currentHealth;
+    public float regenHealth;
 
     public const float MAX_MANA = 250;
     public float currentMana;
+    public float regenMana;
 
     public const float MAX_IDENTITY = 200;
     public float currentIdentity;
@@ -39,7 +42,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     // [핵심] 모든 데미지 로직 통합
-    public void GetPlayerDamage(PlayerGetDamageInfo info)
+    public void GivePlayerDamage(PlayerGetDamageInfo info)
     {
         if (IsTimeStopped) return;
 
@@ -50,7 +53,7 @@ public class PlayerStats : MonoBehaviour
             return;
         }
 
-        if(buffState.GetPlayerBuff(BuffID_Player.PLAYER_SKILL_BURSTCANNON_3) is PlayerBuffShieldCounter buff)
+        if (buffState.GetPlayerBuff(BuffID_Player.PLAYER_SKILL_BURSTCANNON_3) is PlayerBuffShieldCounter buff)
         {
             buff.OnDamaged(info.damage);
         }
@@ -68,15 +71,73 @@ public class PlayerStats : MonoBehaviour
     private void ApplyCC(PlayerGetDamageInfo info)
     {
         if (info.isKnockbackAttack)
+        {
+            PlayerKnockBack(info.knockbackDistance, info.isKnockbackToDeath);
+        }
 
-            if (info.isStunAttack)
-                buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.STUN, info.stunDuration));
+        if (info.isStunAttack)
+            buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.STUN, info.stunDuration));
 
         if (info.isDownAttack)
             buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.DOWN, info.downDuration));
 
         if (info.isSilenceAttack)
             buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.SILENCE, info.silenceDuration));
+
+        if (info.isGrabAttack)
+        {
+            IsGrabbed = true;
+        }
+    }
+
+    public void PlayerKnockBack(int KnockbackDistance, bool isKnockbackToDeath, HexTile PlayerTile = null, HexTile BossTile = null)
+    {
+        if (PlayerTile == null)
+        {
+            PlayerTile = Player.Instance.move.GetCurrentTile();
+        }
+
+        if (BossTile == null)
+        {
+            BossTile = GameManager.Instance.GetBoss().GetComponent<Boss>().interaction.GetCurrentTile();
+        }
+
+        if (!isKnockbackToDeath)
+        {
+            HexTile tile = HexTileManager.Instance.tileBackHelper.GetBackTile(PlayerTile, BossTile, KnockbackDistance);
+            if (tile.currentTileState == TileState.Default)
+            {
+                Player.Instance.move.PlayerKnockBack(tile);
+            }
+        }
+        else
+        {
+            HexTile tile = null;
+            int knockbackDist = 0;
+
+            for (int i = 1; i <= KnockbackDistance; i++)
+            {
+                HexTile tileTemp = HexTileManager.Instance.tileBackHelper.GetBackTile(PlayerTile, BossTile, i);
+                int distanceTemp = HexTileManager.Instance.GetTileDistance(tileTemp, PlayerTile);
+
+                if (distanceTemp == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    tile = tileTemp;
+                    knockbackDist = distanceTemp;
+                }
+            }
+
+            Player.Instance.move.PlayerKnockBack(tile);
+
+            if (knockbackDist != KnockbackDistance)
+            {
+                KillPlayerInstantly();
+            }
+        }
     }
 
     public bool IsPlayerCrowdControlled()
@@ -87,6 +148,7 @@ public class PlayerStats : MonoBehaviour
     public void AddShield(float amount, int duration, Action action = null)
     {
         buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.PLAYER_SHIELD, duration, 0, amount, action));
+        Debug.Log($"CreateShield {duration} turns");
     }
 
     public void AddAttackBuff(float amount, float additional, int duration)
@@ -133,7 +195,7 @@ public class PlayerStats : MonoBehaviour
 
     public void KillPlayerInstantly()
     {
-
+        Die();
     }
 
     public void ProcessTurn()
@@ -146,15 +208,17 @@ public class PlayerStats : MonoBehaviour
 
     private void RegenStats()
     {
-        // 체력/마나 회복 로직 (buffState에서 추가 회복량 가져옴)
-        float manaRegen = 20 + buffState.GetAdditionalManaRegen(20);
+        currentHealth = Math.Min(MAX_HEALTH, currentHealth + regenHealth);
+        float manaRegen = regenMana + buffState.GetAdditionalManaRegen(regenMana);
         currentMana = Mathf.Min(MAX_MANA, currentMana + manaRegen);
+
+        statsUI.UpdateHPBar(currentHealth);
         statsUI.UpdateManaBar(currentMana);
     }
 
     private void CheckPlayerShield()
     {
-        if(buffState.HasPlayerBuffs(BuffID_Player.PLAYER_SHIELD))
+        if (HasPlayerShield())
         {
             statsUI.UpdateShieldBar(buffState.GetCurrentShield());
         }
@@ -172,7 +236,8 @@ public class PlayerStats : MonoBehaviour
     public float GetCurrentAttack() => buffState.GetCalculatedAttack(baseAttack);
     public float GetStaggerMultiflyer() => 1f;
     public bool IsImmovable() => IsStunned || IsDowned || IsTimeStopped;
-    private void Die() { /* 사망 연출 */ }
+    public bool IsPlayerGrabbed() => IsGrabbed;
+    private void Die() { Debug.Log("Die"); }
 }
 
 public class PlayerGetDamageInfo
@@ -182,6 +247,7 @@ public class PlayerGetDamageInfo
 
     public bool isKnockbackAttack;
     public int knockbackDistance;
+    public bool isKnockbackToDeath;
 
     public bool isStunAttack;
     public int stunDuration;
@@ -192,28 +258,34 @@ public class PlayerGetDamageInfo
     public bool isSilenceAttack;
     public int silenceDuration;
 
+    public bool isGrabAttack;
+
     public PlayerGetDamageInfo(
         float damage,
-        bool isTrueDamage,
+        bool isTrueDamage = false,
         bool isKnockbackAttack = false,
         int knockbackDistance = 0,
+        bool isKnockbackToDeath = false,
         bool isStunAttack = false,
         int stunDuration = 0,
         bool isDownAttack = false,
         int downDuration = 0,
         bool isSilenceAttack = false,
-        int silenceDuration = 0
+        int silenceDuration = 0,
+        bool isGrabAttack = false
         )
     {
         this.damage = damage;
         this.isTrueDamage = isTrueDamage;
         this.isKnockbackAttack = isKnockbackAttack;
         this.knockbackDistance = knockbackDistance;
+        this.isKnockbackToDeath = isKnockbackToDeath;
         this.isStunAttack = isStunAttack;
         this.stunDuration = stunDuration;
         this.isDownAttack = isDownAttack;
         this.downDuration = downDuration;
         this.isSilenceAttack = isSilenceAttack;
         this.silenceDuration = silenceDuration;
+        this.isGrabAttack = isGrabAttack;
     }
 }

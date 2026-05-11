@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
         bool value = true;
         if (state.HasPlayerBuffs(BuffID_Player.STUN)) return false;
         if (state.HasPlayerBuffs(BuffID_Player.DOWN)) return false;
+        if (stats.IsPlayerGrabbed()) return false;
         if (QueueManager.Instance.HasAction()) return false;
 
         return value;

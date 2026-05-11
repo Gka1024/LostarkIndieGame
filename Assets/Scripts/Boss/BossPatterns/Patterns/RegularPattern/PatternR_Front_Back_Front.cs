@@ -18,10 +18,6 @@ public class PatternR_Front_Back_Front : BossPattern
         base.OnStartPattern(ai);
     }
 
-    /// <summary>
-    /// GenerateTurn 직전에 호출되는 훅
-    /// 상태 변경은 여기서 처리한다.
-    /// </summary>
     protected override void OnBeforeGenerateTurn(BossAI ai)
     {
         base.OnBeforeGenerateTurn(ai);
@@ -32,7 +28,7 @@ public class PatternR_Front_Back_Front : BossPattern
         if (currentTurn == 1)
         {
             fixedPlayerTile = HexTileManager.Instance
-                .IsThereHexTileByCube(
+                .GetTileByCube(
                     ai.bossController.GetPlayerTile().CubeCoord * -1
                 );
 

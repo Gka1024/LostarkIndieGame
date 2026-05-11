@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 public class PatternR_Cross_Whirlwind : BossPattern
-{ // 십자로 찍고 휠윈드
+{ // 십자로 찍고 휠윈드 (수정필)
     public PatternR_Cross_Whirlwind()
     {
         turnGenerators.Add(MakePattern0);
@@ -18,7 +18,7 @@ public class PatternR_Cross_Whirlwind : BossPattern
 
     private BossPatternTurnInfo MakePattern0(BossAI ai)
     {
-        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
+        return BossPatternBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
@@ -27,7 +27,7 @@ public class PatternR_Cross_Whirlwind : BossPattern
         HexTile playerTile = ai.bossController.GetPlayerTile();
         List<HexTile> attackRange = TileRayHelper.GetCrossTiles(playerTile, curTile, 2);
 
-        return BossPatternTurnBuilder.Create(attackRange).SetDamage(1).Build();
+        return BossPatternBuilder.Create(attackRange).SetDamage(1).Build();
     }
 
     public override void PerformActionAnimation(BossAnimation animation)

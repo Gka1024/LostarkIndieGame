@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PatternR_Ghost_Ball : BossPattern
-{ // 원래는 감금 후 
+{ // 원혼불을 만들고 해당 구슬을 부수면 보스의 쉴드 부수기
     private const int SHIELD_DURATION = 15;
 
     private bool isSphereDestroyed;
@@ -47,7 +47,7 @@ public class PatternR_Ghost_Ball : BossPattern
     {
         if (isShieldBroken)
         {
-            return BossPatternTurnBuilder
+            return BossPatternBuilder
                 .Create(new List<HexTile>())
                 .SetDamage(0)
                 .Build();
@@ -56,7 +56,7 @@ public class PatternR_Ghost_Ball : BossPattern
         var bossTile = ai.bossController.GetCurrentTile();
         var aroundTiles = HexTileManager.Instance.GetTilesWithinRange(bossTile, 1);
 
-        return BossPatternTurnBuilder
+        return BossPatternBuilder
             .Create(aroundTiles)
             .SetDamage(50)
             .Build();

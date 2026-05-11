@@ -40,6 +40,19 @@ public class BattleItemUI : MonoBehaviour
     public GameObject[] highlightObjects;
     public GameObject[] cursorObjects;
 
+    [Header("ItemMask")]
+    public RectTransform[] maskObjects;
+    private const int MASK_SIZE_Y = 100;
+
+    private int potionCooldownMax;
+    private int granadeCooldownMax;
+    private int specialCooldownMax;
+
+    [Header("Item Count")]
+    public TextMeshProUGUI potionCount;
+    public TextMeshProUGUI granadeCount;
+    public TextMeshProUGUI specialCount;
+
     // --- 설명창 제어 ---
     public void UpdateDescWindow(BattleItemData data)
     {
@@ -210,5 +223,30 @@ public class BattleItemUI : MonoBehaviour
 
         targetImage.sprite = newIcon;
         targetImage.SetNativeSize();
+    }
+
+    public void RegisterMaxCooldown()
+    {
+        potionCooldownMax = battleItemManager.MaxPotionCooldown;
+        granadeCooldownMax = battleItemManager.MaxGranadeCooldown;
+        specialCooldownMax = battleItemManager.MaxSpecialCooldown;
+    }
+
+    public void UpdateItemMask(int potionCooldown, int granadeCooldown, int specialCooldown)
+    {
+        float ratioPotion = Mathf.Clamp01((float)potionCooldown / potionCooldownMax);
+        float ratioGranade = Mathf.Clamp01((float)granadeCooldown / granadeCooldownMax);
+        float ratiospeical = Mathf.Clamp01((float)specialCooldown / specialCooldownMax);
+
+        maskObjects[0].sizeDelta = new Vector2(maskObjects[0].sizeDelta.x, ratioPotion * MASK_SIZE_Y);
+        maskObjects[1].sizeDelta = new Vector2(maskObjects[1].sizeDelta.x, ratioGranade * MASK_SIZE_Y);
+        maskObjects[2].sizeDelta = new Vector2(maskObjects[2].sizeDelta.x, ratiospeical * MASK_SIZE_Y);
+    }
+
+    public void UpdateCount(int potionNum, int granadeNum, int specialNum)
+    {
+        potionCount.SetText(potionNum.ToString());
+        granadeCount.SetText(granadeNum.ToString());
+        specialCount.SetText(specialNum.ToString());
     }
 }

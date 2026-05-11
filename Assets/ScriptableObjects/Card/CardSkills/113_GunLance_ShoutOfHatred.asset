@@ -16,10 +16,10 @@ MonoBehaviour:
   cardName: 
   isCardSkill: 1
   HasChainSkill: 0
-  ChainSkill: {fileID: 0}
+  chainPaths: []
   playerWeapon: 3
-  beforeActTurn: 1
-  afterActTurn: 0
+  beforeActTurn: 0
+  afterActTurn: 1
   needToSelectTile: 1
   tileSelectType: 3
   skillAngle: 0
@@ -33,6 +33,7 @@ MonoBehaviour:
   manaUse: 50
   identityGain: 10
   stagger: 10
+  destroy: 0
   coolDownTurn: 20
   isCounterAble: 0
   isHeadAttack: 0

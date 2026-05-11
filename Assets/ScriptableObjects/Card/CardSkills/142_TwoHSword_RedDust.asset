@@ -21,11 +21,11 @@ MonoBehaviour:
     chainStats: {fileID: 11400000, guid: e184d05e2a4b91c45bb1d2beaf94ef15, type: 2}
   playerWeapon: 1
   beforeActTurn: 1
-  afterActTurn: 1
+  afterActTurn: 0
   needToSelectTile: 1
   tileSelectType: 1
   skillAngle: 3
-  skillAngleRange: 1
+  skillAngleRange: 2
   skillDistance: 0
   skillDistanceRange: 0
   aroundRange: 0
@@ -35,6 +35,7 @@ MonoBehaviour:
   manaUse: 30
   identityGain: 10
   stagger: 10
+  destroy: 0
   coolDownTurn: 20
   isCounterAble: 0
   isHeadAttack: 0

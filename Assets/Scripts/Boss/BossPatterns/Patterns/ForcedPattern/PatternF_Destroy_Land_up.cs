@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatternF_Destroy_Land_up : BossPattern
+public class PatternF_Destroy_Land_Up : BossPattern
 { // 지파 패턴(위)
-    public PatternF_Destroy_Land_up()
+    public PatternF_Destroy_Land_Up()
     {
         turnGenerators.Add(MakeIdleTurn); // 점프
         turnGenerators.Add(MakePattern1); // 내려찍고 타일 부수기
@@ -24,7 +24,7 @@ public class PatternF_Destroy_Land_up : BossPattern
         // 필요 시 정리
     }
 
-    private HexTile centerTile = HexTileManager.Instance.IsThereHexTileByCube(new Vector3Int(0, 0, 0));
+    private HexTile centerTile = HexTileManager.Instance.GetTileByCube(new Vector3Int(0, 0, 0));
 
     public override void OnAfterTurnExecuted(BossAI ai)
     {
@@ -47,7 +47,7 @@ public class PatternF_Destroy_Land_up : BossPattern
 
     private HexTile GetNextTile(HexTile curTile)
     {
-        centerTile = HexTileManager.Instance.IsThereHexTileByCube(new Vector3Int(0, 0, 0));
+        centerTile = HexTileManager.Instance.GetTileByCube(new Vector3Int(0, 0, 0));
         return HexTileManager.Instance.tileRayHelper.GetRayNextTile(curTile, centerTile, 2);
     }
 
@@ -55,7 +55,7 @@ public class PatternF_Destroy_Land_up : BossPattern
     {
         List<HexTile> attackRange = ai.bossPatternHelper.GetBreakTilesUp();
 
-        return BossPatternTurnBuilder.Create(attackRange).SetDamage(1).SetSpecial().Build();
+        return BossPatternBuilder.Create(attackRange).SetDamage(1).SetSpecial().Build();
     }
 
     private BossPatternTurnInfo MakePattern2(BossAI ai)
@@ -64,7 +64,7 @@ public class PatternF_Destroy_Land_up : BossPattern
 
         List<HexTile> AttackRange = HexTileManager.Instance.GetTilesWithinRange(curTile, 3);
 
-        return BossPatternTurnBuilder.Create(AttackRange).SetDamage(30).SetKnockback(1).Build();
+        return BossPatternBuilder.Create(AttackRange).SetDamage(30).SetKnockback(1).Build();
     }
 
     public override void PerformActionAnimation(BossAnimation animation)

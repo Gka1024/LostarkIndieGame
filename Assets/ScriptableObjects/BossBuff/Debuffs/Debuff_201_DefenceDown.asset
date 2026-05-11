@@ -16,7 +16,7 @@ MonoBehaviour:
   buffName: "\uBC29\uC5B4\uB825 \uAC10\uC18C"
   effectValue: 0
   buffSide: 1
-  description: "\uBC29\uC5B4\uB825 \uAC10\uC18C"
+  description: "\uBCF4\uC2A4\uC758 \uBC29\uC5B4\uB825\uC774 \uAC10\uC18C\uD55C\uB2E4."
   Icon: {fileID: 0}
   specificBuff:
     rid: -2

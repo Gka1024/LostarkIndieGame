@@ -65,7 +65,6 @@ public class PlayerBuffState : MonoBehaviour
     {
         for (int i = _activeBuffs.Count - 1; i >= 0; i--)
         {
-            _activeBuffs[i].Duration--;
             _activeBuffs[i].OnTick(_stats);
             if (_activeBuffs[i].Duration <= 0)
             {

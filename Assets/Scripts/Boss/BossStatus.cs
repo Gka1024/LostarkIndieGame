@@ -42,6 +42,11 @@ public class BossStatus : MonoBehaviour
     private Dictionary<int, BossBuff> bossBuffs = new();
     private Dictionary<int, BossBuff> bossDebuffs = new();
 
+    public void DebugBuffs()
+    {
+        Debug.Log($"버프 :  {bossBuffs.Count} || 디버프 : {bossDebuffs.Count}");
+    }
+
     // =========================================================
     // ====================== 상태 제어 ========================
     // =========================================================
@@ -179,6 +184,39 @@ public class BossStatus : MonoBehaviour
         AlertBuffsUpdate();
     }
 
+    public void RemoveBossBuffStack(int buffId)
+    {
+        // 1. 버프 리스트 확인
+        if (bossBuffs.ContainsKey(buffId))
+        {
+            HandleStackReduction(bossBuffs, buffId);
+        }
+        // 2. 디버프 리스트 확인 (엘스 문이 아닌 이유는 ID가 중복될 수 없지만 확실히 하기 위해)
+        else if (bossDebuffs.ContainsKey(buffId))
+        {
+            HandleStackReduction(bossDebuffs, buffId);
+        }
+
+        // UI 업데이트 알림
+        AlertBuffsUpdate();
+    }
+
+    private void HandleStackReduction(Dictionary<int, BossBuff> dictionary, int id)
+    {
+        var buff = dictionary[id];
+
+        if (buff.Stack > 1)
+        {
+            buff.Stack--;
+            Debug.Log($"보스 버프 [{id}] 스택 감소. 현재 스택: {buff.Stack}");
+        }
+        else
+        {
+            dictionary.Remove(id);
+            Debug.Log($"보스 버프 [{id}] 마지막 스택 제거됨.");
+        }
+    }
+
     private void ReduceBuffDuration()
     {
         ReduceBuffDurationDictionary(bossBuffs);
@@ -212,6 +250,15 @@ public class BossStatus : MonoBehaviour
 
         foreach (var debuff in bossDebuffs)
             value = debuff.Value.ModifyIncomeDamage(value);
+
+        return value;
+    }
+
+    public int CalculateDestructionOnBuffs(int destruction)
+    {
+        int value = destruction;
+        foreach (var debuff in bossDebuffs)
+            value = debuff.Value.ModifyIncomeDestruction(value);
 
         return value;
     }

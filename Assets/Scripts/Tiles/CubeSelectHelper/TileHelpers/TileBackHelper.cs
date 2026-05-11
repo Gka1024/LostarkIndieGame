@@ -40,8 +40,8 @@ public class TileBackHelper : MonoBehaviour
         }
 
         // Dot 값이 너무 낮거나(bestTile이 null 포함) 타일이 없을 때 → playerTile 반환
-        // 예: dot < 0.5는 방향이 너무 어긋난 경우라고 판단
-        if (bestTile == null || bestDot < 0.5f)
+        // 예: dot < 0.85는 방향이 너무 어긋난 경우라고 판단
+        if (bestTile == null || bestDot < 0.85f)
         {
             return playerTile;
         }

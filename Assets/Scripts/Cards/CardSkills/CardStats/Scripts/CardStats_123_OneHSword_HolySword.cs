@@ -27,7 +27,7 @@ public class CardStats_OneHSword_HolySword : CardStats
 
             case 3:
                 this.rayDistance--;
-                this.skill_damage *= 1 + opt3_damage_coef;
+                this.skill_damage *= 1 + opt3_damage_coef * 0.01f;
                 break;
 
             default:

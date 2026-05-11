@@ -21,10 +21,10 @@ public class PatternR_Portal_Rush : BossPattern
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
         var current = ai.bossController.GetCurrentTile();
-        var facing = HexTileManager.Instance.IsThereHexTileByCube(current.CubeCoord + new Vector3Int(1, 0, -1));
+        var facing = HexTileManager.Instance.GetTileByCube(current.CubeCoord + new Vector3Int(1, 0, -1));
 
         if (facing == null)
-            return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
+            return BossPatternBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
 
         // 이동 방향 벡터 계산
         Vector3Int moveVector = facing.CubeCoord - current.CubeCoord;
@@ -32,13 +32,13 @@ public class PatternR_Portal_Rush : BossPattern
         List<HexTile> moveLines = new();
         moveLines.Add(current);
 
-        HexTile nextTile = HexTileManager.Instance.IsThereHexTileByCube(current.CubeCoord + moveVector);
+        HexTile nextTile = HexTileManager.Instance.GetTileByCube(current.CubeCoord + moveVector);
 
         while (nextTile != null)
         {
             moveLines.Add(nextTile);
             current = nextTile;
-            nextTile = HexTileManager.Instance.IsThereHexTileByCube(current.CubeCoord + moveVector);
+            nextTile = HexTileManager.Instance.GetTileByCube(current.CubeCoord + moveVector);
         }
 
         // 공격 범위 계산
@@ -49,7 +49,7 @@ public class PatternR_Portal_Rush : BossPattern
             attackRangeSet.UnionWith(HexTileManager.Instance.GetTilesWithinRange(tile, 1));
         }
 
-        return BossPatternTurnBuilder.Create(attackRangeSet.ToList()).SetDamage(40).Build();
+        return BossPatternBuilder.Create(attackRangeSet.ToList()).SetDamage(40).Build();
     }
 
     // 2턴: 포탈에서 플레이어 방향으로 광선 공격
@@ -64,7 +64,7 @@ public class PatternR_Portal_Rush : BossPattern
         // 랜덤 포탈에서 플레이어 방향으로 2칸 광선
         List<HexTile> result = TileRayHelper.GetRayTiles(randomTile, playerTile, 2, true);
 
-        return BossPatternTurnBuilder.Create(result).SetDamage(20).Build();
+        return BossPatternBuilder.Create(result).SetDamage(20).Build();
     }
 
     public override void OnPatternEnd(BossAI ai)

@@ -23,7 +23,7 @@ public class PatternF_Create_Pillars_1 : BossPattern
 
     public override void OnAfterTurnExecuted(BossAI ai)
     {
-        if (currentTurn == 3 || currentTurnInfo != null)
+        if (currentTurn == 3 && currentTurnInfo != null)
         {
             List<HexTile> pillarsToBreak = new();
 
@@ -46,16 +46,16 @@ public class PatternF_Create_Pillars_1 : BossPattern
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
         List<HexTile> AttackRange = new();
-        HexTile centertile = HexTileManager.Instance.IsThereHexTileByCube(new Vector3Int(0, 0, 0));
+        HexTile centertile = HexTileManager.Instance.GetTileByCube(new Vector3Int(0, 0, 0));
         AttackRange.AddRange(centertile.neighbors);
         AttackRange.Add(centertile);
 
-        return BossPatternTurnBuilder.Create(AttackRange).SetDamage(10f).SetKnockback(3).Build();
+        return BossPatternBuilder.Create(AttackRange).SetDamage(10f).SetKnockback(3).Build();
     }
 
     private BossPatternTurnInfo MakePattern2(BossAI ai)
     {
-        ai.bossPatternHelper.CreatePillars();
+        ai.bossPatternHelper.CreatePillars(0);
 
         return MakeIdleTurn(ai);
     }
@@ -72,7 +72,7 @@ public class PatternF_Create_Pillars_1 : BossPattern
 
         List<HexTile> attackRange = PatternUtility.GetAttackRangeByDistance(ai, patterns);
 
-        return BossPatternTurnBuilder.Create(attackRange).SetDamage(50f).Build();
+        return BossPatternBuilder.Create(attackRange).SetDamage(50f).Build();
     }
 
     private BossPatternTurnInfo MakePattern4(BossAI ai)
@@ -85,7 +85,7 @@ public class PatternF_Create_Pillars_1 : BossPattern
             explosionTiles.AddRange(HexTileManager.Instance.GetTilesWithinRange(tile, 2));
         }
 
-        return BossPatternTurnBuilder
+        return BossPatternBuilder
             .Create(explosionTiles)
             .SetDamage(40f)
             .Build();
@@ -116,7 +116,7 @@ public class PatternF_Create_Pillars_1 : BossPattern
             }
         }
 
-        return BossPatternTurnBuilder
+        return BossPatternBuilder
             .Create(explosionTiles)
             .SetDamage(60f)
             .Build();

@@ -20,7 +20,7 @@ MonoBehaviour:
   HP_decrease: 0
   additional_move: 0
   damage: 200
-  destruction: 3
+  destruction: 30
   stagger: 0
   hasDebuff: 0
   buffID: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HexTileManager : MonoBehaviour
@@ -20,7 +21,10 @@ public class HexTileManager : MonoBehaviour
     public HexTile[] allTiles;
 
     [SerializeField]
-    private List<HexTile> playerMoveRange = new List<HexTile>();
+    private List<HexTile> playerMoveRange = new();
+
+    [SerializeField]
+    private List<HexTile> AttackPreviewTiles = new();
 
     private Dictionary<Vector3Int, HexTile> tileMap = new();
 
@@ -56,6 +60,11 @@ public class HexTileManager : MonoBehaviour
         HexTileSelectHandler.GetComponent<HexTileSelectHandler>().RegisterHextile(obj);
     }
 
+    public void OnTurnEnd()
+    {
+        ClearAttackPreview();
+    }
+
     // 타일의 속성으로 타일을 반환하는 코드들입니다. 
 
     public List<HexTile> GetAllTiles()
@@ -85,7 +94,7 @@ public class HexTileManager : MonoBehaviour
         return null;
     }
 
-    public HexTile IsThereHexTile(Vector3 pos)
+    public HexTile GetTile(Vector3 pos)
     {
         foreach (HexTile tile in allTiles)
         {
@@ -97,7 +106,7 @@ public class HexTileManager : MonoBehaviour
         return null;
     }
 
-    public HexTile IsThereHexTileByCube(Vector3Int pos)
+    public HexTile GetTileByCube(Vector3Int pos)
     {
         if (tileMap.TryGetValue(pos, out HexTile tile))
         {
@@ -247,6 +256,22 @@ public class HexTileManager : MonoBehaviour
         return boss.GetComponent<BossInteraction>().BossTileColor;
     }
 
+    public void RegisterAttackPreview(List<HexTile> tiles)
+    {
+        AttackPreviewTiles = tiles;
+    }
+
+    private void ClearAttackPreview()
+    {
+        AttackPreviewTiles.Clear();
+    }
+
+    public bool IsAttackPreviewTile(HexTile tile)
+    {
+        if (AttackPreviewTiles.Contains(tile)) return true;
+        return false;
+    }
+
     // BFS 를 사용하는 코드들입니다. 
 
     public List<HexTile> GetTilesWithinRange(HexTile startTile, int range)
@@ -262,8 +287,8 @@ public class HexTileManager : MonoBehaviour
 
     public int GetTileDistance(Vector3Int start, Vector3Int end)
     {
-        HexTile startTile = IsThereHexTileByCube(start);
-        HexTile endTile = IsThereHexTileByCube(end);
+        HexTile startTile = GetTileByCube(start);
+        HexTile endTile = GetTileByCube(end);
         if (startTile != null && endTile != null)
         {
             return GetTileDistance(startTile, endTile);
@@ -322,6 +347,19 @@ public class HexTileManager : MonoBehaviour
             if (distance > maxDistance)
             {
                 break;
+            }
+        }
+    }
+
+    // 그외
+
+    public void ResetAllTileState()
+    {
+        foreach(HexTile tile in allTiles)
+        {
+            if(tile.currentTileState != TileState.Default)
+            {
+                tile.SetTileState(TileState.Default);
             }
         }
     }

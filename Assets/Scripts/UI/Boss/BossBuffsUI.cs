@@ -22,6 +22,19 @@ public class BossBuffsUI : MonoBehaviour
     public Dictionary<int, BossBuff> bossBuffsCopy;
     public Dictionary<int, BossBuff> bossDebuffsCopy;
 
+    public void Start()
+    {
+        foreach (Transform child in buffsParentGameObject.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Transform child in debuffsParentGameObject.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
     public void OnTurnStart()
     {
         bossStatus.AlertBuffsUpdate();
@@ -92,7 +105,7 @@ public class BossBuffsUI : MonoBehaviour
 
             BossBuffIconUI iconUI = iconObj.GetComponent<BossBuffIconUI>();
 
-            iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.Stack,buff.Duration);
+            iconUI.Init(buff, buffDescribtionUI, buffName, buffDesc, buff.Stack, buff.Duration);
 
             if (buff.Data == null)
             {

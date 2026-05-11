@@ -29,6 +29,7 @@ public class CardStats_GunLance_BurstCannon : CardStats
 
             case 3:
                 this.beforeActTurn = 0;
+                this.afterActTurn = 2;
                 this.skill_damage += opt3_damage;
                 break;
 

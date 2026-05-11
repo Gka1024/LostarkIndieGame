@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 public class PatternR_In_Out_Attack : BossPattern
-{ // 3카운터 패턴입니다. 
+{ // 안밖 공격(미구현)
     public PatternR_In_Out_Attack()
     {
         

@@ -61,6 +61,8 @@ public class CardManager : MonoBehaviour
 
     public void SpawnCard(GameObject card)
     {
+        if (card == null) return;
+
         GameObject newCard = Instantiate(card, centerPosition, Quaternion.identity, cardParent);
 
         AddCardsInHand(newCard);

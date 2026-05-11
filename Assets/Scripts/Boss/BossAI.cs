@@ -26,6 +26,9 @@ public class BossAI : MonoBehaviour
     private bool isTaunted;
     private bool isGroggied;
 
+    [SerializeField] private bool isAirborne;
+    public bool IsAirborne => isAirborne;
+
     private void Start()
     {
         bossPhaseController.Initialize();
@@ -128,20 +131,11 @@ public class BossAI : MonoBehaviour
 
         ApplyPlayerDamage(player, info);
 
-        if (info.IsKnockback)
-        {
-            // 넉백 처리
-        }
-
-        if (info.IsDownAttack)
-        {
-            // 다운 처리
-        }
     }
 
     private void ApplyPlayerDamage(Player player, BossPatternTurnInfo info)
     {
-        player.stats.GetPlayerDamage(info.ToPlayerDamageInfo());
+        player.stats.GivePlayerDamage(info.ToPlayerDamageInfo());
     }
 
     // ===============================
@@ -235,6 +229,24 @@ public class BossAI : MonoBehaviour
     }
 
     // ===============================
+    // 특수 기술 처리
+    // ===============================
+
+    public void SetAirborne(bool state)
+    {
+        isAirborne = state;
+
+        if (state)
+        {
+            StartCoroutine(bossAnimation.FloatBoss(100, 0.5f));
+        }
+        else
+        {
+            StartCoroutine(bossAnimation.LandBoss(1f));
+        }
+    }
+
+    // ===============================
 
     private void SetPattern(BossPattern pattern)
     {
@@ -270,7 +282,7 @@ public class BossAI : MonoBehaviour
             InterruptCurrentPattern();
 
             bossStatus.MakeBossGroggy(5);
-            bossStatus.AddBossBuff(BossBuffFactory.CreateBuff(BuffID_Boss.BUFF_VALTAN_ARMOR, -1, 0));
+            bossStatus.RemoveBossBuffStack((int)BuffID_Boss.BUFF_VALTAN_ARMOR);
         }
     }
 

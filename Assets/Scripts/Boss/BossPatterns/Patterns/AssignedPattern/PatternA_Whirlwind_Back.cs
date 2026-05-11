@@ -38,15 +38,15 @@ public class PatternA_Whirlwind_Back : BossPattern
     {
         HexTile curTile = ai.bossController.GetCurrentTile();
 
-        centerTile = HexTileManager.Instance.IsThereHexTileByCube(new Vector3Int(0, 0, 0));
+        centerTile = HexTileManager.Instance.GetTileByCube(new Vector3Int(0, 0, 0));
         List<HexTile> AttackRange = HexTileManager.Instance.GetTilesWithinRange(curTile, 3);
 
-        return BossPatternTurnBuilder.Create(AttackRange).SetDamage(30).SetKnockback(1).Build();
+        return BossPatternBuilder.Create(AttackRange).SetDamage(30).SetKnockback(1).Build();
     }
 
     private HexTile GetNextTile(HexTile curTile)
     {
-        centerTile = HexTileManager.Instance.IsThereHexTileByCube(new Vector3Int(0, 0, 0));
+        centerTile = HexTileManager.Instance.GetTileByCube(new Vector3Int(0, 0, 0));
         return HexTileManager.Instance.tileRayHelper.GetRayNextTile(curTile, centerTile, 2);
     }
 

@@ -109,7 +109,7 @@ public class BossStats : MonoBehaviour
     {
         float damage = data.damage;
 
-        float finalDamage = data.isTrueDamage ? 
+        float finalDamage = data.isTrueDamage ?
         damage : CalculateDamage(damage);
 
         finalDamage *= bossGetDamageRatio;
@@ -227,7 +227,9 @@ public class BossStats : MonoBehaviour
             return;
         }
 
-        destroyAmount -= amount;
+        int finalAmount = bossStatus.CalculateDestructionOnBuffs(amount);
+
+        destroyAmount -= finalAmount;
 
         if (destroyAmount <= 0)
         {
@@ -305,6 +307,11 @@ public class BossStats : MonoBehaviour
     public int GetBossHPByLine()
     {
         return (int)health / 150;
+    }
+
+    public void EnterPhase2()
+    {
+        health = MAX_HEALTH_PHASE_2;
     }
 }
 

@@ -29,6 +29,7 @@ public class PlayerBuffShieldCounter : PlayerBuff
         }
 
         Player.Instance.state.RemoveBuff(BuffID_Player.PLAYER_SKILL_BURSTCANNON_3);
+        QueueManager.Instance.Clear();
     }
 
     public override void OnRemove(PlayerStats stat) { OnExpire?.Invoke(); }

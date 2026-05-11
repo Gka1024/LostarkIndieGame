@@ -6,11 +6,14 @@ public class PatternA_SpearAttack : BossPattern
 { // 공중에서 창 내려찍기
     public PatternA_SpearAttack()
     {
+        turnGenerators.Add(MakeBossAir);
         turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakeBossDown);
+
     }
 
     private HexTile centerTile;
@@ -20,6 +23,8 @@ public class PatternA_SpearAttack : BossPattern
         isTileFixed = false;
         base.OnStartPattern(ai);
     }
+
+    
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
@@ -34,13 +39,13 @@ public class PatternA_SpearAttack : BossPattern
         attackRange.Add(playerTile);
         attackRange.AddRange(playerTile.neighbors);
 
-        return BossPatternTurnBuilder.Create(attackRange).SetDamage(30).Build();
+        return BossPatternBuilder.Create(attackRange).SetDamage(30).Build();
 
     }
 
     private HexTile GetNextTile(HexTile curTile)
     {
-        centerTile = HexTileManager.Instance.IsThereHexTileByCube(new Vector3Int(0, 0, 0));
+        centerTile = HexTileManager.Instance.GetTileByCube(new Vector3Int(0, 0, 0));
         return HexTileManager.Instance.tileRayHelper.GetRayNextTile(curTile, centerTile, 2);
     }
 

@@ -27,8 +27,6 @@ public class CardList : MonoBehaviour
     private Dictionary<int, GameObject> chainsDictionary = new();
     private Dictionary<int, ChainStats> chainStatsDictionary = new();
 
-
-
     private void Awake()
     {
         if (Instance == null)

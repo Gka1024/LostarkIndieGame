@@ -40,15 +40,17 @@ public class PatternR_Dummy : BossPattern
 
     private BossPatternTurnInfo MakePattern0(BossAI ai)
     {
-        return BossPatternTurnBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
+        return BossPatternBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
         List<HexTile> attackRange = new();
         attackRange.Add(ai.bossController.GetCurrentTile());
+        attackRange.Add(ai.bossController.GetPlayerTile()); // 플레이어를 볼때
+        attackRange.Add(Player.Instance.move.GetCurrentTile()); // 플레이어를 보지 않을때
 
-        return BossPatternTurnBuilder.Create(attackRange).SetDamage(0).Build();
+        return BossPatternBuilder.Create(attackRange).SetDamage(0).Build();
     }
 
     public override void PerformActionAnimation(BossAnimation animation)

@@ -9,6 +9,6 @@ public class BossDebuffCorrosion : BossBuff
 
     public override int ModifyIncomeDestruction(int destruction)
     {
-        return destruction + 1;
+        return destruction * 2;
     }
 }

@@ -19,7 +19,7 @@ public class CardStats_Hammer_PerfectSwing : CardStats
         {
             case 1:
                 beforeActTurn += opt1_turns;
-                skill_damage += opt1_damage_coef;
+                skill_damage *= 1 + opt1_damage_coef * 0.01f;
                 break;
 
             case 2:

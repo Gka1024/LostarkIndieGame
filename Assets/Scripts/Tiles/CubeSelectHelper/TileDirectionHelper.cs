@@ -40,9 +40,9 @@ public class TileDirectionHelper : MonoBehaviour
         return distanceHelper.GetClockWiseTiles(currentTile, facingTile, distance, tileCount, isClockWise);
     }
 
-    public List<HexTile> GetSectorTiles(HexTile currentTile, HexTile facingTile, int radius, int angle)
+    public List<HexTile> GetSectorTiles(HexTile currentTile, HexTile facingTile, int radius, int angle, float rotationOffset = 0f)
     {
-        return sectorHelper.GetSectorTiles(currentTile, facingTile, radius, angle);
+        return sectorHelper.GetSectorTiles(currentTile, facingTile, radius, angle, rotationOffset);
     } 
 
 }
