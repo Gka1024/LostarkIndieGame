@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BossPatternPhase4 : BossPatternPhase
 {
+    public override int PhaseNumber => 4;
+
     protected override void RegisterRegularPatterns()
     {
         RegisterRegularPattern(new PatternR_Whirlwind());

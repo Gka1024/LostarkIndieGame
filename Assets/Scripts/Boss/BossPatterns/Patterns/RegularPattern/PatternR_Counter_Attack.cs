@@ -14,6 +14,8 @@ public class PatternR_Counter_Attack : BossPattern
 
     public PatternR_Counter_Attack()
     {
+        turnGenerators.Add(MakePattern1);
+
         // 대기 턴들
         for (int i = 0; i < WAIT_TURNS; i++)
         {
@@ -32,20 +34,10 @@ public class PatternR_Counter_Attack : BossPattern
         isCounterTriggered = false;
 
         // 성공 패턴
-        counterSuccess = PatternUtility.CreatePatternByDistance(ai, new[]
-        {
-            (2, 6, true),
-            (3, 18, true)
-        }, damage: 40, knockbackDistance: 2);
+        counterSuccess = BossPatternCounterSucess(ai);
 
         // 실패 패턴
-        counterFail = PatternUtility.CreatePatternByDistance(ai, new[]
-        {
-            (2, 6, true),
-            (2, 3, false),
-            (3, 10, true),
-            (3, 4, false)
-        }, damage: 40, knockbackDistance: 1);
+        counterFail = BossPatternCounterFail(ai);
     }
 
     protected override void OnBeforeGenerateTurn(BossAI ai)
@@ -71,6 +63,17 @@ public class PatternR_Counter_Attack : BossPattern
         }
     }
 
+    HexTile fixedTile;
+
+    private BossPatternTurnInfo MakePattern1(BossAI ai)
+    {
+        isTileFixed = true;
+        HexTile playerTile = ai.bossController.GetPlayerTile();
+        fixedTile = playerTile;
+
+        return MakeIdleTurn(ai);
+    }
+
     private BossPatternTurnInfo MakeCounterTurn(BossAI ai)
     {
         float currentStagger = ai.GetBoss().stats.GetCurrentStagger();
@@ -83,6 +86,20 @@ public class PatternR_Counter_Attack : BossPattern
 
         Debug.Log("보스가 약하게 반격합니다.");
         return counterFail;
+    }
+
+    private BossPatternTurnInfo BossPatternCounterFail(BossAI ai)
+    {
+        HexTile bossTile = ai.bossController.GetCurrentTile();
+        List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(bossTile, fixedTile, 3, 120, 60);
+
+        return BossPatternBuilder.Create(attackRange).SetDamage(1).SetKnockback(2, true).Build();
+    }
+
+    private BossPatternTurnInfo BossPatternCounterSucess(BossAI ai)
+    {
+        List<HexTile> attackRange = HexTileManager.Instance.GetTilesWithinRange(GetBossTile(), 5);
+        return BossPatternBuilder.Create(attackRange).SetDamage(1).SetKnockback(2, true).Build();
     }
 
     public override void OnPatternEnd(BossAI ai)

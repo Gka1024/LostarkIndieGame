@@ -24,6 +24,8 @@ public class DamageSystem : MonoBehaviour
         value.damage *= playerStats.GetCurrentAttack();
         value.stagger *= playerStats.GetStaggerMultiflyer();
 
+        //value.damage *= Random.Range(0.85f, 1.05f);
+
         return value;
     }
 }

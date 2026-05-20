@@ -9,6 +9,7 @@ public class PatternR_Swing_And_Spin : BossPattern
         turnGenerators.Add(MakePattern3);
         turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern5);
+        turnGenerators.Add(MakePattern6);
     }
 
     public override void OnStartPattern(BossAI ai)
@@ -16,41 +17,49 @@ public class PatternR_Swing_And_Spin : BossPattern
         base.OnStartPattern(ai);
     }
 
-    private BossPatternTurnInfo MakePattern1(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
+    private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
-        (2, 3, true), (3, 5, true),
-        (4, 2, false), (4, 6, true),
-        (5, 8, true), (5, 3, false)
-    },
-    damage: 40);
+        HexTile playerTile = ai.bossController.GetPlayerTile();
+        HexTile bossTile = ai.bossController.GetCurrentTile();
 
-    private BossPatternTurnInfo MakePattern2(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
+        List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(bossTile, playerTile, 4, 120, 30);
+        return BossPatternBuilder.Create(attackRange).SetDamage(20).SetKnockback(1).Build();
+    }
+
+    private BossPatternTurnInfo MakePattern2(BossAI ai)
     {
-        (2, 3, false), (3, 5, false),
-        (4, 2, true), (4, 6, false),
-        (5, 8, false), (5, 3, true)
-    },
-    damage: 40);
+        HexTile playerTile = ai.bossController.GetPlayerTile();
+        HexTile bossTile = ai.bossController.GetCurrentTile();
 
-    private BossPatternTurnInfo MakePattern3(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
+        List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(bossTile, playerTile, 4, 120, 30);
+        return BossPatternBuilder.Create(attackRange).SetDamage(20).SetKnockback(1).Build();
+    }
+
+    private BossPatternTurnInfo MakePattern3(BossAI ai)
     {
-        (2, 2, false), (2, 2, true),
-        (3, 3, true), (3, 3, false),
-        (4, 3, true), (4, 3, false),
-        (5, 3, true), (5, 3, false),
-        (6, 2, true), (6, 2, false)
-    },
-    damage: 50, downDuration: 3);  // 예시: 다운 효과 추가
+        HexTile playerTile = ai.bossController.GetPlayerTile();
+        HexTile bossTile = ai.bossController.GetCurrentTile();
+        HexTile attackTile = TileDirectionHelper.Instance.GetFrontTile(bossTile, playerTile, 4);
 
+        List<HexTile> attackRange = HexTileManager.Instance.GetTilesWithinRange(attackTile, 2);
+        return BossPatternBuilder.Create(attackRange).SetDamage(40).SetKnockback(1).Build();
+    }
 
-
-    private BossPatternTurnInfo MakePattern5(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
+    private BossPatternTurnInfo MakePattern5(BossAI ai)
     {
-        (4, 24, true),
-        (5, 30, true),
-        (6, 36, true)
-    },
-    damage: 60, knockbackDistance: 2);
+        HexTile bossTile = ai.bossController.GetCurrentTile();
+        List<HexTile> attackRange = HexTileManager.Instance.GetTilesWithinRange(bossTile, 4);
+
+        return BossPatternBuilder.Create(attackRange).SetDamage(50).SetKnockback(1).Build();
+    }
+
+    private BossPatternTurnInfo MakePattern6(BossAI ai)
+    {
+        HexTile bossTile = ai.bossController.GetCurrentTile();
+        List<HexTile> attackRange = HexTileManager.Instance.GetTilesWithinRange(bossTile, 6);
+
+        return BossPatternBuilder.Create(attackRange).SetDamage(50).SetKnockback(1).Build();
+    }
 
     public override void OnPatternEnd(BossAI ai)
     {

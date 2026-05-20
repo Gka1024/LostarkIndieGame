@@ -20,7 +20,7 @@ public class PlayerBuffShieldCounter : PlayerBuff
         this.isBossHit = isBossHit;
     }
 
-    public void OnDamaged(float damage)
+    public void OnGetHit(float damage)
     {
         if (isBossHit)
         {

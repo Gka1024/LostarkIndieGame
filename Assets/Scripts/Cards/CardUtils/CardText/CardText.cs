@@ -7,7 +7,7 @@ using UnityEngine;
 public class CardText : MonoBehaviour
 {
     public CardDataBase cardDataBase;
-    public UIManager uiManager;
+    public UICardTripod uiManager;
 
     public TextMeshProUGUI cardName;
     public TextMeshProUGUI cardDes;

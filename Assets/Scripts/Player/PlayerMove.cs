@@ -22,13 +22,45 @@ public class PlayerMove : MonoBehaviour
         playerAnimation = gameObject.GetComponent<PlayerAnimation>();
     }
 
-
     void Start()
     {
         currentTile = hexTileManager.GetObjectHextile(gameObject);
     }
 
     public HexTile GetCurrentTile() => currentTile;
+
+    public void Revive()
+    {
+        if (currentTile.currentTileState == TileState.Destroyed)
+        {
+            Debug.Log("revive");
+            HexTile centerTile = HexTileManager.Instance.GetTileByCube(Vector3Int.zero);
+
+            HexTile targetTile = null;
+
+            int distanceToCenter = HexTileManager.Instance.GetTileDistance(currentTile, centerTile);
+
+            for (int i = 1; i <= distanceToCenter; i++)
+            {
+                HexTile tileTemp = TileDirectionHelper.Instance.GetFrontTile(currentTile, centerTile, i);
+
+                if (tileTemp != null && tileTemp.currentTileState == TileState.Default)
+                {
+                    targetTile = tileTemp;
+                    break;
+                }
+            }
+
+            if (targetTile == null)
+            {
+                targetTile = centerTile;
+            }
+
+            Debug.Log(targetTile.CubeCoord);
+
+            MoveToTile(new PlayerMoveInfo(targetTile, ignoreDistance: true));
+        }
+    }
 
     public void MoveToTile(PlayerMoveInfo info)
     {
@@ -60,7 +92,7 @@ public class PlayerMove : MonoBehaviour
         currentTile = tile;
         tile.ResetColor();
 
-        StartCoroutine(MoveCoroutine(targetPosition, info.isTurnEnd));
+        StartCoroutine(MoveCoroutine(targetPosition, info.isTurnEnd, info.isDash));
     }
 
 
@@ -75,9 +107,10 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    private IEnumerator MoveCoroutine(Vector3 targetPosition, bool isTurnEnd)
+    private IEnumerator MoveCoroutine(Vector3 targetPosition, bool isTurnEnd, bool isDash = false)
     {
-        playerAnimation.isMoving = true;
+        if (!isDash) playerAnimation.isMoving = true;
+        if(isDash) playerAnimation.UseDash();
 
         Vector3 startPosition = transform.position;
         float elapsed = 0f;

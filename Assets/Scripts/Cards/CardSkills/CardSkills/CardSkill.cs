@@ -17,16 +17,10 @@ public abstract class CardSkill : MonoBehaviour
     [SerializeField] protected int selectedTripod = 1;
     protected SkillObject skillOption;
 
-    void Start()
-    {
-        manager = GameManager.Instance;
-        playerAnimation = manager.playerAnimation;
-    }
-
     public CardStats Initialize(CardStats stats, int tripodIndex)
     {
         manager = GameManager.Instance;
-        playerAnimation = manager.playerAnimation;
+        playerAnimation = Player.Instance.anim;
 
         baseCardStats = stats;
         runtimeCardStats = baseCardStats.Clone<CardStats>();

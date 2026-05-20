@@ -26,6 +26,9 @@ public class ObjectManager : MonoBehaviour
 
     public GameObject InnerWalls;
     public GameObject OuterWalls;
+    public GameObject OuterWallsDown;
+    public GameObject OuterWallsUp;
+    public GameObject OuterWallsMiddle;
 
     [Header("Obstacles")]
     public GameObject obstacleLeftUp;
@@ -224,10 +227,21 @@ public class ObjectManager : MonoBehaviour
         }
     }
 
-    public void DestroyOuterWalls()
+    public void DestroyOuterWallsDown()
     {
-        OuterWalls.SetActive(false);
+        OuterWallsDown.SetActive(false);
     }
+
+    public void DestroyOuterWallsUP()
+    {
+        OuterWallsUp.SetActive(false);
+    }
+
+    public void DestroyOuterWallsMiddle()
+    {
+        OuterWallsMiddle.SetActive(false);
+    }
+
 
     public void DestroyInnerWalls()
     {

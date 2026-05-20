@@ -25,9 +25,9 @@ public class TileDirectionHelper : MonoBehaviour
         }
     }
 
-    public HexTile GetFrontTile(HexTile playerTile, HexTile targetTile)
+    public HexTile GetFrontTile(HexTile playerTile, HexTile targetTile, int distance = 0)
     {
-        return frontHelper.GetFrontTile(playerTile, targetTile);
+        return frontHelper.GetFrontTile(playerTile, targetTile, distance);
     }
 
     public HexTile GetBackTile(HexTile playerTile, HexTile targetTile, int distance)

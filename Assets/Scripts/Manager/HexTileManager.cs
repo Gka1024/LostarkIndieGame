@@ -236,6 +236,11 @@ public class HexTileManager : MonoBehaviour
 
     public bool IsBossTile(HexTile tile)
     {
+        if(boss.GetComponent<BossInteraction>().isBossAir)
+        {
+            return false;
+        }
+
         if (boss.GetComponent<BossInteraction>().currentTile == tile || boss.GetComponent<BossInteraction>().neighborTile.Contains(tile))
         {
             return true;

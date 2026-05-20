@@ -7,7 +7,7 @@ public class Chain_Hammer_Sizemic : ChainSkill
     {
         PlayerMove playerSC = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
         playerSC.MoveToTile(new PlayerMoveInfo(data.mainTile));
-        yield return 0;
+        yield return base.ExecuteChain(data, isBossHit);
     }
 
 }

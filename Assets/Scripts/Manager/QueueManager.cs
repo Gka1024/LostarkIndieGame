@@ -39,8 +39,6 @@ public class QueueManager : MonoBehaviour
         afterDelay += data.isChainSkill ? 0 : data.afterDelay;
         chainDelay += data.isChainSkill ? data.afterDelay : 0; // 예시 로직
         actionQueue.Enqueue(data);
-
-        Debug.Log($"Queuemanager - Enqueue {beforeDelay} {afterDelay} {chainDelay}");
     }
 
     public void ProcessTurn()

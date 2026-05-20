@@ -8,9 +8,10 @@ public abstract class BossPattern
     protected int currentTurn;
     protected bool isFinished;
 
+    protected BossAI ai;
+
     protected bool isTileFixed = false;
     public bool IsTileFixed() => isTileFixed;
-    protected HexTile fixedPlayerTile;
 
     protected List<Func<BossAI, BossPatternTurnInfo>> turnGenerators = new();
     protected BossPatternTurnInfo currentTurnInfo;
@@ -21,13 +22,10 @@ public abstract class BossPattern
     // 패턴 시작
     public virtual void OnStartPattern(BossAI ai)
     {
+        this.ai = ai;
         currentTurn = 0;
         isFinished = false;
 
-        if (isTileFixed)
-        {
-            fixedPlayerTile = ai.bossController.GetPlayerTile();
-        }
     }
 
     protected virtual void OnBeforeGenerateTurn(BossAI ai) { }
@@ -89,13 +87,37 @@ public abstract class BossPattern
     protected BossPatternTurnInfo MakeBossAir(BossAI ai)
     {
         ai.SetAirborne(true);
+
         return MakeIdleTurn(ai);
     }
 
-    protected BossPatternTurnInfo MakeBossDown(BossAI ai)
+    protected BossPatternTurnInfo MakeBossDown(BossAI ai, HexTile dropTile = null)
     {
-        ai.SetAirborne(false);
+        if (dropTile == null)
+        {
+            dropTile = HexTileManager.Instance.GetTileByCube(new Vector3Int(0, 0, 0));
+        }
+
+        Debug.Log(dropTile.CubeCoord);
+
+        ai.SetAirborne(false, dropTile);
         return MakeIdleTurn(ai);
+    }
+
+    protected HexTile GetBossTile()
+    {
+        return ai.bossController.GetCurrentTile();
+    }
+
+    protected HexTile GetPlayerTile(bool look = true)
+    {
+        if (look)
+        {
+            return ai.bossController.GetPlayerTile();
+        }
+
+        return Player.Instance.move.GetCurrentTile();
+
     }
 }
 

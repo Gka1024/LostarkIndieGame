@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class BossStats : MonoBehaviour
@@ -36,7 +37,7 @@ public class BossStats : MonoBehaviour
     // =========================
 
     public const float MAX_STAGGER = 1600;
-    private float staggerAmount = MAX_STAGGER;
+    private float curBossStagger = MAX_STAGGER;
     public bool isStaggerAble = true;
 
     // =========================
@@ -73,7 +74,7 @@ public class BossStats : MonoBehaviour
         bossAI = GetComponent<BossAI>();
         bossDefence = BOSS_DEFENCE_BASE;
         bossAttackRatio = BOSS_ATTACK_BASE;
-        staggerAmount = MAX_STAGGER;
+        curBossStagger = MAX_STAGGER;
     }
 
     // =========================================================
@@ -202,13 +203,18 @@ public class BossStats : MonoBehaviour
     {
         if (!isStaggerAble) return;
 
-        staggerAmount -= amount;
+        curBossStagger -= amount;
         staggerBar.UpdateBossStagger();
 
-        if (staggerAmount <= 0)
+        if (curBossStagger <= 0)
         {
-            bossStatus.MakeBossGroggy(5);
+            bossStatus.MakeBossGroggy(10);
         }
+    }
+
+    public void RecoverStagger(float amount = MAX_STAGGER)
+    {
+        curBossStagger = math.max(curBossStagger + amount, MAX_STAGGER);
     }
 
     // =========================================================
@@ -233,6 +239,7 @@ public class BossStats : MonoBehaviour
 
         if (destroyAmount <= 0)
         {
+            isDestroyable = false;
             bossAI.NotifyDestroyResult(true);
         }
     }
@@ -263,7 +270,7 @@ public class BossStats : MonoBehaviour
         }
     }
 
-    public float GetCurrentStagger() => staggerAmount;
+    public float GetCurrentStagger() => curBossStagger;
 
     // =========================================================
     // ================== 턴 진행 ===============================

@@ -27,7 +27,7 @@ public class EstherSkill_Bahunturr : EstherSkill
         {
             if (estherAnimationController != null) estherAnimationController.PlayAttackAnimation();
             estherManager.GivePlayerBuff(skillData.buff_duration);
-            VFXManager.Instance.PlayEffect(VFXID.Esther_Bahuntur, targetTile, 5);
+            VFXManager.Instance.PlayEffect(VFXID.Esther_Bahuntur, targetTile, 5, -1.96f);
         });
 
     }

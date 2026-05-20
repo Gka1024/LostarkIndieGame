@@ -75,7 +75,7 @@ public class PatternA_Rush : BossPattern
             ai.bossStatus.MakeBossGroggy(5);
             ai.bossStats.EnableDestroy(30, 5);
             EstherManager.Instance.AddEstherValue(60);
-            ai.bossController.AddBuff(BossBuffFactory.CreateBuff(BuffID_Boss.BUFF_RAGE, 1, 5));
+            ai.bossController.AddBuff(BossBuffFactory.CreateBuff(BuffID_Boss.BUFF_RAGE, 1, 10));
         }
 
         HexTile objectTile = GameManager.Instance.objectManager.IsObjectExist(currentTurnInfo.TargetTiles, TileState.IsPillar);

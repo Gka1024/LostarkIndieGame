@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PatternF_Boss_Ghost : BossPattern
-{  // 유령 되기 패턴
+{  // 유령 되기 패턴 
     public PatternF_Boss_Ghost()
     {
         turnGenerators.Add(MakePattern1); // 2

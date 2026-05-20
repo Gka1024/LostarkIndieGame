@@ -6,6 +6,8 @@ public class CardList : MonoBehaviour
     public CardManager cardManager;
     public static CardList Instance { get; private set; }
 
+    private int specialMoveCooldown;
+
     [Header("전체 카드 및 기본 카드 목록")]
     public GameObject basicCard;
 
@@ -37,7 +39,7 @@ public class CardList : MonoBehaviour
         {
             Destroy(gameObject); // 중복된 인스턴스가 있으면 삭제
         }
-
+        specialMoveCooldown = 0;
         RegisterCardID();
         RegisterCardStats();
 
@@ -198,6 +200,25 @@ public class CardList : MonoBehaviour
         }
     }
 
+    public bool CheckSpecialMove()
+    {
+        Debug.Log($"cool : {specialMoveCooldown}");
+        return specialMoveCooldown == 0;
+    }
+
+    public void SetSpecialMoveCooldown(int cooldown = 5)
+    {
+        specialMoveCooldown = cooldown;
+    }
+
+    private void ReduceSpecialMoveCoolDown()
+    {
+        if(specialMoveCooldown > 0)
+        {
+            specialMoveCooldown--;
+        }
+    }
+
     // 카드의 쿨타임 초기화
     public void ResetCooldownByID(int targetID)
     {
@@ -214,8 +235,7 @@ public class CardList : MonoBehaviour
 
     public void ResetQuickMove()
     {
-        ResetCooldownByID(2);
-        cardManager.SpawnCard(GetCardByID(2));
+        specialMoveCooldown = 0;
     }
 
     // 턴 종료시 실행
@@ -223,6 +243,7 @@ public class CardList : MonoBehaviour
     {
         cardsInHands.Clear();
         ProgressCooldownTurn();
+        ReduceSpecialMoveCoolDown();
     }
     // =====
 }

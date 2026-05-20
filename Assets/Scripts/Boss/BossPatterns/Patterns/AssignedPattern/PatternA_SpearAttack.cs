@@ -12,8 +12,7 @@ public class PatternA_SpearAttack : BossPattern
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakeIdleTurn);
-        turnGenerators.Add(MakeBossDown);
-
+        turnGenerators.Add((ai) => MakeBossDown(ai, HexTileManager.Instance.GetTileByCube(new Vector3Int(0, 0, 0))));
     }
 
     private HexTile centerTile;
@@ -23,8 +22,6 @@ public class PatternA_SpearAttack : BossPattern
         isTileFixed = false;
         base.OnStartPattern(ai);
     }
-
-    
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
@@ -41,12 +38,6 @@ public class PatternA_SpearAttack : BossPattern
 
         return BossPatternBuilder.Create(attackRange).SetDamage(30).Build();
 
-    }
-
-    private HexTile GetNextTile(HexTile curTile)
-    {
-        centerTile = HexTileManager.Instance.GetTileByCube(new Vector3Int(0, 0, 0));
-        return HexTileManager.Instance.tileRayHelper.GetRayNextTile(curTile, centerTile, 2);
     }
 
     public override void PerformActionAnimation(BossAnimation animation)

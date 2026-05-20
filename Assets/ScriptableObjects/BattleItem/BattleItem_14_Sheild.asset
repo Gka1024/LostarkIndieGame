@@ -26,5 +26,5 @@ MonoBehaviour:
   buffID: 0
   buff_duration: 0
   granadeType: 0
-  potionType: 5
+  potionType: 4
   specialType: 0

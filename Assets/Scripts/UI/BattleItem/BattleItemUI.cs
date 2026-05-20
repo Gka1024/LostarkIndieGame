@@ -1,3 +1,4 @@
+using System.Collections;
 using NUnit.Framework.Interfaces;
 using TMPro;
 using UnityEngine;
@@ -52,6 +53,9 @@ public class BattleItemUI : MonoBehaviour
     public TextMeshProUGUI potionCount;
     public TextMeshProUGUI granadeCount;
     public TextMeshProUGUI specialCount;
+
+    [Header("Warning")]
+    public GameObject warningText;
 
     // --- 설명창 제어 ---
     public void UpdateDescWindow(BattleItemData data)
@@ -204,6 +208,15 @@ public class BattleItemUI : MonoBehaviour
     public void ResetSlotCursor()
     {
         foreach (var obj in cursorObjects) obj.SetActive(false);
+    }
+
+    public IEnumerator DisplayItemWarning()
+    {
+        warningText.SetActive(true);
+
+        yield return new WaitForSeconds(1.2f);
+
+        warningText.SetActive(false);
     }
 
     // --- 아이콘 업데이트 (아이템 교체 완료 시 호출) ---

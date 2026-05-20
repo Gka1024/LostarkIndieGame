@@ -5,7 +5,7 @@ public class PatternF_Destroy_Land_Up : BossPattern
 { // 지파 패턴(위)
     public PatternF_Destroy_Land_Up()
     {
-        turnGenerators.Add(MakeIdleTurn); // 점프
+        turnGenerators.Add(MakeBossAir); // 점프
         turnGenerators.Add(MakePattern1); // 내려찍고 타일 부수기
         turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern2); // 휠윈드하면서 돌아오기
@@ -31,7 +31,7 @@ public class PatternF_Destroy_Land_Up : BossPattern
         if (currentTurn == 1)
         {
             ai.bossPatternHelper.DestroyUpTiles();
-            ai.GetBoss().interaction.Moveto(ai.bossPatternHelper.GetUpBossTile());
+            ai.SetAirborne(false, ai.bossPatternHelper.GetUpBossTile());
         }
 
         if (3 <= currentTurn && currentTurn <= 6)
@@ -55,7 +55,7 @@ public class PatternF_Destroy_Land_Up : BossPattern
     {
         List<HexTile> attackRange = ai.bossPatternHelper.GetBreakTilesUp();
 
-        return BossPatternBuilder.Create(attackRange).SetDamage(1).SetSpecial().Build();
+        return BossPatternBuilder.Create(attackRange).SetDamage(1).SetKnockback(30, true).Build();
     }
 
     private BossPatternTurnInfo MakePattern2(BossAI ai)

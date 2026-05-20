@@ -1,8 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TileFrontHelper : MonoBehaviour
 {
-    public HexTile GetFrontTile(HexTile mainTile, HexTile targetTile)
+    public HexTile GetFrontTile(HexTile mainTile, HexTile targetTile, int distance = 0)
     {
         if (mainTile == null || targetTile == null) return null;
         if (mainTile.neighbors == null) return mainTile;
@@ -12,8 +14,23 @@ public class TileFrontHelper : MonoBehaviour
 
         HexTile bestTile = null;
         float bestDot = -Mathf.Infinity;
- 
-        foreach (HexTile neighbor in mainTile.neighbors)
+
+        List<HexTile> tilesToCheck = new();
+
+        if (distance == 0)
+        {
+            tilesToCheck = mainTile.neighbors.ToList();
+        }
+        else
+        {
+            tilesToCheck = HexTileManager.Instance.GetTilesWithinRange(mainTile, distance);
+            foreach (HexTile tile in HexTileManager.Instance.GetTilesWithinRange(mainTile, distance - 1))
+            {
+                tilesToCheck.Remove(tile);
+            }
+        }
+
+        foreach (HexTile neighbor in tilesToCheck)
         {
             if (neighbor == null) continue;
 

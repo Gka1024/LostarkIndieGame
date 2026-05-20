@@ -10,7 +10,9 @@ public class PatternF_Create_Pillars_3 : BossPattern
         turnGenerators.Add(MakePattern3); // 2 : 쪼기
         turnGenerators.Add(MakePattern3); // 3 : 쪼기 
         turnGenerators.Add(MakePattern4); // 4 : 공격
-        turnGenerators.Add(MakePattern5); // 5 : 다른거 부수기
+        turnGenerators.Add(MakePattern5); // 5 : 터지고
+        turnGenerators.Add(MakeIdleTurn); // 6 : 터지고
+        turnGenerators.Add(MakePattern5); // 7 : 다른거 부수기
     }
     private List<HexTile> brokenPillarTiles = new();
 
@@ -53,7 +55,7 @@ public class PatternF_Create_Pillars_3 : BossPattern
     {
         List<HexTile> attackRange = HexTileManager.Instance.GetAllTiles();
         List<HexTile> pillarTiles = ai.bossPatternHelper.GetPillarTiles(1);
-        List<HexTile> pillarSafe = ai.bossPatternHelper.GetPillarSafeTiles();
+        List<HexTile> pillarSafe = ai.bossPatternHelper.GetPillarSafeTilesSmall();
 
         foreach (HexTile tile in pillarTiles)
         {

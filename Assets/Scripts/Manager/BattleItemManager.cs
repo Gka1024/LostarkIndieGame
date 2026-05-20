@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -141,6 +142,11 @@ public class BattleItemManager : MonoBehaviour
                     SetItemUsed(ItemType.Potion);
                     currentCoroutine = StartCoroutine(UsePotionSequence());
                 }
+                else
+                {
+                    battleItemUI.ShowControlButtons(false);
+                    StartCoroutine(battleItemUI.DisplayItemWarning());
+                }
                 break;
 
             case ItemType.Granade:
@@ -149,6 +155,11 @@ public class BattleItemManager : MonoBehaviour
                     SetItemUsed(ItemType.Granade);
                     currentCoroutine = StartCoroutine(UseThrowableSequence());
                 }
+                 else
+                {
+                    battleItemUI.ShowControlButtons(false);
+                    StartCoroutine(battleItemUI.DisplayItemWarning());
+                }
                 break;
 
             case ItemType.Special:
@@ -156,6 +167,11 @@ public class BattleItemManager : MonoBehaviour
                 {
                     SetItemUsed(ItemType.Special);
                     currentCoroutine = StartCoroutine(UseSpecialSequence());
+                }
+                 else
+                {
+                    battleItemUI.ShowControlButtons(false);
+                    StartCoroutine(battleItemUI.DisplayItemWarning());
                 }
                 break;
         }
@@ -166,10 +182,12 @@ public class BattleItemManager : MonoBehaviour
         battleItemUI.ShowControlButtons(false);
         yield return playerAnimation.DrinkPotion();
 
+        Debug.Log(currentItem.potionType);
+
         switch (currentItem.potionType)
         {
             case PotionType.Heal:
-                playerStats.Heal(30, true);
+                playerStats.Heal(currentItem.value, true);
                 VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Heal, 1);
                 break;
 
@@ -179,12 +197,13 @@ public class BattleItemManager : MonoBehaviour
                 break;
 
             case PotionType.Shield:
-                //playerStats.AddAttackBuff(30, 0, 20);
+                playerStats.AddShield(currentItem.value * PlayerStats.MAX_HEALTH * 0.01f, currentItem.duration);
                 VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Shield, 1);
                 break;
 
             case PotionType.TimeStop:
-                //playerStats.AddAttackBuff(30, 0, 20);
+                playerStats.IsTimeStopped = true;
+                playerStats.timeStopRemaining = currentItem.duration;
                 VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Gold, 1);
                 break;
 
@@ -294,6 +313,7 @@ public class BattleItemManager : MonoBehaviour
 
         if (currentItem.specialType == SpecialType.CampFire)
             PlaceItem(hexTileSelectHandler.selectedTile, itemPrefabCampFire, 20);
+
         else if (currentItem.specialType == SpecialType.ScareCrow)
             PlaceItem(hexTileSelectHandler.selectedTile, itemPrefabScareCrow, 5);
 
@@ -356,6 +376,7 @@ public class BattleItemManager : MonoBehaviour
         var placeable = item.GetComponent<BattleItemPlaceable>();
         placeable.RegisterHextile(tile);
         placeable.SetPlaceDuration(duration);
+        placeable.OnItemPlaced();
     }
 
     public void OnTurnEnd()

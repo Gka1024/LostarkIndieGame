@@ -9,7 +9,7 @@ public class BossPatternPhaseDummy : BossPatternPhase
 
     protected override void RegisterOpeningPatterns()
     {
-        //RegisterOpeningPattern(new PatternR_Rush_Grab_Breath());
+        RegisterOpeningPattern(new PatternR_Dummy());
     }
 
     public override void OnEnter()
@@ -18,6 +18,8 @@ public class BossPatternPhaseDummy : BossPatternPhase
     }
 
     private int regularPatternCount = 0;
+
+    public override int PhaseNumber => 1;
 
     public override BossPattern GetNextPattern()
     {

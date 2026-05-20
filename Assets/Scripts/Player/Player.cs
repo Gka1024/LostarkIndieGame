@@ -28,10 +28,16 @@ public class Player : MonoBehaviour
         if (state.HasPlayerBuffs(BuffID_Player.STUN)) return false;
         if (state.HasPlayerBuffs(BuffID_Player.DOWN)) return false;
         if (stats.IsPlayerGrabbed()) return false;
+        if(stats.IsTimeStopped) return false;
         if (QueueManager.Instance.HasAction()) return false;
 
         return value;
+    }
 
+    public void Revive()
+    {
+        stats.Revive();
+        move.Revive();
     }
 
 }

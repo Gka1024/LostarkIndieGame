@@ -46,7 +46,15 @@ public class PlayerStatsUI : MonoBehaviour
         PlayerMaxHP = PlayerStats.MAX_HEALTH;
         PlayerMaxMana = PlayerStats.MAX_MANA;
         PlayerMaxIdentity = PlayerStats.MAX_IDENTITY;
-        
+
+        SetBarSize();
+    }
+
+    private void SetBarSize()
+    {
+        PlayerHPBar.sizeDelta = new Vector2(420, 100);
+        PlayerShieldBar.sizeDelta = new Vector2(0, 100);
+        PlayerManaBar.sizeDelta = new Vector2(420, 100);
     }
 
     public void UpdateHPBar(float currentHealth)
@@ -72,7 +80,7 @@ public class PlayerStatsUI : MonoBehaviour
         float identityRatio = Mathf.Clamp01(currentIdentity / PlayerMaxIdentity);
         identityMask.sizeDelta = new Vector2(identityMask.sizeDelta.x, maskFullHeight * identityRatio);
 
-        if(currentIdentity == PlayerMaxIdentity) SetIdentityReady(true);
+        if (currentIdentity == PlayerMaxIdentity) SetIdentityReady(true);
     }
 
     public void SetIdentityReady(bool show)

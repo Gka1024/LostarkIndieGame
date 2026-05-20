@@ -190,6 +190,9 @@ public class HexTileSelectHandler : MonoBehaviour
     public void SaveSelectedTiles()
     {
         if (!isSelecting || isSelectStopped) return;
+        //if (!selectedTiles.Contains(curHexTile)) return;
+        if (curHexTile.meshRenderer.material.color != appropriateColor) return;
+
         selectedTile = curHexTile;
         foreach (var tile in tilesInRange)
             if (tile.meshRenderer.material.color == appropriateColor)

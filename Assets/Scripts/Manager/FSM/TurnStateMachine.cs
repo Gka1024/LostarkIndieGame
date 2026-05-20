@@ -150,7 +150,8 @@ public class TurnStateMachine : MonoBehaviour
     private void GivePlayerCard()
     {
         manager.cardManager.ResetHand();
-        manager.cardManager.GiveRandomCard(5);
+        manager.cardManager.GiveRandomCard(4);
+        manager.cardManager.GiveSpecificCard(141);
         manager.cardManager.GiveBasicCard();
     }
 
@@ -177,6 +178,7 @@ public class TurnStateMachine : MonoBehaviour
     public void PlayerTurnEnd()
     {
         manager.cardManager.DisposeAllCards();
+        manager.cardManager.cardDescriptionUI.OnPointerExit();
     }
 
     private IEnumerator DisplayPlayerTurn(float time)

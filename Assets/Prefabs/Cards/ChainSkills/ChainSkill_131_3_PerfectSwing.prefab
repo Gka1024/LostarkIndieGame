@@ -45,14 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardID: 131
-  CardTripodNum: 2
+  CardTripodNum: 3
   chainStats: {fileID: 11400000, guid: 02f2e6d10b04d174bb3dcb7229821538, type: 2}
-  manager: {fileID: 0}
-  skillManager: {fileID: 0}
-  cardList: {fileID: 0}
-  Player: {fileID: 0}
-  playerStats: {fileID: 0}
-  playerSC: {fileID: 0}
-  Boss: {fileID: 0}
   baseCardSkill: {fileID: 0}
   tripodNum: 0

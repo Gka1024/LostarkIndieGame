@@ -37,7 +37,7 @@ public class PatternA_JumpAttack : BossPattern
         };
         result.AddRange(playerTile.neighbors);
 
-        return BossPatternBuilder.Create(result).SetDamage(10).SetKnockback(2).SetBreakWalls().Build();
+        return BossPatternBuilder.Create(result).SetDamage(30).SetKnockback(2).SetBreakWalls().Build();
     }
 
     public override void PerformActionAnimation(BossAnimation animation)

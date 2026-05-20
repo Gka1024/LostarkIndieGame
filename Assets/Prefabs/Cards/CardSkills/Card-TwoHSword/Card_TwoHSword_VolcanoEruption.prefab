@@ -321,7 +321,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -40}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 175, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1310590068022812629
@@ -496,7 +496,6 @@ MonoBehaviour:
   lerpSpeed: 30
   cardParabolaVariable: 80
   disposeDuration: 0.2
-  hoverOffset: 10
 --- !u!114 &5822368605544602972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,11 +533,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardID: 143
   manager: {fileID: 0}
-  tileSelector: {fileID: 0}
-  skillManager: {fileID: 0}
-  cardList: {fileID: 0}
-  bossStats: {fileID: 0}
-  playerStats: {fileID: 0}
   playerAnimation: {fileID: 0}
   chainSkill: {fileID: 0}
   baseCardStats: {fileID: 0}

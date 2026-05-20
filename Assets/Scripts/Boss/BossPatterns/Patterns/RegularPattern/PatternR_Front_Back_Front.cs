@@ -7,9 +7,9 @@ public class PatternR_Front_Back_Front : BossPattern
 
     public PatternR_Front_Back_Front()
     {
-        turnGenerators.Add(ai => MakePatternCommon(ai));
-        turnGenerators.Add(ai => MakePatternCommon(ai));
-        turnGenerators.Add(ai => MakePatternCommon(ai, applyDown: true));
+        turnGenerators.Add(MakePattern1);
+        turnGenerators.Add(MakePattern2);
+        turnGenerators.Add(MakePattern3);
     }
 
     public override void OnStartPattern(BossAI ai)
@@ -18,46 +18,42 @@ public class PatternR_Front_Back_Front : BossPattern
         base.OnStartPattern(ai);
     }
 
-    protected override void OnBeforeGenerateTurn(BossAI ai)
+    HexTile fixedTile;
+
+    private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
-        base.OnBeforeGenerateTurn(ai);
+        HexTile playerTile = GetPlayerTile(true);
+        HexTile BossTile = GetBossTile();
 
-        // currentTurn은 0부터 시작한다고 가정
+        isTileFixed = true;
+        fixedTile = playerTile;
 
-        // 2번째 턴 시작 시 (index 1)
-        if (currentTurn == 1)
-        {
-            fixedPlayerTile = HexTileManager.Instance
-                .GetTileByCube(
-                    ai.bossController.GetPlayerTile().CubeCoord * -1
-                );
+        List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(BossTile, playerTile, 4, 60);
 
-            isTileFixed = true;
-        }
-
-        // 3번째 턴 시작 시 (index 2)
-        if (currentTurn == 2)
-        {
-            isTileFixed = false;
-        }
+        return BossPatternBuilder.Create(attackRange).SetDamage(40f).SetKnockback(1).Build();
     }
 
-    private BossPatternTurnInfo MakePatternCommon(BossAI ai, bool applyDown = false)
+    private BossPatternTurnInfo MakePattern2(BossAI ai)
     {
-        var patterns = new (int direction, int count, bool clockwise)[]
-        {
-            (2, 2, true), (2, 2, false),
-            (3, 3, true), (3, 3, false),
-            (4, 3, true), (4, 3, false),
-            (5, 3, true), (5, 3, false),
-        };
+        HexTile attackTile = HexTileManager.Instance.GetTileByCube(fixedTile.CubeCoord * -1);
+        HexTile BossTile = GetBossTile();
 
-        return PatternUtility.CreatePatternByDistance(
-            ai,
-            patterns,
-            damage: 50,
-            downDuration: applyDown ? 2 : 0
-        );
+        List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(BossTile, attackTile, 4, 60);
+
+        return BossPatternBuilder.Create(attackRange).SetDamage(50).SetKnockback(1).Build();
+    }
+
+    private BossPatternTurnInfo MakePattern3(BossAI ai)
+    {
+        HexTile playerTile = GetPlayerTile(true);
+        HexTile BossTile = GetBossTile();
+
+        isTileFixed = true;
+        fixedTile = playerTile;
+
+        List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(BossTile, playerTile, 6, 80);
+
+        return BossPatternBuilder.Create(attackRange).SetDamage(70).SetKnockback(1).Build();
     }
 
     public override void OnPatternEnd(BossAI ai)

@@ -7,8 +7,8 @@ public class PatternR_Sector_Attack_Twice : BossPattern
     public PatternR_Sector_Attack_Twice()
     {
         turnGenerators.Add(MakePattern1);
-        turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakeIdleTurn);
+        turnGenerators.Add(MakePattern1);
 
     }
 
@@ -19,7 +19,7 @@ public class PatternR_Sector_Attack_Twice : BossPattern
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
-    { 
+    {
         List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(ai.bossController.GetCurrentTile(), ai.bossController.GetPlayerTile(), 3, 90);
 
         return BossPatternBuilder.Create(attackRange).SetDamage(40f).Build();

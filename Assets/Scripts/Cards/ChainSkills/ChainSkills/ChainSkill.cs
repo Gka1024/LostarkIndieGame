@@ -22,16 +22,9 @@ public abstract class ChainSkill : MonoBehaviour
         yield return null;
     }
 
-    public virtual void SetTripod(int index)
-    {
-        this.tripodNum = index;
-        chainStats.ApplyOption(index);
-    }
-
     public float GetDamage() => chainStats.skill_damage;
     public float GetIdentity() => chainStats.identityGain;
     public float GetStagger() => chainStats.stagger;
-
 
     private void ApplyBossSkills(ChainStats stat)
     {

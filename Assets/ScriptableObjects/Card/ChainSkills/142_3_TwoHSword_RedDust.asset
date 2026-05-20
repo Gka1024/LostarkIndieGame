@@ -22,10 +22,10 @@ MonoBehaviour:
   isCounterAble: 0
   damageRange: []
   targetTile: {fileID: 0}
-  needToSelectTile: 0
-  tileSelectType: 0
-  skillAngle: 0
-  skillAngleRange: 0
+  needToSelectTile: 1
+  tileSelectType: 1
+  skillAngle: 3
+  skillAngleRange: 2
   skillDistance: 0
   skillDistanceRange: 0
   aroundRange: 0

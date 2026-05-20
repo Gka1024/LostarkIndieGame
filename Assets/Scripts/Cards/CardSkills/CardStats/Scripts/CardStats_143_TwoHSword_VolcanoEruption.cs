@@ -10,6 +10,7 @@ public class CardStats_TwoHSword_VolcanoEruption : CardStats
 
     public override void ApplyOption(int num)
     {
+        HasChainSkill = true;
         switch (num)
         {
             case 1:
@@ -37,10 +38,11 @@ public class CardStats_TwoHSword_VolcanoEruption : CardStats
         if (original == null) return null;
 
         ChainStats clonedStats = Instantiate(original);
+        clonedStats.SetDamage(base_skill_damage_2);
 
         if (tripodIndex == 2)
         {
-            clonedStats.ChangeDamage(opt2_damage_coef);
+            clonedStats.MultiflyDamage(opt2_damage_coef);
             clonedStats.skillDistanceRange++;
         }
 

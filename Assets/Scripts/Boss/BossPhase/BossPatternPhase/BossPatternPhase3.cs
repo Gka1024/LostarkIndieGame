@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BossPatternPhase3 : BossPatternPhase
 {   // 지형파괴 ~ 유령
+    public override int PhaseNumber => 3;
+
     protected override void RegisterRegularPatterns()
     {
         RegisterRegularPattern(new PatternR_Smash_4Times());
@@ -16,7 +18,7 @@ public class BossPatternPhase3 : BossPatternPhase
         RegisterRegularPattern(new PatternR_Sector_Attack_Twice());
 
         RegisterRegularPattern(new PatternR_Rush_Grab_Breath());
-       // RegisterRegularPattern(new PatternR_Ghost_Ball());
+        // RegisterRegularPattern(new PatternR_Ghost_Ball());
 
     }
 

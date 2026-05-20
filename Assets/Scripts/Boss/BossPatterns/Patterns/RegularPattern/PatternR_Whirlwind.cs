@@ -19,13 +19,13 @@ public class PatternR_Whirlwind : BossPattern
         isTileFixed = false;
     }
 
-    private BossPatternTurnInfo MakePattern1(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
+    private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
-        (2, 12, true),
-        (3, 18, true),
-        (4, 24, true)
-    },
-   damage: 30, knockbackDistance: 2);
+        HexTile bossTile = ai.bossController.GetCurrentTile();
+        List<HexTile> attackRange = HexTileManager.Instance.GetTilesWithinRange(bossTile, 4);
+
+        return BossPatternBuilder.Create(attackRange).SetDamage(30).SetKnockback(1).Build();
+    }
 
     public override void PerformActionAnimation(BossAnimation animation)
     {

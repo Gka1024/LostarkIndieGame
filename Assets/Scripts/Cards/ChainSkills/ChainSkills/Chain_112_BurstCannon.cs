@@ -9,7 +9,7 @@ public class ChainSkill_GunLance_BurstCannon : ChainSkill
         PlayerMove move = Player.Instance.move;
         HexTile playerTile = move.GetCurrentTile();
         HexTile targetTile = data.mainTile;
-        
+
         // 플레이어의 앞쪽 타일 계산
 
         Debug.Log("ExecuteChain : ChainSkill_GunLance_BurstCannon");
@@ -26,7 +26,7 @@ public class ChainSkill_GunLance_BurstCannon : ChainSkill
             move.MoveToTile(new PlayerMoveInfo(frontTile, ignoreDistance: true));
         }
 
-        yield return null;
+        yield return base.ExecuteChain(data, isBossHit);
     }
 
 

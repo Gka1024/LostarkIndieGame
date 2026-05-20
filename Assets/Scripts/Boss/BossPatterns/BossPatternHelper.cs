@@ -20,7 +20,8 @@ public class BossPatternHelper : MonoBehaviour
     [SerializeField] private GameObject displayName;
     [SerializeField] private List<HexTile> tile_PillarCreate1;
     [SerializeField] private List<HexTile> tile_PillarCreate2;
-    [SerializeField] private List<HexTile> tile_PillarSafe;
+    [SerializeField] private List<HexTile> tile_PillarBackLarge;
+    [SerializeField] private List<HexTile> tile_PillarBackSmall;
 
     [Header("Tile Break Pattern")]
     [SerializeField] private List<HexTile> tile_ToBreak_Down;
@@ -134,6 +135,11 @@ public class BossPatternHelper : MonoBehaviour
         GameManager.Instance.objectManager.BreakAllPillars();
     }
 
+    public void BreakInnerWalls()
+    {
+        GameManager.Instance.objectManager.DestroyInnerWalls();
+    }
+
     // ================ CreatePillars (PatternF_CreatePillars* 패턴용)
 
     public int CreatePillars(int index)
@@ -179,16 +185,21 @@ public class BossPatternHelper : MonoBehaviour
         return null;
     }
 
-    public List<HexTile> GetPillarSafeTiles()
+    public List<HexTile> GetPillarSafeTilesLarge()
     {
-        return tile_PillarSafe;
+        return tile_PillarBackLarge;
     }
 
-    public List<HexTile> GetPillarSafeTiles(int num)
+    public List<HexTile> GetPillarSafeTilesSmall()
     {
-        List<HexTile> returnTiles = new(tile_PillarSafe);
-        returnTiles.Remove(tile_PillarSafe[num * 2]);
-        returnTiles.Remove(tile_PillarSafe[num * 2 + 1]);
+        return tile_PillarBackSmall;
+    }
+
+    public List<HexTile> GetPillarSafeTilesWithoutNum(int num)
+    {
+        List<HexTile> returnTiles = new(tile_PillarBackSmall);
+        returnTiles.Remove(tile_PillarBackSmall[num * 2]);
+        returnTiles.Remove(tile_PillarBackSmall[num * 2 + 1]);
 
         return returnTiles;
     }
@@ -225,12 +236,14 @@ public class BossPatternHelper : MonoBehaviour
         foreach (HexTile tile in tile_ToBreak_Down)
         {
             tile.DestroyTile();
+            objectManager.DestroyOuterWallsDown();
         }
         isDownTileBroke = true;
 
         if (isUpTileBroke)
         {
             DestroyMiddleTiles();
+            objectManager.DestroyOuterWallsMiddle();
         }
     }
 
@@ -239,12 +252,14 @@ public class BossPatternHelper : MonoBehaviour
         foreach (HexTile tile in tile_ToBreak_Up)
         {
             tile.DestroyTile();
+            objectManager.DestroyOuterWallsUP();
         }
         isUpTileBroke = true;
 
         if (isDownTileBroke)
         {
             DestroyMiddleTiles();
+            objectManager.DestroyOuterWallsMiddle();
         }
     }
 

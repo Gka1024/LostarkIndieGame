@@ -3,10 +3,10 @@ using System.Linq;
 using UnityEngine;
 
 public class PatternR_Swing_Cross_Attack : BossPattern
-{ // 십자로 찍기 패턴입니다.
+{ // 휘두르고 십자로 찍기 패턴입니다.
     public PatternR_Swing_Cross_Attack()
     {
-        turnGenerators.Add(MakePattern0);
+        turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern2);
     }
@@ -15,11 +15,6 @@ public class PatternR_Swing_Cross_Attack : BossPattern
     {
         base.OnStartPattern(ai);
         isTileFixed = false;
-    }
-
-    private BossPatternTurnInfo MakePattern0(BossAI ai)
-    {
-        return BossPatternBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }
 
     private BossPatternTurnInfo MakePattern1(BossAI ai)
@@ -36,7 +31,7 @@ public class PatternR_Swing_Cross_Attack : BossPattern
         HexTile playerTile = ai.bossController.GetPlayerTile();
         List<HexTile> attackRange = TileRayHelper.GetCrossTiles(playerTile, curTile, 2);
 
-        return BossPatternBuilder.Create(attackRange).SetDamage(1).Build();
+        return BossPatternBuilder.Create(attackRange).SetDamage(40).Build();
     }
 
     public override void PerformActionAnimation(BossAnimation animation)

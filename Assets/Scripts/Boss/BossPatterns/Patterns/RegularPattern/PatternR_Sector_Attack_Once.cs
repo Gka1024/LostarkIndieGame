@@ -6,9 +6,9 @@ public class PatternR_Sector_Attack_Once : BossPattern
 { // 부채꼴 한번 찍기 패턴입니다. 
     public PatternR_Sector_Attack_Once()
     {
-        turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern1);
+        turnGenerators.Add(MakeIdleTurn);
     }
 
     public override void OnStartPattern(BossAI ai)
@@ -26,7 +26,7 @@ public class PatternR_Sector_Attack_Once : BossPattern
 
     public override void OnPatternEnd(BossAI ai)
     {
-        
+
     }
 
     public override void PerformActionAnimation(BossAnimation animation)

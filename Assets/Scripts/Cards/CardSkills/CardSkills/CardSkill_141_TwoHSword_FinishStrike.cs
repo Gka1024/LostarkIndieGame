@@ -39,13 +39,14 @@ public class TwoHSword_FinishStrike_2 : SkillObject
 
     public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
-        yield return base.Execute(card, data, isBossHit);
 
         if (card.runtimeCardStats is CardStats_TwoHSword_FinishStrike stats)
         {
-            AreaDamageEffect effect = new AreaDamageEffect(data.selectedTiles, stats.opt2_skill_damage, 1);
+            AreaDamageEffect effect = new AreaDamageEffect(data.selectedTiles, stats.opt2_skill_damage, 2);
             FieldEffectManager.Instance.AddEffect(effect);
         }
+
+        yield return base.Execute(card, data, isBossHit);
     }
 }
 

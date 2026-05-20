@@ -31,7 +31,7 @@ MonoBehaviour:
   aroundRange: 0
   rayDistance: 0
   rayWidth: 0
-  skill_damage: 5
+  skill_damage: 3
   manaUse: 30
   identityGain: 10
   stagger: 10
@@ -47,3 +47,4 @@ MonoBehaviour:
   opt1_identity_bonus: 100
   opt2_attack_increase: 10
   opt2_increase_turns: 5
+  opt3_damage_coef: 0

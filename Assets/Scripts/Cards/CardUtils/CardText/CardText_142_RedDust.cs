@@ -18,7 +18,7 @@ public class CardText_TwoHSword_RedDust : CardText
             baseValues["opt2_attack_increase"] = cardStat.opt2_attack_increase.ToString();
             baseValues["opt2_increase_turns"] = cardStat.opt2_increase_turns.ToString();
 
-
+            baseValues["opt3_damage_coef"] = cardStat.opt3_damage_coef.ToString();
         }
 
         return baseValues;

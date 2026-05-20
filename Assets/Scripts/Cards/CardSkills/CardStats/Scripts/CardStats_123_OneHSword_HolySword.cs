@@ -35,4 +35,21 @@ public class CardStats_OneHSword_HolySword : CardStats
                 break;
         }
     }
+
+    public override ChainStats GetChainStats(int tripodIndex)
+    {
+        ChainStats original = chainPaths.Find(p => p.tripodIndex == tripodIndex)?.chainStats;
+
+        if (original == null) return null;
+
+        ChainStats clonedStats = Instantiate(original);
+        clonedStats.SetDamage(base_skill_damage_2);
+
+        if (tripodIndex == 3)
+        {
+            clonedStats.MultiflyDamage(opt3_damage_coef);
+        }
+
+        return clonedStats;
+    }
 }

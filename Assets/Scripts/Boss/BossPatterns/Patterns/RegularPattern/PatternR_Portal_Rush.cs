@@ -8,7 +8,11 @@ public class PatternR_Portal_Rush : BossPattern
     public PatternR_Portal_Rush()
     {
         turnGenerators.Add(MakePattern1);
+        turnGenerators.Add(MakeBossAir);
         turnGenerators.Add(MakePattern2);
+        turnGenerators.Add(MakePattern2);
+        turnGenerators.Add(MakePattern2);
+        turnGenerators.Add((ai) => MakeBossDown(ai));
     }
 
     public override void OnStartPattern(BossAI ai)

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BossPatternPhase2 : BossPatternPhase
 { // 기둥부수기 ~ 지형파괴
+    public override int PhaseNumber => 2;
+
     protected override void RegisterRegularPatterns()
     {
         RegisterRegularPattern(new PatternR_Smash_4Times());

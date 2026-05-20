@@ -13,6 +13,8 @@ public class CardStats_TwoHSword_RedDust : CardStats
     public float opt2_attack_increase;
     public int opt2_increase_turns;
 
+    public float opt3_damage_coef;
+
     public override void ApplyOption(int num)
     {
         switch (num)
@@ -28,11 +30,29 @@ public class CardStats_TwoHSword_RedDust : CardStats
 
             case 3:
                 isCounterAble = true;
+                HasChainSkill = true;
                 break;
 
             default:
                 Debug.LogWarning("ApplyOption: 알 수 없는 옵션 번호입니다: " + num);
                 break;
         }
+    }
+
+
+    public override ChainStats GetChainStats(int tripodIndex)
+    {
+        ChainStats original = chainPaths.Find(p => p.tripodIndex == tripodIndex)?.chainStats;
+
+        if (original == null) return null;
+
+        ChainStats clonedStats = Instantiate(original);
+
+        if (tripodIndex == 3)
+        {
+            clonedStats.SetDamage(base_skill_damage);
+        }
+
+        return clonedStats;
     }
 }

@@ -40,9 +40,9 @@ public class ChainStats : ScriptableObject
     {
         skill_damage = damage;
     }
-    
-    public virtual void ChangeDamage(float damageOverride)
+
+    public virtual void MultiflyDamage(float damageOverride)
     {
-        skill_damage *= damageOverride * 0.01f;
+        skill_damage *= 1 + damageOverride * 0.01f;
     }
 }

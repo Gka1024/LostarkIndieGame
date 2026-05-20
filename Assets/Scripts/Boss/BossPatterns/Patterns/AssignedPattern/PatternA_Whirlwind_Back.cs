@@ -41,7 +41,7 @@ public class PatternA_Whirlwind_Back : BossPattern
         centerTile = HexTileManager.Instance.GetTileByCube(new Vector3Int(0, 0, 0));
         List<HexTile> AttackRange = HexTileManager.Instance.GetTilesWithinRange(curTile, 3);
 
-        return BossPatternBuilder.Create(AttackRange).SetDamage(30).SetKnockback(1).Build();
+        return BossPatternBuilder.Create(AttackRange).SetDamage(40).SetKnockback(1).Build();
     }
 
     private HexTile GetNextTile(HexTile curTile)

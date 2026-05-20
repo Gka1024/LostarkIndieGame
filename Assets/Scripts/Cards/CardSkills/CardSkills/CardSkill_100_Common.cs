@@ -39,19 +39,28 @@ public class CardSkill_QuickMove : SkillObject
 
     public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
     {
-        PlayerMove playerMove = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
-
-        if (!card.manager.hexTileManager.IsBossTile(data.mainTile))
+        if (CardList.Instance.CheckSpecialMove())
         {
-            Debug.Log("Move Accepted");
-            playerMove.MoveToTile(new PlayerMoveInfo(data.mainTile, isDash: true, isFace: true, ignoreDistance: true));
+            PlayerMove playerMove = GameManager.Instance.GetPlayer().GetComponent<PlayerMove>();
+
+            if (!card.manager.hexTileManager.IsBossTile(data.mainTile))
+            {
+                Debug.Log("Move Accepted");
+                playerMove.MoveToTile(new PlayerMoveInfo(data.mainTile, isDash: true, isFace: true, ignoreDistance: true));
+            }
+
+            isPlayAnimation = false;
+
+            CardList.Instance.SetSpecialMoveCooldown();
+
+            base.Execute(card, data, isBossHit);
+
+            yield return 0;
         }
-
-        isPlayAnimation = false;
-
-        base.Execute(card, data, isBossHit);
-
-        yield return 0;
+        else
+        {
+            Debug.Log("쿨타임입니다.");
+        }
     }
 }
 

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BossPatternPhase1 : BossPatternPhase
 {   // 조우~기둥부수기
+    public override int PhaseNumber => 1;
+    
     protected override void RegisterRegularPatterns()
     {
         RegisterRegularPattern(new PatternR_Swing_And_Spin());

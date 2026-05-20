@@ -85,11 +85,13 @@ public class CardStatsEditor : Editor
         card.manaUse = EditorGUILayout.FloatField("Mana Cost", card.manaUse);
         card.identityGain = EditorGUILayout.FloatField("Identity Cost", card.identityGain);
         card.stagger = EditorGUILayout.FloatField("Stagger", card.stagger);
+        card.destroy = EditorGUILayout.IntField("Destroy", card.destroy);
         card.coolDownTurn = EditorGUILayout.IntField("Cooldown Turn", card.coolDownTurn);
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("==== 스킬 속성 관련 변수 ====", EditorStyles.boldLabel);
         card.isCounterAble = EditorGUILayout.Toggle("Is Counter Able", card.isCounterAble);
+        card.isHeadAttack = EditorGUILayout.Toggle("Is Head Attack", card.isHeadAttack);
         card.isHeadAttack = EditorGUILayout.Toggle("Is Head Attack", card.isHeadAttack);
         card.isBackAttack = EditorGUILayout.Toggle("Is Back Attack", card.isBackAttack);
         card.isSuperArmor = EditorGUILayout.Toggle("Is Super Armor", card.isSuperArmor);
@@ -143,6 +145,7 @@ public class CardStatsEditor : Editor
             case nameof(CardStats.manaUse):
             case nameof(CardStats.identityGain):
             case nameof(CardStats.stagger):
+            case nameof(CardStats.destroy):
             case nameof(CardStats.coolDownTurn):
             case nameof(CardStats.isCounterAble):
             case nameof(CardStats.isHeadAttack):

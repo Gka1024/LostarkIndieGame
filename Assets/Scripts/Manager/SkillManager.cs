@@ -16,8 +16,6 @@ public class SkillManager : MonoBehaviour
     public BattleItemManager battleItemManager;
     public PlayerStats playerStats;
 
-    public ChainSkillList chainSkillList;
-
     public GameObject boss;
     public GameObject player;
 
@@ -104,6 +102,7 @@ public class SkillManager : MonoBehaviour
             if (currentSkill.CardID != 100)
             {
                 Debug.Log("현재 움직일 수 없습니다. 다른 카드를 사용하세요.");
+                yield return 0;
             }
         }
 
@@ -113,15 +112,8 @@ public class SkillManager : MonoBehaviour
         ShowTripodUI(true);
         ShowCancelButton(true);
 
-        if (playerStats.IsPlayerCrowdControlled())
-        {
-            if (currentSkill.CardID != 100 && selectedTripod != 2)
-            {
-                Debug.Log("현재 움직일 수 없습니다. 다른 카드를 사용하세요.");
-            }
-        }
-
         yield return new WaitUntil(() => currentState == SkillState.SelectingTile);
+
         ShowTripodUI(false);
 
         currentStats.ApplyOption(selectedTripod);
@@ -216,7 +208,7 @@ public class SkillManager : MonoBehaviour
 
         if (stats == null) return;
 
-        ChainStats chainStats = stats.chainPaths.Find(p => p.tripodIndex == tripodIndex)?.chainStats;
+        ChainStats chainStats = stats.GetChainStats(tripodIndex);
 
         if (chainStats == null)
         {
@@ -290,13 +282,15 @@ public class SkillManager : MonoBehaviour
             yield break;
         }
 
+
+
         // 2. 프리팹 인스턴스 생성
         var chainGO = Instantiate(chainSkillData);
         var chainSkill = chainGO.GetComponent<ChainSkill>();
 
         // 2.5 트라이포드 적용 및 타일 선택 
-        chainSkill.SetTripod(data.tripodIndex);
-        var chainStat = CardList.Instance.GetChainStats(data.skillId, data.tripodIndex);
+        var cardStats = CardList.Instance.GetCardStats(data.skillId);
+        var chainStat = cardStats.GetChainStats(data.tripodIndex);
         chainSkill.chainStats = chainStat;
 
         if (chainStat.needToSelectTile)

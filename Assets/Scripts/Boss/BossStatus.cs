@@ -107,6 +107,8 @@ public class BossStatus : MonoBehaviour
         boss.bossEffectController.PlayGroggyEffect(false);
         SetCurrentStatus(CurrentBossStatus.Idle);
 
+        if (bossStats.GetCurrentStagger() == 0) bossStats.RecoverStagger();
+
         OnGroggyRecovered?.Invoke();
     }
 

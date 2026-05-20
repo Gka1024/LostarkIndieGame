@@ -42,9 +42,10 @@ public class VFXManager : MonoBehaviour
         PlayEffect(id, tile.transform.position + tileVFXOffset, duration);
     }
 
-    public void PlayEffect(int id, HexTile tile, int turnDuration)
+    public void PlayEffect(int id, HexTile tile, int turnDuration, float yoffset = 0)
     { // 턴 단위 이펙트
-        PlayEffect(id, tile.transform.position + tileVFXOffset, 0, turnDuration);
+        Vector3 offset = new Vector3(0, yoffset, 0);
+        PlayEffect(id, tile.transform.position + tileVFXOffset + offset, 0, turnDuration);
     }
 
     public void PlayEffect(int id, List<HexTile> tiles, float duration = -1f)

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,11 +15,8 @@ public class GameManager : MonoBehaviour
     public CardManager cardManager;
     public EstherManager estherManager;
     public ObjectManager objectManager;
-    public UIManager UIManager;
+    public UICardTripod UIManager;
     public FieldEffectManager fieldEffectManager;
-
-
-    public PlayerAnimation playerAnimation;
 
     public CardList cardList;
     public ObjectClickHandler objectClickHandler;
@@ -30,6 +28,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject boss;
 
     public int GameTurn;
+    public int ReviveChance;
 
     private void Awake()
     {
@@ -117,5 +116,48 @@ public class GameManager : MonoBehaviour
         objectClickHandler.isPlayerClicked = false;
         HexTileManager.Instance.ResetTileColor();
         player.GetComponent<Player>().PlayerCursor.SetActive(false);
+    }
+
+    public void RestartCurrentScene()
+    {
+        Time.timeScale = 1f;
+        // 1. 현재 활성화된 씬의 정보를 가져옵니다.
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        // 2. 해당 씬의 이름을 사용해 다시 로드합니다.
+        SceneManager.LoadScene(currentScene.name);
+    }
+
+    public void GameOver()
+    {
+        UIManager.GameOverUI.SetActive(true);
+        UIManager.GameOverUI.GetComponent<GameOverUI>().Init(ReviveChance);
+        Time.timeScale = 0f;
+    }
+
+    public void PlayerDie()
+    {
+        Player.Instance.stats.KillPlayerInstantly();
+    }
+
+    public void Revive()
+    {
+        if (ReviveChance >= 1)
+        {
+            ReviveChance--;
+            Time.timeScale = 1f;
+
+            PlayerStats stat = player.GetComponent<Player>().stats;
+            if (stat.isPlayerDie)
+            {
+                Player.Instance.Revive();
+            }
+            UIManager.GameOverUI.SetActive(false);
+        }
+        else
+        {
+            StartCoroutine(UIManager.GameOverUI.GetComponent<GameOverUI>().SetWarning());
+        }
+
     }
 }

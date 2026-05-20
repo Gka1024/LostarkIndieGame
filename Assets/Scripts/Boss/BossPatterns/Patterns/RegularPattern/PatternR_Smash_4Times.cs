@@ -9,7 +9,7 @@ public class PatternR_Smash_4Times : BossPattern
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern1);
         turnGenerators.Add(MakePattern2);
-        turnGenerators.Add(MakePattern2);
+        turnGenerators.Add(MakePattern3);
     }
 
     public override void OnStartPattern(BossAI ai)
@@ -18,29 +18,48 @@ public class PatternR_Smash_4Times : BossPattern
         isTileFixed = false;
     }
 
-    private BossPatternTurnInfo MakePattern1(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
+    public override void OnAfterTurnExecuted(BossAI ai)
     {
-        (2, 2, false), (2, 2, true),
-        (3, 3, false), (3, 3, true),
-    },
-     damage: 50);
+        if (currentTurn == 2)
+        {
+            isTileFixed = true;
+        }
+    }
 
-    private BossPatternTurnInfo MakePattern2(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
+    private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
-        (2, 2, false), (2, 2, true),
-        (3, 3, false), (3, 3, true),
-        (4, 3, false), (4, 3, true),
-    },
-    damage: 60, downDuration: 3);
+        HexTile playerTile = ai.bossController.GetPlayerTile();
+        HexTile bossTile = ai.bossController.GetCurrentTile();
 
-    private BossPatternTurnInfo MakePattern3(BossAI ai) => PatternUtility.CreatePatternByDistance(ai, new[]
+        List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(bossTile, playerTile, 3, 60);
+
+
+        return BossPatternBuilder.Create(attackRange).SetDamage(30).Build();
+    }
+
+    HexTile fixedTile;
+
+    private BossPatternTurnInfo MakePattern2(BossAI ai)
     {
-        (2, 2, false), (2, 2, true),
-        (3, 3, false), (3, 3, true),
-        (4, 3, false), (4, 3, true),
-        (5, 4, false), (5, 4, true),
-    },
-    damage: 60);
+        HexTile playerTile = ai.bossController.GetPlayerTile();
+        HexTile bossTile = ai.bossController.GetCurrentTile();
+
+        fixedTile = playerTile;
+
+        List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(bossTile, playerTile, 4, 60);
+
+        return BossPatternBuilder.Create(attackRange).SetDamage(50).Build();
+    }
+
+
+    private BossPatternTurnInfo MakePattern3(BossAI ai)
+    {
+        HexTile bossTile = ai.bossController.GetCurrentTile();
+
+        List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(bossTile, fixedTile, 3, 60);
+
+        return BossPatternBuilder.Create(attackRange).SetDamage(60).Build();
+    }
 
 
     public override void OnPatternEnd(BossAI ai)

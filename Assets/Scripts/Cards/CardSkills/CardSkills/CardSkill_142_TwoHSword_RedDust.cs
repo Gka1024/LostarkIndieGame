@@ -73,6 +73,18 @@ public class TwoHSword_RedDust_3 : SkillObject
     {
         card.runtimeCardStats.ApplyOption(3);
     }
+
+    public override IEnumerator Execute(CardSkill card, SkillQueueData data, bool isBossHit)
+    {
+        yield return base.Execute(card, data, isBossHit);
+
+        if (card.runtimeCardStats is CardStats_TwoHSword_RedDust stats)
+        {
+            PlayerStats playerStats = Player.Instance.stats;
+            playerStats.AddAttackBuff(stats.base_buff_attack, 0, stats.base_buff_turns);
+        }
+
+    }
 }
 
 /*  // ==== 트라이포드 1번

@@ -89,7 +89,7 @@ public class ObjectClickHandler : MonoBehaviour
             return;
         }
 
-        playerMove.MoveToTile(new PlayerMoveInfo(tile, isTurnEnd: true));
+        playerMove.MoveToTile(new PlayerMoveInfo(tile, isFace: true, isTurnEnd: true));
     }
 
     private void SetPlayerClickState(bool clicked)

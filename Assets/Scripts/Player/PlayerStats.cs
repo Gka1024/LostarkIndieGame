@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,12 +12,15 @@ public class PlayerStats : MonoBehaviour
 
     [Header("Status Flags")]
     public bool IsTimeStopped;
+    public int timeStopRemaining;
     public bool IsStunned;
     public bool IsDowned;
     public bool IsSilenced;
     public bool IsGrabbed;
     public bool IsHiding;
     public bool IsSuperArmor;
+
+    public bool isPlayerDie;
 
     [Header("Base Stats")]
     public const float MAX_HEALTH = 500;
@@ -36,6 +40,7 @@ public class PlayerStats : MonoBehaviour
     {
         currentHealth = MAX_HEALTH;
         currentMana = MAX_MANA;
+        isPlayerDie = false;
         currentIdentity = 0;
         buffState = GetComponent<PlayerBuffState>();
         statsUI.UpdateIdentityBar(currentIdentity);
@@ -55,7 +60,7 @@ public class PlayerStats : MonoBehaviour
 
         if (buffState.GetPlayerBuff(BuffID_Player.PLAYER_SKILL_BURSTCANNON_3) is PlayerBuffShieldCounter buff)
         {
-            buff.OnDamaged(info.damage);
+            buff.OnGetHit(info.damage);
         }
 
         // 1. 실드 처리
@@ -66,6 +71,9 @@ public class PlayerStats : MonoBehaviour
 
         // 3. CC 처리 (슈퍼아머 체크)
         if (!IsSuperArmor) ApplyCC(info);
+
+        // 4. 애니메이션 처리
+        anim.GetDamaged();
     }
 
     private void ApplyCC(PlayerGetDamageInfo info)
@@ -149,6 +157,7 @@ public class PlayerStats : MonoBehaviour
     {
         buffState.AddBuff(PlayerBuffFactory.CreateBuff(BuffID_Player.PLAYER_SHIELD, duration, 0, amount, action));
         Debug.Log($"CreateShield {duration} turns");
+        statsUI.UpdateShieldBar(buffState.GetCurrentShield());
     }
 
     public void AddAttackBuff(float amount, float additional, int duration)
@@ -180,6 +189,7 @@ public class PlayerStats : MonoBehaviour
         if (currentMana >= amount)
         {
             currentMana -= amount;
+            statsUI.UpdateManaBar(currentMana);
             return true;
         }
 
@@ -195,7 +205,7 @@ public class PlayerStats : MonoBehaviour
 
     public void KillPlayerInstantly()
     {
-        Die();
+        StartCoroutine(Die());
     }
 
     public void ProcessTurn()
@@ -204,6 +214,7 @@ public class PlayerStats : MonoBehaviour
         RegenStats();
         CheckPlayerShield();
         CheckPlayerHealth();
+        CheckPlayerTimeStop();
     }
 
     private void RegenStats()
@@ -233,11 +244,44 @@ public class PlayerStats : MonoBehaviour
         statsUI.UpdateHPBar(currentHealth);
     }
 
+    private void CheckPlayerTimeStop()
+    {
+        if (IsTimeStopped)
+        {
+            timeStopRemaining--;
+        }
+
+        if (timeStopRemaining <= 0)
+        {
+            IsTimeStopped = false;
+        }
+    }
+
     public float GetCurrentAttack() => buffState.GetCalculatedAttack(baseAttack);
     public float GetStaggerMultiflyer() => 1f;
     public bool IsImmovable() => IsStunned || IsDowned || IsTimeStopped;
     public bool IsPlayerGrabbed() => IsGrabbed;
-    private void Die() { Debug.Log("Die"); }
+
+    public IEnumerator Die()
+    {
+       anim.SetPlayerDown(true);
+        Debug.Log("Die");
+        isPlayerDie = true;
+
+        yield return new WaitForSeconds(1.2f);
+
+        GameManager.Instance.GameOver();
+    }
+
+    public void Revive()
+    {
+        anim.SetPlayerDown(false);
+        currentHealth = MAX_HEALTH;
+        currentMana = MAX_MANA;
+        isPlayerDie = false;
+        currentIdentity = 0;
+        statsUI.UpdateIdentityBar(currentIdentity);
+    }
 }
 
 public class PlayerGetDamageInfo

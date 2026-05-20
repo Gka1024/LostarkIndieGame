@@ -232,16 +232,18 @@ public class BossAI : MonoBehaviour
     // 특수 기술 처리
     // ===============================
 
-    public void SetAirborne(bool state)
+    public void SetAirborne(bool state, HexTile tile = null)
     {
         isAirborne = state;
 
         if (state)
         {
+            bossController.bossInteraction.MovetoAir();
             StartCoroutine(bossAnimation.FloatBoss(100, 0.5f));
         }
         else
         {
+            bossController.bossInteraction.Moveto(tile);
             StartCoroutine(bossAnimation.LandBoss(1f));
         }
     }

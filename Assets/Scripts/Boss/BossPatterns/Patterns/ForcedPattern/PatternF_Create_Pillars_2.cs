@@ -10,8 +10,12 @@ public class PatternF_Create_Pillars_2 : BossPattern
         turnGenerators.Add(MakePattern2); // 1 : 광범위 공격
         turnGenerators.Add(MakePattern3); // 2 : 쪼기
         turnGenerators.Add(MakePattern3); // 3 : 쪼기 
-        turnGenerators.Add(MakePattern4); // 4 : 공격
-        turnGenerators.Add(MakePattern5); // 5 : 다른거 부수기
+        turnGenerators.Add(MakePattern4); // 4 : 확정
+        turnGenerators.Add(MakePattern5); // 5 : 공격
+        turnGenerators.Add(MakeIdleTurn); // 6: 대기
+        turnGenerators.Add(MakePattern6); // 7: 터지고
+        turnGenerators.Add(MakeIdleTurn); // 8: 대기
+        turnGenerators.Add(MakePattern7); //  9 ; 다른거 부수기
     }
 
     private List<HexTile> brokenPillarTiles = new();
@@ -24,7 +28,7 @@ public class PatternF_Create_Pillars_2 : BossPattern
 
     public override void OnAfterTurnExecuted(BossAI ai)
     {
-        if (currentTurn == 4 && currentTurnInfo != null)
+        if (currentTurn == 5 || currentTurn == 9)
         {
             List<HexTile> pillarsToBreak = new();
 
@@ -55,7 +59,7 @@ public class PatternF_Create_Pillars_2 : BossPattern
     {
         List<HexTile> attackRange = HexTileManager.Instance.GetAllTiles();
         List<HexTile> pillarTiles = ai.bossPatternHelper.GetPillarTiles(1);
-        List<HexTile> pillarSafe = ai.bossPatternHelper.GetPillarSafeTiles();
+        List<HexTile> pillarSafe = ai.bossPatternHelper.GetPillarSafeTilesSmall();
 
         foreach (HexTile tile in pillarTiles)
         {
@@ -73,20 +77,48 @@ public class PatternF_Create_Pillars_2 : BossPattern
     private BossPatternTurnInfo MakePattern3(BossAI ai)
     {
         List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(
-            ai.bossInteraction.GetCurrentTile(), Player.Instance.move.GetCurrentTile(), 5, 100);
+            ai.bossController.GetCurrentTile(), ai.bossController.GetPlayerTile(), 5, 100);
 
         return BossPatternBuilder.Create(attackRange).SetDamage(0f).Build();
     }
 
+    HexTile fixedTile;
+
     private BossPatternTurnInfo MakePattern4(BossAI ai)
     {
+        isTileFixed = true;
+        fixedTile = Player.Instance.move.GetCurrentTile();
         List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(
-            ai.bossInteraction.GetCurrentTile(), Player.Instance.move.GetCurrentTile(), 5, 100);
+            ai.bossInteraction.GetCurrentTile(), ai.bossController.GetPlayerTile(), 5, 100);
+
+        return BossPatternBuilder.Create(attackRange).SetDamage(0).Build();
+    }
+
+    private BossPatternTurnInfo MakePattern5(BossAI ai)
+    {
+        List<HexTile> attackRange = TileDirectionHelper.Instance.GetSectorTiles(
+            ai.bossInteraction.GetCurrentTile(), fixedTile, 5, 100);
 
         return BossPatternBuilder.Create(attackRange).SetDamage(40f).SetKnockback(2).Build();
     }
 
-    private BossPatternTurnInfo MakePattern5(BossAI ai)
+    private BossPatternTurnInfo MakePattern6(BossAI ai)
+    {
+        List<HexTile> explosionTiles = new();
+
+        foreach (HexTile tile in brokenPillarTiles)
+        {
+            explosionTiles.Add(tile);
+            explosionTiles.AddRange(HexTileManager.Instance.GetTilesWithinRange(tile, 2));
+        }
+
+        return BossPatternBuilder
+            .Create(explosionTiles)
+            .SetDamage(40f)
+            .Build();
+    }
+
+    private BossPatternTurnInfo MakePattern7(BossAI ai)
     {
         List<HexTile> explosionTiles = new();
 

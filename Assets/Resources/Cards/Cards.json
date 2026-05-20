@@ -150,7 +150,7 @@
     {
       "id": 121,
       "name": "신성한 보호",
-      "description": "성스러운 빛으로  {base_shield_turns} 간 자신 최대 생명력의 {base_shields} 에 해당하는 보호막을 부여한다.",
+      "description": "성스러운 빛으로  {base_shield_turns}턴 간 자신 최대 생명력의 {base_shields} 에 해당하는 보호막을 부여한다.",
       "options": [
         {
           "option_id": 1,
@@ -172,7 +172,7 @@
     {
       "id": 122,
       "name": "천상의 축복",
-      "description": "빛의 수호자를 소환하여 주변에 {base_skill_damage}의 피해를 주고 자신에게 축복을 내려 {base_buff_turns} 동안 공격력을 {base_attack_increase} 증가시킨다.",
+      "description": "빛의 수호자를 소환하여 주변에 {base_skill_damage}의 피해를 주고 자신에게 축복을 내려 {base_buff_turns}턴 동안 공격력을 {base_attack_increase} 증가시킨다.",
       "options": [
         {
           "option_id": 1,
@@ -204,7 +204,7 @@
         {
           "option_id": 2,
           "option_name": "성흔",
-          "option_description": "빛의 잔해가 남아 {opt2_turns} 동안 매 턴 {opt2_damage} 피해를 입힌다."
+          "option_description": "빛의 잔해가 남아 {opt2_turns}턴 동안 매 턴 {opt2_damage} 피해를 입힌다."
         },
         {
           "option_id": 3,
@@ -221,7 +221,7 @@
     {
       "id": 131,
       "name": "퍼펙트 스윙",
-      "description": "{before_turn} 동안 차지하며, 차지가 완료되면 두 손으로 해머를 크게 휘둘러 {base_skill_damage}의 피해를 준다. ",
+      "description": "{before_turn}턴 동안 차지하며, 차지가 완료되면 두 손으로 해머를 크게 휘둘러 {base_skill_damage}의 피해를 준다. ",
       "options": [
         {
           "option_id": 1,
@@ -263,7 +263,7 @@
         {
           "option_id": 3,
           "option_name": "어스이터",
-          "option_description": "데미지가 낮아지지만, 해머를 내리치지 않고 주변으로 2회 돌리며 데미지를 준다. 두번째 회전은 한 칸 이동하여 공격할 수 있다."
+          "option_description": "데미지가 {opt3_damage_coef}%낮아지지만, 해머를 내리치지 않고 주변으로 2회 돌리며 데미지를 준다. 두번째 회전은 한 칸 이동하여 공격할 수 있다."
         }
       ]
     },
@@ -344,7 +344,7 @@
         {
           "option_id": 3,
           "option_name": "상쇄",
-          "option_description": "와일즈 아님. 아무튼 아님. 올려치기 공격에 카운터가 가능합니다. 아무튼 상쇄 올려베기 아니라고"
+          "option_description": "공격력이 증가하지 않지만, 스킬의 데미지가 {opt3_damage_coef}% 증가하고 사용 중 데미지를 받지 않는다. 이후 추가 공격을 한번 더 한다."
         }
       ]
     },
@@ -356,7 +356,7 @@
     {
       "id": 143,
       "name": "볼케이노 이럽션",
-      "description": "1칸 내의 범위로 도약한 뒤 공격하여 대검을 찍어 주변에 {base_skill_damage}의 데미지를 주고, 후폭풍을 일으켜 {base_skill_damage_2}의 데미지를 준다.",
+      "description": "2칸 내의 범위로 도약한 뒤 공격하여 대검을 찍어 주변에 {base_skill_damage}의 데미지를 주고, 후폭풍을 일으켜 {base_skill_damage_2}의 데미지를 준다.",
       "options": [
         {
           "option_id": 1,
@@ -366,7 +366,7 @@
         {
           "option_id": 2,
           "option_name": "방출된 분노",
-          "option_description": "후폭풍의 피해가 {opt2_damage_coef}% 증가하고 범위가 1칸 늘어나지만, 아이덴티티를 회복할 수 없다."
+          "option_description": "후폭풍의 피해가 {opt2_damage_coef}% 증가하지만, 아이덴티티를 회복할 수 없다."
         },
         {
           "option_id": 3,

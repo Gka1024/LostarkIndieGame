@@ -6,7 +6,6 @@ using UnityEngine;
 public class PatternR_Outer_Grab : BossPattern
 {
     private bool isGrabSuccess;
-    // 생성된 오브젝트들을 관리할 리스트 (배열보다 리스트가 안전합니다)
     private List<GameObject> outerModelings = new List<GameObject>();
 
     public PatternR_Outer_Grab()

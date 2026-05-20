@@ -15,7 +15,7 @@ MonoBehaviour:
   cardID: 133
   tripodIndex: 3
   chainSkillPrefab: {fileID: 6533646972396356552, guid: 094643aa8e78b044d898eaf6cf090f02, type: 3}
-  afterDelay: 0
+  afterDelay: 1
   skill_damage: 0
   stagger: 0
   identityGain: 0

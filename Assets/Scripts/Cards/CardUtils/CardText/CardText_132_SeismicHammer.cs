@@ -12,6 +12,7 @@ public class CardText_SeismicHammer : CardText
         if (cardStat != null)
         {
             baseValues["opt1_damage_coef"] = cardStat.opt1_damage_coef.ToString();
+            baseValues["opt3_damage_coef"] = cardStat.opt3_damage_down_coef.ToString();
             //baseValues["text"] = Mathf.RoundToInt(playerStats.GetPlayerAttack() * cardStat.var2).ToString()
 
         }

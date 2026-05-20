@@ -8,7 +8,6 @@ public class PatternR_Rush : BossPattern
     {
         turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakeIdleTurn);
-        turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern1);
     }
 
@@ -20,6 +19,32 @@ public class PatternR_Rush : BossPattern
         isTileFixed = false;
     }
 
+    public override void OnAfterTurnExecuted(BossAI ai)
+    {
+        if (currentTurn != 2)
+            return;
+
+        if (targetTile == null)
+        {
+            Debug.LogWarning("Rush targetTile is null.");
+            return;
+        }
+
+        HexTile currentTile = ai.bossController.GetCurrentTile();
+
+        // 벽을 칠 경우, 실제 이동 위치는 벽 바로 앞 타일
+        HexTile moveTile = TileDirectionHelper.Instance
+            .GetFrontTile(targetTile, currentTile);
+
+        if (moveTile == null)
+        {
+            Debug.LogWarning("Rush finalTile is null.");
+            return;
+        }
+
+        ai.GetBoss().GetComponent<BossInteraction>().Moveto(moveTile);
+    }
+
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
         var current = ai.bossController.GetCurrentTile();
@@ -29,7 +54,7 @@ public class PatternR_Rush : BossPattern
 
         targetTile = tile;
 
-        return BossPatternBuilder.Create(result).SetDamage(10).Build();
+        return BossPatternBuilder.Create(result).SetDamage(50).Build();
     }
 
 

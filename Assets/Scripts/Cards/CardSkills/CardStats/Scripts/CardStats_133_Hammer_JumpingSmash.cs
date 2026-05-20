@@ -19,8 +19,7 @@ public class CardStats_Hammer_JumpingSmash : CardStats
                 break;
 
             case 3:
-                this.skill_damage += opt3_skill_damage;
-
+                HasChainSkill = true;
                 this.tileSelectType = TileSelectType.Around;
                 this.aroundRange = 2;
                 break;
@@ -29,5 +28,22 @@ public class CardStats_Hammer_JumpingSmash : CardStats
                 Debug.LogWarning("ApplyOption: 알 수 없는 옵션 번호입니다: " + num);
                 break;
         }
+    }
+
+
+    public override ChainStats GetChainStats(int tripodIndex)
+    {
+        ChainStats original = chainPaths.Find(p => p.tripodIndex == tripodIndex)?.chainStats;
+
+        if (original == null) return null;
+
+        ChainStats clonedStats = Instantiate(original);
+
+        if (tripodIndex == 3)
+        {
+            clonedStats.SetDamage(opt3_skill_damage);
+        }
+
+        return clonedStats;
     }
 }

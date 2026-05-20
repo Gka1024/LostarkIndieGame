@@ -17,7 +17,6 @@ public class CardSkill_GunLance_Bash : CardSkill
 
     protected override void SkillAnimation(HexTile tile)
     {
-        Debug.Log("123");
         manager.GetPlayer().GetComponent<PlayerMove>().RotateToTile(tile);
         playerAnimation.PlayAnimation(1);
     }

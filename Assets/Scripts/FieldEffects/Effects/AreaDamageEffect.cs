@@ -9,7 +9,6 @@ public class AreaDamageEffect : FieldEffect
         this.tiles = tiles;
         this.damage = damage;
         this.duration = duration;
-
     }
 
     public override void OnTurnStart()

@@ -35,7 +35,7 @@ MonoBehaviour:
   manaUse: 40
   identityGain: 0
   stagger: 50
-  destroy: 0
+  destroy: 25
   coolDownTurn: 20
   isCounterAble: 0
   isHeadAttack: 0

@@ -27,4 +27,4 @@ MonoBehaviour:
   buff_duration: 0
   granadeType: 0
   potionType: 0
-  specialType: 2
+  specialType: 1

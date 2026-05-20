@@ -27,4 +27,20 @@ public class CardStats_TwoHSword_FinishStrike : CardStats
                 break;
         }
     }
+
+    public override ChainStats GetChainStats(int tripodIndex)
+    {
+        ChainStats original = chainPaths.Find(p => p.tripodIndex == tripodIndex)?.chainStats;
+
+        if (original == null) return null;
+
+        ChainStats clonedStats = Instantiate(original);
+
+        if (tripodIndex == 3)
+        {
+            clonedStats.SetDamage(opt3_skill_damage);
+        }
+
+        return clonedStats;
+    }
 }

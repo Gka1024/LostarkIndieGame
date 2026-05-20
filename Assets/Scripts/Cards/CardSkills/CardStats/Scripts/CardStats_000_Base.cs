@@ -18,7 +18,7 @@ public class CardStats_Base : CardStats
 
         if (tripodIndex == 2)
         {
-            clonedStats.ChangeDamage(1f);
+            clonedStats.MultiflyDamage(1f);
             clonedStats.skillDistanceRange++;
         }
 

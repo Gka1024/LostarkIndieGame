@@ -39,11 +39,11 @@ MonoBehaviour:
   manaUse: 40
   identityGain: 10
   stagger: 40
-  destroy: 0
+  destroy: 15
   coolDownTurn: 20
   isCounterAble: 0
   isHeadAttack: 0
   isBackAttack: 0
   isSuperArmor: 0
-  base_skill_damage_2: 5
+  base_skill_damage_2: 8
   opt2_damage_coef: 40

@@ -16,7 +16,7 @@ MonoBehaviour:
   tripodIndex: 1
   chainSkillPrefab: {fileID: 7064955508541714225, guid: 0e14d4787599f7844b81e9279da1fed9, type: 3}
   afterDelay: 1
-  skill_damage: 0
+  skill_damage: 10
   stagger: 0
   identityGain: 0
   isCounterAble: 0
@@ -30,4 +30,4 @@ MonoBehaviour:
   skillDistanceRange: 0
   aroundRange: 0
   rayDistance: 3
-  rayWidth: 2
+  rayWidth: 1

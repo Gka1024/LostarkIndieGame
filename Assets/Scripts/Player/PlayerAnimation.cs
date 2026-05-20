@@ -36,7 +36,10 @@ public class PlayerAnimation : MonoBehaviour
     public GameObject CampFire;
 
     private static readonly int IsWalkingHash = Animator.StringToHash("isWalking");
+    private static readonly int IsDashHash = Animator.StringToHash("UseDash");
     private static readonly int IsDownHash = Animator.StringToHash("isDown");
+    private static readonly int DrinkPotionHash = Animator.StringToHash("DrinkPotion");
+    private static readonly int GetHitHash = Animator.StringToHash("GetHit");
 
     void Update()
     {
@@ -139,19 +142,33 @@ public class PlayerAnimation : MonoBehaviour
     public IEnumerator DrinkPotion()
     {
         RemovePlayerWeapon();
-        animator.SetTrigger("DrinkPotion");
+        animator.SetTrigger(DrinkPotionHash);
         yield return new WaitForSeconds(2.3f);
         ShowPlayerWeapon();
-        
+
 
         yield return null;
+    }
+    
+    // ==== 대시 모션
+
+    public void UseDash()
+    {
+        animator.SetTrigger(IsDashHash);
+    }
+
+    // ==== 피격 모션
+
+    public void GetDamaged()
+    {
+        animator.SetTrigger(GetHitHash);
     }
 
     // ===== 플레이어 다운 로직
 
     public void SetPlayerDown(bool down)
     {
-        animator.SetBool("isPlayerDown", down);
+        animator.SetBool(IsDownHash, down);
     }
 
     // ===== 수류탄 로직

@@ -80,9 +80,8 @@ public class PatternR_Rush_Grab_Breath : BossPattern
     public BossPatternTurnInfo MakePattern2(BossAI ai)
     {
         Debug.Log(rushRange.Count);
-        return BossPatternBuilder.Create(rushRange.ToList()).SetDamage(10).Build();
+        return BossPatternBuilder.Create(rushRange.ToList()).SetDamage(0).Build();
     }
-
 
     public BossPatternTurnInfo MakePattern3(BossAI ai)
     {

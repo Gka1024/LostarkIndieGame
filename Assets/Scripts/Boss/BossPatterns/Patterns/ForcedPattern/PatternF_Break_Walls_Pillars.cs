@@ -11,6 +11,7 @@ public class PatternF_Break_All_Walls_Pillars : BossPattern
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
         ai.bossPatternHelper.BreakAllWalls();
+        ai.bossPatternHelper.BreakAllWalls();
         ai.bossPatternHelper.BreakAllPillars();
         return BossPatternBuilder.Create(new List<HexTile>()).SetDamage(0).Build();
     }

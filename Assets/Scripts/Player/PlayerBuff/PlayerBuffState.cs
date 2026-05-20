@@ -44,6 +44,15 @@ public class PlayerBuffState : MonoBehaviour
         }
     }
 
+    private void RemoveBuff(PlayerBuff buff)
+    {
+        if (_activeBuffs.Contains(buff))
+        {
+            _activeBuffs.Remove(buff);
+            buff.OnRemove(_stats); // 버프 종료 시 필요한 처리 (이펙트 해제 등)
+        }
+    }
+
     // [실드 로직] 리스트를 순회하며 데미지를 깎음
     public float AbsorbDamageWithShields(float damage)
     {
@@ -56,7 +65,7 @@ public class PlayerBuffState : MonoBehaviour
             shield.Amount -= absorb;
             damage -= absorb;
 
-            if (shield.Amount <= 0) RemoveBuff(BuffID_Player.PLAYER_SHIELD);
+            if (shield.Amount <= 0) RemoveBuff(shield);
         }
         return damage;
     }

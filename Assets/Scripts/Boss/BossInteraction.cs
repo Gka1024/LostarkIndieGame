@@ -9,6 +9,8 @@ public class BossInteraction : MonoBehaviour
 
     [SerializeField] private float moveDuration;
 
+    public bool isBossAir;
+
     public HexTile currentTile; // 보스가 위치한 타일
     public Color BossTileColor;
     public List<HexTile> neighborTile = new List<HexTile>(); // 보스 주변 타일
@@ -30,6 +32,7 @@ public class BossInteraction : MonoBehaviour
     public void Moveto(HexTile targetTile) // 코루틴으로 보스 이동 구현하기
     {
         StartCoroutine(MoveCoroutine(targetTile));
+        isBossAir = false;
 
         currentTile = targetTile;
         neighborTile = new List<HexTile>(currentTile.neighbors);
@@ -38,8 +41,21 @@ public class BossInteraction : MonoBehaviour
         ColorBossTile();
     }
 
+    public void MovetoAir()
+    {
+        currentTile = null;
+        neighborTile = null;
+        isBossAir = true;
+        HexTileManager.Instance.ResetTileColor();
+    }
+
     public IEnumerator MoveCoroutine(HexTile targetTile)
     {
+        if(targetTile == null)
+        {
+            Debug.Log("!@#");
+        }
+
         bossAnimation.isMoving = true;
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = targetTile.GetThisSpawnPos(0);

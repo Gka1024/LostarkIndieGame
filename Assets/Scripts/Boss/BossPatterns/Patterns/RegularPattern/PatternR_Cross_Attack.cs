@@ -27,7 +27,7 @@ public class PatternR_Cross_Attack : BossPattern
         HexTile playerTile = ai.bossController.GetPlayerTile();
         List<HexTile> attackRange = TileRayHelper.GetCrossTiles(playerTile, curTile, 2);
 
-        return BossPatternBuilder.Create(attackRange).SetDamage(1).Build();
+        return BossPatternBuilder.Create(attackRange).SetDamage(40).Build();
     }
 
     public override void PerformActionAnimation(BossAnimation animation)
