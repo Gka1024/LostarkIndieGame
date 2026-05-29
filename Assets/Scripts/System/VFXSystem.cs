@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class VFXManager : MonoBehaviour
+public class VFXSystem : MonoBehaviour
 {
-    public static VFXManager Instance { get; private set; }
+    public static VFXSystem Instance { get; private set; }
 
     [System.Serializable]
     public struct VFXMapping

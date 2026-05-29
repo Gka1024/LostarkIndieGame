@@ -44,15 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6570f31013560e74c97b2d40ac27b653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardID: 0
-  CardTripodNum: 0
-  chainStats: {fileID: 0}
-  manager: {fileID: 0}
-  skillManager: {fileID: 0}
-  cardList: {fileID: 0}
-  Player: {fileID: 0}
-  playerStats: {fileID: 0}
-  playerSC: {fileID: 0}
-  Boss: {fileID: 0}
+  CardID: 141
+  CardTripodNum: 3
+  chainStats: {fileID: 11400000, guid: 5d36291c8bd28dc428bb9e800863fd80, type: 2}
   baseCardSkill: {fileID: 0}
   tripodNum: 0

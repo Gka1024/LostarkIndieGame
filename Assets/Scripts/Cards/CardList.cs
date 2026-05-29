@@ -7,6 +7,8 @@ public class CardList : MonoBehaviour
     public static CardList Instance { get; private set; }
 
     private int specialMoveCooldown;
+    public int GetSpecialMoveCooldown() => specialMoveCooldown;
+
 
     [Header("전체 카드 및 기본 카드 목록")]
     public GameObject basicCard;

@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStatsUI : MonoBehaviour
 {
@@ -17,6 +17,12 @@ public class PlayerStatsUI : MonoBehaviour
     private const float MANA_BAR_MAX_X = 420;
     private float PlayerMaxMana;
     public RectTransform PlayerManaBar;
+    public RectTransform PlayerManaBarBlink;
+    public Image PlayerManaBarBlinkImage;
+    public RectTransform PlayerManaBar_Preview;
+
+    private bool blinkManabar;
+    private float blinkTimer;
 
     private float PlayerMaxIdentity;
 
@@ -36,10 +42,10 @@ public class PlayerStatsUI : MonoBehaviour
     public GameObject buffsParentGameObject;
     public GameObject debuffsParentGameObject;
 
-
     public List<PlayerBuff> PlayerBuffsCopy;
     public List<PlayerBuff> PlayerDebuffsCopy;
 
+    public Color originalManaColor;
 
     public void Awake()
     {
@@ -47,7 +53,18 @@ public class PlayerStatsUI : MonoBehaviour
         PlayerMaxMana = PlayerStats.MAX_MANA;
         PlayerMaxIdentity = PlayerStats.MAX_IDENTITY;
 
+        blinkManabar = false;
         SetBarSize();
+    }
+
+    void Update()
+    {
+        if (blinkManabar)
+        {
+            blinkTimer += Time.deltaTime * 5f; // 깜빡임 속도
+            float alpha = Mathf.Lerp(0.4f, 1f, (Mathf.Sin(blinkTimer) + 1f) / 2f);
+            PlayerManaBarBlinkImage.color = new Color(PlayerManaBarBlinkImage.color.r, PlayerManaBarBlinkImage.color.g, PlayerManaBarBlinkImage.color.b, alpha);
+        }
     }
 
     private void SetBarSize()
@@ -73,6 +90,24 @@ public class PlayerStatsUI : MonoBehaviour
     {
         float manaRatio = Mathf.Clamp01(currentMana / PlayerMaxMana);
         PlayerManaBar.sizeDelta = new Vector2(manaRatio * MANA_BAR_MAX_X, PlayerManaBar.sizeDelta.y);
+        PlayerManaBarBlink.sizeDelta = new Vector2(manaRatio * MANA_BAR_MAX_X, PlayerManaBar.sizeDelta.y);
+        PlayerManaBar_Preview.sizeDelta = new Vector2(manaRatio * MANA_BAR_MAX_X, PlayerManaBar.sizeDelta.y);
+    }
+
+    public void IndicateManaBar(int cardID)
+    {
+        float UseMana = CardList.Instance.GetCardStats(cardID).manaUse;
+
+        blinkManabar = true;
+        float manaLeft = Player.Instance.stats.currentMana - UseMana;
+        float manaRatio = Mathf.Clamp01(manaLeft / PlayerMaxMana);
+        PlayerManaBar_Preview.sizeDelta = new Vector2(manaRatio * MANA_BAR_MAX_X, PlayerManaBar.sizeDelta.y);
+    }
+
+    public void ManaBlinkOff()
+    {
+        PlayerManaBar_Preview.sizeDelta = PlayerManaBar.sizeDelta;
+        blinkManabar = false;
     }
 
     public void UpdateIdentityBar(float currentIdentity)

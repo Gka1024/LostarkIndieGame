@@ -141,7 +141,7 @@ public class PlayerBuffState : MonoBehaviour
             }
         }
 
-        return manaRegen;
+        return manaRegen - baseRegen;
     }
 
     public float GetCurrentShield()

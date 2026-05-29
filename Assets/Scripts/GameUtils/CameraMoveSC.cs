@@ -7,6 +7,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] private bool useMouseMove;
     [SerializeField] private float panBorderThickness = 20f;
 
+    [Header("Map Bounds")]
+    [SerializeField] private bool useBounds = false;
+    [SerializeField] private Vector2 minBounds; // 맵의 최소 X, Z
+    [SerializeField] private Vector2 maxBounds; // 맵의 최대 X, Z
+
     [Header("Zoom")]
     [SerializeField] private float zoomSpeed = 15f;
     [SerializeField] private float minHeight = 10f;
@@ -19,22 +24,37 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform player;
 
     private Vector3 targetPosition;
-    private Vector3 dragStartWorld;
-
     private Camera cam;
+
+    // [수정] 고정된 Vector3 대신 카메라의 피치(기울기) 각도에 따른 수평 오프셋만 유지합니다.
+    private Vector3 horizontalFocusOffset;
+
+    private Vector3 initialFullOffset;
+    private float initialHeight; // 초기 높이
 
     private void Awake()
     {
         cam = Camera.main;
         targetPosition = transform.position;
-        AdjustFocusOffset();
+
+        if (player != null)
+        {
+            // Y축(높이)을 포함한 카메라와 플레이어의 '초기 상대 위치 벡터'를 통째로 저장합니다.
+            initialFullOffset = transform.position - player.position;
+            initialHeight = transform.position.y;
+        }
     }
 
     private void LateUpdate()
     {
+        // 줌과 드래그가 동시에 일어나서 생기는 떨림 방지
+        if (!isDragging)
+        {
+            HandleZoom();
+        }
+
         HandleDragMove();
         HandleEdgeMove();
-        HandleZoom();
         HandleFocus();
 
         ApplyMovement();
@@ -43,7 +63,6 @@ public class CameraController : MonoBehaviour
     // ======================
     // Drag Move (Right Click)
     // ======================
-
     private bool isDragging;
     private Vector3 lastDragWorld;
 
@@ -62,8 +81,6 @@ public class CameraController : MonoBehaviour
             delta.y = 0;
 
             targetPosition += delta;
-
-            // ⭐ 기준점 갱신 (핵심)
             lastDragWorld = currentWorld;
         }
 
@@ -78,7 +95,8 @@ public class CameraController : MonoBehaviour
     // ======================
     private void HandleEdgeMove()
     {
-        if (Input.GetMouseButton(1) || !useMouseMove) return;
+        // [수정] 드래그 중이 아닐 때만 엣지 이동 작동 (마우스 밖으로 나가는 버그 방지)
+        if (isDragging || !useMouseMove) return;
 
         Vector3 dir = Vector3.zero;
 
@@ -107,36 +125,54 @@ public class CameraController : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (Mathf.Abs(scroll) < 0.01f) return;
 
-        targetPosition.y -= scroll * zoomSpeed;
-        targetPosition.y = Mathf.Clamp(targetPosition.y, minHeight, maxHeight);
+        Vector3 zoomDirection = transform.forward;
+
+        Vector3 zoomMovement = zoomDirection * scroll * zoomSpeed;
+
+        Vector3 nextTargetPos = targetPosition + zoomMovement;
+
+        float clampedY = Mathf.Clamp(nextTargetPos.y, minHeight, maxHeight);
+
+        if (nextTargetPos.y >= minHeight && nextTargetPos.y <= maxHeight)
+        {
+            targetPosition = nextTargetPos;
+        }
+        else
+        {
+            float currentY = targetPosition.y;
+            if (currentY != clampedY)
+            {
+                float remainingFactor = (clampedY - currentY) / zoomMovement.y;
+                targetPosition += zoomMovement * remainingFactor;
+            }
+        }
     }
 
     // ======================
     // Focus Player (Space)
     // ======================
-
-    [SerializeField] private Vector3 focusOffset = new Vector3(0, 0, 0);
-
-    private void AdjustFocusOffset()
-    {
-        focusOffset = this.transform.position - player.transform.position;
-    }
-
     private void HandleFocus()
     {
         if (player == null) return;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            targetPosition = player.position + focusOffset;
+            targetPosition = player.position + initialFullOffset;
         }
     }
-
+    
     // ======================
     // Apply Movement
     // ======================
     private void ApplyMovement()
     {
+        // [추가] 맵 영역 제한 처리
+        if (useBounds)
+        {
+            targetPosition.x = Mathf.Clamp(targetPosition.x, minBounds.x, maxBounds.x);
+            targetPosition.z = Mathf.Clamp(targetPosition.z, minBounds.y, maxBounds.y);
+        }
+
         transform.position = Vector3.Lerp(
             transform.position,
             targetPosition,

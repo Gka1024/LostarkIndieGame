@@ -67,7 +67,7 @@
         {
           "option_id": 2,
           "option_name": "긴급 이동",
-          "option_description": "3칸 내 원하는 위치로 이동할 수 있다. 남발하지 않도록 하자."
+          "option_description": "3칸 내 원하는 위치로 이동할 수 있다. 남발하지 않도록 하자. 남은 턴 수 : {left_cooldown}"
         },
         {
           "option_id": 3,

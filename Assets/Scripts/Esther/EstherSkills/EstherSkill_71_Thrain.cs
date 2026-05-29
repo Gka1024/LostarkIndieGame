@@ -29,7 +29,7 @@ public class EstherSkill_Thrain : EstherSkill
         {
             if (estherAnimationController != null) estherAnimationController.PlayAttackAnimation();
             estherManager.ProcessEstherSkillDamageData(new BossDamageData(skillData.skillDamage1, skillData.stagger1, skillData.destroy1));
-            VFXManager.Instance.PlayProjectile(VFXID.Esther_Thirain_Projectile, spawnTile, targetTile, 20f, 1.5f);
+            VFXSystem.Instance.PlayProjectile(VFXID.Esther_Thirain_Projectile, spawnTile, targetTile, 20f, 1.5f);
         });
 
         // 5턴 후 데미지 + 무력화
@@ -37,7 +37,7 @@ public class EstherSkill_Thrain : EstherSkill
         {
             if (estherAnimationController != null) estherAnimationController.PlayAttackAnimation();
             estherManager.ProcessEstherSkillDamageData(new BossDamageData(skillData.skillDamage2, skillData.stagger2, skillData.destroy2));
-            VFXManager.Instance.PlayEffect(VFXID.Esther_Thirain, selectedTiles, 0.1f);
+            VFXSystem.Instance.PlayEffect(VFXID.Esther_Thirain, selectedTiles, 0.1f);
         });
     }
 }

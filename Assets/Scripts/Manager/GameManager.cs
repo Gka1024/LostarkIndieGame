@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject boss;
 
+    public bool isTutorialCleared = false;
+
     public int GameTurn;
     public int ReviveChance;
 
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {

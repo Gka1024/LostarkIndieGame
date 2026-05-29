@@ -221,6 +221,9 @@ public class PlayerStats : MonoBehaviour
     {
         currentHealth = Math.Min(MAX_HEALTH, currentHealth + regenHealth);
         float manaRegen = regenMana + buffState.GetAdditionalManaRegen(regenMana);
+
+        Debug.Log($"manaregen : {regenMana}");
+
         currentMana = Mathf.Min(MAX_MANA, currentMana + manaRegen);
 
         statsUI.UpdateHPBar(currentHealth);

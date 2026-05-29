@@ -1,7 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class Lonaun : MonoBehaviour
+public class LonaunCrystal : MonoBehaviour
 {
     [SerializeField] private float offset = 0.5f;
     [SerializeField] private float speed = 2f;
@@ -16,7 +16,7 @@ public class Lonaun : MonoBehaviour
     {
         float y = math.sin(Time.time * speed) * offset;
         this.transform.position = startPos + new Vector3(0, y, 0);
-
+        this.transform.rotation = Quaternion.Euler(0, Time.time * 50f, 0);
     }
 
 }

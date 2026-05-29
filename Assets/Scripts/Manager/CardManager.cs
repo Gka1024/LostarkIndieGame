@@ -30,6 +30,7 @@ public class CardManager : MonoBehaviour
     public GameObject TripodCancelButton; // 트라이포드 취소 버튼 
 
     public CardDescriptionUI cardDescriptionUI;
+    public PlayerStatsUI playerStatsUI;
 
     public void Awake()
     {
@@ -219,6 +220,8 @@ public class CardManager : MonoBehaviour
 
         cardDescriptionUI.SetCardText(card.GetComponent<CardSkill>().CardID);
         cardDescriptionUI.OnPointerEnter();
+
+        playerStatsUI.IndicateManaBar(card.GetComponent<CardSkill>().CardID);
     }
 
     public void PointerExit(CardInteraction card)
@@ -240,6 +243,7 @@ public class CardManager : MonoBehaviour
         }
 
         cardDescriptionUI.OnPointerExit();
+        playerStatsUI.ManaBlinkOff();
     }
 
     // ======================

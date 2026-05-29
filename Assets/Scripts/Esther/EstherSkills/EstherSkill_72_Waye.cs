@@ -26,21 +26,21 @@ public class EstherSkill_Waye : EstherSkill
        {
            if (estherAnimationController != null) estherAnimationController.PlayAttackAnimation();
            estherManager.ProcessEstherSkillDamageData(new BossDamageData(skillData.skillDamage1, skillData.stagger1));
-           VFXManager.Instance.PlayEffect(VFXID.Esther_Waye, targetTile);
+           VFXSystem.Instance.PlayEffect(VFXID.Esther_Waye, targetTile);
        });
 
         RegisterTurnAction(3, () =>
         {
             if (estherAnimationController != null) estherAnimationController.PlayAttackAnimation();
             estherManager.ProcessEstherSkillDamageData(new BossDamageData(skillData.skillDamage2, skillData.stagger2));
-            VFXManager.Instance.PlayEffect(VFXID.Esther_Waye, targetTile);
+            VFXSystem.Instance.PlayEffect(VFXID.Esther_Waye, targetTile);
         });
 
         RegisterTurnAction(4, () =>
         {
             if (estherAnimationController != null) estherAnimationController.PlayAttackAnimation();
             estherManager.ProcessEstherSkillDamageData(new BossDamageData(skillData.skillDamage3, skillData.stagger3));
-            VFXManager.Instance.PlayEffect(VFXID.Esther_Waye, targetTile);
+            VFXSystem.Instance.PlayEffect(VFXID.Esther_Waye, targetTile);
         });
     }
 }

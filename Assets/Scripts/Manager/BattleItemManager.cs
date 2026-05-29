@@ -188,28 +188,28 @@ public class BattleItemManager : MonoBehaviour
         {
             case PotionType.Heal:
                 playerStats.Heal(currentItem.value, true);
-                VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Heal, 1);
+                VFXSystem.Instance.PlayEffectAtPlayer(VFXID.Player_Heal, 1);
                 break;
 
             case PotionType.Atropine:
                 playerStats.AddAttackBuff(30, 0, 20);
-                VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Buff, 1);
+                VFXSystem.Instance.PlayEffectAtPlayer(VFXID.Player_Buff, 1);
                 break;
 
             case PotionType.Shield:
                 playerStats.AddShield(currentItem.value * PlayerStats.MAX_HEALTH * 0.01f, currentItem.duration);
-                VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Shield, 1);
+                VFXSystem.Instance.PlayEffectAtPlayer(VFXID.Player_Shield, 1);
                 break;
 
             case PotionType.TimeStop:
                 playerStats.IsTimeStopped = true;
                 playerStats.timeStopRemaining = currentItem.duration;
-                VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Gold, 1);
+                VFXSystem.Instance.PlayEffectAtPlayer(VFXID.Player_Gold, 1);
                 break;
 
             case PotionType.Identity:
                 //playerStats.AddAttackBuff(30, 0, 20);
-                VFXManager.Instance.PlayEffectAtPlayer(VFXID.Player_Identity, 1);
+                VFXSystem.Instance.PlayEffectAtPlayer(VFXID.Player_Identity, 1);
                 break;
                 // ... 나머지 물약 로직
         }
@@ -282,7 +282,7 @@ public class BattleItemManager : MonoBehaviour
 
         }
 
-        VFXManager.Instance.PlayEffect(id, target, 0.4f);
+        VFXSystem.Instance.PlayEffect(id, target, 0.4f);
     }
 
     private void ApplyEffectToBoss()

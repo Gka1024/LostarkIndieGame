@@ -48,7 +48,7 @@ public class VFXAutoReturn : MonoBehaviour
             yield return new WaitForSeconds(2.0f);
         }
 
-        VFXManager.Instance.ReturnToPool(_effectId, gameObject);
+        VFXSystem.Instance.ReturnToPool(_effectId, gameObject);
     }
 
     public bool TickTurn()
@@ -59,7 +59,7 @@ public class VFXAutoReturn : MonoBehaviour
 
         if (_remainingTurns <= 0)
         {
-            VFXManager.Instance.ReturnToPool(_effectId, gameObject);
+            VFXSystem.Instance.ReturnToPool(_effectId, gameObject);
             return true;
         }
 

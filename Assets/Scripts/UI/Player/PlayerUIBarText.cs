@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerUIBar : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class PlayerUIBarText : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject text;
 

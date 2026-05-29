@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class VFXList : MonoBehaviour
 {
-    public VFXManager vfxManager;
+    public VFXSystem vfxManager;
 
     // 범위 설정 (예: Field=1000번대, Player=2000번대, Boss=3000번대)
     public int fieldOffset = 1001;

@@ -16,6 +16,7 @@ public class CardStats_Hammer_JumpingSmash : CardStats
                 break;
 
             case 2:
+                this.skillDistance++;
                 break;
 
             case 3:

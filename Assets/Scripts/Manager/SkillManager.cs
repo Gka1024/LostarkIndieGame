@@ -278,10 +278,9 @@ public class SkillManager : MonoBehaviour
         var chainSkillData = CardList.Instance.GetChainSkills(data.skillId, data.tripodIndex);
         if (chainSkillData == null)
         {
-            Debug.LogError($"스킬 데이터를 찾을 수 없음: {data.skillId}");
+            Debug.LogError($"스킬 데이터를 찾을 수 없음: {data.skillId} {data.tripodIndex}");
             yield break;
         }
-
 
 
         // 2. 프리팹 인스턴스 생성
