@@ -3,8 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
-    public enum ETutorialStep { Welcome, MoveExample, AttackExample, ItemExample, AvoidPattern, Clear }
-    public ETutorialStep currentStep = ETutorialStep.Welcome;
+    public enum ETutorialStep { Start, Welcome, MoveExample, AttackExample, ItemExample, AvoidPattern, Clear }
+    public ETutorialStep currentStep = ETutorialStep.Start;
+
+    public ObjectClickHandler objectClickHandler;
 
     [Header("UI Panels")]
     [SerializeField] private GameObject startPanel;
@@ -19,9 +21,14 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject EstherUI;
     [SerializeField] private GameObject BattleItemUI;
 
+    public void Start()
+    {
+        SetTimeScale(0f);
+    }
+
     public void StartTutorial()
     {
-        EnterStep(ETutorialStep.MoveExample);
+        EnterStep(ETutorialStep.Welcome);
         startPanel.SetActive(false);
     }
 
@@ -39,17 +46,32 @@ public class TutorialManager : MonoBehaviour
         // 현재 단계에 맞는 UI와 규칙 활성화
         switch (currentStep)
         {
+            case ETutorialStep.Start:
+                break;
+
             case ETutorialStep.Welcome:
                 welcomePanel.SetActive(true);
+                welcomePanel.GetComponent<TutorialPanelUI>().Init(this);
                 break;
 
             case ETutorialStep.MoveExample:
                 moveGuidePanel.SetActive(true);
-                // 기획적으로 플레이어가 이동만 할 수 있게 다른 버튼을 비활성화하는 로직 추가 가능
+                moveGuidePanel.GetComponent<TutorialPanelUI>().Init(this);
                 break;
 
             case ETutorialStep.AttackExample:
                 attackGuidePanel.SetActive(true);
+                attackGuidePanel.GetComponent<TutorialPanelUI>().Init(this);
+                break;
+
+            case ETutorialStep.ItemExample:
+                ItemGuidePanel.SetActive(true);
+                ItemGuidePanel.GetComponent<TutorialPanelUI>().Init(this);
+                break;
+
+            case ETutorialStep.AvoidPattern:
+                AvoidGuidePanel.SetActive(true);
+                AvoidGuidePanel.GetComponent<TutorialPanelUI>().Init(this);
                 break;
 
             case ETutorialStep.Clear:
@@ -58,7 +80,7 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    private void SetTimeScale(float scale)
+    public void SetTimeScale(float scale)
     {
         Time.timeScale = scale;
     }
@@ -66,11 +88,17 @@ public class TutorialManager : MonoBehaviour
     // 외부(Player나 UI 버튼)에서 무언가 완료했을 때 호출하는 함수
     public void CompleteCurrentStep()
     {
-        if (currentStep == ETutorialStep.Welcome)
+        if (currentStep == ETutorialStep.Start)
+            EnterStep(ETutorialStep.Welcome);
+        else if (currentStep == ETutorialStep.Welcome)
             EnterStep(ETutorialStep.MoveExample);
         else if (currentStep == ETutorialStep.MoveExample)
             EnterStep(ETutorialStep.AttackExample);
         else if (currentStep == ETutorialStep.AttackExample)
+            EnterStep(ETutorialStep.ItemExample);
+        else if (currentStep == ETutorialStep.ItemExample)
+            EnterStep(ETutorialStep.AvoidPattern);
+        else if (currentStep == ETutorialStep.AvoidPattern)
             EnterStep(ETutorialStep.Clear);
     }
 

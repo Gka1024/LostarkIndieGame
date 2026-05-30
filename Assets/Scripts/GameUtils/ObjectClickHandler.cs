@@ -18,6 +18,7 @@ public class ObjectClickHandler : MonoBehaviour
     [SerializeField] private HexTileSelectHandler hexTileSelectHandler;
 
     public bool isPlayerClicked;
+    public event Action OnPlayerClicked;
 
     void Update()
     {
@@ -48,6 +49,7 @@ public class ObjectClickHandler : MonoBehaviour
             if (skillManager.CheckPlayerMoveable())
             {
                 SetPlayerClickState(true);
+                OnPlayerClicked?.Invoke();
             }
             else
             {
