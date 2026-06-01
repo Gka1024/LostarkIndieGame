@@ -19,6 +19,7 @@ public class ObjectClickHandler : MonoBehaviour
 
     public bool isPlayerClicked;
     public event Action OnPlayerClicked;
+    public event Action OnTileClicked;
 
     void Update()
     {
@@ -61,6 +62,7 @@ public class ObjectClickHandler : MonoBehaviour
             if (isPlayerClicked)
             {
                 HandleTileMovement(clickedTile);
+                OnTileClicked?.Invoke();
                 SetPlayerClickState(false);
             }
         }

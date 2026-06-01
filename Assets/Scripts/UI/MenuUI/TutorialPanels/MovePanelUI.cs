@@ -14,33 +14,62 @@ public class MovePanelUI : TutorialPanelUI
         {
             case 2:
                 tutorialManager.SetTimeScale(1f);
-                PreparePlayerClickStage();
+                StartCoroutine(PreparePlayerClickStage());
                 break;
+            case 3:
+                tutorialManager.SetTimeScale(0f);
+                tutorialManager.objectClickHandler.isClickAvailable = false;
+                break;
+            case 4:
+                tutorialManager.SetTimeScale(1f);
+                StartCoroutine(PrepareTileClickStage());
+                break;
+
+            default: break;
         }
     }
 
-    private void PreparePlayerClickStage()
+    private IEnumerator PreparePlayerClickStage()
     {
+        yield return new WaitForSeconds(0.5f);
         ObjectClickHandler objectClickHandler = tutorialManager.objectClickHandler;
         objectClickHandler.isClickAvailable = true;
 
         if (objectClickHandler == null)
         {
             Debug.LogError("ObjectClickHandler가 할당되지 않았습니다!");
-            return;
+            yield return 0;
         }
 
-        // 혹시 모를 중복 구독 방지 후 이벤트 연결
         objectClickHandler.OnPlayerClicked -= OnPlayerClickedInsideTutorial;
         objectClickHandler.OnPlayerClicked += OnPlayerClickedInsideTutorial;
     }
 
     private void OnPlayerClickedInsideTutorial()
     {
-        // 목적을 달성했으므로 이벤트를 해제합니다.
         tutorialManager.objectClickHandler.OnPlayerClicked -= OnPlayerClickedInsideTutorial;
+        base.OnPointerDown(null);
+    }
 
-        // 부모의 OnPointerDown을 호출하여 인덱스를 증가시키고 다음 패널(Index 4)을 엽니다.
+    private IEnumerator PrepareTileClickStage()
+    {
+        yield return new WaitForSeconds(0.5f);
+        ObjectClickHandler objectClickHandler = tutorialManager.objectClickHandler;
+        objectClickHandler.isClickAvailable = true;
+
+        if (objectClickHandler == null)
+        {
+            Debug.LogError("ObjectClickHandler가 할당되지 않았습니다!");
+            yield return 0;
+        }
+
+        objectClickHandler.OnTileClicked -= OntileClickedInsideTutorial;
+        objectClickHandler.OnTileClicked += OntileClickedInsideTutorial;
+    }
+
+    private void OntileClickedInsideTutorial()
+    {
+        tutorialManager.objectClickHandler.OnTileClicked -= OntileClickedInsideTutorial;
         base.OnPointerDown(null);
     }
 
@@ -48,6 +77,7 @@ public class MovePanelUI : TutorialPanelUI
     {
         // 인덱스가 3일 때는 패널 자체를 클릭해서 넘어가는 것을 막음
         if (index == 2) return;
+        if (index == 4) return;
 
         base.OnPointerDown(eventData);
     }
