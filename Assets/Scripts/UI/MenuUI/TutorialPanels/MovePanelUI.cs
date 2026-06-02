@@ -18,7 +18,7 @@ public class MovePanelUI : TutorialPanelUI
                 break;
             case 3:
                 tutorialManager.SetTimeScale(0f);
-                tutorialManager.objectClickHandler.isClickAvailable = false;
+                tutorialManager.objectClickHandler.SetClickAvailable(false);
                 break;
             case 4:
                 tutorialManager.SetTimeScale(1f);
@@ -31,9 +31,9 @@ public class MovePanelUI : TutorialPanelUI
 
     private IEnumerator PreparePlayerClickStage()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         ObjectClickHandler objectClickHandler = tutorialManager.objectClickHandler;
-        objectClickHandler.isClickAvailable = true;
+        objectClickHandler.SetClickAvailable(true);
 
         if (objectClickHandler == null)
         {
@@ -53,9 +53,9 @@ public class MovePanelUI : TutorialPanelUI
 
     private IEnumerator PrepareTileClickStage()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         ObjectClickHandler objectClickHandler = tutorialManager.objectClickHandler;
-        objectClickHandler.isClickAvailable = true;
+        objectClickHandler.SetClickAvailable(true);
 
         if (objectClickHandler == null)
         {

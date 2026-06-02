@@ -6,7 +6,9 @@ public class TutorialManager : MonoBehaviour
     public enum ETutorialStep { Start, Welcome, MoveExample, AttackExample, ItemExample, AvoidPattern, Clear }
     public ETutorialStep currentStep = ETutorialStep.Start;
 
-    public ObjectClickHandler objectClickHandler;
+    public ObjectClickHandler objectClickHandler;    
+    public CardManager cardManager;
+    public BattleItemManager battleItemManager;
 
     [Header("UI Panels")]
     [SerializeField] private GameObject startPanel;
@@ -110,6 +112,6 @@ public class TutorialManager : MonoBehaviour
         }
 
         // 빌드 세팅에 등록된 메인 보스전 씬으로 전환
-        SceneManager.LoadScene("Scene_Valtan");
+        SceneManager.LoadScene("BattleScene");
     }
 }

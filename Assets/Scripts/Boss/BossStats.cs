@@ -17,7 +17,7 @@ public class BossStats : MonoBehaviour
     public const float MAX_HEALTH = 24000;
     public const float MAX_HEALTH_PHASE_2 = 6000;
 
-    private float health = MAX_HEALTH;
+    protected float health = MAX_HEALTH;
 
     // =========================
     // Shield

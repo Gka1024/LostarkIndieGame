@@ -137,6 +137,7 @@ public class HexTile : MonoBehaviour
         {
             ShowPlayerMoveableRange(true);
         }
+        //Debug.Log(this.CubeCoord);
     }
 
     public void OnMouseExit()

@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 public abstract class TutorialPanelUI : MonoBehaviour, IPointerDownHandler
 {
     public TutorialManager tutorialManager;
+
     public GameObject button;
 
     [SerializeField] protected int index;

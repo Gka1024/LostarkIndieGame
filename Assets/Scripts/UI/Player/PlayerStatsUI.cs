@@ -28,7 +28,6 @@ public class PlayerStatsUI : MonoBehaviour
 
     public RectTransform identityMask;
     private float maskFullHeight;
-    public GameObject identityBackGround;
 
     private const float ICON_MOVE_MARGIN = 65;
 
@@ -114,13 +113,6 @@ public class PlayerStatsUI : MonoBehaviour
     {
         float identityRatio = Mathf.Clamp01(currentIdentity / PlayerMaxIdentity);
         identityMask.sizeDelta = new Vector2(identityMask.sizeDelta.x, maskFullHeight * identityRatio);
-
-        if (currentIdentity == PlayerMaxIdentity) SetIdentityReady(true);
-    }
-
-    public void SetIdentityReady(bool show)
-    {
-        identityBackGround.SetActive(show);
     }
 
     public void UpdateBuffs(List<PlayerBuff> buffs)

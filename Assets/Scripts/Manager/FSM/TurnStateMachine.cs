@@ -18,16 +18,13 @@ public class TurnStateMachine : MonoBehaviour
     public Player player;
 
     private bool isLoopStarted = false;
-
     [SerializeField] private GameTurnState currentState;
-
     public TaskCompletionSource<bool> chainSkillTCS;
-
     private bool isPlayerTurnDone = false;
-
     public bool isNeedToWaitChainTileSelect = false;
-
     public bool CanPlayerInteract => currentState == GameTurnState.PlayerTurn;
+
+    public bool isTutorial = false;
 
 
     void Start()
@@ -50,6 +47,7 @@ public class TurnStateMachine : MonoBehaviour
         }
     }
 
+    // 수정된 부분: isTutorial 조건에 따라 루프 제어
     public async void StartTurnLoop()
     {
         if (isLoopStarted) return;
@@ -59,6 +57,14 @@ public class TurnStateMachine : MonoBehaviour
         while (true)
         {
             await RunTurnCycle();
+
+            // 만약 튜토리얼 모드라면 한 번만 실행하고 루프를 빠져나갑니다.
+            if (isTutorial)
+            {
+                currentState = GameTurnState.TutorialEnd;
+                Debug.Log("튜토리얼 턴 루프 종료");
+                break; 
+            }
         }
     }
 
@@ -75,7 +81,6 @@ public class TurnStateMachine : MonoBehaviour
 
         currentState = GameTurnState.TurnEnd;
         await HandleTurnEnd();
-
     }
 
     // ============= GameTurnState.BossStartMotion;
@@ -100,7 +105,7 @@ public class TurnStateMachine : MonoBehaviour
         if (player.IsMoveable())
         {
             StartCoroutine(DisplayPlayerTurn(1f));
-            GivePlayerCard();
+            if (!isTutorial) GivePlayerCard();
 
             // 플레이어의 카드 선택이 완료될 때까지 대기
             while (!isPlayerTurnDone) await Task.Yield();
@@ -232,5 +237,6 @@ public enum GameTurnState
     BossStartMotion,
     PlayerTurn,
     BossAttack,
-    TurnEnd
+    TurnEnd,
+    TutorialEnd // 튜토리얼 종료 상태 추가
 }

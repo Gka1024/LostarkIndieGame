@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +32,8 @@ public class CardManager : MonoBehaviour
 
     public CardDescriptionUI cardDescriptionUI;
     public PlayerStatsUI playerStatsUI;
+
+    public event Action CardUseAction;
 
     public void Awake()
     {
@@ -255,6 +258,7 @@ public class CardManager : MonoBehaviour
         currentCard = obj;
         currentCard.GetComponent<CardText>().SetTripodText();
         skillManager.StartSkillSequence(currentCard);
+        CardUseAction?.Invoke();
     }
 
     // ======================

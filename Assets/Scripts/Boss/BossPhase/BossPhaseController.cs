@@ -24,7 +24,7 @@ public class BossPhaseController : MonoBehaviour
         RegisterAllForcedPattern();
     }
 
-    public BossPattern GetNextPattern()
+    public virtual BossPattern GetNextPattern()
     {
         EvaluateGlobalPatterns();
         PhaseCheck();
@@ -77,6 +77,10 @@ public class BossPhaseController : MonoBehaviour
 
     private BossPatternPhase GetPatternPhaseByHP(BossPhase phase)
     {
+        if (!GameManager.Instance.isTutorialCleared)
+        {
+            return new BossPatternPhaseDummy();
+        }
         switch (phase)
         {
             //case BossPhase.Phase1: return new BossPatternPhaseDummy(); 

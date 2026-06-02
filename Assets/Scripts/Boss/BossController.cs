@@ -92,7 +92,7 @@ public class BossController : MonoBehaviour
 
     public void RotateToTile(HexTile tile)
     {
-        bossAnimation.RotateToTile(tile);
+        if (GameManager.Instance.isTutorialCleared) bossAnimation.RotateToTile(tile);
     }
 
     public HexTile GetCurrentTile()
@@ -109,7 +109,7 @@ public class BossController : MonoBehaviour
 
     public void GetBossDamageData(BossDamageData data)
     {
-        if(!bossAI.IsAirborne)
+        if (!bossAI.IsAirborne)
         {
             bossDamagePopup.ShowDamage(bossStats.ApplyDamageData(data));
         }

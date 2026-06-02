@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectClickHandler : MonoBehaviour
 {
-    public bool isClickAvailable;
+    private bool isClickAvailable;
 
     [SerializeField] private GameManager manager;
 

@@ -1,110 +1,138 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BossHPBar : MonoBehaviour
 {
-    public RectTransform currentBossHP; // HP 마스크
-    public RectTransform nextBossHP; // 다음 HP 마스크
-
-    public GameObject[] HealthLines; // HP 줄 배열 빨강 -> 보라 -> 파랑 -> 하늘 -> 연두 -> 노랑 -> 주황 
-    public GameObject[] BackgroundLines; // HP 줄 배경 배열
-    public GameObject LastHP; // 마지막 HP 줄
-
-    [SerializeField] private bool hasBossShield;
-    public RectTransform shieldBar;
-    public float currentShield;
-
+    [Header("HP Bar UI")]
+    public RectTransform currentBossHP;  // HP 마스크
+    public RectTransform nextBossHP;     // 다음 HP 마스크 (필요 시 활용)
     public TextMeshProUGUI textBossHP;
     public TextMeshProUGUI textBossHPLine;
 
-    public const float MaxHealth = 24000; // 보스 총 체력 (160줄 * 150)
-    public float currentHealth;
+    [Header("HP Lines")]
+    public GameObject[] HealthLines;     // 빨강 -> 보라 -> 파랑 -> 하늘 -> 연두 -> 노랑 -> 주황 
+    public GameObject[] BackgroundLines; // HP 줄 배경 배열
+    public GameObject LastHP;            // 마지막 HP 줄
 
-    public float healthPerStage = 150; // 한 줄당 체력
-    private float currentHealthOnStage;
+    [Header("Shield")]
+    public RectTransform shieldBar;
+    public float currentShield;
 
-    [SerializeField]
-    private int currentStage;
-    private float maskFullWidth;
-
+    [Header("Debuff & Settings")]
     public GameObject defenceDownDebuff;
+    public float healthPerStage = 150f;  // 한 줄당 체력
+
+    // 캡슐화를 통해 외부에서 직접 수정하지 못하도록 프로퍼티/private 설정
+    public float currentHealth { get; private set; }
+    private float MaxHealth;
+    private int MaxHealthLine;
+    private float maskFullWidth;
 
     private void Start()
     {
+        // 1. 초기 데이터 설정
+        MaxHealth = GameManager.Instance.isTutorialCleared ? BossStats.MAX_HEALTH : TutorialBossStats.MAX_HEALTH_TUTORIAL;
         currentHealth = MaxHealth;
-        currentHealthOnStage = healthPerStage;
-        currentStage = 0;
-        maskFullWidth = currentBossHP.sizeDelta.x;
+        MaxHealthLine = Mathf.CeilToInt(MaxHealth / healthPerStage);
+        Canvas.ForceUpdateCanvases();
+        maskFullWidth = 839f;
 
-        UpdateHPBar(false);
+        // 2. 초기 UI 상태 동기화
+        RefreshUI();
     }
 
+    /// <summary>
+    /// 보스에게 데미지를 입힙니다.
+    /// </summary>
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        currentHealthOnStage -= damage;
+        if (currentHealth <= 0) return;
 
-        bool isBarColorChange = false;
+        currentHealth = Mathf.Max(0, currentHealth - damage);
+
+        RefreshUI();
 
         if (currentHealth <= 0)
         {
-            currentHealth = 0;
-            currentHealthOnStage = 0;
-            textBossHPLine.SetText("X0");
             GameOver();
         }
-
-        if (currentHealthOnStage <= 0)
-        {
-            while (currentHealthOnStage < 0)
-            {
-                currentStage++; // 체력 줄 이동
-                currentHealthOnStage += healthPerStage; // 다음 체력 줄 채우기
-                isBarColorChange = true;
-            }
-        }
-
-        UpdateHP(currentHealth);
-        UpdateHPBar(isBarColorChange);
     }
 
-    private void ResetHPBar()
+    /// <summary>
+    /// 외부에서 보스의 체력을 강제로 설정할 때 사용합니다.
+    /// </summary>
+    public void SetCurrentHealth(float value)
     {
-        for (int i = 0; i < HealthLines.Length; i++)
+        currentHealth = Mathf.Clamp(value, 0, MaxHealth);
+
+        RefreshUI();
+
+        if (currentHealth <= 0)
         {
-            HealthLines[i].SetActive(false);
-            BackgroundLines[i].SetActive(false);
+            GameOver();
         }
     }
 
-    private void UpdateHP(float hp)
+    /// <summary>
+    /// 현재 체력(currentHealth)을 기반으로 모든 UI를 한 번에 새로고침합니다.
+    /// </summary>
+    private void RefreshUI()
     {
-        textBossHP.SetText(((int)hp).ToString() + " / " + MaxHealth.ToString());
-    }
+        // 1. 텍스트 가독성 최적화
+        textBossHP.SetText($"{(int)currentHealth} / {MaxHealth}");
 
-    private void UpdateHPBar(bool isBarColorChange)
-    {
-        float bossHPRatio = Mathf.Clamp01(currentHealthOnStage / healthPerStage); // 비율 계산 (0~1 사이로 제한)
+        if (currentHealth <= 0)
+        {
+            textBossHPLine.SetText("X0");
+            currentBossHP.sizeDelta = new Vector2(0, currentBossHP.sizeDelta.y);
+            ResetHPBar();
+            return;
+        }
+
+        // 2. 현재 체력이 위치한 '줄(Stage)'과 '해당 줄에 남은 체력' 계산
+        float consumedHealth = MaxHealth - currentHealth;
+        int currentStage = (int)(consumedHealth / healthPerStage);
+
+        // [수정] 체력이 가득 차 있을 때(소모량이 0일 때) 나머지가 0이 되어 게이지가 사라지는 현상 방지
+        float currentHealthOnStage;
+        if (currentHealth >= MaxHealth)
+        {
+            currentStage = 0;
+            currentHealthOnStage = healthPerStage;
+        }
+        else
+        {
+            currentHealthOnStage = healthPerStage - (consumedHealth % healthPerStage);
+        }
+
+        // 3. 체력 바 게이지 조절 (비율 계산)
+        float bossHPRatio = Mathf.Clamp01(currentHealthOnStage / healthPerStage);
         currentBossHP.sizeDelta = new Vector2(maskFullWidth * bossHPRatio, currentBossHP.sizeDelta.y);
 
-        if (isBarColorChange)
-        {
-            ResetHPBar();
-            textBossHPLine.SetText("X" + (160 - currentStage).ToString()); // 남은 체력 줄 표시
-            HealthLines[currentStage % 7].SetActive(true); // 현재 스테이지 HP 줄 활성화
+        // 4. 남은 체력 줄 개수 텍스트 표기
+        int remainingLines = MaxHealthLine - currentStage;
+        textBossHPLine.SetText($"X{remainingLines}");
 
-            if (currentStage != 159)
-            {
-                BackgroundLines[(currentStage + 1) % 7].SetActive(true); // 현재 스테이지 HP 줄 배경 활성화
-            }
-            else
-            {
-                LastHP.SetActive(true); // 마지막 HP 줄 활성화
-            }
+        // 5. HP 줄 및 배경 오브젝트 제어
+        ResetHPBar();
+
+        int currentLineIndex = currentStage % 7;
+        HealthLines[currentLineIndex].SetActive(true);
+
+        if (currentStage < MaxHealthLine - 1)
+        {
+            int nextLineIndex = (currentStage + 1) % 7;
+            BackgroundLines[nextLineIndex].SetActive(true);
+        }
+        else
+        {
+            if (LastHP != null) LastHP.SetActive(true);
         }
     }
 
+    /// <summary>
+    /// 보호막 바 UI를 업데이트합니다.
+    /// </summary>
     public void UpdateShieldBar(float shield)
     {
         currentShield = shield;
@@ -116,53 +144,21 @@ public class BossHPBar : MonoBehaviour
         }
 
         shieldBar.gameObject.SetActive(true);
-
-        // 보호막은 현재 체력줄 기준으로 표시
         float shieldRatio = Mathf.Clamp01(shield / healthPerStage);
         shieldBar.sizeDelta = new Vector2(maskFullWidth * shieldRatio, shieldBar.sizeDelta.y);
     }
 
-    public void SetCurrentHealth(float value)
+    private void ResetHPBar()
     {
-        currentHealth = Mathf.Clamp(value, 0, MaxHealth); // 0 ~ MaxHealth 사이로 제한
-        currentStage = (int)((MaxHealth - currentHealth) / healthPerStage); // 현재 줄 계산
-        currentHealthOnStage = healthPerStage - ((MaxHealth - currentHealth) % healthPerStage); // 해당 줄의 체력
-
-        if (currentHealth <= 0)
+        for (int i = 0; i < HealthLines.Length; i++)
         {
-            currentHealth = 0;
-            currentHealthOnStage = 0;
-            textBossHPLine.SetText("X0");
-            GameOver();
+            if (HealthLines[i] != null) HealthLines[i].SetActive(false);
+            if (BackgroundLines[i] != null) BackgroundLines[i].SetActive(false);
         }
-        else
-        {
-            textBossHPLine.SetText("X" + (160 - currentStage).ToString());
-        }
-
-        ResetHPBar();
-        HealthLines[currentStage % 7].SetActive(true);
-
-        if (currentStage != 159)
-        {
-            BackgroundLines[(currentStage + 1) % 7].SetActive(true);
-        }
-        else
-        {
-            LastHP.SetActive(true);
-        }
-
-        float bossHPRatio = Mathf.Clamp01(currentHealthOnStage / healthPerStage);
-        currentBossHP.sizeDelta = new Vector2(maskFullWidth * bossHPRatio, currentBossHP.sizeDelta.y);
+        if (LastHP != null) LastHP.SetActive(false);
     }
 
-    public void ShowDebuff(bool show)
-    {
-        defenceDownDebuff.SetActive(show);
-    }
+    public void ShowDebuff(bool show) => defenceDownDebuff.SetActive(show);
 
-    public void GameOver()
-    {
-        Debug.Log("Game Over");
-    }
+    public void GameOver() => Debug.Log("Game Over");
 }
