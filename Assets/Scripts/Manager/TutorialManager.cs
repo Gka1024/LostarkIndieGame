@@ -1,14 +1,16 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
-    public enum ETutorialStep { Start, Welcome, MoveExample, AttackExample, ItemExample, AvoidPattern, Clear }
+    public enum ETutorialStep { Start, Welcome, MoveExample, AttackExample, ItemExample, EstherExample, AvoidPattern, Clear }
     public ETutorialStep currentStep = ETutorialStep.Start;
 
-    public ObjectClickHandler objectClickHandler;    
+    public ObjectClickHandler objectClickHandler;
     public CardManager cardManager;
     public BattleItemManager battleItemManager;
+    public EstherManager estherManager;
 
     [Header("UI Panels")]
     [SerializeField] private GameObject startPanel;
@@ -16,6 +18,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject moveGuidePanel;
     [SerializeField] private GameObject attackGuidePanel;
     [SerializeField] private GameObject ItemGuidePanel;
+    [SerializeField] private GameObject EstherGuidePanel;
     [SerializeField] private GameObject AvoidGuidePanel;
 
     [SerializeField] private GameObject PlayerUI;
@@ -26,6 +29,13 @@ public class TutorialManager : MonoBehaviour
     public void Start()
     {
         SetTimeScale(0f);
+        GameManager.Instance.isTutorialCleared = false;
+    }
+
+    public void Init(GameManager manager)
+    {
+        manager.isTutorialCleared = false;
+        //StartTutorial();
     }
 
     public void StartTutorial()
@@ -43,6 +53,7 @@ public class TutorialManager : MonoBehaviour
         moveGuidePanel.SetActive(false);
         attackGuidePanel.SetActive(false);
         ItemGuidePanel.SetActive(false);
+        EstherGuidePanel.SetActive(false);
         AvoidGuidePanel.SetActive(false);
 
         // 현재 단계에 맞는 UI와 규칙 활성화
@@ -71,6 +82,11 @@ public class TutorialManager : MonoBehaviour
                 ItemGuidePanel.GetComponent<TutorialPanelUI>().Init(this);
                 break;
 
+            case ETutorialStep.EstherExample:
+                EstherGuidePanel.SetActive(true);
+                EstherGuidePanel.GetComponent<TutorialPanelUI>().Init(this);
+                break;
+
             case ETutorialStep.AvoidPattern:
                 AvoidGuidePanel.SetActive(true);
                 AvoidGuidePanel.GetComponent<TutorialPanelUI>().Init(this);
@@ -87,6 +103,18 @@ public class TutorialManager : MonoBehaviour
         Time.timeScale = scale;
     }
 
+    public IEnumerator TutorialTurnStart()
+    {
+        TurnStateMachine TSM = GameManager.Instance.turnStateMachine;
+        TSM.isLoopOnce = true;
+
+        if (TSM.GetLoopStarted)
+        {
+            yield return new WaitForSeconds(0.7f);
+        }
+        TSM.StartTurnLoop();
+    }
+
     // 외부(Player나 UI 버튼)에서 무언가 완료했을 때 호출하는 함수
     public void CompleteCurrentStep()
     {
@@ -99,6 +127,8 @@ public class TutorialManager : MonoBehaviour
         else if (currentStep == ETutorialStep.AttackExample)
             EnterStep(ETutorialStep.ItemExample);
         else if (currentStep == ETutorialStep.ItemExample)
+            EnterStep(ETutorialStep.EstherExample);
+        else if (currentStep == ETutorialStep.EstherExample)
             EnterStep(ETutorialStep.AvoidPattern);
         else if (currentStep == ETutorialStep.AvoidPattern)
             EnterStep(ETutorialStep.Clear);

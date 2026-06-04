@@ -47,15 +47,8 @@ public class BossHPBar : MonoBehaviour
     public void TakeDamage(float damage)
     {
         if (currentHealth <= 0) return;
-
         currentHealth = Mathf.Max(0, currentHealth - damage);
-
         RefreshUI();
-
-        if (currentHealth <= 0)
-        {
-            GameOver();
-        }
     }
 
     /// <summary>
@@ -64,13 +57,7 @@ public class BossHPBar : MonoBehaviour
     public void SetCurrentHealth(float value)
     {
         currentHealth = Mathf.Clamp(value, 0, MaxHealth);
-
         RefreshUI();
-
-        if (currentHealth <= 0)
-        {
-            GameOver();
-        }
     }
 
     /// <summary>

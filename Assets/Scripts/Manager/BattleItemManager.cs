@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -56,6 +57,12 @@ public class BattleItemManager : MonoBehaviour
     public GameObject itemPrefabCampFire;
     public GameObject itemPrefabScareCrow;
 
+    [HideInInspector] public Action ItemUsePotion;
+    [HideInInspector] public Action ItemUseGranade;
+    [HideInInspector] public Action ItemUseSpecial;
+    [HideInInspector] public Action ItemChangeAction;
+    [HideInInspector] public Action OnSlotClickAction;
+ 
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -92,6 +99,8 @@ public class BattleItemManager : MonoBehaviour
 
         // 2. UI에게 "이 데이터로 설명창 띄워줘"라고 명령 (데이터 전달)
         battleItemUI.ShowControlButtons(true);
+
+        OnSlotClickAction?.Invoke();
     }
 
     // ==== 아이템 데이터 교체 ====
@@ -110,6 +119,8 @@ public class BattleItemManager : MonoBehaviour
         // UI에게 "아이콘이랑 텍스트 갱신해"라고 명령 (연출)
         battleItemUI.UpdateSlotIcon(newData.itemType, newData.itemIcon);
         battleItemUI.UpdateDescWindow(newData);
+
+        ItemChangeAction?.Invoke();
     }
 
     // 장착된 데이터를 안전하게 가져오기 위한 함수
@@ -213,6 +224,8 @@ public class BattleItemManager : MonoBehaviour
                 break;
                 // ... 나머지 물약 로직
         }
+
+        ItemUsePotion?.Invoke();
         EndItemTurn();
     }
 
@@ -237,6 +250,7 @@ public class BattleItemManager : MonoBehaviour
             ApplyEffectToBoss();
         }
 
+        ItemUseGranade?.Invoke();
         EndItemTurn();
     }
 
@@ -317,6 +331,8 @@ public class BattleItemManager : MonoBehaviour
         else if (currentItem.specialType == SpecialType.ScareCrow)
             PlaceItem(hexTileSelectHandler.selectedTile, itemPrefabScareCrow, 5);
 
+
+        ItemUseSpecial?.Invoke();
         EndItemTurn();
     }
 

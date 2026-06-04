@@ -17,6 +17,7 @@ public class EstherManager : MonoBehaviour
     public Player player;
 
     [SerializeField] private bool isEstherUsing;
+    public Action OnEstherSkillUse;
 
     // 에스더 스킬 오브젝트들
     public GameObject SkillObject_Thirain;
@@ -257,6 +258,7 @@ public class EstherManager : MonoBehaviour
         selectedEstherTiles = new List<HexTile>(manager.hexTileSelectHandler.selectedTiles);
         SetEstherSkill(estherSkill);
         estherSkill.Execute(targetTile, selectedEstherTiles);
+        OnEstherSkillUse?.Invoke();
         ResetEsther();
     }
 

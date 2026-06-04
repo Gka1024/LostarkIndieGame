@@ -40,6 +40,7 @@ public class BattleItemInteraction : MonoBehaviour, IPointerEnterHandler, IPoint
         battleItemUI.SelectSlotCursor(slotType);
 
         battleItemManager.OnSlotClick(slotType);
+
     }
 
     public void BattleItemCursorOff()

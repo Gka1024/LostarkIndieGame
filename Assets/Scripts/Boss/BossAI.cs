@@ -274,7 +274,7 @@ public class BossAI : MonoBehaviour
 
     public void NotifyBossDead()
     {
-
+        GameManager.Instance.BossDie();
     }
 
     public void NotifyDestroyResult(bool isSuccess)

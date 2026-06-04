@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using NUnit.Framework.Interfaces;
 using TMPro;
@@ -56,6 +57,9 @@ public class BattleItemUI : MonoBehaviour
 
     [Header("Warning")]
     public GameObject warningText;
+
+    public GameObject DarkGranadeArrow;
+
 
     // --- 설명창 제어 ---
     public void UpdateDescWindow(BattleItemData data)
@@ -162,6 +166,11 @@ public class BattleItemUI : MonoBehaviour
             case ItemType.Potion: itemChangePotionPanel.SetActive(true); break;
             case ItemType.Granade: itemChangeGranadePanel.SetActive(true); break;
             case ItemType.Special: itemChangeSpecialPanel.SetActive(true); break;
+        }
+
+        if(!GameManager.Instance.isTutorialCleared)
+        {
+            DarkGranadeArrow.SetActive(true);
         }
     }
 

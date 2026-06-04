@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     public ObjectManager objectManager;
     public UICardTripod UIManager;
     public FieldEffectManager fieldEffectManager;
+    public TutorialManager tutorialManager; // 튜토리얼이 아닌 경우 인스펙터에 연결하지 말것
 
     public CardList cardList;
     public ObjectClickHandler objectClickHandler;
@@ -27,10 +29,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject boss;
 
-    public bool isTutorialCleared = false;
+    public bool isTutorialCleared;
 
     public int GameTurn;
     public int ReviveChance;
+
+    public Action OnTurnEnd;
+    public Action OnBossDie;
 
     private void Awake()
     {
@@ -43,6 +48,16 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject); // 중복된 인스턴스가 있으면 삭제
+        }
+    }
+
+    void Start()
+    {
+        isTutorialCleared = true;
+
+        if (tutorialManager != null)
+        {
+            tutorialManager.Init(this);
         }
     }
 
@@ -64,6 +79,8 @@ public class GameManager : MonoBehaviour
 
     public void TurnEnd()
     {
+        OnTurnEnd?.Invoke();
+
         boss.GetComponent<BossStats>().OnTurnEnd();
         player.GetComponent<PlayerStats>().ProcessTurn();
 
@@ -163,4 +180,10 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
+    public void BossDie()
+    {
+        OnBossDie?.Invoke();
+    }
+
 }

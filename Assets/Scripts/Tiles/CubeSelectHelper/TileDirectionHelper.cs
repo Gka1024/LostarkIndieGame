@@ -25,14 +25,14 @@ public class TileDirectionHelper : MonoBehaviour
         }
     }
 
-    public HexTile GetFrontTile(HexTile playerTile, HexTile targetTile, int distance = 0)
+    public HexTile GetFrontTile(HexTile originTile, HexTile targetTile, int distance = 0)
     {
-        return frontHelper.GetFrontTile(playerTile, targetTile, distance);
+        return frontHelper.GetFrontTile(originTile, targetTile, distance);
     }
 
-    public HexTile GetBackTile(HexTile playerTile, HexTile targetTile, int distance)
+    public HexTile GetBackTile(HexTile originTile, HexTile targetTile, int distance)
     {
-        return backHelper.GetBackTile(playerTile, targetTile, distance);
+        return backHelper.GetBackTile(originTile, targetTile, distance);
     }
 
     public List<HexTile> GetDistanceTiles(HexTile currentTile, HexTile facingTile, int distance, int tileCount, bool isClockWise = true)

@@ -11,6 +11,8 @@ public class BattleItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private BattleItemUI battleItemUI;
     private BattleItemManager battleItemManager;
 
+    public GameObject ItemGranadeArrow;
+
     private void Awake()
     {
         // 씬에 있는 UI와 매니저를 찾아둡니다.
@@ -51,5 +53,12 @@ public class BattleItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         battleItemUI.CloseAllChangeUI();
         battleItemUI.ShowDescWindow(false);
         battleItemManager.CancelItem();
+
+        // 튜토리얼용 
+
+        if (!GameManager.Instance.isTutorialCleared)
+        {
+            ItemGranadeArrow.SetActive(false);
+        }
     }
 }

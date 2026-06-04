@@ -64,33 +64,42 @@ public class PlayerMove : MonoBehaviour
 
     public void MoveToTile(PlayerMoveInfo info)
     {
-        HexTile tile = info.tile;
+        HexTile targetTile = info.tile;
 
-        if (tile == null || !tile.GetIsTileMoveable()) return;
+        if (targetTile == null || !targetTile.GetIsTileMoveable()) return;
 
-        // 강제 이동이 아닐 경우엔 이동 가능 여부를 체크
         if (!info.ignoreDistance)
         {
-            if (!hexTileManager.IsTileMoveable(currentTile, tile, moveAbleDistance))
+            if (!hexTileManager.IsTileMoveable(currentTile, targetTile, moveAbleDistance))
             {
-                tile.ResetColor();
+                targetTile.ResetColor();
                 return;
             }
         }
         else
         {
-            // 강제 이동 시 보스 타일 체크 (막고 싶을 경우)
-            if (hexTileManager.IsBossTile(tile)) return;
+            if (hexTileManager.IsBossTile(targetTile))
+            {
+                HexTile tile = TileDirectionHelper.Instance.GetFrontTile(targetTile, currentTile);
+                targetTile = tile;
+            }
         }
 
         if (info.isFace)
         {
-            RotateToTile(tile);
+            RotateToTile(targetTile);
         }
 
-        Vector3 targetPosition = new Vector3(tile.transform.position.x, transform.position.y, tile.transform.position.z);
-        currentTile = tile;
-        tile.ResetColor();
+        // 타일 위치 및 정보 갱신
+        currentTile = targetTile;
+        targetTile.ResetColor();
+
+        // 코루틴 실행을 위한 최종 목적지 계산
+        Vector3 targetPosition = new Vector3(
+            targetTile.transform.position.x,
+            transform.position.y,
+            targetTile.transform.position.z
+        );
 
         StartCoroutine(MoveCoroutine(targetPosition, info.isTurnEnd, info.isDash));
     }
@@ -110,7 +119,7 @@ public class PlayerMove : MonoBehaviour
     private IEnumerator MoveCoroutine(Vector3 targetPosition, bool isTurnEnd, bool isDash = false)
     {
         if (!isDash) playerAnimation.isMoving = true;
-        if(isDash) playerAnimation.UseDash();
+        if (isDash) playerAnimation.UseDash();
 
         Vector3 startPosition = transform.position;
         float elapsed = 0f;

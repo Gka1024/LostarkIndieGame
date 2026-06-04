@@ -18,13 +18,15 @@ public class TurnStateMachine : MonoBehaviour
     public Player player;
 
     private bool isLoopStarted = false;
+    public bool GetLoopStarted => isLoopStarted;
+
     [SerializeField] private GameTurnState currentState;
     public TaskCompletionSource<bool> chainSkillTCS;
     private bool isPlayerTurnDone = false;
     public bool isNeedToWaitChainTileSelect = false;
     public bool CanPlayerInteract => currentState == GameTurnState.PlayerTurn;
 
-    public bool isTutorial = false;
+    public bool isLoopOnce = false;
 
 
     void Start()
@@ -47,7 +49,6 @@ public class TurnStateMachine : MonoBehaviour
         }
     }
 
-    // 수정된 부분: isTutorial 조건에 따라 루프 제어
     public async void StartTurnLoop()
     {
         if (isLoopStarted) return;
@@ -58,12 +59,12 @@ public class TurnStateMachine : MonoBehaviour
         {
             await RunTurnCycle();
 
-            // 만약 튜토리얼 모드라면 한 번만 실행하고 루프를 빠져나갑니다.
-            if (isTutorial)
+            if (isLoopOnce)
             {
                 currentState = GameTurnState.TutorialEnd;
-                Debug.Log("튜토리얼 턴 루프 종료");
-                break; 
+                Debug.Log("턴 루프 종료");
+                isLoopStarted = false;
+                break;
             }
         }
     }
@@ -105,7 +106,7 @@ public class TurnStateMachine : MonoBehaviour
         if (player.IsMoveable())
         {
             StartCoroutine(DisplayPlayerTurn(1f));
-            if (!isTutorial) GivePlayerCard();
+            if (!isLoopOnce) GivePlayerCard();
 
             // 플레이어의 카드 선택이 완료될 때까지 대기
             while (!isPlayerTurnDone) await Task.Yield();
@@ -156,7 +157,7 @@ public class TurnStateMachine : MonoBehaviour
     {
         manager.cardManager.ResetHand();
         manager.cardManager.GiveRandomCard(4);
-        manager.cardManager.GiveSpecificCard(141);
+        //manager.cardManager.GiveSpecificCard(141);
         manager.cardManager.GiveBasicCard();
     }
 

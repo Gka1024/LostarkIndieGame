@@ -33,8 +33,8 @@ public class AttackPanelUI : TutorialPanelUI
 
             case 4:
                 CardtripodUI.SetActive(true);
-                GameManager.Instance.turnStateMachine.isTutorial = true;
-                GameManager.Instance.turnStateMachine.StartTurnLoop();
+                StartCoroutine(tutorialManager.TutorialTurnStart());
+                GameManager.Instance.OnTurnEnd += OnTurnEnd;
                 break;
 
             case 5:
@@ -64,21 +64,17 @@ public class AttackPanelUI : TutorialPanelUI
         base.OnPointerDown(null);
     }
 
-    private IEnumerator DelayedPointerDown()
+    private void OnTurnEnd()
     {
-        yield return new WaitForSeconds(2f);
         base.OnPointerDown(null);
+        GameManager.Instance.OnTurnEnd -= OnTurnEnd;
     }
 
     public override void OnPointerDown(PointerEventData eventData)
     {
         if (index == 2) return;
 
-        if (index == 4)
-        {
-            StartCoroutine(DelayedPointerDown());
-            return;
-        }
+        if (index == 4) return;
 
         base.OnPointerDown(eventData);
     }
