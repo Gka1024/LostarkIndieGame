@@ -57,6 +57,12 @@ public class PatternR_Swing_And_Spin : BossPattern
     {
         HexTile bossTile = ai.bossController.GetCurrentTile();
         List<HexTile> attackRange = HexTileManager.Instance.GetTilesWithinRange(bossTile, 6);
+        List<HexTile> removeRange = HexTileManager.Instance.GetTilesWithinRange(bossTile, 4);
+
+        foreach(HexTile tile in removeRange)
+        {
+            attackRange.Remove(tile);
+        }
 
         return BossPatternBuilder.Create(attackRange).SetDamage(50).SetKnockback(1).Build();
     }

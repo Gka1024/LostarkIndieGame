@@ -5,8 +5,9 @@ using UnityEngine.EventSystems;
 public abstract class TutorialPanelUI : MonoBehaviour, IPointerDownHandler
 {
     public TutorialManager tutorialManager;
-
     public GameObject button;
+
+    protected bool needLoopAgain = false;
 
     [SerializeField] protected int index;
     [SerializeField] private GameObject[] panelsObject;
@@ -14,7 +15,9 @@ public abstract class TutorialPanelUI : MonoBehaviour, IPointerDownHandler
     public void Init(TutorialManager tutorialManager)
     {
         index = 0;
+        needLoopAgain = false;
         this.tutorialManager = tutorialManager;
+        GameManager.Instance.turnStateMachine.OnLoopEnd += CheckLoopAgain;
     }
 
     public void ReviveButton()
@@ -53,6 +56,19 @@ public abstract class TutorialPanelUI : MonoBehaviour, IPointerDownHandler
         foreach (var panel in panelsObject)
         {
             panel.SetActive(false);
+        }
+    }
+
+    public void ResetEvent()
+    {
+        GameManager.Instance.turnStateMachine.OnLoopEnd -= CheckLoopAgain;
+    }
+
+    protected void CheckLoopAgain()
+    {
+        if (needLoopAgain)
+        {
+            StartCoroutine(tutorialManager.TutorialTurnStart());
         }
     }
 

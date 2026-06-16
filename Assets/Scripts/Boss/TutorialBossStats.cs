@@ -7,7 +7,9 @@ public class TutorialBossStats : BossStats
 
     void Start()
     {
-        SetBossHP(1500f);
+        Debug.Log("tutorialBossStats");
+        health = MAX_HEALTH_TUTORIAL;
+        bossHPBar.Init(this);
     }
 }
 

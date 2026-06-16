@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -27,7 +28,7 @@ public class TurnStateMachine : MonoBehaviour
     public bool CanPlayerInteract => currentState == GameTurnState.PlayerTurn;
 
     public bool isLoopOnce = false;
-
+    public Action OnLoopEnd;
 
     void Start()
     {
@@ -64,6 +65,7 @@ public class TurnStateMachine : MonoBehaviour
                 currentState = GameTurnState.TutorialEnd;
                 Debug.Log("턴 루프 종료");
                 isLoopStarted = false;
+                OnLoopEnd?.Invoke();
                 break;
             }
         }

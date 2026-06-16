@@ -18,8 +18,8 @@ public class BossPatternHelper : MonoBehaviour
 
     [Header("Pillar Create Pattern")]
     [SerializeField] private GameObject displayName;
-    [SerializeField] private List<HexTile> tile_PillarCreate1;
-    [SerializeField] private List<HexTile> tile_PillarCreate2;
+    [SerializeField] private List<HexTile> tile_PillarCreateLarge;
+    [SerializeField] private List<HexTile> tile_PillarCreateSmall;
     [SerializeField] private List<HexTile> tile_PillarBackLarge;
     [SerializeField] private List<HexTile> tile_PillarBackSmall;
 
@@ -148,18 +148,18 @@ public class BossPatternHelper : MonoBehaviour
 
         switch (index)
         {
-            case 0:
-                objectManager.CreatePillarForImposter(tile_PillarCreate1);
+            case 0: // 바깥쪽 기둥 만들기
+                objectManager.CreatePillarForImposter(tile_PillarCreateLarge);
                 break;
 
-            case 1:
-                objectManager.CreatePillarForImposter(tile_PillarCreate2);
+            case 1: // 안쪽 기둥 만들기
+                objectManager.CreatePillarForImposter(tile_PillarCreateSmall);
                 break;
 
-            case 2:
-                returnNum = UnityEngine.Random.Range(0, tile_PillarCreate2.Count);
-                List<HexTile> tiles = new(tile_PillarCreate2);
-                tiles.Remove(tile_PillarCreate2[returnNum]);
+            case 2: // 안쪽 기둥에서 하나 빼고 생성하기
+                returnNum = UnityEngine.Random.Range(0, tile_PillarCreateSmall.Count);
+                List<HexTile> tiles = new(tile_PillarCreateSmall);
+                tiles.Remove(tile_PillarCreateSmall[returnNum]);
                 objectManager.CreatePillarForImposter(tiles);
 
                 break;
@@ -175,10 +175,10 @@ public class BossPatternHelper : MonoBehaviour
         switch (index)
         {
             case 0:
-                return tile_PillarCreate1;
+                return tile_PillarCreateLarge;
 
             case 1:
-                return tile_PillarCreate2;
+                return tile_PillarCreateSmall;
 
             default: break;
         }
@@ -195,13 +195,26 @@ public class BossPatternHelper : MonoBehaviour
         return tile_PillarBackSmall;
     }
 
-    public List<HexTile> GetPillarSafeTilesWithoutNum(int num)
+    public List<HexTile> GetPillarSafeTilesSmall(int pos)
     {
         List<HexTile> returnTiles = new(tile_PillarBackSmall);
-        returnTiles.Remove(tile_PillarBackSmall[num * 2]);
-        returnTiles.Remove(tile_PillarBackSmall[num * 2 + 1]);
 
+        int targetIndex = (int)pos * 2;
+
+        if (targetIndex + 1 < tile_PillarBackSmall.Count)
+        {
+            returnTiles.RemoveAt(targetIndex + 1);
+            returnTiles.RemoveAt(targetIndex);
+        }
         return returnTiles;
+    }
+
+    private enum PillarPosition
+    {
+        RightUP = 0,
+        RightDown = 1,
+        LeftDown = 2,
+        LeftUp = 3,
     }
 
     // ================ BreakTiles

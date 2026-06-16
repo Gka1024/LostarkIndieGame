@@ -126,7 +126,7 @@ public class PatternF_Chain_Destruction_Fist : BossPattern
 
     public BossPatternTurnInfo MakePattern9(BossAI ai)
     {
-        List<HexTile> attackrange = HexTileManager.Instance.GetInvertedTiles(ai.bossPatternHelper.GetPillarSafeTilesWithoutNum(pillarNum));
+        List<HexTile> attackrange = HexTileManager.Instance.GetInvertedTiles(ai.bossPatternHelper.GetPillarSafeTilesSmall(pillarNum));
         return BossPatternBuilder.Create(attackrange).SetDamage(10f).SetKnockback(5).Build();
     }
 

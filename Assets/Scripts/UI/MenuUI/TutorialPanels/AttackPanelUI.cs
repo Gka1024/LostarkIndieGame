@@ -33,11 +33,13 @@ public class AttackPanelUI : TutorialPanelUI
 
             case 4:
                 CardtripodUI.SetActive(true);
+                needLoopAgain = true;
                 StartCoroutine(tutorialManager.TutorialTurnStart());
                 GameManager.Instance.OnTurnEnd += OnTurnEnd;
                 break;
 
             case 5:
+                needLoopAgain = false;
                 break;
 
         }

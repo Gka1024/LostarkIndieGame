@@ -57,7 +57,13 @@ public class GameManager : MonoBehaviour
 
         if (tutorialManager != null)
         {
+            isTutorialCleared = false;
             tutorialManager.Init(this);
+        }
+
+        if (tutorialManager == null)
+        {
+            turnStateMachine.StartTurnLoop();
         }
     }
 

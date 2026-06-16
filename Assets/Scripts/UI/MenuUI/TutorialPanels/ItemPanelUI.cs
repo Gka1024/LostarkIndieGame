@@ -32,6 +32,8 @@ public class ItemPanelUI : TutorialPanelUI
                 ChangeButtonMask.SetActive(true);
                 tutorialManager.battleItemManager.battleItemUI.SelectSlotCursor(ItemType.Potion);
                 tutorialManager.battleItemManager.ItemUsePotion += OnPotionItemUse;
+                
+                needLoopAgain = true;
                 GetComponent<Image>().raycastTarget = false;
                 break;
 
@@ -39,6 +41,7 @@ public class ItemPanelUI : TutorialPanelUI
                 tutorialManager.battleItemManager.battleItemUI.ResetSlotCursor();
                 NotPotionItemMask.SetActive(false);
                 ChangeButtonMask.SetActive(false);
+                needLoopAgain = false;
                 StartCoroutine(DelayedRaycastOn());
                 break;
 
@@ -50,6 +53,8 @@ public class ItemPanelUI : TutorialPanelUI
                 tutorialManager.battleItemManager.ItemUseGranade += OnGranadeItemUse;
                 tutorialManager.battleItemManager.ItemChangeAction += OnItemChange;
 
+                needLoopAgain = true;
+
                 PrepareToUseDarkGranade();
 
                 GetComponent<Image>().raycastTarget = false;
@@ -57,6 +62,7 @@ public class ItemPanelUI : TutorialPanelUI
 
             case 7:
                 GetComponent<Image>().raycastTarget = true;
+                needLoopAgain = false;
                 break;
 
         }
@@ -104,6 +110,8 @@ public class ItemPanelUI : TutorialPanelUI
         ChangeButtonArrow.SetActive(true);
         tutorialManager.battleItemManager.OnSlotClickAction -= ShowChangeButtonArrow;
     }
+
+  
 
     public override void OnPointerDown(PointerEventData eventData)
     {

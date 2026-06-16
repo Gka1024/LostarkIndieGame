@@ -25,6 +25,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject BossUI;
     [SerializeField] private GameObject EstherUI;
     [SerializeField] private GameObject BattleItemUI;
+    [SerializeField] private GameObject ResolutionDropdownUI;
 
     public void Start()
     {
@@ -35,12 +36,14 @@ public class TutorialManager : MonoBehaviour
     public void Init(GameManager manager)
     {
         manager.isTutorialCleared = false;
+        objectClickHandler.SetClickAvailable(false);
         //StartTutorial();
     }
 
     public void StartTutorial()
     {
         EnterStep(ETutorialStep.Welcome);
+        ResolutionDropdownUI.SetActive(false);
         startPanel.SetActive(false);
     }
 
@@ -49,12 +52,12 @@ public class TutorialManager : MonoBehaviour
         currentStep = nextStep;
 
         // 모든 가이드 UI를 일단 끄기
-        welcomePanel.SetActive(false);
-        moveGuidePanel.SetActive(false);
-        attackGuidePanel.SetActive(false);
-        ItemGuidePanel.SetActive(false);
-        EstherGuidePanel.SetActive(false);
-        AvoidGuidePanel.SetActive(false);
+        ResetUIPanel(welcomePanel);
+        ResetUIPanel(moveGuidePanel);
+        ResetUIPanel(attackGuidePanel);
+        ResetUIPanel(ItemGuidePanel);
+        ResetUIPanel(EstherGuidePanel);
+        ResetUIPanel(AvoidGuidePanel);
 
         // 현재 단계에 맞는 UI와 규칙 활성화
         switch (currentStep)
@@ -96,6 +99,12 @@ public class TutorialManager : MonoBehaviour
                 EndTutorial();
                 break;
         }
+    }
+
+    private void ResetUIPanel(GameObject panel)
+    {
+        panel.SetActive(false);
+        panel.GetComponent<TutorialPanelUI>().ResetEvent();
     }
 
     public void SetTimeScale(float scale)
@@ -142,6 +151,12 @@ public class TutorialManager : MonoBehaviour
         }
 
         // 빌드 세팅에 등록된 메인 보스전 씬으로 전환
+        MoveToBattle();
+    }
+
+    public void MoveToBattle()
+    {
+        SetTimeScale(1f);
         SceneManager.LoadScene("BattleScene");
     }
 }

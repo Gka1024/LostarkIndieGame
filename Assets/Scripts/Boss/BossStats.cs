@@ -17,7 +17,7 @@ public class BossStats : MonoBehaviour
     public const float MAX_HEALTH = 24000;
     public const float MAX_HEALTH_PHASE_2 = 6000;
 
-    protected float health = MAX_HEALTH;
+    public float health = MAX_HEALTH;
 
     // =========================
     // Shield
@@ -75,6 +75,7 @@ public class BossStats : MonoBehaviour
         bossDefence = BOSS_DEFENCE_BASE;
         bossAttackRatio = BOSS_ATTACK_BASE;
         curBossStagger = MAX_STAGGER;
+        bossHPBar.Init(this);
     }
 
     // =========================================================
@@ -302,7 +303,7 @@ public class BossStats : MonoBehaviour
 
     public void ResetDefenceRatio()
     {
-        bossGetDamageRatio = 1f; // 🔥 버그 수정
+        bossGetDamageRatio = 1f;
     }
 
     public void SetBossHP(float value)

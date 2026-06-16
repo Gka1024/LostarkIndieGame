@@ -62,7 +62,7 @@ public class BattleItemManager : MonoBehaviour
     [HideInInspector] public Action ItemUseSpecial;
     [HideInInspector] public Action ItemChangeAction;
     [HideInInspector] public Action OnSlotClickAction;
- 
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -166,7 +166,7 @@ public class BattleItemManager : MonoBehaviour
                     SetItemUsed(ItemType.Granade);
                     currentCoroutine = StartCoroutine(UseThrowableSequence());
                 }
-                 else
+                else
                 {
                     battleItemUI.ShowControlButtons(false);
                     StartCoroutine(battleItemUI.DisplayItemWarning());
@@ -179,7 +179,7 @@ public class BattleItemManager : MonoBehaviour
                     SetItemUsed(ItemType.Special);
                     currentCoroutine = StartCoroutine(UseSpecialSequence());
                 }
-                 else
+                else
                 {
                     battleItemUI.ShowControlButtons(false);
                     StartCoroutine(battleItemUI.DisplayItemWarning());
@@ -191,7 +191,7 @@ public class BattleItemManager : MonoBehaviour
     private IEnumerator UsePotionSequence()
     {
         battleItemUI.ShowControlButtons(false);
-        yield return playerAnimation.DrinkPotion();
+        playerAnimation.StartDrinkPotion();
 
         Debug.Log(currentItem.potionType);
 
@@ -225,6 +225,7 @@ public class BattleItemManager : MonoBehaviour
                 // ... 나머지 물약 로직
         }
 
+        yield return 0;
         ItemUsePotion?.Invoke();
         EndItemTurn();
     }

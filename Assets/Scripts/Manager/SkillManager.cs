@@ -102,7 +102,7 @@ public class SkillManager : MonoBehaviour
             if (currentSkill.CardID != 100)
             {
                 Debug.Log("현재 움직일 수 없습니다. 다른 카드를 사용하세요.");
-                yield return 0;
+                yield break;
             }
         }
 
@@ -117,6 +117,15 @@ public class SkillManager : MonoBehaviour
         ShowTripodUI(false);
 
         currentStats.ApplyOption(selectedTripod);
+
+        if (currentSkill.CardID == 100 && selectedTripod == 2 && !CardList.Instance.CheckSpecialMove())
+        {
+            Debug.Log("아직 사용할 수 없습니다");
+            isCardUsing = false;
+            ShowCancelButton(false);
+            currentState = SkillState.Idle;
+            yield break;
+        }
 
         // 타일 선택
         if (currentStats.needToSelectTile)
@@ -199,7 +208,6 @@ public class SkillManager : MonoBehaviour
 
         // 큐에 등록
         QueueManager.Instance.EnqueueSkill(data);
-        Debug.Log($"[EnqueueCardSkill] CardID {data.skillId} (트라이포드 {tripodIndex}) 스킬이 큐에 등록됨 {data.beforeDelay} {data.afterDelay}");
     }
 
     public void EnqueueChainSkill(CardStats stats, int cardID, int tripodIndex)

@@ -9,8 +9,11 @@ public class PatternA_SpearAttack : BossPattern
         turnGenerators.Add(MakeBossAir);
         turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add(MakePattern1);
+        turnGenerators.Add(MakePattern2);
         turnGenerators.Add(MakePattern1);
+        turnGenerators.Add(MakePattern2);
         turnGenerators.Add(MakePattern1);
+        turnGenerators.Add(MakePattern2);
         turnGenerators.Add(MakeIdleTurn);
         turnGenerators.Add((ai) => MakeBossDown(ai, HexTileManager.Instance.GetTileByCube(new Vector3Int(0, 0, 0))));
     }
@@ -23,21 +26,30 @@ public class PatternA_SpearAttack : BossPattern
         base.OnStartPattern(ai);
     }
 
+    private List<HexTile> AttackRange = new();
+
     private BossPatternTurnInfo MakePattern1(BossAI ai)
     {
-        HexTile randomTile = HexTileManager.Instance.GetRandomTile(HexTileManager.Instance.GetAllTiles());
+        AttackRange = new();
+        HexTile randomTile1 = HexTileManager.Instance.GetRandomTile(HexTileManager.Instance.GetAllTiles());
+        HexTile randomTile2 = HexTileManager.Instance.GetRandomTile(HexTileManager.Instance.GetAllTiles());
         HexTile playerTile = ai.bossController.GetPlayerTile();
 
-        List<HexTile> attackRange = new();
+        AttackRange.Add(randomTile1);
+        AttackRange.AddRange(randomTile1.neighbors);
 
-        attackRange.Add(randomTile);
-        attackRange.AddRange(randomTile.neighbors);
+        AttackRange.Add(randomTile2);
+        AttackRange.AddRange(randomTile2.neighbors);
 
-        attackRange.Add(playerTile);
-        attackRange.AddRange(playerTile.neighbors);
+        AttackRange.Add(playerTile);
+        AttackRange.AddRange(playerTile.neighbors);
 
-        return BossPatternBuilder.Create(attackRange).SetDamage(30).Build();
+        return BossPatternBuilder.Create(AttackRange).SetDamage(0).Build();
+    }
 
+    private BossPatternTurnInfo MakePattern2(BossAI ai)
+    {
+        return BossPatternBuilder.Create(AttackRange).SetDamage(50).Build();
     }
 
     public override void PerformActionAnimation(BossAnimation animation)

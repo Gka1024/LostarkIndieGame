@@ -147,7 +147,6 @@ public class HexTileManager : MonoBehaviour
     public HexTile GetRandomTile(List<HexTile> tiles)
     {
         int ranNum = Random.Range(0, tiles.Count);
-        Debug.Log(ranNum);
         return tiles[ranNum];
     }
 

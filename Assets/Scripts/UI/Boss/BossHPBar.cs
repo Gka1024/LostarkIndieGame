@@ -30,14 +30,16 @@ public class BossHPBar : MonoBehaviour
 
     private void Start()
     {
-        // 1. 초기 데이터 설정
-        MaxHealth = GameManager.Instance.isTutorialCleared ? BossStats.MAX_HEALTH : TutorialBossStats.MAX_HEALTH_TUTORIAL;
-        currentHealth = MaxHealth;
         MaxHealthLine = Mathf.CeilToInt(MaxHealth / healthPerStage);
         Canvas.ForceUpdateCanvases();
         maskFullWidth = 839f;
+        RefreshUI();
+    }
 
-        // 2. 초기 UI 상태 동기화
+    public void Init(BossStats stat)
+    {
+        MaxHealth = stat.health;
+        currentHealth = MaxHealth;
         RefreshUI();
     }
 
